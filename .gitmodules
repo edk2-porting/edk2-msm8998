@@ -1,6 +1,8 @@
 [submodule "edk2"]
 	path = edk2
 	url = https://github.com/tianocore/edk2.git
+	commit = 492679a55d2692ca5ccd33a9b2314f171d2cdd4e
 [submodule "edk2-platforms"]
 	path = edk2-platforms
 	url = https://github.com/tianocore/edk2-platforms.git
+	commit = aa3f6fd542e99dde4206537b095f1a2201275e75

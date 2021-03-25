@@ -10,5 +10,3 @@ ramdisk
 *.swp
 *.rej
 *.orig
-/edk2/*
-/edk2-platforms/*
