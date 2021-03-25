@@ -3,6 +3,7 @@
 ##### Change this to add device #####
 DEVICES=(
 	nash
+	sagit
 )
 #####################################
 
