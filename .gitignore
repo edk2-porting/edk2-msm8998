@@ -1,0 +1,14 @@
+boot-*.img
+uefi-*.img
+uefi-*.img-dtb
+uefi-*.img.gz
+uefi-*.img.gz-dtb
+workspace
+*.dll
+ramdisk
+.vscode
+*.swp
+*.rej
+*.orig
+/edk2/*
+/edk2-platforms/*
