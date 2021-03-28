@@ -26,6 +26,7 @@ QQ交流群: 697666196
 
 1. 摩托罗拉 Z2 Force (nash)
 2. 小米6 (sagit)
+3. 小米Mix2 (chiron)
 
 ## 依赖
 
@@ -45,7 +46,7 @@ sudo apt install build-essential uuid-dev iasl git nasm gcc-aarch64-linux-gnu ab
 1.克隆此项目（默认使用国内fastgit镜像加速）
 
 ```bash
-git clone https://hub.fastgit.org/sunshuyu/edk2-msm8998.git --depth=1
+git clone https://hub.fastgit.org/lumingyu0423/edk2-MSM8998.git --depth=1
 cd edk2-msm8998
 ```
 
