@@ -3,7 +3,7 @@
 A broken but working EDK2 implementation for Snapdragon 835 platform.
 
 中国人请看中文版
-[Chinese version (中文版)](https://github.com/sunshuyu/edk2-msm8998/blob/master/README.zh.md)
+[Chinese version (中文版)](https://github.com/lumingyu0423/edk2-MSM8998/blob/master/README.zh.md)
 
 ## Resources
 
@@ -24,7 +24,8 @@ QQ group: 697666196 (Never On-Topic)
 ## Supported devices
 
 1. Moto Z2 Force (nash)
-2. Xiaomi Mi6 (sagit)   
+2. Xiaomi Mi6 (sagit)  
+3. Xiaomi Mix2 (chiron) 
 
 ## Dependencies
 
@@ -41,8 +42,8 @@ sudo apt install build-essential uuid-dev iasl git nasm gcc-aarch64-linux-gnu ab
 1.Clone this project (no need for recursive)
 
 ```bash
-git clone https://github.com/sunshuyu/edk-msm8998.git --depth=1
-cd edk2-msm8998
+git clone https://github.com/lumingyu0423/edk2-MSM8998.git --depth=1
+cd edk2-MSM8998
 ```
 
 2.Build this project
