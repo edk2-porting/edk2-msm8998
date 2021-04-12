@@ -26,6 +26,7 @@ QQ group: 697666196 (Never On-Topic)
 1. Moto Z2 Force (nash)
 2. Xiaomi Mi6 (sagit)  
 3. Xiaomi Mix2 (chiron) 
+4. OnePlus 5 (cheeseburger)
 
 ## Dependencies
 

@@ -5,6 +5,7 @@ DEVICES=(
 	nash
 	sagit
 	chiron
+	cheeseburger
 
 )
 #####################################
