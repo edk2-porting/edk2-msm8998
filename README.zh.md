@@ -27,6 +27,7 @@ QQ交流群: 697666196
 1. 摩托罗拉 Z2 Force (nash)
 2. 小米6 (sagit)
 3. 小米Mix2 (chiron)
+4. 一加5 (cheeseburger)
 
 ## 依赖
 
