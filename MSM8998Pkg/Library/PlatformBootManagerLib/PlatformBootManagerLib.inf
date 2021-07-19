@@ -2,28 +2,20 @@
 #  Implementation for PlatformBootManagerLib library class interfaces.
 #
 #  Copyright (C) 2015-2016, Red Hat, Inc.
-#  Copyright (c) 2014, ARM Ltd. All rights reserved.
-#  Copyright (c) 2007 - 2014, Intel Corporation. All rights reserved.
-#  Copyright (c) 2016, Linaro Ltd. All rights reserved.
-#  Copyright (c), 2017, Andrei Warkentin <andrey.warkentin@gmail.com>
+#  Copyright (c) 2014, ARM Ltd. All rights reserved.<BR>
+#  Copyright (c) 2007 - 2014, Intel Corporation. All rights reserved.<BR>
+#  Copyright (c) 2016, Linaro Ltd. All rights reserved.<BR>
 #
-#  This program and the accompanying materials are licensed and made available
-#  under the terms and conditions of the BSD License which accompanies this
-#  distribution. The full text of the license may be found at
-#  http://opensource.org/licenses/bsd-license.php
-#
-#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR
-#  IMPLIED.
+#  SPDX-License-Identifier: BSD-2-Clause-Patent
 #
 ##
 
 [Defines]
   INF_VERSION                    = 0x00010005
   BASE_NAME                      = PlatformBootManagerLib
-  FILE_GUID                      = 92FD2DE3-B9CB-4B35-8141-42AD34D73C9F
+  FILE_GUID                      = 6FC7BC89-0B6F-EE12-E6F1-AA6890080905
   MODULE_TYPE                    = DXE_DRIVER
-  VERSION_STRING                 = 1.0
+  VERSION_STRING                 = 1.1
   LIBRARY_CLASS                  = PlatformBootManagerLib|DXE_DRIVER
 
 #
@@ -34,15 +26,13 @@
 
 [Sources]
   PlatformBm.c
+  PlatformBm.h
 
 [Packages]
+  EmbeddedPkg/EmbeddedPkg.dec
   MdeModulePkg/MdeModulePkg.dec
   MdePkg/MdePkg.dec
   ShellPkg/ShellPkg.dec
-  MSM8998Pkg/MSM8998Pkg.dec
-
-[BuildOptions.AARCH64]
-  GCC:*_*_*_CC_FLAGS = -Wno-unused-variable
 
 [LibraryClasses]
   BaseLib
@@ -59,11 +49,14 @@
   UefiBootManagerLib
   UefiBootServicesTableLib
   UefiLib
+  UefiRuntimeServicesTableLib
 
 [FeaturePcd]
   gEfiMdePkgTokenSpaceGuid.PcdUgaConsumeSupport
 
 [FixedPcd]
+  gEfiMdeModulePkgTokenSpaceGuid.PcdEmuVariableNvModeEnable
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString
   gEfiMdePkgTokenSpaceGuid.PcdUartDefaultBaudRate
   gEfiMdePkgTokenSpaceGuid.PcdUartDefaultDataBits
   gEfiMdePkgTokenSpaceGuid.PcdUartDefaultParity
@@ -74,6 +67,9 @@
   gEfiMdePkgTokenSpaceGuid.PcdPlatformBootTimeOut
 
 [Guids]
+  gEdkiiNonDiscoverableEhciDeviceGuid
+  gEdkiiNonDiscoverableUhciDeviceGuid
+  gEdkiiNonDiscoverableXhciDeviceGuid
   gEfiFileInfoGuid
   gEfiFileSystemInfoGuid
   gEfiFileSystemVolumeLabelInfoIdGuid
@@ -82,11 +78,11 @@
   gUefiShellFileGuid
 
 [Protocols]
+  gEdkiiNonDiscoverableDeviceProtocolGuid
   gEfiDevicePathProtocolGuid
   gEfiGraphicsOutputProtocolGuid
   gEfiLoadedImageProtocolGuid
+  gEfiPciRootBridgeIoProtocolGuid
   gEfiSimpleFileSystemProtocolGuid
   gEsrtManagementProtocolGuid
-  gEfiUsb2HcProtocolGuid
-  gEFIDroidKeypadDeviceProtocolGuid
-
+  gPlatformBootManagerProtocolGuid

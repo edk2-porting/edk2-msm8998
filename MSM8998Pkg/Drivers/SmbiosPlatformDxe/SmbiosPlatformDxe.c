@@ -52,11 +52,11 @@
   "Serial Not Set\0"                 /* Serial  */
 
 #define TYPE4_STRINGS                                               \
-  "BGA\0"                       /* socket type */              \
+  "BGA-1156\0"                       /* socket type */              \
   "ARM LTD\0"                        /* manufactuer */              \
-  "Cortex-A57\0"                     /* processor 1 description */  \
-  "Cortex-A53\0"                     /* processor 2 description */  \
-  "Cortex-A72\0"                     /* processor 2 description */  \
+  "Snapdragon 835 Extreme Edition\0"  /* processor 1 description */  \
+  "Snapdragon 835 Extreme Edition\0"  /* processor 2 description */  \
+  "Snapdragon 835 Extreme Edition\0"  /* processor 2 description */  \
   "0xd03\0"                          /* A53 part number */          \
   "0xd07\0"                          /* A57 part number */          \
   "0xd08\0"                          /* A72 part number */

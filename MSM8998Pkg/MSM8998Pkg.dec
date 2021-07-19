@@ -42,3 +42,5 @@
   gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32|UINT32|0x0000a403
   gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleWidth|1440|UINT32|0x0000a404
   gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleHeight|2560|UINT32|0x0000a405
+  # RTC information
+  gMSM8998PkgTokenSpaceGuid.PcdBootShimInfo1|0xaf000000|UINT64|0x00000a601

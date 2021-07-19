@@ -3,17 +3,13 @@
 ##### Change this to add device #####
 DEVICES=(
 	nash
-	sagit
-	chiron
-	cheeseburger
-
 )
 #####################################
 
 function _help(){
 	echo "Usage: build.sh --device DEV"
 	echo
-	echo "Build edk2 for Qualcomm MSM8998 platform."
+	echo "Build edk2 for Qualcomm msm8998 platform."
 	echo
 	echo "Options: "
 	echo "	--device DEV, -d DEV: build for DEV. (${DEVICES[*]})"
@@ -22,9 +18,10 @@ function _help(){
 	echo "	--acpi, -A:           compile acpi."
 	echo "	--clean, -C:          clean workspace and output."
 	echo "	--distclean, -D:      clean up all files that are not in repo."
+	echo "	--outputdir, -O:      output folder."
 	echo "	--help, -h:           show this help."
 	echo
-	echo "MainPage: null null"
+	echo "MainPage: https://github.com/lumingyu0423/edk2-MSM8998"
 	exit "${1}"
 }
 
@@ -41,12 +38,12 @@ function _build(){
 	then echo "iasl failed with ${?}" >&2;return 1
 	fi
 	# based on the instructions from edk2-platform
-	rm -f "boot_${DEVICE}.img" uefi_img "uefi-${DEVICE}.img.gz" "uefi-${DEVICE}.img.gz-dtb"
-	build -s -n 0 -a AARCH64 -t GCC5 -p "MSM8998Pkg/Devices/${DEVICE}.dsc"||return "$?"
+	rm -f "${OUTDIR}/boot-${DEVICE}.img" uefi_img "uefi-${DEVICE}.img.gz" "uefi-${DEVICE}.img.gz-dtb"
+	build -s -n 0 -a AARCH64 -t GCC5 -p "MSM8998Pkg/Devices/${DEVICE}.dsc" ||return "$?"
 	gzip -c < workspace/Build/MSM8998Pkg/DEBUG_GCC5/FV/MSM8998PKG_UEFI.fd > "workspace/uefi-${DEVICE}.img.gz"||return "$?"
 	cat "workspace/uefi-${DEVICE}.img.gz" "device_specific/${DEVICE}.dtb" > "workspace/uefi-${DEVICE}.img.gz-dtb"||return "$?"
-	abootimg --create "boot-${DEVICE}.img" -k "workspace/uefi-${DEVICE}.img.gz-dtb" -r ramdisk||return "$?"
-	echo "Build done: boot-${DEVICE}.img"
+	abootimg --create "${OUTDIR}/boot-${DEVICE}.img" -k "workspace/uefi-${DEVICE}.img.gz-dtb" -r ramdisk||return "$?"
+	echo "Build done: ${OUTDIR}/boot-${DEVICE}.img"
 	set +x
 }
 
@@ -61,8 +58,9 @@ DEVICE=""
 CHINESE=false
 CLEAN=false
 DISTCLEAN=false
+export OUTDIR="${PWD}"
 export GEN_ACPI=false
-OPTS="$(getopt -o d:hacACD -l device:,help,all,chinese,acpi,clean,distclean -n 'build.sh' -- "$@")"||exit 1
+OPTS="$(getopt -o d:hacACDO: -l device:,help,all,chinese,acpi,clean,distclean,outputdir: -n 'build.sh' -- "$@")"||exit 1
 eval set -- "${OPTS}"
 while true
 do	case "${1}" in
@@ -72,6 +70,7 @@ do	case "${1}" in
 		-A|--acpi)GEN_ACPI=true;shift;;
 		-C|--clean)CLEAN=true;shift;;
 		-D|--distclean)DISTCLEAN=true;shift;;
+		-O|--outputdir)OUTDIR="${2}";shift 2;;
 		-h|--help)_help 0;shift;;
 		--)shift;break;;
 		*)_help 1;;
@@ -88,7 +87,7 @@ then	set -e
 		git submodule set-url edk2-platforms https://hub.fastgit.org/tianocore/edk2-platforms.git
 		git submodule init;git submodule update --depth 1
 		pushd edk2
-		
+
 		git submodule set-url ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3   https://hub.fastgit.org/ucb-bar/berkeley-softfloat-3.git
 		git submodule set-url CryptoPkg/Library/OpensslLib/openssl                  https://hub.fastgit.org/openssl/openssl.git
 		git submodule set-url BaseTools/Source/C/BrotliCompress/brotli              https://hub.fastgit.org/google/brotli.git
@@ -126,10 +125,10 @@ echo "EDK2_PLATFORMS Path: ${_EDK2_PLATFORMS}"
 export GCC5_AARCH64_PREFIX="${CROSS_COMPILE:-aarch64-linux-gnu-}"
 export PACKAGES_PATH="$_EDK2:$_EDK2_PLATFORMS:$PWD"
 export WORKSPACE="${PWD}/workspace"
-export GITCOMMIT=`git describe --tags`
+GITCOMMIT="$(git describe --tags --always)"||GITCOMMIT="unknown"
+export GITCOMMIT
 echo > ramdisk
 set -e
-# python3 assets/generate-logo.py ${GITCOMMIT}
 if [ "${DEVICE}" == "all" ]
 then	E=0
 	for i in "${DEVICES[@]}"

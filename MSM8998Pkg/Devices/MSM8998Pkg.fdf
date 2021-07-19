@@ -360,8 +360,8 @@ APRIORI DXE {
     #
     INF EmbeddedPkg/Drivers/VirtualKeyboardDxe/VirtualKeyboardDxe.inf
 
-    INF MSM8998Pkg/MSM8998Dxe/MSM8998Dxe.inf
-    INF MSM8998Pkg/SimpleFbDxe/SimpleFbDxe.inf
+    INF MSM8998Pkg/Drivers/MSM8998Dxe/MSM8998Dxe.inf
+    INF MSM8998Pkg/Drivers/SimpleFbDxe/SimpleFbDxe.inf
 
     #
     # USB Host Support
