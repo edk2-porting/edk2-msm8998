@@ -27,6 +27,7 @@ QQ chinese group: 697666196 (Main group, full)  996450026 (Second group)  737223
 
 1. Moto Z2 Force (nash)
 2. Xiaomi Mix2   (chiron) 
+3. Xiaomi Mi6    (sagit)
 
 
 ## Dependencies

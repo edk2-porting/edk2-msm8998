@@ -30,6 +30,7 @@ QQ中文交流群:
 ## 已支持的设备
 1. 摩托罗拉 Z2 Force (nash)
 2. 小米 MIX2         (chiron)
+3. 小米 Mi6          (sagit)
 
 ## 依赖
 
