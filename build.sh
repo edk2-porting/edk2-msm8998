@@ -5,6 +5,7 @@ DEVICES=(
 	nash
 	chiron
 	sagit
+	joan
 )
 #####################################
 
