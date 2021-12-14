@@ -32,6 +32,7 @@ QQ中文交流群:
 2. 小米 MIX2         (chiron)
 3. 小米 Mi6          (sagit)
 4. LG V30            (joan)
+5. 一加5t             (dumpling)
 
 ## 依赖
 
