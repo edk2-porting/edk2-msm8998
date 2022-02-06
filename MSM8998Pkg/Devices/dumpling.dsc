@@ -7,7 +7,7 @@
   SUPPORTED_ARCHITECTURES        = AARCH64
   BUILD_TARGETS                  = DEBUG|RELEASE
   SKUID_IDENTIFIER               = DEFAULT
-  FLASH_DEFINITION               = MSM8998Pkg/Devices/nash.fdf
+  FLASH_DEFINITION               = MSM8998Pkg/Devices/dumpling.fdf
 
 !include MSM8998Pkg/MSM8998Pkg.dsc
 
