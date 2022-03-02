@@ -87,18 +87,18 @@ if ! [ -f edk2/edksetup.sh ] || ! [ -f ../edk2/edksetup.sh ]
 then	set -e
 	echo "Updating submodules"
 	if "${CHINESE}"
-	then	git submodule set-url edk2 https://hub.fastgit.org/tianocore/edk2.git
-		git submodule set-url edk2-platforms https://hub.fastgit.org/tianocore/edk2-platforms.git
+	then	git submodule set-url edk2 https://hub.fastgit.xyz/tianocore/edk2.git
+		git submodule set-url edk2-platforms https://hub.fastgit.xyz/tianocore/edk2-platforms.git
 		git submodule init;git submodule update --depth 1
 		pushd edk2
 
-		git submodule set-url ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3   https://hub.fastgit.org/ucb-bar/berkeley-softfloat-3.git
-		git submodule set-url CryptoPkg/Library/OpensslLib/openssl                  https://hub.fastgit.org/openssl/openssl.git
-		git submodule set-url BaseTools/Source/C/BrotliCompress/brotli              https://hub.fastgit.org/google/brotli.git
+		git submodule set-url ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3   https://hub.fastgit.xyz/ucb-bar/berkeley-softfloat-3.git
+		git submodule set-url CryptoPkg/Library/OpensslLib/openssl                  https://hub.fastgit.xyz/openssl/openssl.git
+		git submodule set-url BaseTools/Source/C/BrotliCompress/brotli              https://hub.fastgit.xyz/google/brotli.git
 		git submodule set-url UnitTestFrameworkPkg/Library/CmockaLib/cmocka         https://git.cryptomilk.org/projects/cmocka.git
-		git submodule set-url ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3   https://hub.fastgit.org/ucb-bar/berkeley-softfloat-3.git
-		git submodule set-url MdeModulePkg/Library/BrotliCustomDecompressLib/brotli https://hub.fastgit.org/google/brotli.git
-		git submodule set-url MdeModulePkg/Universal/RegularExpressionDxe/oniguruma https://hub.fastgit.org/kkos/oniguruma.git
+		git submodule set-url ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3   https://hub.fastgit.xyz/ucb-bar/berkeley-softfloat-3.git
+		git submodule set-url MdeModulePkg/Library/BrotliCustomDecompressLib/brotli https://hub.fastgit.xyz/google/brotli.git
+		git submodule set-url MdeModulePkg/Universal/RegularExpressionDxe/oniguruma https://hub.fastgit.xyz/kkos/oniguruma.git
 		git submodule init;git submodule update
 		git checkout .gitmodules
 		popd
