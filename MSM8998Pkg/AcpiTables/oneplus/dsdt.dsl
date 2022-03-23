@@ -78949,41 +78949,52 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Alias (PSUB, _SUB)
         }
 
-        Device (BTH0)
+        Device(BTH0)
+{
+    Name(_HID, "QCOM00B7")
+        Alias(\_SB.PSUB, _SUB)
+    Name(_DEP, Package(0x3)
+    {
+        PEP0,
+        PMIC,
+        UAR3   // depends on UART ACPI definition
+    })
+    Name(_PRW, Package(0x2)
+    {
+        Zero,
+        Zero
+    })
+    Name(_S4W, 0x2)
+    Name(_S0W, 0x2)
+    Method(_CRS, 0x0, NotSerialized)
+    {
+        Name(PBUF, ResourceTemplate()
         {
-            Name (_HID, "QCOM00B7")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
-            Name (_DEP, Package (0x03)  // _DEP: Dependencies
-            {
-                PEP0, 
-                PMIC, 
-                UAR3
-            })
-            Name (_PRW, Package (0x02)  // _PRW: Power Resources for Wake
-            {
-                Zero, 
-                Zero
-            })
-            Name (_S4W, 0x02)  // _S4W: S4 Device Wake State
-            Name (_S0W, 0x02)  // _S0W: S0 Device Wake State
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
-            {
-                Name (PBUF, ResourceTemplate ()
-                {
-                    UartSerialBusV2 (0x0001C200, DataBitsEight, StopBitsOne,
-                        0xC0, LittleEndian, ParityTypeNone, FlowControlHardware,
-                        0x0020, 0x0020, "\\_SB.UAR3",
-                        0x00, ResourceConsumer, , Exclusive,
-                        )
-                })
-                Return (PBUF) /* \_SB_.BTH0._CRS.PBUF */
-            }
+            UARTSerialBus(
+                115200,                    // ConnectionSpeed
+                DataBitsEight,             // BitsPerByte         (defaults to DataBitsEight)
+                StopBitsOne,               // StopBits            (defaults to StopBitsOne)
+                0xC0,                      // LinesInUse
+                LittleEndian,              // IsBigEndian         (defaults to LittleEndian)
+                ParityTypeNone,            // Parity              (defaults to ParityTypeNone)
+                FlowControlHardware,       // FlowControl         (defaults to FlowControlNone)
+                0x20,                      // ReceiveBufferSize
+                0x20,                      // TransmitBufferSize
+                "\\_SB.UAR3",              // depends on UART ACPI definition
+                0,                         // ResourceSourceIndex (defaults to 0)
+                ResourceConsumer,          // ResourceUsage       (defaults to ResourceConsumer)
+                ,                          // DescriptorName
+                )
 
-            Method (_STA, 0, NotSerialized)  // _STA: Status
-            {
-                Return (0x0F)
-            }
-        }
+                // GpioIo(Exclusive, PullDown, 0, 0, , "\\_SB.PM01", , , , ) {146} // 0x690 - PM_INT__PM1_GPIO19__GPIO_IN_STS
+        })
+        Return(PBUF)
+    }
+    Method(_STA, 0x0, NotSerialized)
+    {
+        Return(0xF)
+    }
+}//End BTH0
 
         Device (ADC1)
         {
