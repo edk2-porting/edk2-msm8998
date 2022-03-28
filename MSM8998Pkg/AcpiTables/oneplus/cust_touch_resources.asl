@@ -31,24 +31,6 @@ Scope (\_SB.PEP0)
 
                         Package (0x02)
                         {
-                            "PMICVREGVOTE", 
-                            Package (0x0A)
-                            {
-                                "PPP_RESOURCE_ID_LDO28_A", 
-                                One, 
-                                0x002DE600, 
-                                0x9C40, 
-                                One, 
-                                Zero, 
-                                One, 
-                                Zero, 
-                                Zero, 
-                                Zero
-                            }
-                        }, 
-
-                        Package (0x02)
-                        {
                             "TLMMGPIO", 
                             Package (0x06)
                             {
@@ -60,7 +42,7 @@ Scope (\_SB.PEP0)
                                 Zero
                             }
                         }, 
-
+                        
                         Package (0x02)
                         {
                             "PMICVREGVOTE", 
@@ -68,8 +50,26 @@ Scope (\_SB.PEP0)
                             {
                                 "PPP_RESOURCE_ID_LDO6_A", 
                                 One, 
-                                0x001B7740, 
+                                0x1b9680, 
                                 0x9C40, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO28_A", 
+                                One, 
+                                0x2de600, 
+                                0x4e20, 
                                 One, 
                                 Zero, 
                                 One, 
@@ -112,10 +112,28 @@ Scope (\_SB.PEP0)
                         }
                     }, 
 
-                    Package (0x08)
+                    Package ()
                     {
                         "DSTATE", 
                         0x03, 
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO28_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+                        
                         Package (0x02)
                         {
                             "PMICVREGVOTE", 
@@ -144,24 +162,6 @@ Scope (\_SB.PEP0)
                                 Zero, 
                                 Zero, 
                                 One, 
-                                Zero
-                            }
-                        }, 
-
-                        Package (0x02)
-                        {
-                            "PMICVREGVOTE", 
-                            Package (0x0A)
-                            {
-                                "PPP_RESOURCE_ID_LDO28_A", 
-                                One, 
-                                Zero, 
-                                Zero, 
-                                Zero, 
-                                Zero, 
-                                Zero, 
-                                Zero, 
-                                Zero, 
                                 Zero
                             }
                         }, 

@@ -54,9 +54,9 @@
 #define TYPE4_STRINGS                                               \
   "BGA-1156\0"                       /* socket type */              \
   "ARM LTD\0"                        /* manufactuer */              \
-  "Snapdragon 835 Extreme Edition\0"  /* processor 1 description */  \
-  "Snapdragon 835 Extreme Edition\0"  /* processor 2 description */  \
-  "Snapdragon 835 Extreme Edition\0"  /* processor 2 description */  \
+  "Qualcomm Snapdragon SDM835\0"  /* processor 1 description */  \
+  "Qualcomm Snapdragon SDM835\0"  /* processor 2 description */  \
+  "Qualcomm Snapdragon SDM835\0"  /* processor 2 description */  \
   "0xd03\0"                          /* A53 part number */          \
   "0xd07\0"                          /* A57 part number */          \
   "0xd08\0"                          /* A72 part number */
