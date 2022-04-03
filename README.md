@@ -30,6 +30,7 @@ QQ chinese group: 697666196 (Main group, full)  996450026 (Second group)  737223
 3. Xiaomi Mi6    (sagit)
 4. LG V30        (joan)
 5. One plus 5T   (dumpling)
+6. One Plus 5    (cheeseburger)
 
 
 ## Dependencies
