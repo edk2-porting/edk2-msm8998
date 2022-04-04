@@ -230,7 +230,7 @@ APRIORI DXE {
 
     FILE FREEFORM = 7E374E25-8E01-4FEE-87F2-390C23C606CD {
         // SECTION RAW = MSM8998Pkg/AcpiTables/8998/DBG2.aml
-        SECTION RAW = MSM8998Pkg/AcpiTables/oneplus/dsdt.aml
+        SECTION RAW = MSM8998Pkg/AcpiTables/oneplus/dumpling/dsdt.aml
         // SECTION RAW = MSM8998Pkg/AcpiTables/8998/FACS.aml
         // SECTION RAW = MSM8998Pkg/AcpiTables/8998/FADT.aml
         // SECTION RAW = MSM8998Pkg/AcpiTables/8998/GTDT.aml
