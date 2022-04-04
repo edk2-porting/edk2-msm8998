@@ -19,7 +19,7 @@ jobs:
           - chiron
           - nash
           - joan
-	    - sagit
+	  - sagit
 
     steps:
       - name: Checkout repository
