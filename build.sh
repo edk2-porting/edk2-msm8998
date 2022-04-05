@@ -1,6 +1,6 @@
 #!/bin/bash
 
-##### Change this to add device #####
+##### Change this to add device ####
 DEVICES=(
 	nash
 	chiron
@@ -9,7 +9,7 @@ DEVICES=(
 	cheeseburger
         dumpling
 )
-#####################################
+####################################
 
 function _help(){
 	echo "Usage: build.sh --device DEV"
