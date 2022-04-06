@@ -141,7 +141,7 @@ APRIORI DXE {
     INF MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf
     INF MdeModulePkg/Universal/Console/GraphicsConsoleDxe/GraphicsConsoleDxe.inf
 
-    !include MSM8998Pkg/Devices_Binary/wp/dxe.inc
+    !include MSM8998Pkg/Devices_Binary/joan/dxe.inc
 
     INF MdeModulePkg/Universal/BdsDxe/BdsDxe.inf  
 
@@ -175,7 +175,7 @@ APRIORI DXE {
 
     INF MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
 
-    !include MSM8998Pkg/Devices_Binary/wp/dxe.inc
+    !include MSM8998Pkg/Devices_Binary/joan/dxe.inc
 
     #
     # Virtual Keyboard
@@ -228,15 +228,7 @@ APRIORI DXE {
     # INF RuleOverride = ACPITABLE MSM8998Pkg/AcpiTables/AcpiTables.inf
 
     FILE FREEFORM = 7E374E25-8E01-4FEE-87F2-390C23C606CD {
-        // SECTION RAW = MSM8998Pkg/AcpiTables/8998/DBG2.aml
-        SECTION RAW = MSM8998Pkg/AcpiTables/8998/DSDT.aml
-        // SECTION RAW = MSM8998Pkg/AcpiTables/8998/FACS.aml
-        // SECTION RAW = MSM8998Pkg/AcpiTables/8998/FADT.aml
-        // SECTION RAW = MSM8998Pkg/AcpiTables/8998/GTDT.aml
-        // SECTION RAW = MSM8998Pkg/AcpiTables/8998/MADT.aml
-        // SECTION RAW = MSM8998Pkg/AcpiTables/8998/MCFG.aml
-        // SECTION RAW = MSM8998Pkg/AcpiTables/8998/CSRT.aml
-        // SECTION RAW = MSM8998Pkg/AcpiTables/asus/facp.aml
+        SECTION RAW = MSM8998Pkg/AcpiTables/joan/dsdt.aml
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/Csrt.acp
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/dbg2.acp
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/Facp.acp
@@ -245,7 +237,6 @@ APRIORI DXE {
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/IORT.acp
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/Madt.acp
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/Mcfg.acp
-        // SECTION RAW = MSM8998Pkg/AcpiTables/asus/TPM2.acp
         SECTION UI = "AcpiTables"
     }
 
