@@ -26,14 +26,21 @@ QQ chinese group: 697666196 (Main group, full)  996450026 (Second group)  737223
 ## Supported devices
 
 1. Moto Z2 Force (nash)
-2. Xiaomi Mix2   (chiron) 
+2. Xiaomi Mi Mix 2   (chiron) 
 3. Xiaomi Mi6    (sagit)
 4. LG V30        (joan)
-5. One plus 5T   (dumpling)
-6. One Plus 5    (cheeseburger)
+5. OnePlus 5T   (dumpling)
+6. OnePlus 5    (cheeseburger)
 
+**CAUTION FOR ONEPLUS 5 USERS!** After installing GPU, screen and touch might be upside down. Fix it by first changing display orientation, and then adjust touch values from Windows registry path HKLM\System\Touch\SCREENPROPERTIES. Change TouchInvertXAxis and TouchInvertYAxis values to 1 and reboot. This is not needed if everything is working out of box.
+
+## Supported devices
+
+[Windows Status Matrix](https://renegade-project.org/#/en/windows/state-frame.html)
 
 ## Dependencies
+
+Compiling has been tested on Debian 11 (bullseye) and on Ubuntu 20.04 LTS.
 
 For Ubuntu 20.04:
 
