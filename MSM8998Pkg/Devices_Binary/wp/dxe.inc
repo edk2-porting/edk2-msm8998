@@ -177,6 +177,12 @@
     SECTION UI = "UsbMouseDxe"
     }
 
+    FILE DRIVER = 5bd181db-0487-4f1a-ae73-820e165611b3 {
+    SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/ButtonsDxe/ButtonsDxe.depex
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/ButtonsDxe/ButtonsDxe.efi
+    SECTION UI = "ButtonsDxe"
+    }
+
     # FILE DRIVER = 9A5163E7-5C29-453F-825C-837A46A81E15 {
     # SECTION DXE_DEPEX = MSM8998Pkg/Binary/SerialDxe/SerialDxe.depex
     # SECTION PE32 = MSM8998Pkg/Binary/SerialDxe/SerialDxe.efi
