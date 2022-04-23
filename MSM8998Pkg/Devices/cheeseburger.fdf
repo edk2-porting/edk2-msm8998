@@ -141,7 +141,7 @@ APRIORI DXE {
     INF MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf
     INF MdeModulePkg/Universal/Console/GraphicsConsoleDxe/GraphicsConsoleDxe.inf
 
-    !include MSM8998Pkg/Devices_Binary/wp/dxe.inc
+    !include MSM8998Pkg/Devices_Binary/cheeseburger/dxe.inc
 
     INF MdeModulePkg/Universal/BdsDxe/BdsDxe.inf  
 
@@ -169,14 +169,14 @@ APRIORI DXE {
     INF MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf
     INF MdeModulePkg/Universal/Console/GraphicsConsoleDxe/GraphicsConsoleDxe.inf
     INF MdeModulePkg/Universal/Console/TerminalDxe/TerminalDxe.inf
-    INF MdeModulePkg/Universal/SerialDxe/SerialDxe.inf
+
 
     INF ArmPkg/Drivers/ArmGic/ArmGicDxe.inf
     INF ArmPkg/Drivers/TimerDxe/TimerDxe.inf
 
     INF MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
 
-    !include MSM8998Pkg/Devices_Binary/wp/dxe.inc
+    !include MSM8998Pkg/Devices_Binary/cheeseburger/dxe.inc
 
     #
     # Virtual Keyboard

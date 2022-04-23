@@ -20,6 +20,7 @@ function _help(){
 	echo "	--device DEV, -d DEV: build for DEV. (${DEVICES[*]})"
 	echo "	--all, -a:            build all devices."
 	echo "	--chinese, -c:        use fastgit for submodule cloning."
+	echo "  --release MODE, -r MODE: Release mode for building, default is 'RELEASE', 'DEBUG' alternatively."
 	echo "	--acpi, -A:           compile acpi."
 	echo "	--clean, -C:          clean workspace and output."
 	echo "	--distclean, -D:      clean up all files that are not in repo."
@@ -44,10 +45,32 @@ function _build(){
 	fi
 	# based on the instructions from edk2-platform
 	rm -f "${OUTDIR}/boot-${DEVICE}.img" uefi_img "uefi-${DEVICE}.img.gz" "uefi-${DEVICE}.img.gz-dtb"
-	build -s -n 0 -a AARCH64 -t GCC5 -p "MSM8998Pkg/Devices/${DEVICE}.dsc" ||return "$?"
-	gzip -c < workspace/Build/MSM8998Pkg/DEBUG_GCC5/FV/MSM8998PKG_UEFI.fd > "workspace/uefi-${DEVICE}.img.gz"||return "$?"
-	cat "workspace/uefi-${DEVICE}.img.gz" "device_specific/${DEVICE}.dtb" > "workspace/uefi-${DEVICE}.img.gz-dtb"||return "$?"
-	abootimg --create "${OUTDIR}/boot-${DEVICE}.img" -k "workspace/uefi-${DEVICE}.img.gz-dtb" -r ramdisk||return "$?"
+	case "${MODE}" in
+		RELEASE)_MODE=RELEASE;;
+		*)_MODE=DEBUG;;
+	esac
+	build \
+		-s \
+		-n 0 \
+		-a AARCH64 \
+		-t GCC5 \
+		-p "MSM8998Pkg/Devices/${DEVICE}.dsc" \
+		-b "${_MODE}" \
+		||return "$?"
+	gzip -c \
+		< "workspace/Build/MSM8998Pkg/${_MODE}_GCC5/FV/MSM8998PKG_UEFI.fd" \
+		> "workspace/uefi-${DEVICE}.img.gz" \
+		||return "$?"
+	cat \
+		"workspace/uefi-${DEVICE}.img.gz" \
+		"device_specific/${DEVICE}.dtb" \
+		> "workspace/uefi-${DEVICE}.img.gz-dtb" \
+		||return "$?"
+	abootimg \
+		--create "${OUTDIR}/boot-${DEVICE}.img" \
+		-k "workspace/uefi-${DEVICE}.img.gz-dtb" \
+		-r ramdisk \
+		||return "$?"
 	echo "Build done: ${OUTDIR}/boot-${DEVICE}.img"
 	set +x
 }
@@ -59,13 +82,15 @@ function _distclean(){ if [ -d .git ];then git clean -xdf;else _clean;fi; }
 cd "$(dirname "$0")"||exit 1
 [ -f MSM8998Pkg/MSM8998Pkg.dsc ]||_error "cannot find MSM8998Pkg/MSM8998Pkg.dsc"
 typeset -l DEVICE
+typeset -u MODE
 DEVICE=""
+MODE=RELEASE
 CHINESE=false
 CLEAN=false
 DISTCLEAN=false
 export OUTDIR="${PWD}"
 export GEN_ACPI=false
-OPTS="$(getopt -o d:hacACDO: -l device:,help,all,chinese,acpi,clean,distclean,outputdir: -n 'build.sh' -- "$@")"||exit 1
+OPTS="$(getopt -o d:hacACDO:r: -l device:,help,all,chinese,acpi,clean,distclean,outputdir:,release: -n 'build.sh' -- "$@")"||exit 1
 eval set -- "${OPTS}"
 while true
 do	case "${1}" in
@@ -76,6 +101,7 @@ do	case "${1}" in
 		-C|--clean)CLEAN=true;shift;;
 		-D|--distclean)DISTCLEAN=true;shift;;
 		-O|--outputdir)OUTDIR="${2}";shift 2;;
+		-r|--release)MODE="${2}";shift 2;;
 		-h|--help)_help 0;shift;;
 		--)shift;break;;
 		*)_help 1;;
