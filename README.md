@@ -19,7 +19,7 @@ QQ chinese group: 697666196 (Main group, full)  996450026 (Second group)  737223
 
 ## WARNING
 
-**DO NOT EVER TRY TO PORT IT TO *SONY* DEVICES**
+**DO NOT EVER TRY TO PORT IT TO *SONY, SAMSUNG* DEVICES**
 
 **YOUR UFS WILL BE WIPED CLEAN!!!**
 
@@ -31,8 +31,6 @@ QQ chinese group: 697666196 (Main group, full)  996450026 (Second group)  737223
 4. LG V30        (joan)
 5. OnePlus 5T   (dumpling)
 6. OnePlus 5    (cheeseburger)
-
-**CAUTION FOR ONEPLUS 5 USERS!** After installing GPU, screen and touch might be upside down. Fix it by first changing display orientation, and then adjust touch values from Windows registry path HKLM\System\Touch\SCREENPROPERTIES. Change TouchInvertXAxis and TouchInvertYAxis values to 1 and reboot. This is not needed if everything is working out of box.
 
 ## Supported devices
 
