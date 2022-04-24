@@ -32,8 +32,6 @@ QQ chinese group: 697666196 (Main group, full)  996450026 (Second group)  737223
 5. OnePlus 5T   (dumpling)
 6. OnePlus 5    (cheeseburger)
 
-**CAUTION FOR ONEPLUS 5 USERS!** After installing GPU, screen and touch might be upside down. Fix it by first changing display orientation, and then adjust touch values from Windows registry path HKLM\System\Touch\SCREENPROPERTIES. Change TouchInvertXAxis and TouchInvertYAxis values to 1 and reboot. This is not needed if everything is working out of box.
-
 ## Supported devices
 
 [Windows Status Matrix](https://renegade-project.org/#/en/windows/state-frame.html)
