@@ -75991,80 +75991,44 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                             }
                         }, 
 
-                        Package (0x0E)
+                        Package (0x08)
                         {
                             "PRIMARY_SOURCE_MODES", 
-                            0x0C, 
-                            Package (0x02)
+                            0x06,
+							Package (0x02)		//(600x1200)
                             {
-                                0x0280, 
-                                0x01E0
+                                0x0258, 
+                                0x04B0
                             }, 
-
-                            Package (0x02)
-                            {
-                                0x0320, 
-                                0x0258
-                            }, 
-
-                            Package (0x02)
-                            {
-                                0x0500, 
-                                0x02D0
-                            }, 
-
-                            Package (0x02)
-                            {
-                                0x0400, 
-                                0x0300
-                            }, 
-
-                            Package (0x02)		//(144P)
-                            {
-                                0x0090, 
-                                0x0120
-                            }, 
-
-                            Package (0x02)		//(240P)
-                            {
-                                0x00F0, 
-                                0x01E0
-                            }, 
-
-                            Package (0x02)		//(360P)
-                            {
-                                0x0168, 
-                                0x02D0
-                            }, 
-
-                            Package (0x02)		//(480P)
-                            {
-                                0x01E0, 
-                                0x03C0
-                            }, 
-
-                            Package (0x02)		//(720P)
+							
+							Package (0x02)		//(720x1440)
                             {
                                 0x02D0, 
                                 0x05A0
                             }, 
+							
+							Package (0x02)		//(800x1600)
+                            {
+                                0x0320, 
+                                0x0640
+                            }, 
+							
+							Package (0x02)		//(900x1800)
+                            {
+                                0x0384, 
+                                0x0708
+                            }, 
 
-                            Package (0x02)		//(1080P)
+                            Package (0x02)		//(1080x2160)
                             {
                                 0x0438, 
                                 0x0870
                             }, 
 
-                            Package (0x02)		//(1440P)
+                            Package (0x02)		//(1440x2880)
                             {
                                 0x05A0, 
                                 0x0B40
-                            }, 
-
-                            Package (0x02)
-                            {
-                                0x0780, 
-                                0x0500
                             }
                         }
                     }, 
