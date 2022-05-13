@@ -76019,46 +76019,46 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                                 0x0300
                             }, 
 
-                            Package (0x02)
+                            Package (0x02)		//(144P)
                             {
-                                0x0480, 
-                                0x0300
+                                0x0090, 
+                                0x0120
                             }, 
 
-                            Package (0x02)
+                            Package (0x02)		//(240P)
                             {
-                                0x0500, 
-                                0x0300
+                                0x00F0, 
+                                0x01E0
                             }, 
 
-                            Package (0x02)
+                            Package (0x02)		//(360P)
                             {
-                                0x0550, 
-                                0x0300
+                                0x0168, 
+                                0x02D0
                             }, 
 
-                            Package (0x02)
+                            Package (0x02)		//(480P)
                             {
-                                0x0556, 
-                                0x0300
+                                0x01E0, 
+                                0x03C0
                             }, 
 
-                            Package (0x02)
+                            Package (0x02)		//(720P)
                             {
-                                0x0640, 
-                                0x0384
+                                0x02D0, 
+                                0x05A0
                             }, 
 
-                            Package (0x02)
+                            Package (0x02)		//(1080P)
                             {
-                                0x0500, 
-                                0x0400
+                                0x0438, 
+                                0x0870
                             }, 
 
-                            Package (0x02)
+                            Package (0x02)		//(1440P)
                             {
-                                0x0780, 
-                                0x0438
+                                0x05A0, 
+                                0x0B40
                             }, 
 
                             Package (0x02)
