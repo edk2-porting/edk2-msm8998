@@ -76746,80 +76746,38 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                             }
                         }, 
 
-                        Package (0x0E)
+                        Package (0x07)
                         {
                             "PRIMARY_SOURCE_MODES", 
-                            0x0C, 
-                            Package (0x02)
+                            0x05,
+							Package (0x02)		//(600x1066)
                             {
-                                0x0280, 
-                                0x01E0
+                                0x0258, 
+                                0x042A
                             }, 
-
-                            Package (0x02)
+							
+							Package (0x02)		//(720x1280)
+                            {
+                                0x02D0, 
+                                0x0500
+                            }, 
+							
+							Package (0x02)		//(800x1422)
                             {
                                 0x0320, 
-                                0x0258
+                                0x058E
+                            }, 
+							
+							Package (0x02)		//(900x1600)
+                            {
+                                0x0384, 
+                                0x0640
                             }, 
 
-                            Package (0x02)
+                            Package (0x02)		//(1080x1920)
                             {
-                                0x0500, 
-                                0x02D0
-                            }, 
-
-                            Package (0x02)
-                            {
-                                0x0400, 
-                                0x0300
-                            }, 
-
-                            Package (0x02)
-                            {
-                                0x0480, 
-                                0x0300
-                            }, 
-
-                            Package (0x02)
-                            {
-                                0x0500, 
-                                0x0300
-                            }, 
-
-                            Package (0x02)
-                            {
-                                0x0550, 
-                                0x0300
-                            }, 
-
-                            Package (0x02)
-                            {
-                                0x0556, 
-                                0x0300
-                            }, 
-
-                            Package (0x02)
-                            {
-                                0x0640, 
-                                0x0384
-                            }, 
-
-                            Package (0x02)
-                            {
-                                0x0500, 
-                                0x0400
-                            }, 
-
-                            Package (0x02)
-                            {
-                                0x0780, 
-                                0x0438
-                            }, 
-
-                            Package (0x02)
-                            {
-                                0x0780, 
-                                0x0500
+                                0x0438, 
+                                0x0780
                             }
                         }
                     }, 
