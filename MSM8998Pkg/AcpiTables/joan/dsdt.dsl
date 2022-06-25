@@ -655,7 +655,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
             }
         }
 
-        Name (BFCC, 0x3336)
+        Name (BFCC, 0x2F44)
         Name (PCT1, 0x05)
         Name (PCT2, 0x09)
         Name (CUST, "8998_MTP")
@@ -75991,44 +75991,101 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                             }
                         }, 
 
-                        Package (0x08)
+                        Package (0x11)
                         {
                             "PRIMARY_SOURCE_MODES", 
-                            0x06,
-							Package (0x02)		//(600x1200)
+                            0x0F,
+							
+							Package (0x02)
                             {
-                                0x0258, 
-                                0x04B0
+                                1440, 
+                                2880
+                            },
+							
+							Package (0x02)
+                            {
+                                1440, 
+                                2560
+                            },
+							
+							Package (0x02)
+                            {
+                                1440, 
+                                1920
+                            },
+							
+							Package (0x02)
+                            {
+                                1080, 
+                                2160
                             }, 
 							
-							Package (0x02)		//(720x1440)
+							Package (0x02)
                             {
-                                0x02D0, 
-                                0x05A0
+                                1080, 
+                                1920
+                            },
+							
+							Package (0x02)
+                            {
+                                1080, 
+                                1400
+                            },
+							
+							
+							Package (0x02)
+                            {
+                                720, 
+                                1440
                             }, 
 							
-							Package (0x02)		//(800x1600)
+							Package (0x02)
                             {
-                                0x0320, 
-                                0x0640
+                                720, 
+                                1280
                             }, 
 							
-							Package (0x02)		//(900x1800)
+							Package (0x02)
                             {
-                                0x0384, 
-                                0x0708
+                                720, 
+                                960
+                            }, 
+							
+							Package (0x02)
+                            {
+                                600, 
+                                1200
+                            }, 	
+							
+							
+							Package (0x02)
+                            {
+                                600, 
+                                1066
+                            }, 
+							
+							Package (0x02)
+                            {
+                                600, 
+								800
+                            },
+							
+							Package (0x02)
+                            {
+                                480, 
+                                960
+                            }, 
+							
+							Package (0x02)
+                            {
+                                480, 
+                                854
                             }, 
 
-                            Package (0x02)		//(1080x2160)
+							Package (0x02)
                             {
-                                0x0438, 
-                                0x0870
-                            }, 
-
-                            Package (0x02)		//(1440x2880)
-                            {
-                                0x05A0, 
-                                0x0B40
+                                480, 
+                                640
                             }
                         }
                     }, 

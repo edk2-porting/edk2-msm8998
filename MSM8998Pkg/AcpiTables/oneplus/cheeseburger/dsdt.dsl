@@ -639,7 +639,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             }
         }
 
-        Name (BFCC, 0x3336)
+        Name (BFCC, 0x303E)
         Name (PCT1, 0x05)
         Name (PCT2, 0x09)
         Name (CUST, "8998_MTP")
@@ -76746,38 +76746,56 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                             }
                         }, 
 
-                        Package (0x07)
+                        Package (0x0A)
                         {
                             "PRIMARY_SOURCE_MODES", 
-                            0x05,
-							Package (0x02)		//(600x1066)
+                            0x08,
+							Package (0x02)
                             {
-                                0x0258, 
-                                0x042A
+                                1080, 
+                                1920
+                            },
+							
+							Package (0x02)
+                            {
+                                1080, 
+                                1400
+                            },
+							
+							Package (0x02)
+                            {
+                                720, 
+                                1280
                             }, 
 							
-							Package (0x02)		//(720x1280)
+							Package (0x02)
                             {
-                                0x02D0, 
-                                0x0500
+                                720, 
+                                960
                             }, 
 							
-							Package (0x02)		//(800x1422)
+							Package (0x02)
                             {
-                                0x0320, 
-                                0x058E
+                                600, 
+                                1066
                             }, 
 							
-							Package (0x02)		//(900x1600)
+							Package (0x02)
                             {
-                                0x0384, 
-                                0x0640
+                                600, 
+								800
+                            },
+							
+							Package (0x02)
+                            {
+                                480, 
+                                854
                             }, 
 
-                            Package (0x02)		//(1080x1920)
+							Package (0x02)
                             {
-                                0x0438, 
-                                0x0780
+                                480, 
+                                640
                             }
                         }
                     }, 
