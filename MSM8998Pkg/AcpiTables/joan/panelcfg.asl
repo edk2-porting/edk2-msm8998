@@ -55,41 +55,51 @@ Name (PCFG, Buffer(){"
  </DSIControllerMapping>
  <DisplayResetInfo>0 10000 1000 25000 0</DisplayResetInfo>
 </Group>
-<DSIInitSequence> 39 B0 20 43
+<DSIInitSequence>
+ 39 B0 20
  39 F2 00
- 39 FF 03 00
+ 39 FF 03
  FF 01
  05 35
  05 11
  FF 3C
  15 53 07
  15 55 0C
- 39 B0 A5 00
- 39 B2 5D 41 04 8C 00 FF FF 15 00 00 00 00
- 39 E8 08 90 10 25
- 39 D4 10 00 FF 60 30 40 50 20 20 20 20 A0 00 20 00 34 a0 08 DA DA 4A
- 39 FB 03 77
- 39 ED 13 00 07 00 13
- 39 E2 20 0D 08 A8 0A AA 04 A4 80 80 80 5C 5C 5C
- 39 E7 00 0D 76 1F 00 0D 4A 44 0D 76 25 00 0D 0D 0D 0D 4A 00
- 39 CE 81 1F 0F 01 24 68 22 20 04 01 00 80 FF 88 08 02 00 00
+ 39 B0 A5
+ 39 B2 5D
+ 39 E8 08
+ 39 D4 10
+ 39 FB 03
+ 39 ED 13
+ 39 E2 20
+ 39 E7 00
+ 39 CE 81
  FF 5A
- 39 E7 00 0D 76 1F 00 0D 0D 44 0D 76 25 00 0D 0D 0D 0D 4A 00
+ 39 E7 00
  FF 46
  05 29
 </DSIInitSequence>
 <DSIUsePostPanelOn>False</DSIUsePostPanelOn>
-<DSIPostInitSequence> FF 14
+<DSIPostInitSequence>
+ FF 14
  05 29
-</DSIPostInitSequence><DSITermSequence> 39 51 03
+</DSIPostInitSequence><DSITermSequence>
+ 39 51 03
  05 28
  05 10
 </DSITermSequence>
 <Group id='Backlight Configuration'>
  <BacklightType>3</BacklightType>
-  <BacklightSteps>1</BacklightSteps>
-<BrightnessMaxLuminance>430000</ BrightnessMaxLuminance>
-<BrightnessMinLuminance>323</BrightnessMinLuminance>
-<BrightnessRangeLevel0>100 400000 1 0</BrightnessRangeLevel0>
+    <BacklightPmicControlType>2</BacklightPmicControlType>
+    <BacklightSteps>100</BacklightSteps>
+    <BacklightPMICBankSelect>15</BacklightPMICBankSelect>
+    <BacklightPMICPWMFrequency>600000</BacklightPMICPWMFrequency>
+    <BacklightDefault>80</BacklightDefault>
+    <BacklightLowPower>40</BacklightLowPower>
+    <PMIPowerPmicNumber>1</PMIPowerPmicNumber>
+    <PMIPowerPmicModel>21</PMIPowerPmicModel>
+    <PMIPowerconfig>1</PMIPowerConfig>
+    <BrightnessMinLuminance>3230</BrightnessMinLuminance>
+    <BrightnessMaxLuminance>4300000</BrightnessMaxLuminance>
 </Group>
 "})
