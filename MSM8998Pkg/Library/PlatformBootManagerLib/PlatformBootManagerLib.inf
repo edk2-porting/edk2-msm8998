@@ -76,6 +76,7 @@
   gEfiFileSystemVolumeLabelInfoIdGuid
   gEfiEndOfDxeEventGroupGuid
   gEfiTtyTermGuid
+  gSimpleInitFileGuid
   gUefiShellFileGuid
 
 [Protocols]
