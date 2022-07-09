@@ -84578,6 +84578,18 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             Alias (\_SB.PSUB, _SUB)
         }
 
+        Device (GPS)
+        {
+            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            {
+                GLNK
+            })
+            Name (_HID, "QCOM00B9")  // _HID: Hardware ID
+            Alias (PSUB, _SUB)
+            Name (_CID, "ACPIQCOM00B9")  // _CID: Compatible ID
+            Name (_UID, Zero)  // _UID: Unique ID
+        }
+
         Device (SSM)
         {
             Name (_DEP, Package (0x02)  // _DEP: Dependencies
