@@ -75504,7 +75504,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                     Package (0x03)
                     {
                         "RESOURCE", 
-                        "DSI_PANEL_EN", 
+                        "DSI_PANEL_RESET", 
                         "DISPLAY"
                     }
                 })
@@ -81648,7 +81648,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                 {
                     DerefOf (RBUF [0x04]) [0x0D] = P004 /* \_SB_.GPU0.PMCL.P004 */
                 }
-
                 Return (RBUF) /* \_SB_.GPU0.PMCL.RBUF */
             }
 
@@ -81850,6 +81849,14 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                 Return (RBUF) /* \_SB_.GPU0.PBRT.RBUF */
             }
 
+            Method (PBRC, 2, NotSerialized)
+            {
+                Name (RBUF, Buffer (0x02)
+                {
+                     0x00, 0x00                                       // ..
+                })
+                Return (RBUF) /* \_SB_.GPU0.PBRC.RBUF */
+            }
             Method (DITH, 2, NotSerialized)
             {
                 Name (RBUF, Buffer (One)
@@ -82158,191 +82165,15 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                 Return (RBUF) /* \_SB_.GPU0.ROE1.RBUF */
             }
 
-            Method (BLK1, 0, NotSerialized)
-            {
-                Name (RBUF, Buffer (0x20){})
-                CreateDWordField (RBUF, Zero, WMAX)
-                WMAX = Zero
-                CreateDWordField (RBUF, 0x04, HMAX)
-                HMAX = Zero
-                CreateDWordField (RBUF, 0x08, HZ)
-                HZ = Zero
-                CreateDWordField (RBUF, 0x0C, FLGS)
-                CreateQWordField (RBUF, 0x10, LRAT)
-                CreateDWordField (RBUF, 0x18, NLNS)
-                Local0 = 0x02
-                If ((\_SB.ECOK == One))
-                {
-                    Acquire (\_SB.MUT0, 0xFFFF)
-                    Local3 = 0x19
-                    While ((Local3 > Zero))
-                    {
-                        \_SB.I2C7.BSTA = Zero
-                        \_SB.I2C7.BLEN = One
-                        \_SB.I2C7.DAT1 = 0x84
-                        \_SB.I2C7.APIR = \_SB.I2C7.BUF1 /* External reference */
-                        \_SB.I2C7.BUFF = \_SB.I2C7.RB01 /* External reference */
-                        If ((\_SB.I2C7.BYAT == Zero))
-                        {
-                            Local0 = \_SB.I2C7.DATA /* External reference */
-                        }
-
-                        If ((Local0 == 0xAA))
-                        {
-                            Local3--
-                            Sleep (0xC8)
-                        }
-                        Else
-                        {
-                            Break
-                        }
-                    }
-
-                    Release (\_SB.MUT0)
-                }
-
-                If (((Local0 > 0x02) || (Local0 == Zero)))
-                {
-                    Local0 = 0x02
-                }
-
-                NLNS = Local0
-                Local0 = One
-                If ((\_SB.ECOK == One))
-                {
-                    Acquire (\_SB.MUT0, 0xFFFF)
-                    \_SB.I2C7.BSTA = Zero
-                    \_SB.I2C7.BLEN = One
-                    \_SB.I2C7.DAT1 = 0x85
-                    \_SB.I2C7.APIR = \_SB.I2C7.BUF1 /* External reference */
-                    \_SB.I2C7.BUFF = \_SB.I2C7.RB01 /* External reference */
-                    If ((\_SB.I2C7.BYAT == Zero))
-                    {
-                        If ((\_SB.I2C7.DATA == Zero))
-                        {
-                            Local0 = Zero
-                        }
-                    }
-
-                    Release (\_SB.MUT0)
-                }
-
-                If (((Local0 & 0x03) == Zero))
-                {
-                    Local0 = One
-                }
-                Else
-                {
-                    Local0 = Zero
-                }
-
-                FLGS = Local0
-                Local0 = 0x80BEFC00
-                If ((\_SB.ECOK == One))
-                {
-                    Acquire (\_SB.MUT0, 0xFFFF)
-                    \_SB.I2C7.BSTA = Zero
-                    \_SB.I2C7.BLEN = One
-                    \_SB.I2C7.DAT1 = 0x83
-                    \_SB.I2C7.APIR = \_SB.I2C7.BUF1 /* External reference */
-                    \_SB.I2C7.BUFF = \_SB.I2C7.RB01 /* External reference */
-                    If ((\_SB.I2C7.BYAT == Zero))
-                    {
-                        Local1 = \_SB.I2C7.DATA /* External reference */
-                        While (One)
-                        {
-                            Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler
-                            _T_0 = Local1
-                            If ((_T_0 == 0x0A))
-                            {
-                                Local0 = 0x80BEFC00
-                            }
-                            ElseIf ((_T_0 == 0x14))
-                            {
-                                Local0 = 0x00000001017DF800
-                            }
-                            ElseIf ((_T_0 == 0x19))
-                            {
-                                Local0 = 0x0000000141DD7600
-                            }
-                            Else
-                            {
-                                Local0 = 0x80BEFC00
-                            }
-
-                            Break
-                        }
-                    }
-
-                    Release (\_SB.MUT0)
-                }
-
-                LRAT = Local0
-                CreateDWordField (RBUF, 0x1C, RSVD)
-                RSVD = Zero
-                Return (RBUF) /* \_SB_.GPU0.BLK1.RBUF */
-            }
-
-            Method (BCP1, 1, NotSerialized)
-            {
-                Name (RBUF, Buffer (0x04){})
-                CreateDWordField (RBUF, Zero, STS)
-                STS = Zero
-                Name (BUFF, Buffer (0x03){})
-                CreateByteField (BUFF, Zero, STAT)
-                CreateByteField (BUFF, One, DLEN)
-                CreateByteField (BUFF, 0x02, DATA)
-                If ((\_SB.ECOK == One))
-                {
-                    Acquire (\_SB.MUT0, 0xFFFF)
-                    STAT = Zero
-                    DLEN = One
-                    If ((Arg0 == One))
-                    {
-                        DATA = 0x22
-                        \_SB.I2C7.CM03 = BUFF /* \_SB_.GPU0.BCP1.BUFF */
-                    }
-                    ElseIf ((Arg0 == 0x02))
-                    {
-                        DATA = 0x21
-                        \_SB.I2C7.CM03 = BUFF /* \_SB_.GPU0.BCP1.BUFF */
-                    }
-                    Else
-                    {
-                        STS = One
-                    }
-
-                    Release (\_SB.MUT0)
-                }
-                Else
-                {
-                    STS = One
-                }
-
-                Return (RBUF) /* \_SB_.GPU0.BCP1.RBUF */
-            }
 
             Name (_DOD, Package (0x01)  // _DOD: Display Output Devices
             {
                 0x00024321
             })
-            Device (AVS0)
+            Method (_STA, 0, NotSerialized)  // _STA: Status
             {
-                Name (_ADR, 0x00024321)  // _ADR: Address
-                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
-                {
-                    Name (RBUF, Buffer (0x02)
-                    {
-                         0x79, 0x00                                       // y.
-                    })
-                    Return (RBUF) /* \_SB_.GPU0.AVS0._CRS.RBUF */
-                }
 
-                Name (_DEP, Package (0x02)  // _DEP: Dependencies
-                {
-                    \_SB.MMU1, 
-                    \_SB.VFE0
-                })
+                Return (0x0F)
             }
 
             Method (CHDV, 0, NotSerialized)
@@ -82372,7 +82203,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
 
             Method (REGR, 0, NotSerialized)
             {
-                Name (RBUF, Package (0x14)
+                Name (RBUF, Package (0x1B)
                 {
                     Package (0x02)
                     {
@@ -82389,6 +82220,12 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                     Package (0x02)
                     {
                         "ForceActive", 
+                        Zero
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DeferForceActive", 
                         Zero
                     }, 
 
@@ -82419,7 +82256,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                     Package (0x02)
                     {
                         "DisableCDI", 
-                        Zero
+                        One
                     }, 
 
                     Package (0x02)
@@ -82454,14 +82291,44 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
 
                     Package (0x02)
                     {
-                        "SecureCarveoutSize", 
-                        0x04C00000
+                        "SupportsCacheCoherency", 
+                        One
                     }, 
 
                     Package (0x02)
                     {
-                        "SupportsCacheCoherency", 
+                        "SupportsSHMBridge", 
+                        Zero
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "SecureCarveoutSize", 
+                        0x00200000
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "UBWCEnable", 
+                        Zero
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "allowDrmAbove1080p", 
                         One
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "ZeroPageLowAddr", 
+                        0x85F00000
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "ZeroPageHighAddr", 
+                        Zero
                     }, 
 
                     Package (0x02)
@@ -82470,9 +82337,27 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                         One
                     }, 
 
-                    Package (0x03)
+                    Package (0x06)
                     {
                         "GRAPHICS", 
+                        Package (0x02)
+                        {
+                            "ForceActive", 
+                            Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "EnableSystemCache", 
+                            One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "EnableSysCacheForGpuhtw", 
+                            One
+                        }, 
+
                         Package (0x0A)
                         {
                             "DCVS", 
@@ -82527,28 +82412,16 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                             Package (0x02)
                             {
                                 "BusResetValue", 
-                                0x08FC
+                                0x04B0
                             }
                         }, 
 
-                        Package (0x07)
+                        Package (0x06)
                         {
-                            "A5x", 
+                            "A6x", 
                             Package (0x02)
                             {
-                                "DisableSpCollapse", 
-                                Zero
-                            }, 
-
-                            Package (0x02)
-                            {
-                                "DisableRbCcuCollapse", 
-                                Zero
-                            }, 
-
-                            Package (0x02)
-                            {
-                                "DisableDCS", 
+                                "SleepMode", 
                                 Zero
                             }, 
 
@@ -82560,7 +82433,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
 
                             Package (0x02)
                             {
-                                "DisableGpmuCG", 
+                                "DisableGmuCG", 
                                 Zero
                             }, 
 
@@ -82568,11 +82441,17 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                             {
                                 "EnableFallbackToDisableSecureMode", 
                                 Zero
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "DisableCPCrashDump", 
+                                Zero
                             }
                         }
                     }, 
 
-                    Package (0x03)
+                    Package (0x04)
                     {
                         "VIDEO", 
                         Package (0x02)
@@ -82585,6 +82464,22 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                         {
                             "PreventPowerCollapse", 
                             Zero
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "EnableSystemCache", 
+                            One
+                        }
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "CRYPTO", 
+                        Package (0x02)
+                        {
+                            "EnableCryptoVA", 
+                            One
                         }
                     }, 
 
@@ -82604,13 +82499,13 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                         }
                     }, 
 
-                    Package (0x06)
+                    Package (0x07)
                     {
                         "DISPLAY", 
                         Package (0x02)
                         {
                             "DisableMiracast", 
-                            One
+                            Zero
                         }, 
 
                         Package (0x02)
@@ -82635,6 +82530,12 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                         {
                             "DisableMDPBLT", 
                             One
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DisableExternal", 
+                            0x03
                         }
                     }
                 })
