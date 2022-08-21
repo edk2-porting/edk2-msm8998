@@ -239,7 +239,7 @@ APRIORI DXE {
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/IORT.acp
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/Madt.acp
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/Mcfg.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/asus/TPM2.acp
+      # SECTION RAW = MSM8998Pkg/AcpiTables/asus/TPM2.acp
         SECTION UI = "AcpiTables"
     }
 
