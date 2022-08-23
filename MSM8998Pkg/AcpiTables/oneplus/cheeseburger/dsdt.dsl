@@ -625,62 +625,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             }
         }
 
-        Name (BFCC, 0x303E)
-        Name (PCT1, 0x05)
-        Name (PCT2, 0x09)
-        Name (CUST, "8998_MTP")
-        Name (VNOM, 0x0ED8)
-        Name (VLOW, 0x0CE4)
-        Name (EMPT, 0x0C80)
-        Name (DCMA, 0x0384)
-        Name (BOCP, 0x1194)
-        Name (BVLO, 0x0BB8)
-        Name (BLOP, 0x14)
-        Name (BNOP, 0x16)
-        Name (IFGD, 0x32)
-        Name (VFGD, 0x32)
-        Name (VDD1, 0x10FE)
-        Name (FCC1, 0x0834)
-        Name (HCLI, Zero)
-        Name (SCLI, 0x0A)
-        Name (SHLI, 0x2D)
-        Name (HHLI, 0x37)
-        Name (FVC1, 0x69)
-        Name (CCC1, 0x03E8)
-        Name (RID2, 0x3A98)
-        Name (RID3, 0x000222E0)
-        Device (PEIC)
-        {
-            Name (_HID, "QCOM00D8")  // _HID: Hardware ID
-            Alias (\_SB.PSUB, _SUB)
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
-            {
-                Name (RBUF, ResourceTemplate ()
-                {
-                    I2cSerialBusV2 (0x0008, ControllerInitiated, 0x00061A80,
-                        AddressingMode7Bit, "\\_SB.I2C7",
-                        0x00, ResourceConsumer, , Exclusive,
-                        )
-                })
-                Return (RBUF) /* \_SB_.PEIC._CRS.RBUF */
-            }
-
-            Method (PMCF, 0, NotSerialized)
-            {
-                Name (CFG0, Package (0x02)
-                {
-                    Zero, 
-                    0x02
-                })
-                Return (CFG0) /* \_SB_.PEIC.PMCF.CFG0 */
-            }
-
-            Method (_STA, 0, NotSerialized)  // _STA: Status
-            {
-                Return (Zero)
-            }
-        }
-
         include("pmic_batt.asl")
 
         Device (PTCC)
@@ -89239,7 +89183,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
         {
             Name (_HID, "QCOM00CF")  // _HID: Hardware ID
             Name (_UID, Zero)  // _UID: Unique ID
-            Name (_TZD, Package (0x08)  // _TZD: Thermal Zone Devices
+            Name (_TZD, Package (0x09)  // _TZD: Thermal Zone Devices
             {
                 \_SB.SYSM.APC0.CL0.CPU0, 
                 \_SB.SYSM.APC0.CL0.CPU1, 
@@ -89248,7 +89192,8 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 \_SB.PEP0, 
                 \_SB.GPU0.MON0, 
                 \_SB.GPU0, 
-                \_SB.PMBM
+                \_SB.BAT1, 
+                \_SB.SCHG
             })
             Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
             {
@@ -89298,7 +89243,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
         {
             Name (_HID, "QCOM009E")  // _HID: Hardware ID
             Name (_UID, Zero)  // _UID: Unique ID
-            Name (_TZD, Package (0x09)  // _TZD: Thermal Zone Devices
+            Name (_TZD, Package (0x0A)  // _TZD: Thermal Zone Devices
             {
                 \_SB.SYSM.APC0.CL0.CPU0, 
                 \_SB.SYSM.APC0.CL0.CPU1, 
@@ -89308,7 +89253,8 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 \_SB.SYSM.APC0.CL1.CPU5, 
                 \_SB.SYSM.APC0.CL1.CPU6, 
                 \_SB.SYSM.APC0.CL1.CPU7, 
-                \_SB.PMBM
+                \_SB.BAT1, 
+                \_SB.SCHG
             })
             Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
             {
@@ -89333,11 +89279,12 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
         {
             Name (_HID, "QCOM009E")  // _HID: Hardware ID
             Name (_UID, One)  // _UID: Unique ID
-            Name (_TZD, Package (0x03)  // _TZD: Thermal Zone Devices
+            Name (_TZD, Package (0x04)  // _TZD: Thermal Zone Devices
             {
                 \_SB.PEP0, 
                 \_SB.GPU0, 
-                \_SB.PMBM
+                \_SB.BAT1, 
+                \_SB.SCHG
             })
             Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
             {
@@ -89401,7 +89348,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
         {
             Name (_HID, "QCOM00B4")  // _HID: Hardware ID
             Name (_UID, 0x64)  // _UID: Unique ID
-            Name (_TZD, Package (0x0E)  // _TZD: Thermal Zone Devices
+            Name (_TZD, Package (0x0F)  // _TZD: Thermal Zone Devices
             {
                 \_SB.SYSM.APC0.CL0.CPU0, 
                 \_SB.SYSM.APC0.CL0.CPU1, 
@@ -89416,7 +89363,8 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 \_SB.GPU0.MON0, 
                 \_SB.GPU0, 
                 \_SB.COEX, 
-                \_SB.PMBM
+                \_SB.BAT1, 
+                \_SB.SCHG
             })
             Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
             {
