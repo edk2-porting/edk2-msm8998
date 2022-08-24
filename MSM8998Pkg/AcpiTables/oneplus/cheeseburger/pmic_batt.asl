@@ -23,34 +23,6 @@ Device (BAT1)
     }
 }
 
-// Charging  (currently unavailable)
-Device (SCHG)
-{
-    Name (_HID, "SMB1380")  // _HID: Hardware ID
-    Name (_DEP, Package (0x02)  // _DEP: Dependencies
-    {
-        \_SB.I2C7, 
-        \_SB.BAT1, 
-    })
-    Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
-    {
-        Name (RBUF, ResourceTemplate ()
-        {
-            I2cSerialBusV2 (0x0055, ControllerInitiated, 0x000186A0,
-                AddressingMode7Bit, "\\_SB.I2C7",
-                0x00, ResourceConsumer, , Exclusive,
-                )
-        })
-        Return (RBUF) /* \_SB_.SCHG._CRS.RBUF */
-    }
-
-    Method (_STA, 0, NotSerialized)  // _STA: Status
-    {
-            Return (Zero)
-    }
-
-}
-
 Device (BCL1)
 {
     Name (_HID, "QCOM00DB")  // _HID: Hardware ID
@@ -61,7 +33,7 @@ Device (BCL1)
     })
     Method (_STA, 0, NotSerialized)  // _STA: Status
     {
-        Return (0x0F)
+        Return (0x0B)
     }
 
     Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
