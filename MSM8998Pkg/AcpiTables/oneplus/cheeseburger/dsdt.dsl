@@ -85656,6 +85656,22 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             }
         }
 
+        //
+        // Qualcomm GPS driver
+        //
+        // TEST
+        Device (GPS)
+        {
+            Name (_DEP, Package (One)  // _DEP: Dependencies
+            {
+                \_SB.GLNK
+            })
+            Name (_HID, "QCOM00B9")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
+            Name (_CID, "ACPIQCOM00B9")  // _CID: Compatible ID
+            Name (_UID, Zero)  // _UID: Unique ID
+        }
+        
         Device (COEX)
         {
             Name (_HID, "QCOM0094")  // _HID: Hardware ID
