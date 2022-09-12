@@ -50,12 +50,16 @@ function _build(){
 		RELEASE)_MODE=RELEASE;;
 		*)_MODE=DEBUG;;
 	esac
+	if [ -f "devices/${DEVICE}.conf" ]
+	then source "devices/${DEVICE}.conf"
+	else source "devices/default.conf"
+	fi
 	build \
 		-s \
 		-n 0 \
 		-a AARCH64 \
 		-t GCC5 \
-		-p "MSM8998Pkg/Devices/${DEVICE}.dsc" \
+		-p "${DSC_FILE}" \
 		-b "${_MODE}" \
 		||return "$?"
 	gzip -c \
@@ -67,10 +71,16 @@ function _build(){
 		"device_specific/${DEVICE}.dtb" \
 		> "workspace/uefi-${DEVICE}.img.gz-dtb" \
 		||return "$?"
-	abootimg \
-		--create "${OUTDIR}/boot-${DEVICE}.img" \
-		-k "workspace/uefi-${DEVICE}.img.gz-dtb" \
-		-r ramdisk \
+	python3 ./mkbootimg.py \
+		--kernel "workspace/uefi-${DEVICE}.img.gz-dtb" \
+		--ramdisk ramdisk \
+		--kernel_offset 0x00000000 \
+		--ramdisk_offset 0x00000000 \
+		--tags_offset 0x00000000 \
+		--os_version "${BOOTIMG_OS_VERSION}" \
+		--os_patch_level "${BOOTIMG_OS_PATCH_LEVEL}" \
+		--header_version 1 \
+		-o "${OUTDIR}/boot-${DEVICE}.img" \
 		||return "$?"
 	echo "Build done: ${OUTDIR}/boot-${DEVICE}.img"
 	set +x
