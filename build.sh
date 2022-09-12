@@ -17,15 +17,16 @@ function _help(){
 	echo "Build edk2 for Qualcomm msm8998 platform."
 	echo
 	echo "Options: "
-	echo "	--device DEV, -d DEV: build for DEV. (${DEVICES[*]})"
-	echo "	--all, -a:            build all devices."
-	echo "	--chinese, -c:        use fastgit for submodule cloning."
-	echo "  --release MODE, -r MODE: Release mode for building, default is 'RELEASE', 'DEBUG' alternatively."
-	echo "	--acpi, -A:           compile acpi."
-	echo "	--clean, -C:          clean workspace and output."
-	echo "	--distclean, -D:      clean up all files that are not in repo."
-	echo "	--outputdir, -O:      output folder."
-	echo "	--help, -h:           show this help."
+	echo "	--device DEV, -d DEV:    build for DEV. (${DEVICES[*]})"
+	echo "	--all, -a:               build all devices."
+	echo "	--chinese, -c:           use fastgit for submodule cloning."
+	echo "	--release MODE, -r MODE: Release mode for building, default is 'RELEASE', 'DEBUG' alternatively."
+	echo "	--acpi, -A:              compile acpi."
+	echo " 	--skip-rootfs-gen:       skip generating SimpleInit rootfs to speed up building."
+	echo "	--clean, -C:             clean workspace and output."
+	echo "	--distclean, -D:         clean up all files that are not in repo."
+	echo "	--outputdir, -O:         output folder."
+	echo "	--help, -h:              show this help."
 	echo
 	echo "MainPage: https://github.com/lumingyu0423/edk2-MSM8998"
 	exit "${1}"
@@ -101,7 +102,8 @@ CLEAN=false
 DISTCLEAN=false
 export OUTDIR="${PWD}"
 export GEN_ACPI=false
-OPTS="$(getopt -o d:hacACDO:r: -l device:,help,all,chinese,acpi,clean,distclean,outputdir:,release: -n 'build.sh' -- "$@")"||exit 1
+export GEN_ROOTFS=true
+OPTS="$(getopt -o d:hacACDO:r: -l device:,help,all,chinese,acpi,skip-rootfs-gen,clean,distclean,outputdir:,release: -n 'build.sh' -- "$@")"||exit 1
 eval set -- "${OPTS}"
 while true
 do	case "${1}" in
@@ -112,6 +114,7 @@ do	case "${1}" in
 		-C|--clean)CLEAN=true;shift;;
 		-D|--distclean)DISTCLEAN=true;shift;;
 		-O|--outputdir)OUTDIR="${2}";shift 2;;
+		--skip-rootfs-gen)GEN_ROOTFS=false;shift;;
 		-r|--release)MODE="${2}";shift 2;;
 		-h|--help)_help 0;shift;;
 		--)shift;break;;
@@ -127,6 +130,7 @@ then	set -e
 	if "${CHINESE}"
 	then	git submodule set-url edk2 https://hub.fastgit.xyz/tianocore/edk2.git
 		git submodule set-url edk2-platforms https://hub.fastgit.xyz/tianocore/edk2-platforms.git
+		git submodule set-url MSM8998Pkg/Library/SimpleInit https://hub.fastgit.xyz/BigfootACA/simple-init.git
 		git submodule init;git submodule update --depth 1
 		pushd edk2
 
@@ -140,9 +144,17 @@ then	set -e
 		git submodule init;git submodule update
 		git checkout .gitmodules
 		popd
+		pushd MSM8998Pkg/Library/SimpleInit
+		git submodule set-url libs/lvgl     https://hub.fastgit.xyz/lvgl/lvgl.git
+		git submodule set-url libs/freetype https://hub.fastgit.xyz/freetype/freetype.git
+		git submodule init;git submodule update
+		popd
 		git checkout .gitmodules
 	else	git submodule init;git submodule update --depth 1
 		pushd edk2
+		git submodule init;git submodule update
+		popd
+		pushd MSM8998Pkg/Library/SimpleInit
 		git submodule init;git submodule update
 		popd
 	fi
@@ -160,17 +172,41 @@ do	if [ -n "${i}" ]&&[ -d "${i}/Platform" ]
 		break
 	fi
 done
+for i in "${SIMPLE_INIT}" MSM8998Pkg/Library/SimpleInit ./simple-init ../simple-init
+do	if [ -n "${i}" ]&&[ -f "${i}/SimpleInit.inc" ]
+	then	_SIMPLE_INIT="$(realpath "${i}")"
+		break
+	fi
+done
 [ -n "${_EDK2}" ]||_error "EDK2 not found, please see README.md"
 [ -n "${_EDK2_PLATFORMS}" ]||_error "EDK2 Platforms not found, please see README.md"
+[ -n "${_SIMPLE_INIT}" ]||_error "SimpleInit not found, please see README.md"
 echo "EDK2 Path: ${_EDK2}"
 echo "EDK2_PLATFORMS Path: ${_EDK2_PLATFORMS}"
-export GCC5_AARCH64_PREFIX="${CROSS_COMPILE:-aarch64-linux-gnu-}"
-export PACKAGES_PATH="$_EDK2:$_EDK2_PLATFORMS:$PWD"
+export CROSS_COMPILE="${CROSS_COMPILE:-aarch64-linux-gnu-}"
+export GCC5_AARCH64_PREFIX="${CROSS_COMPILE}"
+export CLANG38_AARCH64_PREFIX="${CROSS_COMPILE}"
+export PACKAGES_PATH="$_EDK2:$_EDK2_PLATFORMS:$_SIMPLE_INIT:$PWD"
 export WORKSPACE="${PWD}/workspace"
 GITCOMMIT="$(git describe --tags --always)"||GITCOMMIT="unknown"
 export GITCOMMIT
 echo > ramdisk
 set -e
+
+mkdir -p "${_SIMPLE_INIT}/build" "${_SIMPLE_INIT}/root/usr/share/locale"
+for i in "${_SIMPLE_INIT}/po/"*.po
+do	[ -f "${i}" ]||continue
+	_name="$(basename "$i" .po)"
+	_path="${_SIMPLE_INIT}/root/usr/share/locale/${_name}/LC_MESSAGES"
+	mkdir -p "${_path}"
+	msgfmt -o "${_path}/simple-init.mo" "${i}"
+done
+if "${GEN_ROOTFS}"
+then bash "${_SIMPLE_INIT}/scripts/gen-rootfs-source.sh" \
+	"${_SIMPLE_INIT}" \
+	"${_SIMPLE_INIT}/build"
+fi
+
 if [ "${DEVICE}" == "all" ]
 then	E=0
 	for i in "${DEVICES[@]}"

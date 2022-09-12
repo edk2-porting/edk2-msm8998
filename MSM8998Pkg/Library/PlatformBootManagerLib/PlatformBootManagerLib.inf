@@ -34,6 +34,7 @@
   MdePkg/MdePkg.dec
   ShellPkg/ShellPkg.dec
   MSM8998Pkg/MSM8998Pkg.dec
+  SimpleInit.dec
 
 [LibraryClasses]
   BaseLib
@@ -77,6 +78,7 @@
   gEfiEndOfDxeEventGroupGuid
   gEfiTtyTermGuid
   gUefiShellFileGuid
+  gSimpleInitFileGuid
 
 [Protocols]
   gEdkiiNonDiscoverableDeviceProtocolGuid

@@ -14,6 +14,7 @@
 #
 
 !include MdePkg/MdeLibs.dsc.inc
+!include SimpleInit.inc
 
 [LibraryClasses.common]
 !if $(TARGET) == RELEASE

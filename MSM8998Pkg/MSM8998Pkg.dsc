@@ -301,3 +301,7 @@
 !ifdef $(INCLUDE_TFTP_COMMAND)
   ShellPkg/DynamicCommand/TftpDynamicCommand/TftpDynamicCommand.inf
 !endif #$(INCLUDE_TFTP_COMMAND)
+
+[BuildOptions.common]
+  # FIXME: msm8998 doesn't support lse instructions, however build fails without it
+  GCC:*_*_AARCH64_CC_FLAGS = -Wno-unused-variable -march=armv8-a+lse -moutline-atomics -mtune=cortex-a73.cortex-a53
