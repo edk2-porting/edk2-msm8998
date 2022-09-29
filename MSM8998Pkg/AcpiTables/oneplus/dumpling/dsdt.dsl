@@ -29,7 +29,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
     Scope (\_SB)
     {
-        Name (PSUB, "CLS08998")
+        Name (PSUB, "MTP08998")
         Name (SOID, 0x00000124)
         Name (SIDS, "MSM8998")
         Name (SIDV, 0x00020001)
@@ -574,9 +574,9 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
         {
             Name (_HID, "ACPI000E" /* Time and Alarm Device */)  // _HID: Hardware ID
             Alias (\_SB.PSUB, _SUB)
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                PMAP
+                \_SB.PMAP
             })
             Method (_GCP, 0, NotSerialized)  // _GCP: Get Capabilities
             {
@@ -724,7 +724,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
         {
             Name (_HID, "QCOM0035")  // _HID: Hardware ID
             Name (_CID, "PNP0D80" /* Windows-compatible System Power Management Controller */)  // _CID: Compatible ID
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
                 \_SB.PMIC
             })
@@ -37784,7 +37784,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 Package (0x02)
                 {
                     "MPM_INTERRUPT_CONFIG", 
-                    Package (0x08)
+                    Package (0x07)
                     {
                         Package (0x04)
                         {
@@ -37840,14 +37840,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                             0x0166, 
                             Zero, 
                             0x04
-                        }, 
-
-                        Package (0x04)
-                        {
-                            0x0D, 
-                            0x25, 
-                            One, 
-                            Zero
                         }
                     }
                 }
@@ -37934,7 +37926,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 Return (NLMH) /* \_SB_.PEP0.NLMH */
             }
 
-            Name (NLMH, Package (0x01)
+            Name (NLMH, Package (One)
             {
                 Package (0x03)
                 {
@@ -38112,7 +38104,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                         }
                     }, 
 
-                    Package (0x01)
+                    Package (One)
                     {
                         "DEBUG_OFF"
                     }
@@ -38398,7 +38390,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                         }
                     }, 
 
-                    Package (0x01)
+                    Package (One)
                     {
                         "DEBUG_OFF"
                     }
@@ -41091,7 +41083,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (PEPH, 0, NotSerialized)
             {
-                Return (Package (0x01)
+                Return (Package (One)
                 {
                     "ACPI\\VEN_QCOM&DEV_0035"
                 })
@@ -41099,7 +41091,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (BCLH, 0, NotSerialized)
             {
-                Return (Package (0x01)
+                Return (Package (One)
                 {
                     "ACPI\\VEN_QCOM&DEV_0093"
                 })
@@ -41549,7 +41541,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 Return (APCC) /* \_SB_.PEP0.APCC */
             }
 
-            Name (APCC, Package (0x01)
+            Name (APCC, Package (One)
             {
                 Package (0x1A)
                 {
@@ -42406,7 +42398,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (G0MD, 0, NotSerialized)
             {
-                Name (GPCC, Package (0x01)
+                Name (GPCC, Package (One)
                 {
                     Package (0x03)
                     {
@@ -42429,7 +42421,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                                 Package (0x12)
                                 {
                                     "ENTER", 
-                                    Package (0x01)
+                                    Package (One)
                                     {
                                         "PSTATE_SAVE"
                                     }, 
@@ -45023,7 +45015,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (G1MD, 0, NotSerialized)
             {
-                Name (GPCC, Package (0x01)
+                Name (GPCC, Package (One)
                 {
                     Package (0x03)
                     {
@@ -58021,7 +58013,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                                     }
                                 }, 
 
-                                Package (0x1F)
+                                Package (0x1E)
                                 {
                                     "EXIT", 
                                     Package (0x02)
@@ -58342,24 +58334,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                                             One, 
                                             0x00124F80, 
                                             0x3778, 
-                                            One, 
-                                            Zero, 
-                                            One, 
-                                            Zero, 
-                                            Zero, 
-                                            Zero
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "PMICVREGVOTE", 
-                                        Package (0x0A)
-                                        {
-                                            "PPP_RESOURCE_ID_LDO28_A", 
-                                            One, 
-                                            0x00325AA0, 
-                                            0x4E20, 
                                             One, 
                                             Zero, 
                                             One, 
@@ -66521,8 +66495,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 "DMPI", 
                 "DMWE", 
                 "XMPC", 
-                "XMPL", 
-                "XMPT"
+                "XMPL"
             })
         }
 
@@ -73167,43 +73140,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 Return (RBUF) /* \_SB_.I2C7.FNOC.RBUF */
             }
         }
-
-        Device (I2CA)
-        {
-            Name (_HID, "QCOM001F")  // _HID: Hardware ID
-            Name (_UID, 0x0A)  // _UID: Unique ID
-            Name (_DEP, Package (0x02)  // _DEP: Dependencies
-            {
-                \_SB.BAM4, 
-                \_SB.PEP0
-            })
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
-            {
-                Name (RBUF, ResourceTemplate ()
-                {
-                    Memory32Fixed (ReadWrite,
-                        0x0C1B8000,         // Address Base
-                        0x00000600,         // Address Length
-                        )
-                    Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
-                    {
-                        0x00000088,
-                    }
-                })
-                Return (RBUF) /* \_SB_.I2CA._CRS.RBUF */
-            }
-
-            Method (FNOC, 0, NotSerialized)
-            {
-                Name (RBUF, Buffer (0x0E)
-                {
-                    /* 0000 */  0x0A, 0x00, 0x00, 0x40, 0x18, 0x0C, 0x0D, 0x0C,  // ...@....
-                    /* 0008 */  0x00, 0x04, 0x00, 0xF8, 0x24, 0x01               // ....$.
-                })
-                Return (RBUF) /* \_SB_.I2CA.FNOC.RBUF */
-            }
-        }
-
         Scope (\_SB.PEP0)
         {
             Method (BSMD, 0, NotSerialized)
@@ -73211,7 +73147,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 Return (BSRC) /* \_SB_.PEP0.BSRC */
             }
 
-            Name (BSRC, Package (0x06)
+            Name (BSRC, Package (0x05)
             {
                 Package (0x04)
                 {
@@ -74465,168 +74401,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                             }
                         }
                     }
-                }, 
-
-                Package (0x07)
-                {
-                    "DEVICE", 
-                    "\\_SB.I2CA", 
-                    Package (0x03)
-                    {
-                        "COMPONENT", 
-                        Zero, 
-                        Package (0x02)
-                        {
-                            "FSTATE", 
-                            Zero
-                        }
-                    }, 
-
-                    Package (0x07)
-                    {
-                        "DSTATE", 
-                        Zero, 
-                        Package (0x02)
-                        {
-                            "CLOCK", 
-                            Package (0x02)
-                            {
-                                "gcc_blsp2_ahb_clk", 
-                                One
-                            }
-                        }, 
-
-                        Package (0x02)
-                        {
-                            "CLOCK", 
-                            Package (0x04)
-                            {
-                                "gcc_blsp2_qup4_i2c_apps_clk", 
-                                0x08, 
-                                0x0124F800, 
-                                0x04
-                            }
-                        }, 
-
-                        Package (0x02)
-                        {
-                            "BUSARB", 
-                            Package (0x05)
-                            {
-                                0x03, 
-                                "ICBID_MASTER_BLSP_2", 
-                                "ICBID_SLAVE_EBI1", 
-                                0x0927C000, 
-                                Zero
-                            }
-                        }, 
-
-                        Package (0x02)
-                        {
-                            "TLMMGPIO", 
-                            Package (0x06)
-                            {
-                                0x43, 
-                                One, 
-                                0x04, 
-                                One, 
-                                0x03, 
-                                Zero
-                            }
-                        }, 
-
-                        Package (0x02)
-                        {
-                            "TLMMGPIO", 
-                            Package (0x06)
-                            {
-                                0x44, 
-                                One, 
-                                0x04, 
-                                One, 
-                                0x03, 
-                                Zero
-                            }
-                        }
-                    }, 
-
-                    Package (0x02)
-                    {
-                        "DSTATE", 
-                        One
-                    }, 
-
-                    Package (0x02)
-                    {
-                        "DSTATE", 
-                        0x02
-                    }, 
-
-                    Package (0x07)
-                    {
-                        "DSTATE", 
-                        0x03, 
-                        Package (0x02)
-                        {
-                            "CLOCK", 
-                            Package (0x02)
-                            {
-                                "gcc_blsp2_ahb_clk", 
-                                0x02
-                            }
-                        }, 
-
-                        Package (0x02)
-                        {
-                            "CLOCK", 
-                            Package (0x02)
-                            {
-                                "gcc_blsp2_qup4_i2c_apps_clk", 
-                                0x02
-                            }
-                        }, 
-
-                        Package (0x02)
-                        {
-                            "BUSARB", 
-                            Package (0x05)
-                            {
-                                0x03, 
-                                "ICBID_MASTER_BLSP_2", 
-                                "ICBID_SLAVE_EBI1", 
-                                Zero, 
-                                Zero
-                            }
-                        }, 
-
-                        Package (0x02)
-                        {
-                            "TLMMGPIO", 
-                            Package (0x06)
-                            {
-                                0x44, 
-                                Zero, 
-                                Zero, 
-                                Zero, 
-                                0x03, 
-                                Zero
-                            }
-                        }, 
-
-                        Package (0x02)
-                        {
-                            "TLMMGPIO", 
-                            Package (0x06)
-                            {
-                                0x43, 
-                                Zero, 
-                                Zero, 
-                                Zero, 
-                                0x03, 
-                                Zero
-                            }
-                        }
-                    }
                 }
             })
         }
@@ -74690,7 +74464,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 \_SB.SSDD
             })
             Name (_HID, "QCOM00C3")  // _HID: Hardware ID
-            Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
+            Alias (\_SB.PSUB, _SUB)
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
@@ -74717,7 +74491,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 \_SB.PDSR
             })
             Name (_HID, "QCOM003B")  // _HID: Hardware ID
-            Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
+            Alias (\_SB.PSUB, _SUB)
             Method (WDIR, 0, NotSerialized)
             {
                 Return (Package (0x04)
@@ -74745,7 +74519,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             {
                 Name (_ADR, Zero)  // _ADR: Address
                 Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
-                Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
+                Alias (\_SB.PSUB, _SUB)
                 Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
                 {
                     Name (RBUF, ResourceTemplate ()
@@ -74772,7 +74546,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
                 Device (ADCM)
                 {
-                    Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
+                    Alias (\_SB.PSUB, _SUB)
                     Name (_ADR, Zero)  // _ADR: Address
                     Name (_DEP, Package (0x01)  // _DEP: Dependencies
                     {
@@ -74782,14 +74556,14 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     {
                         Return (Package (0x01)
                         {
-                            "ADCM\\ASUS00FB"
+                            "ADCM\\QCOM00FB"
                         })
                     }
 
                     Device (AUDD)
                     {
                         Name (_ADR, Zero)  // _ADR: Address
-                        Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
+                        Alias (\_SB.PSUB, _SUB)
                         Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
                         {
                             Name (RBUF, ResourceTemplate ()
@@ -74806,11 +74580,17 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                                     {   // Pin list
                                         0x0036
                                     }
-                                GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
+                                GpioIo (Exclusive, PullDown, 0x0000, 0x0000, IoRestrictionNone,
                                     "\\_SB.GIO0", 0x00, ResourceConsumer, ,
                                     )
                                     {   // Pin list
-                                        0x001A
+                                        0x0041
+                                    }
+                                GpioIo (Exclusive, PullDown, 0x0000, 0x0000, IoRestrictionNone,
+                                    "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                                    )
+                                    {   // Pin list
+                                        0x0042
                                     }
                             })
                             Return (RBUF) /* \_SB_.ADSP.SLM1.ADCM.AUDD._CRS.RBUF */
@@ -74820,36 +74600,10 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                         {
                             Name (CH, Package (0x02)
                             {
-                                "AUDD\\ASUS0075", 
-                                "AUDD\\ASUS005F"
+                                "AUDD\\QCOM0075", 
+                                "AUDD\\QCOM005F"
                             })
                             Return (CH) /* \_SB_.ADSP.SLM1.ADCM.AUDD.CHLD.CH__ */
-                        }
-
-                        Method (SMAR, 0, NotSerialized)
-                        {
-                            Local1 = Zero
-                            Acquire (\_SB.MUT0, 0xFFFF)
-                            While ((Local1 < 0x3C))
-                            {
-                                If (((\_SB.AMW1.ECAT (0x02, Buffer (0x02)
-                                                {
-                                                     0xF4, 0x05                                       // ..
-                                                }) == 0x55) && (\_SB.AMW1.ECAT (0x02, 
-                                    Buffer (0x02)
-                                                {
-                                                     0xF5, 0x05                                       // ..
-                                                }) == 0x66)))
-                                {
-                                    Break
-                                }
-
-                                Local1++
-                                Sleep (0x32)
-                            }
-
-                            Release (\_SB.MUT0)
-                            Return (Zero)
                         }
 
                         Device (MBHC)
@@ -74915,37 +74669,10 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 \_SB.PDSR
             })
             Name (_HID, "QCOM003C")  // _HID: Hardware ID
-            Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
-            OperationRegion (RID0, SystemMemory, 0x0354A004, One)
-            Field (RID0, DWordAcc, NoLock, Preserve)
-            {
-                RFI0,   1
-            }
-
-            OperationRegion (RID1, SystemMemory, 0x03D1E004, One)
-            Field (RID1, DWordAcc, NoLock, Preserve)
-            {
-                RFI1,   1
-            }
-
-            OperationRegion (RID2, SystemMemory, 0x03D1D004, One)
-            Field (RID2, DWordAcc, NoLock, Preserve)
-            {
-                RFI2,   1
-            }
-
+            Alias (\_SB.PSUB, _SUB)
             Method (_HRV, 0, NotSerialized)  // _HRV: Hardware Revision
             {
-                Local0 = Zero
-                Local1 = Zero
-                Local1 = (RFI2 << 0x02)
-                Local0 |= Local1
-                Local1 = Zero
-                Local1 = (RFI1 << One)
-                Local0 |= Local1
-                Local0 |= RFI0 /* \_SB_.AMSS.RFI0 */
-                Local0 = Zero
-                Return (Local0)
+                Return (One)
             }
 
             Method (RPEM, 0, NotSerialized)
@@ -75136,7 +74863,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
         Device (QSM)
         {
             Name (_HID, "QCOM00BD")  // _HID: Hardware ID
-            Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
+            Alias (\_SB.PSUB, _SUB)
             Name (_DEP, Package (0x04)  // _DEP: Dependencies
             {
                 \_SB.GLNK, 
@@ -75160,7 +74887,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
         Device (SSDD)
         {
             Name (_HID, "QCOM00D6")  // _HID: Hardware ID
-            Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
+            Alias (\_SB.PSUB, _SUB)
             Name (_DEP, Package (0x02)  // _DEP: Dependencies
             {
                 \_SB.GLNK, 
@@ -75239,7 +74966,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
         {
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
-                Return (0x0F)
+                Return (Zero)
             }
         }
 
@@ -75490,7 +75217,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
         Device (GPU0)
         {
             Name (_HID, "QCOM007C")  // _HID: Hardware ID
-            Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
+            Alias (\_SB.PSUB, _SUB)
             Name (_CID, "ACPIQCOM007C")  // _CID: Compatible ID
             Name (_UID, Zero)  // _UID: Unique ID
             Name (_HRV, 0x7C)  // _HRV: Hardware Revision
@@ -83883,7 +83610,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 \_SB.GLNK
             })
             Name (_HID, "QCOM00B5")  // _HID: Hardware ID
-            Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, Zero)  // _UID: Unique ID
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -85659,9 +85386,8 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
         //
         // Qualcomm GPS driver
         //
-        // TEST
-        Device (GPS)
-        {
+        Device (GPS) //test
+            {
             Name (_DEP, Package (One)  // _DEP: Dependencies
             {
                 \_SB.GLNK
@@ -85671,7 +85397,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             Name (_CID, "ACPIQCOM00B9")  // _CID: Compatible ID
             Name (_UID, Zero)  // _UID: Unique ID
         }
-        
+
         Device (COEX)
         {
             Name (_HID, "QCOM0094")  // _HID: Hardware ID
@@ -87266,185 +86992,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             }
         }
 
-        Device (ALE0)
-        {
-            Name (_HID, "ATK4002")  // _HID: Hardware ID
-            Name (_UID, "4002")  // _UID: Unique ID
-            Method (HSWC, 1, Serialized)
-            {
-                Local0 = (Arg0 & 0xFFFFFFFF)
-                While (One)
-                {
-                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler
-                    _T_0 = Local0
-                    If ((_T_0 == Zero))
-                    {
-                        Return (Zero)
-                    }
-                    ElseIf ((_T_0 == One))
-                    {
-                        Return (Zero)
-                    }
-                    ElseIf ((_T_0 == 0x02))
-                    {
-                        Return (ALED (0x02))
-                    }
-                    ElseIf ((_T_0 == 0x03))
-                    {
-                        Return (0xFF)
-                    }
-                    ElseIf ((_T_0 == 0x04))
-                    {
-                        AIRM (Zero)
-                        Return (ALED (Zero))
-                    }
-                    ElseIf ((_T_0 == 0x05))
-                    {
-                        AIRM (One)
-                        Return (ALED (One))
-                    }
-                    ElseIf ((_T_0 == 0x80))
-                    {
-                        Return (One)
-                    }
-                    Else
-                    {
-                        Name (FOO, "WMI/ATK: invalid argument")
-                        Debug = FOO /* \_SB_.ALE0.HSWC.FOO_ */
-                        Return (0xFFFFFFFE)
-                    }
-
-                    Break
-                }
-            }
-
-            Method (AIRM, 1, Serialized)
-            {
-                While (One)
-                {
-                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler
-                    _T_0 = Arg0
-                    If ((_T_0 == Zero))
-                    {
-                        Sleep (0x0D)
-                        \_SB.I2C7.BSTA = Zero
-                        \_SB.I2C7.BLEN = One
-                        \_SB.I2C7.DAT1 = Zero
-                        \_SB.I2C7.AIRM = \_SB.I2C7.BUF1
-                        \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                        If ((\_SB.I2C7.BYAT == Zero))
-                        {
-                            Return (\_SB.I2C7.DATA)
-                        }
-
-                        Return (Zero)
-                    }
-                    ElseIf ((_T_0 == One))
-                    {
-                        Sleep (0x0D)
-                        \_SB.I2C7.BSTA = Zero
-                        \_SB.I2C7.BLEN = One
-                        \_SB.I2C7.DAT1 = One
-                        \_SB.I2C7.AIRM = \_SB.I2C7.BUF1
-                        \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                        If ((\_SB.I2C7.BYAT == Zero))
-                        {
-                            Return (\_SB.I2C7.DATA)
-                        }
-
-                        Return (Zero)
-                    }
-                    Else
-                    {
-                        Return (Zero)
-                    }
-
-                    Break
-                }
-
-                Return (Zero)
-            }
-
-            OperationRegion (CP42, SystemMemory, 0x03D2A000, 0x08)
-            Field (CP42, DWordAcc, NoLock, Preserve)
-            {
-                PI5C,   32, 
-                PIN5,   32
-            }
-
-            Method (ALED, 1, Serialized)
-            {
-                PI5C = 0x0200
-                While (One)
-                {
-                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler
-                    _T_0 = Arg0
-                    If ((_T_0 == One))
-                    {
-                        PIN5 = 0x02
-                        If ((PIN5 == 0x03))
-                        {
-                            Return (One)
-                        }
-                        Else
-                        {
-                            Return (Zero)
-                        }
-                    }
-                    ElseIf ((_T_0 == Zero))
-                    {
-                        PIN5 = Zero
-                        If ((PIN5 == Zero))
-                        {
-                            Return (One)
-                        }
-                        Else
-                        {
-                            Return (Zero)
-                        }
-                    }
-                    ElseIf ((_T_0 == 0x02))
-                    {
-                        Name (LEDS, Zero)
-                        LEDS = (PIN5 & One)
-                        If ((LEDS == One))
-                        {
-                            Return (0x05)
-                        }
-                        Else
-                        {
-                            Return (0x04)
-                        }
-                    }
-                    Else
-                    {
-                        Return (Zero)
-                    }
-
-                    Break
-                }
-
-                Return (PIN5) /* \_SB_.ALE0.PIN5 */
-            }
-        }
-
-        Scope (\_SB)
-        {
-            Device (LSID)
-            {
-                Method (_HID, 0, NotSerialized)  // _HID: Hardware ID
-                {
-                    Return ("MSFT9001")
-                }
-
-                Name (_CID, "PNP0C60" /* Display Sensor Device */)  // _CID: Compatible ID
-                Name (_CRS, Buffer (0x02)  // _CRS: Current Resource Settings
-                {
-                     0x79, 0x00                                       // y.
-                })
-            }
-        }
-
         Scope (\_SB)
         {
             Name (CEXI, Zero)
@@ -87601,1154 +87148,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             }
         }
 
-        Device (AMW1)
-        {
-            Name (_HID, "PNP0C14")  // _HID: Hardware ID
-            Name (_UID, "ATD")  // _UID: Unique ID
-            Name (_WDG, Buffer (0x3C)
-            {
-                /* 0000 */  0x37, 0x33, 0x32, 0x81, 0xCF, 0x7B, 0x29, 0x4C,  // 732..{)L
-                /* 0008 */  0xA3, 0xE6, 0x43, 0x84, 0x74, 0x1A, 0x9C, 0x92,  // ..C.t...
-                /* 0010 */  0x41, 0x54, 0x01, 0x02, 0x72, 0x55, 0x13, 0x0F,  // AT..rU..
-                /* 0018 */  0x1D, 0x27, 0x44, 0x4E, 0x91, 0x4C, 0x3E, 0x6A,  // .'DN.L>j
-                /* 0020 */  0x66, 0xBC, 0x41, 0xBC, 0xD0, 0x00, 0x01, 0x08,  // f.A.....
-                /* 0028 */  0x21, 0x12, 0x90, 0x05, 0x66, 0xD5, 0xD1, 0x11,  // !...f...
-                /* 0030 */  0xB2, 0xF0, 0x00, 0xA0, 0xC9, 0x06, 0x29, 0x10,  // ......).
-                /* 0038 */  0x4D, 0x4F, 0x01, 0x00                           // MO..
-            })
-            Method (ECAT, 2, NotSerialized)
-            {
-                While (One)
-                {
-                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler
-                    _T_0 = Arg0
-                    If ((_T_0 == One))
-                    {
-                        Local0 = "unknown"
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = 0x02
-                            \_SB.I2C7.DAT1 = 0xFA
-                            \_SB.I2C7.DAT2 = 0x05
-                            \_SB.I2C7.RBLK = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUF3 = \_SB.I2C7.BBLK
-                            If ((\_SB.I2C7.STAT == Zero))
-                            {
-                                Local0 = ToString (\_SB.I2C7.BLCK, 0x06)
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (Local0)
-                    }
-                    ElseIf ((_T_0 == 0x02))
-                    {
-                        Local0 = 0xFFFFFFFF
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = 0x02
-                            \_SB.I2C7.DAT1 = (DerefOf (Arg1 [Zero]) & 0xFF)
-                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [One]) & 0xFF)
-                            \_SB.I2C7.RBYT = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUFF = \_SB.I2C7.RBYT
-                            If ((\_SB.I2C7.BYAT == Zero))
-                            {
-                                Local0 = \_SB.I2C7.DATA
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (Local0)
-                    }
-                    ElseIf ((_T_0 == 0x03))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = 0x03
-                            \_SB.I2C7.DAT1 = (DerefOf (Arg1 [Zero]) & 0xFF)
-                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [One]) & 0xFF)
-                            \_SB.I2C7.DAT3 = (DerefOf (Arg1 [0x02]) & 0xFF)
-                            \_SB.I2C7.WBYT = \_SB.I2C7.BUF1
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (Zero)
-                    }
-                    ElseIf ((_T_0 == 0x04))
-                    {
-                        Local0 = 0xFFFFFFFF
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = 0x02
-                            \_SB.I2C7.DAT1 = (DerefOf (Arg1 [Zero]) & 0xFF)
-                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [One]) & 0xFF)
-                            \_SB.I2C7.RWOD = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUF1 = \_SB.I2C7.RWOD
-                            If ((\_SB.I2C7.BSTA == Zero))
-                            {
-                                Local0 = (\_SB.I2C7.DAT1 + (\_SB.I2C7.DAT2 << 0x08))
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (Local0)
-                    }
-                    ElseIf ((_T_0 == 0x05))
-                    {
-                        \_SB.I2C7.BLCK = Buffer (0x20){}
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = 0x02
-                            \_SB.I2C7.DAT1 = (DerefOf (Arg1 [Zero]) & 0xFF)
-                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [One]) & 0xFF)
-                            \_SB.I2C7.RBLK = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUF3 = \_SB.I2C7.BBLK
-                            If ((\_SB.I2C7.STAT == Zero))
-                            {
-                                Return (\_SB.I2C7.BLCK)
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (BLCK) /* External reference */
-                    }
-                    ElseIf ((_T_0 == 0x06))
-                    {
-                        Return (\_SB.I2C7.RLOG ())
-                    }
-                    ElseIf ((_T_0 == 0x07))
-                    {
-                        Local0 = (DerefOf (Arg1 [Zero]) & 0xFF)
-                        Return (\_SB.I2C7.LRST (Local0))
-                    }
-                    ElseIf ((_T_0 == 0x0A))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            Sleep (0x0D)
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = One
-                            \_SB.I2C7.DAT1 = Zero
-                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                            If ((\_SB.I2C7.BYAT == Zero))
-                            {
-                                Return (\_SB.I2C7.DATA)
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (0x09)
-                    }
-                    ElseIf ((_T_0 == 0x0B))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = 0x03
-                            \_SB.I2C7.DAT1 = Zero
-                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [Zero]) & 0xFF)
-                            \_SB.I2C7.CAPW = \_SB.I2C7.BUF1
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (Zero)
-                    }
-                    ElseIf ((_T_0 == 0x0C))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            Sleep (0x0D)
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = One
-                            \_SB.I2C7.DAT1 = 0x1F
-                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                            If ((\_SB.I2C7.BYAT == Zero))
-                            {
-                                Return (\_SB.I2C7.DATA)
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (0x09)
-                    }
-                    ElseIf ((_T_0 == 0x0D))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = 0x03
-                            \_SB.I2C7.DAT1 = 0x1F
-                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [Zero]) & 0xFF)
-                            \_SB.I2C7.CAPW = \_SB.I2C7.BUF1
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (Zero)
-                    }
-                    ElseIf ((_T_0 == 0x0E))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            Sleep (0x0D)
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = One
-                            \_SB.I2C7.DAT1 = 0x31
-                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                            If ((\_SB.I2C7.BYAT == Zero))
-                            {
-                                Return (\_SB.I2C7.DATA)
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (0x09)
-                    }
-                    ElseIf ((_T_0 == 0x0F))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = 0x03
-                            \_SB.I2C7.DAT1 = 0x31
-                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [Zero]) & 0xFF)
-                            \_SB.I2C7.CAPW = \_SB.I2C7.BUF1
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (Zero)
-                    }
-                    ElseIf ((_T_0 == 0x10))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            Sleep (0x0D)
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = One
-                            \_SB.I2C7.DAT1 = 0x35
-                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                            If ((\_SB.I2C7.BYAT == Zero))
-                            {
-                                Return (\_SB.I2C7.DATA)
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (0x09)
-                    }
-                    ElseIf ((_T_0 == 0x11))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = 0x03
-                            \_SB.I2C7.DAT1 = 0x35
-                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [Zero]) & 0xFF)
-                            \_SB.I2C7.CAPW = \_SB.I2C7.BUF1
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (Zero)
-                    }
-                    ElseIf ((_T_0 == 0x12))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            Sleep (0x0D)
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = One
-                            \_SB.I2C7.DAT1 = 0x11
-                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                            If ((\_SB.I2C7.BYAT == Zero))
-                            {
-                                Return (\_SB.I2C7.DATA)
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (0x09)
-                    }
-                    ElseIf ((_T_0 == 0x13))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            Sleep (0x0D)
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = One
-                            \_SB.I2C7.DAT1 = 0x15
-                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                            If ((\_SB.I2C7.BYAT == Zero))
-                            {
-                                Return (\_SB.I2C7.DATA)
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (0x09)
-                    }
-                    ElseIf ((_T_0 == 0x17))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            Sleep (0x0D)
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = One
-                            \_SB.I2C7.DAT1 = 0xD0
-                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                            If ((\_SB.I2C7.BYAT == Zero))
-                            {
-                                Return (\_SB.I2C7.DATA)
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (Zero)
-                    }
-                    ElseIf ((_T_0 == 0x18))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            Sleep (0x0D)
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = One
-                            \_SB.I2C7.DAT1 = 0xD1
-                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                            If ((\_SB.I2C7.BYAT == Zero))
-                            {
-                                Return (\_SB.I2C7.DATA)
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (Zero)
-                    }
-                    ElseIf ((_T_0 == 0x19))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            Sleep (0x0D)
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = One
-                            \_SB.I2C7.DAT1 = 0xD2
-                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                            If ((\_SB.I2C7.BYAT == Zero))
-                            {
-                                Return (\_SB.I2C7.DATA)
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (0x09)
-                    }
-                    ElseIf ((_T_0 == 0x1A))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            Sleep (0x0D)
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = One
-                            \_SB.I2C7.DAT1 = 0xD3
-                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                            If ((\_SB.I2C7.BYAT == Zero))
-                            {
-                                Return (\_SB.I2C7.DATA)
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (0x09)
-                    }
-                    ElseIf ((_T_0 == 0x1B))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            Sleep (0x0D)
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = One
-                            \_SB.I2C7.DAT1 = 0xD4
-                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                            If ((\_SB.I2C7.BYAT == Zero))
-                            {
-                                Return (\_SB.I2C7.DATA)
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (0x09)
-                    }
-                    ElseIf ((_T_0 == 0x1C))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            Sleep (0x0D)
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = One
-                            \_SB.I2C7.DAT1 = 0xD5
-                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
-                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                            If ((\_SB.I2C7.BYAT == Zero))
-                            {
-                                Return (\_SB.I2C7.DATA)
-                            }
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (0x09)
-                    }
-                    ElseIf ((_T_0 == 0x1D))
-                    {
-                        Acquire (\_SB.MUT0, 0xFFFF)
-                        If ((\_SB.ECOK == One))
-                        {
-                            \_SB.I2C7.BSTA = Zero
-                            \_SB.I2C7.BLEN = 0x03
-                            \_SB.I2C7.DAT1 = 0xFF
-                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [Zero]) & 0xFF)
-                            \_SB.I2C7.CAPW = \_SB.I2C7.BUF1
-                        }
-
-                        Release (\_SB.MUT0)
-                        Return (Zero)
-                    }
-                    Else
-                    {
-                        Name (FOO, "WMI/ATD/EC: invalid argument")
-                        Debug = FOO /* \_SB_.AMW1.ECAT.FOO_ */
-                        Debug = Arg0
-                        Fatal (0xA0, 0x00000002, Zero)
-                    }
-
-                    Break
-                }
-            }
-
-            Method (AUAT, 2, NotSerialized)
-            {
-                If ((Arg0 == 0x64))
-                {
-                    Acquire (\_SB.MUT0, 0xFFFF)
-                    \_SB.I2C7.BSTA = Zero
-                    \_SB.I2C7.BLEN = One
-                    \_SB.I2C7.DAT1 = 0xF8
-                    \_SB.I2C7.APIR = \_SB.I2C7.BUF1
-                    \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                    If ((\_SB.I2C7.BYAT == Zero))
-                    {
-                        Local0 = (\_SB.I2C7.DATA & 0xFC)
-                        \_SB.I2C7.DAT2 = (Local0 | One)
-                        \_SB.I2C7.BSTA = Zero
-                        \_SB.I2C7.BLEN = 0x02
-                        \_SB.I2C7.DAT1 = 0xF8
-                        \_SB.I2C7.APIW = \_SB.I2C7.BUF1
-                    }
-
-                    Release (\_SB.MUT0)
-                    Return (\_SB.I2C7.DAT2)
-                }
-
-                Name (FOO, "WMI/ATD/Audio: invalid argument")
-                Debug = FOO /* \_SB_.AMW1.AUAT.FOO_ */
-                Fatal (0xA0, 0x00000003, Zero)
-            }
-
-            OperationRegion (CP19, SystemMemory, 0x03D5F000, 0x10)
-            Field (CP19, DWordAcc, NoLock, Preserve)
-            {
-                PI3C,   32, 
-                PIN3,   32, 
-                PI3N,   32, 
-                PI3S,   32
-            }
-
-            Method (SDCD, 0, Serialized)
-            {
-                Name (TEMP, Zero)
-                TEMP = PIN3 /* \_SB_.AMW1.PIN3 */
-                TEMP &= One
-                Return (TEMP) /* \_SB_.AMW1.SDCD.TEMP */
-            }
-
-            Method (STAT, 2, NotSerialized)
-            {
-                If ((Arg0 == 0xC8))
-                {
-                    Return (SDCD ())
-                }
-
-                Name (FOO, "WMI/ATD/Storage: invalid argument")
-                Debug = FOO /* \_SB_.AMW1.STAT.FOO_ */
-                Fatal (0xA0, 0x00000004, Zero)
-            }
-
-            Name (BATV, Buffer (0x0A)
-            {
-                /* 0000 */  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // ........
-                /* 0008 */  0x00, 0x00                                       // ..
-            })
-
-            OperationRegion (CP20, SystemMemory, 0x03573000, 0x10)
-            Field (CP20, DWordAcc, NoLock, Preserve)
-            {
-                PI4C,   32, 
-                PIN4,   32, 
-                PI4N,   32, 
-                PI4S,   32
-            }
-
-            Method (TPCD, 0, Serialized)
-            {
-                Name (TPVA, Zero)
-                PI4C = 0x0200
-                TPVA = PIN4 /* \_SB_.AMW1.PIN4 */
-                TPVA &= One
-                Return (TPVA) /* \_SB_.AMW1.TPCD.TPVA */
-            }
-
-            Method (KBCD, 0, Serialized)
-            {
-                If ((\_SB.ECOK == One))
-                {
-                    Acquire (\_SB.MUT0, 0xFFFF)
-                    \_SB.I2C7.BSTA = Zero
-                    \_SB.I2C7.BLEN = One
-                    \_SB.I2C7.DAT1 = 0x04
-                    \_SB.I2C7.CM0E = \_SB.I2C7.BUF1
-                    \_SB.I2C7.BUFF = \_SB.I2C7.RB01
-                    If ((\_SB.I2C7.BYAT == Zero))
-                    {
-                        Local0 = (\_SB.I2C7.DATA >> 0x07)
-                        Release (\_SB.MUT0)
-                        Return (Local0)
-                    }
-                }
-
-                Return (0x02)
-            }
-
-            Method (SNAT, 2, NotSerialized)
-            {
-                While (One)
-                {
-                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler
-                    _T_0 = Arg0
-                    If ((_T_0 == 0x0190))
-                    {
-                        Return (TPCD ())
-                    }
-                    ElseIf ((_T_0 == 0x0191))
-                    {
-                        Return (KBCD ())
-                    }
-                    
-                    Break
-                }
-
-                Name (FOO, "WMI/ATD/Sensor: invalid argument")
-                Debug = FOO /* \_SB_.AMW1.SNAT.FOO_ */
-                Fatal (0xA0, 0x00000004, Zero)
-            }
-
-            Method (WMAT, 3, Serialized)
-            {
-                Local0 = (Arg1 & 0xFFFFFFFF)
-                If ((Local0 < 0x64))
-                {
-                    Return (ECAT (Local0, Arg2))
-                }
-
-                If ((Local0 < 0xC8))
-                {
-                    Return (AUAT (Arg1, Arg2))
-                }
-
-                If ((Local0 < 0x012C))
-                {
-                    Return (STAT (Arg1, Arg2))
-                }
-
-                If ((Local0 < 0x01F4))
-                {
-                    Return (SNAT (Arg1, Arg2))
-                }
-
-                Name (FOO, "WMI/ATD: method ID is out of range\n")
-                Debug = FOO /* \_SB_.AMW1.WMAT.FOO_ */
-                Fatal (0xA0, 0x00000001, Zero)
-            }
-
-            Method (_WED, 1, NotSerialized)  // _Wxx: Wake Event
-            {
-                If ((Arg0 == 0xD0))
-                {
-                    Return (One)
-                }
-
-                Return (Zero)
-            }
-
-            Name (WQMO, Buffer (0x104A)
-            {
-                /* 0000 */  0x46, 0x4F, 0x4D, 0x42, 0x01, 0x00, 0x00, 0x00,  // FOMB....
-                /* 0008 */  0x3A, 0x10, 0x00, 0x00, 0x46, 0x6A, 0x00, 0x00,  // :...Fj..
-                /* 0010 */  0x44, 0x53, 0x00, 0x01, 0x1A, 0x7D, 0xDA, 0x54,  // DS...}.T
-                /* 0018 */  0xA8, 0xD0, 0xB3, 0x00, 0x01, 0x06, 0x18, 0x42,  // .......B
-                /* 0020 */  0x10, 0x0B, 0x10, 0x92, 0xE9, 0x80, 0x42, 0x04,  // ......B.
-                /* 0028 */  0x92, 0x4F, 0x24, 0x61, 0x30, 0x28, 0x09, 0x20,  // .O$a0(. 
-                /* 0030 */  0x92, 0x03, 0x21, 0x17, 0x4C, 0x4C, 0x80, 0x08,  // ..!.LL..
-                /* 0038 */  0x08, 0x79, 0x15, 0x60, 0x53, 0x80, 0x49, 0x10,  // .y.`S.I.
-                /* 0040 */  0xF5, 0xEF, 0x0F, 0x51, 0x1A, 0x14, 0x25, 0xB0,  // ...Q..%.
-                /* 0048 */  0x90, 0x21, 0x58, 0x80, 0x6F, 0x01, 0x8E, 0x05,  // .!X.o...
-                /* 0050 */  0x18, 0x16, 0x20, 0x5B, 0x80, 0x65, 0x28, 0x82,  // .. [.e(.
-                /* 0058 */  0xDA, 0xA9, 0x00, 0xB9, 0x93, 0x28, 0x40, 0x3C,  // .....(@<
-                /* 0060 */  0xAA, 0x30, 0x9A, 0x83, 0x22, 0xE1, 0xA0, 0x51,  // .0.."..Q
-                /* 0068 */  0x62, 0x20, 0x24, 0x11, 0x56, 0xCE, 0xB1, 0xA5,  // b $.V...
-                /* 0070 */  0x5C, 0x80, 0x69, 0x01, 0xC2, 0x05, 0x48, 0xC7,  // \.i...H.
-                /* 0078 */  0xD0, 0x08, 0xEA, 0x06, 0x93, 0x54, 0x01, 0xA2,  // .....T..
-                /* 0080 */  0x61, 0x84, 0x56, 0x10, 0x9C, 0x06, 0x71, 0x14,  // a.V...q.
-                /* 0088 */  0x51, 0xC2, 0x30, 0x3C, 0x63, 0x06, 0x0A, 0x17,  // Q.0<c...
-                /* 0090 */  0x24, 0x92, 0x61, 0x82, 0x9E, 0x40, 0x90, 0x92,  // $.a..@..
-                /* 0098 */  0x31, 0xA4, 0x19, 0x8B, 0x40, 0x9C, 0x01, 0xC7,  // 1...@...
-                /* 00A0 */  0x8A, 0x11, 0x2A, 0x24, 0x66, 0x20, 0xC1, 0x4F,  // ..*$f .O
-                /* 00A8 */  0xA0, 0x6B, 0x0C, 0x2D, 0x38, 0x90, 0xAD, 0x4F,  // .k.-8..O
-                /* 00B0 */  0x40, 0x20, 0xD1, 0xA3, 0x04, 0x37, 0xAE, 0x51,  // @ ...7.Q
-                /* 00B8 */  0xD9, 0x98, 0xCE, 0x06, 0x37, 0x30, 0x13, 0xC4,  // ....70..
-                /* 00C0 */  0x39, 0x3C, 0x8C, 0x0C, 0x08, 0x4D, 0x20, 0x7E,  // 9<...M ~
-                /* 00C8 */  0xEC, 0xF0, 0x09, 0xEC, 0x5E, 0x80, 0x62, 0x01,  // ....^.b.
-                /* 00D0 */  0xD6, 0x40, 0x35, 0xD3, 0xDE, 0x20, 0xA4, 0x0C,  // .@5.. ..
-                /* 00D8 */  0x4B, 0xB6, 0x04, 0x18, 0x03, 0x22, 0x33, 0x88,  // K...."3.
-                /* 00E0 */  0x12, 0x23, 0xDE, 0xF1, 0x86, 0xF2, 0x20, 0x3A,  // .#.... :
-                /* 00E8 */  0x03, 0x15, 0x64, 0x94, 0x48, 0x87, 0x15, 0x22,  // ..d.H.."
-                /* 00F0 */  0x8E, 0x31, 0x8A, 0x43, 0x15, 0x5A, 0xEC, 0x13,  // .1.C.Z..
-                /* 00F8 */  0x0F, 0xD9, 0xFE, 0x20, 0x48, 0xB4, 0xF3, 0x80,  // ... H...
-                /* 0100 */  0x7E, 0x04, 0x96, 0x04, 0x22, 0x23, 0x5B, 0x4A,  // ~..."#[J
-                /* 0108 */  0x40, 0x0E, 0x03, 0x09, 0x0E, 0xC7, 0x0A, 0x05,  // @.......
-                /* 0110 */  0x98, 0x9F, 0x99, 0x46, 0xC5, 0x24, 0x00, 0x4A,  // ...F.$.J
-                /* 0118 */  0x03, 0x88, 0x44, 0x41, 0xE8, 0x77, 0x40, 0x05,  // ..DA.w@.
-                /* 0120 */  0x48, 0x39, 0x19, 0x10, 0xDB, 0xE3, 0xD2, 0x35,  // H9.....5
-                /* 0128 */  0xE0, 0x2C, 0x4E, 0xDD, 0x77, 0x83, 0x33, 0xF3,  // .,N.w.3.
-                /* 0130 */  0x59, 0xC1, 0x5B, 0xF0, 0xFF, 0xFF, 0x8C, 0xC0,  // Y.[.....
-                /* 0138 */  0xC7, 0xE0, 0xA1, 0x9E, 0x8E, 0x47, 0xC8, 0x0E,  // .....G..
-                /* 0140 */  0x09, 0x06, 0xC4, 0x7B, 0xBF, 0x15, 0x90, 0xB9,  // ...{....
-                /* 0148 */  0x18, 0x90, 0x1D, 0x14, 0x9E, 0x0F, 0xC0, 0x32,  // .......2
-                /* 0150 */  0xDE, 0x63, 0x3C, 0x86, 0xD3, 0x3C, 0x35, 0x7E,  // .c<..<5~
-                /* 0158 */  0x24, 0xE0, 0x53, 0x39, 0x29, 0x46, 0xE0, 0x63,  // $.S9)F.c
-                /* 0160 */  0x84, 0x47, 0xC7, 0x47, 0xE1, 0xB3, 0x43, 0x83,  // .G.G..C.
-                /* 0168 */  0x02, 0xC4, 0x82, 0x48, 0x05, 0x84, 0x64, 0x1D,  // ...H..d.
-                /* 0170 */  0x23, 0xD0, 0x0E, 0x47, 0x28, 0xC0, 0x97, 0x86,  // #..G(...
-                /* 0178 */  0x66, 0x05, 0x08, 0x15, 0x60, 0x11, 0x48, 0xD7,  // f...`.H.
-                /* 0180 */  0x01, 0xDF, 0x18, 0x3C, 0xFD, 0x04, 0x05, 0xC2,  // ...<....
-                /* 0188 */  0xA2, 0x87, 0x6E, 0xBF, 0x02, 0x10, 0x42, 0x9F,  // ..n...B.
-                /* 0190 */  0xDB, 0x49, 0x3C, 0x50, 0x44, 0x38, 0x0E, 0x8F,  // .I<PD8..
-                /* 0198 */  0x26, 0x70, 0xEC, 0x23, 0x3A, 0x80, 0x17, 0x06,  // &p.#:...
-                /* 01A0 */  0x1C, 0x81, 0x45, 0x8E, 0x12, 0x3D, 0x00, 0xAE,  // ..E..=..
-                /* 01A8 */  0x13, 0x5F, 0xE0, 0xE7, 0x72, 0x00, 0xA1, 0xA3,  // ._..r...
-                /* 01B0 */  0x9C, 0xC3, 0xE1, 0x78, 0xA8, 0x87, 0xF8, 0xE4,  // ...x....
-                /* 01B8 */  0xE0, 0x53, 0xC6, 0xBB, 0x04, 0x9B, 0xC1, 0x51,  // .S.....Q
-                /* 01C0 */  0x3C, 0x36, 0x04, 0x3A, 0x42, 0x4E, 0x60, 0x81,  // <6.:BN`.
-                /* 01C8 */  0x07, 0x10, 0x94, 0xA4, 0x33, 0x08, 0xA0, 0xE4,  // ....3...
-                /* 01D0 */  0xFF, 0x7F, 0x06, 0x01, 0x7C, 0x87, 0x3A, 0x83,  // ....|.:.
-                /* 01D8 */  0x00, 0xEA, 0x47, 0xE4, 0x33, 0x08, 0xFE, 0xFF,  // ..G.3...
-                /* 01E0 */  0x7F, 0x06, 0x81, 0x7B, 0xA2, 0xC0, 0x9F, 0x41,  // ...{...A
-                /* 01E8 */  0xE0, 0x40, 0xC7, 0x39, 0xFC, 0x17, 0x84, 0xF7,  // .@.9....
-                /* 01F0 */  0x0A, 0xDF, 0x17, 0x1E, 0x40, 0x80, 0x91, 0xAC,  // ....@...
-                /* 01F8 */  0x25, 0x52, 0x71, 0x2F, 0x01, 0x09, 0x81, 0x41,  // %Rq/...A
-                /* 0200 */  0x1D, 0x40, 0x80, 0xD3, 0x74, 0x7C, 0x00, 0x01,  // .@..t|..
-                /* 0208 */  0xF3, 0x65, 0xC1, 0x98, 0x31, 0x7C, 0xCC, 0xF0,  // .e..1|..
-                /* 0210 */  0x09, 0xC0, 0x50, 0xF1, 0xDE, 0x01, 0x7C, 0x34,  // ..P...|4
-                /* 0218 */  0xC0, 0x0D, 0xDE, 0x60, 0xC6, 0xF9, 0x1A, 0xD3,  // ...`....
-                /* 0220 */  0x79, 0x03, 0x04, 0x27, 0x8C, 0x08, 0x1E, 0xC0,  // y..'....
-                /* 0228 */  0x23, 0x86, 0x2F, 0x19, 0x31, 0xDE, 0x33, 0x5E,  // #./.1.3^
-                /* 0230 */  0x34, 0x6A, 0x9B, 0x9C, 0x70, 0x9E, 0x37, 0xD8,  // 4j..p.7.
-                /* 0238 */  0x24, 0x42, 0x79, 0x42, 0xEF, 0x1D, 0x86, 0x89,  // $ByB....
-                /* 0240 */  0x72, 0x88, 0xCF, 0x1A, 0x81, 0xA3, 0x1E, 0xD6,  // r.......
-                /* 0248 */  0xB3, 0x87, 0x01, 0x1F, 0x03, 0x0C, 0x73, 0xA0,  // ......s.
-                /* 0250 */  0xCF, 0x1B, 0x2C, 0xEC, 0x79, 0x83, 0x8A, 0x3D,  // ..,.y..=
-                /* 0258 */  0x6F, 0xA0, 0xFE, 0xFF, 0xE7, 0x0D, 0x38, 0x07,  // o.....8.
-                /* 0260 */  0x01, 0x9F, 0x37, 0x80, 0x6B, 0x80, 0xE3, 0x00,  // ..7.k...
-                /* 0268 */  0x68, 0x90, 0x7D, 0x38, 0x78, 0x0C, 0xF0, 0x5D,  // h.}8x..]
-                /* 0270 */  0xC6, 0x78, 0x51, 0x7C, 0xA3, 0xC1, 0xDE, 0x03,  // .xQ|....
-                /* 0278 */  0x70, 0x58, 0x3E, 0xCC, 0x78, 0x74, 0xC6, 0x3F,  // pX>.xt.?
-                /* 0280 */  0x3A, 0x1F, 0x6A, 0xD8, 0xF9, 0xC3, 0x18, 0x0F,  // :.j.....
-                /* 0288 */  0x4C, 0x06, 0x7D, 0x1F, 0xF0, 0xE1, 0x03, 0xA6,  // L.}.....
-                /* 0290 */  0x82, 0x75, 0xEA, 0xF0, 0x01, 0xAE, 0xA3, 0xC0,  // .u......
-                /* 0298 */  0xC3, 0x07, 0x38, 0x86, 0xF9, 0x4C, 0xE1, 0xFB,  // ..8..L..
-                /* 02A0 */  0x82, 0xCF, 0x1E, 0xC0, 0x47, 0xD7, 0xAA, 0x1E,  // ....G...
-                /* 02A8 */  0x31, 0xD8, 0xF0, 0x24, 0x66, 0x91, 0x14, 0xC6,  // 1..$f...
-                /* 02B0 */  0x67, 0x04, 0x9F, 0x3D, 0xE0, 0xFD, 0xFF, 0x0F,  // g..=....
-                /* 02B8 */  0x04, 0x96, 0x04, 0x87, 0x1A, 0x9E, 0x0F, 0x04,  // ........
-                /* 02C0 */  0x27, 0x7E, 0xF2, 0x9E, 0xBE, 0xE7, 0xF6, 0x10,  // '~......
-                /* 02C8 */  0x02, 0xE3, 0xCC, 0xE0, 0x69, 0x9D, 0x94, 0xB5,  // ....i...
-                /* 02D0 */  0x9F, 0x2D, 0xC8, 0x4D, 0xC0, 0x04, 0x3E, 0x38,  // .-.M..>8
-                /* 02D8 */  0x30, 0x34, 0x7E, 0x22, 0x01, 0xEB, 0x71, 0xC0,  // 04~"..q.
-                /* 02E0 */  0x67, 0x06, 0x70, 0xCC, 0xFA, 0x75, 0x04, 0x83,  // g.p..u..
-                /* 02E8 */  0x15, 0x2A, 0xC6, 0xA9, 0xBF, 0x15, 0xC4, 0x7D,  // .*.....}
-                /* 02F0 */  0x98, 0x62, 0xD7, 0x05, 0x36, 0x73, 0xA3, 0x1F,  // .b..6s..
-                /* 02F8 */  0x0B, 0x3B, 0x8A, 0xC0, 0xBE, 0x1F, 0x3C, 0x06,  // .;....<.
-                /* 0300 */  0xBD, 0x7D, 0xBC, 0x7C, 0x84, 0x88, 0xE0, 0x1B,  // .}.|....
-                /* 0308 */  0x94, 0x21, 0x1E, 0x1D, 0xC2, 0x3F, 0x85, 0xF8,  // .!...?..
-                /* 0310 */  0x2A, 0x65, 0xB4, 0xF3, 0x7A, 0x92, 0x62, 0x73,  // *e..z.bs
-                /* 0318 */  0x78, 0x20, 0x09, 0xE5, 0x3B, 0x89, 0x4F, 0x55,  // x ..;.OU
-                /* 0320 */  0x0C, 0x3D, 0x58, 0xBC, 0x90, 0xCF, 0x23, 0x3E,  // .=X...#>
-                /* 0328 */  0x8A, 0xB0, 0x48, 0x07, 0x1B, 0x1A, 0x69, 0x34,  // ..H...i4
-                /* 0330 */  0xA8, 0x73, 0x82, 0x4F, 0x04, 0x3E, 0x0D, 0x3C,  // .s.O.>.<
-                /* 0338 */  0x87, 0xF9, 0x00, 0x62, 0x90, 0xE3, 0xF2, 0x59,  // ...b...Y
-                /* 0340 */  0xE1, 0x51, 0xC0, 0x23, 0x63, 0x77, 0x04, 0xFF,  // .Q.#cw..
-                /* 0348 */  0x0E, 0x7C, 0x36, 0xC0, 0x1F, 0x83, 0x02, 0xBE,  // .|6.....
-                /* 0350 */  0x14, 0x3C, 0x83, 0xC0, 0x3A, 0x8B, 0xE0, 0x4F,  // .<..:..O
-                /* 0358 */  0x14, 0xF8, 0xC3, 0x05, 0x7E, 0x3C, 0x3E, 0x03,  // ....~<>.
-                /* 0360 */  0x78, 0x3E, 0x0F, 0x34, 0xEC, 0xFF, 0x2F, 0x7F,  // x>.4../.
-                /* 0368 */  0x10, 0xA8, 0x91, 0x19, 0xDA, 0x57, 0x80, 0xD3,  // .....W..
-                /* 0370 */  0x7A, 0x15, 0xF0, 0x09, 0xE1, 0xB0, 0xD8, 0x99,  // z.......
-                /* 0378 */  0x83, 0x1C, 0x55, 0x40, 0x31, 0x1E, 0xF8, 0x97,  // ..U@1...
-                /* 0380 */  0x80, 0x27, 0x0C, 0xDF, 0x17, 0x3C, 0x5F, 0x1F,  // .'...<_.
-                /* 0388 */  0xA4, 0xC0, 0x72, 0x4B, 0x60, 0x50, 0x61, 0x82,  // ..rK`Pa.
-                /* 0390 */  0x04, 0xF2, 0xE9, 0x03, 0x78, 0x28, 0xD0, 0x0A,  // ....x(..
-                /* 0398 */  0xD1, 0xD1, 0x80, 0xBD, 0x4C, 0xD9, 0x38, 0xF3,  // ....L.8.
-                /* 03A0 */  0x50, 0x0E, 0x8B, 0x3A, 0x1F, 0xE8, 0xF4, 0xE3,  // P..:....
-                /* 03A8 */  0x49, 0x3C, 0xE2, 0x19, 0x36, 0xC8, 0x19, 0x7B,  // I<..6..{
-                /* 03B0 */  0x0A, 0x87, 0xFF, 0x3A, 0xC1, 0x07, 0x24, 0x48,  // ...:..$H
-                /* 03B8 */  0x1D, 0x7E, 0x79, 0x7C, 0x08, 0x85, 0x1F, 0x12,  // .~y|....
-                /* 03C0 */  0x85, 0x73, 0x5C, 0x30, 0x0A, 0xE2, 0xD1, 0x3B,  // .s\0...;
-                /* 03C8 */  0xCA, 0x89, 0x01, 0x3D, 0x54, 0x4F, 0x02, 0x7F,  // ...=TO..
-                /* 03D0 */  0xCC, 0x78, 0x5C, 0x80, 0x85, 0x77, 0x70, 0xE7,  // .x\..wp.
-                /* 03D8 */  0xE6, 0x69, 0xF8, 0x64, 0x83, 0xBF, 0x06, 0x9C,  // .i.d....
-                /* 03E0 */  0x75, 0x02, 0x7E, 0x5A, 0x00, 0xDF, 0xC9, 0x13,  // u.~Z....
-                /* 03E8 */  0xF7, 0xFF, 0x3F, 0x0E, 0xC0, 0x03, 0xF2, 0x15,  // ..?.....
-                /* 03F0 */  0xC0, 0x4A, 0x8F, 0x01, 0x74, 0x0E, 0x21, 0xC2,  // .J..t.!.
-                /* 03F8 */  0x44, 0xF3, 0x39, 0x13, 0xB5, 0x54, 0x1D, 0x9E,  // D.9..T..
-                /* 0400 */  0x7D, 0xF2, 0xF1, 0xB8, 0xF8, 0xA9, 0xC0, 0x47,  // }......G
-                /* 0408 */  0x16, 0x86, 0xFD, 0x00, 0xE0, 0x63, 0xD1, 0x19,  // .....c..
-                /* 0410 */  0xBE, 0x0F, 0x3C, 0x3B, 0x61, 0x60, 0x3D, 0x52,  // ..<;a`=R
-                /* 0418 */  0x0E, 0x6B, 0xB4, 0xB0, 0x07, 0xFC, 0xD4, 0xE0,  // .k......
-                /* 0420 */  0x1B, 0x87, 0xAF, 0x27, 0x0C, 0xD6, 0x67, 0x0D,  // ...'..g.
-                /* 0428 */  0x70, 0x1C, 0xA3, 0xE0, 0x07, 0x3A, 0xC3, 0x80,  // p....:..
-                /* 0430 */  0x66, 0x98, 0xA7, 0xE6, 0xB3, 0x40, 0xB0, 0x57,  // f....@.W
-                /* 0438 */  0x4B, 0x9F, 0xA1, 0xF8, 0xCD, 0x00, 0x7B, 0x95,  // K.....{.
-                /* 0440 */  0xE2, 0x43, 0xF3, 0x11, 0xE3, 0xC8, 0x7C, 0x8A,  // .C....|.
-                /* 0448 */  0xF0, 0x21, 0xCA, 0xC7, 0x4F, 0x7E, 0x97, 0xF0,  // .!..O~..
-                /* 0450 */  0x25, 0xCA, 0x27, 0x4D, 0x76, 0xDB, 0x64, 0x27,  // %.'Mv.d'
-                /* 0458 */  0x97, 0x67, 0x43, 0xEC, 0xED, 0xCA, 0x08, 0x31,  // .gC....1
-                /* 0460 */  0xDE, 0x51, 0x4C, 0x30, 0xD3, 0xEA, 0x75, 0x9E,  // .QL0..u.
-                /* 0468 */  0xE0, 0x07, 0x05, 0xE7, 0x78, 0x3C, 0xE8, 0x3C,  // ....x<.<
-                /* 0470 */  0xC1, 0xA6, 0xCA, 0x51, 0xE2, 0x73, 0x02, 0x2B,  // ...Q.s.+
-                /* 0478 */  0x07, 0xD4, 0x09, 0xC0, 0xC7, 0x08, 0x6B, 0xA6,  // ......k.
-                /* 0480 */  0x90, 0x6E, 0x1A, 0x1D, 0x27, 0xB8, 0xD2, 0x53,  // .n..'..S
-                /* 0488 */  0x05, 0x05, 0xF1, 0x99, 0xC0, 0x19, 0x20, 0x64,  // ...... d
-                /* 0490 */  0xE4, 0x38, 0x81, 0x1A, 0xB8, 0x2F, 0x3F, 0x1E,  // .8.../?.
-                /* 0498 */  0x9E, 0xEF, 0x46, 0x1E, 0x63, 0x50, 0xF6, 0xFF,  // ..F.cP..
-                /* 04A0 */  0x1F, 0xB6, 0x4F, 0x00, 0xFC, 0xE8, 0xE4, 0xE1,  // ..O.....
-                /* 04A8 */  0x19, 0xD9, 0x6A, 0x4E, 0x09, 0x28, 0x30, 0x1F,  // ..jN.(0.
-                /* 04B0 */  0x26, 0x30, 0x97, 0x2E, 0x70, 0xCD, 0x08, 0xCE,  // &0..p...
-                /* 04B8 */  0x3D, 0xE0, 0x8C, 0xC0, 0x7F, 0x84, 0xE0, 0x33,  // =......3
-                /* 04C0 */  0x02, 0x8F, 0xBE, 0xC3, 0x06, 0xC8, 0xD1, 0x79,  // .......y
-                /* 04C8 */  0xF4, 0x9B, 0x0A, 0x2A, 0xEC, 0x8C, 0x28, 0x88,  // ...*..(.
-                /* 04D0 */  0xEF, 0x04, 0x0E, 0x32, 0x34, 0xD4, 0x50, 0xF9,  // ...24.P.
-                /* 04D8 */  0x01, 0xE2, 0x55, 0xCB, 0x43, 0x7A, 0x3E, 0xF0,  // ..U.Cz>.
-                /* 04E0 */  0x45, 0x05, 0xDC, 0x03, 0xF1, 0x45, 0x05, 0x0C,  // E....E..
-                /* 04E8 */  0x73, 0x65, 0x27, 0x2C, 0x5F, 0x54, 0xC0, 0xF6,  // se',_T..
-                /* 04F0 */  0xFF, 0xBF, 0xA8, 0xC0, 0xBE, 0xF1, 0xFA, 0xA2,  // ........
-                /* 04F8 */  0x02, 0xAE, 0xB1, 0xF9, 0xA2, 0x02, 0x5C, 0x51,  // ......\Q
-                /* 0500 */  0x7D, 0x51, 0x01, 0xE3, 0xCD, 0x91, 0x8D, 0xC5,  // }Q......
-                /* 0508 */  0x87, 0x9E, 0x47, 0x54, 0xDF, 0xDD, 0xD8, 0xD5,  // ..GT....
-                /* 0510 */  0x04, 0x73, 0x5E, 0xF1, 0xF9, 0x00, 0x23, 0xF3,  // .s^...#.
-                /* 0518 */  0x66, 0x82, 0x96, 0x76, 0x33, 0x41, 0xCC, 0x09,  // f..v3A..
-                /* 0520 */  0x73, 0x34, 0xC1, 0x89, 0xB9, 0x99, 0x50, 0x08,  // s4....P.
-                /* 0528 */  0xCB, 0x80, 0x91, 0x08, 0x08, 0x1D, 0x1F, 0x78,  // .......x
-                /* 0530 */  0xEC, 0x9B, 0x09, 0x05, 0xF1, 0xC5, 0xCD, 0x31,  // .......1
-                /* 0538 */  0x6E, 0x26, 0xD0, 0x6F, 0x77, 0x3E, 0x3E, 0xC0,  // n&.ow>>.
-                /* 0540 */  0x39, 0x78, 0xB0, 0x6B, 0x13, 0x18, 0x6E, 0x1E,  // 9x.k..n.
-                /* 0548 */  0x60, 0xF8, 0xFF, 0xDF, 0x3C, 0x30, 0x63, 0x82,  // `...<0c.
-                /* 0550 */  0x73, 0x36, 0xC1, 0x8D, 0x09, 0xDC, 0x97, 0x13,  // s6......
-                /* 0558 */  0xF0, 0x8D, 0x09, 0xCE, 0xA9, 0x00, 0x37, 0x26,  // ......7&
-                /* 0560 */  0x70, 0x9F, 0x2C, 0xF8, 0x98, 0xC0, 0x73, 0x06,  // p.,...s.
-                /* 0568 */  0x01, 0xDE, 0x90, 0x3E, 0x83, 0x00, 0xC3, 0xFF,  // ...>....
-                /* 0570 */  0xFF, 0x19, 0x04, 0x8C, 0x83, 0x0B, 0xCE, 0xAF,  // ........
-                /* 0578 */  0x20, 0xE0, 0xBB, 0x6C, 0x81, 0x65, 0x58, 0x87,  //  ..l.eX.
-                /* 0580 */  0x12, 0xE7, 0xF0, 0xD8, 0x65, 0x0B, 0x60, 0xD8,  // ....e.`.
-                /* 0588 */  0xFF, 0xFF, 0xB2, 0x05, 0xF0, 0xE7, 0x86, 0xE4,  // ........
-                /* 0590 */  0xCB, 0x16, 0x60, 0x6E, 0x1E, 0xFF, 0xFF, 0x67,  // ..`n...g
-                /* 0598 */  0x11, 0x76, 0x34, 0xC1, 0xA6, 0xBB, 0x99, 0xA0,  // .v4.....
-                /* 05A0 */  0xF3, 0x1C, 0x2B, 0x21, 0xE1, 0xBE, 0xA3, 0xFB,  // ..+!....
-                /* 05A8 */  0x5C, 0x9D, 0x60, 0x82, 0x9B, 0x09, 0x4A, 0xFB,  // \.`...J.
-                /* 05B0 */  0xCD, 0x04, 0x20, 0xDC, 0xE5, 0xC2, 0x77, 0x01,  // .. ...w.
-                /* 05B8 */  0x1E, 0x7A, 0x46, 0x14, 0xC4, 0x77, 0x02, 0x5F,  // .zF..w._
-                /* 05C0 */  0x78, 0x6D, 0xE3, 0x66, 0x02, 0x35, 0x80, 0x80,  // xm.f.5..
-                /* 05C8 */  0xFF, 0xFF, 0xCD, 0x04, 0xEC, 0xB7, 0x11, 0xFC,  // ........
-                /* 05D0 */  0x5C, 0xF1, 0x43, 0x78, 0x74, 0xA8, 0xFA, 0xFC,  // \.Cxt...
-                /* 05D8 */  0x40, 0xE6, 0x50, 0xDD, 0x8D, 0x82, 0x28, 0x3C,  // @.P...(<
-                /* 05E0 */  0x3E, 0xA0, 0x6E, 0x27, 0xC0, 0xE4, 0x52, 0xEE,  // >.n'..R.
-                /* 05E8 */  0xDB, 0x09, 0xB8, 0x60, 0xF9, 0xED, 0x04, 0x78,  // ...`...x
-                /* 05F0 */  0x8E, 0xE7, 0xD1, 0x12, 0xD8, 0x9C, 0x00, 0xF8,  // ........
-                /* 05F8 */  0x41, 0x0C, 0x2F, 0xF3, 0x8E, 0x8F, 0x1A, 0x8A,  // A./.....
-                /* 0600 */  0x65, 0xDD, 0xF1, 0x21, 0xA0, 0xFB, 0xC6, 0xCE,  // e..!....
-                /* 0608 */  0xA4, 0x5C, 0x4B, 0xC8, 0xFF, 0x1F, 0x82, 0x1D,  // .\K.....
-                /* 0610 */  0x00, 0x7C, 0x84, 0x00, 0xD7, 0xD9, 0xC0, 0x33,  // .|.....3
-                /* 0618 */  0x3A, 0x9B, 0x47, 0x8F, 0x08, 0x47, 0x65, 0x02,  // :.G..Ge.
-                /* 0620 */  0xCB, 0xBF, 0xE1, 0x83, 0x5E, 0xDE, 0x19, 0x02,  // ....^...
-                /* 0628 */  0x74, 0x20, 0x4F, 0x0E, 0xC7, 0xC8, 0x8F, 0x10,  // t O.....
-                /* 0630 */  0xC0, 0x43, 0xC6, 0x11, 0x02, 0x74, 0xE7, 0x15,  // .C...t..
-                /* 0638 */  0x1F, 0x21, 0x80, 0xEB, 0x71, 0xD3, 0x47, 0x08,  // .!..q.G.
-                /* 0640 */  0xF0, 0x0C, 0xC3, 0xB7, 0x7B, 0x03, 0x3D, 0x12,  // ....{.=.
-                /* 0648 */  0xFA, 0xA8, 0x64, 0x8C, 0x93, 0x0A, 0x62, 0x20,  // ..d...b 
-                /* 0650 */  0x4F, 0xE1, 0x91, 0xC6, 0x28, 0xFF, 0xFF, 0xB7,  // O...(...
-                /* 0658 */  0x7A, 0x5F, 0xF3, 0xD9, 0x5D, 0x82, 0x1D, 0x1C,  // z_..]...
-                /* 0660 */  0x30, 0x81, 0xCF, 0x10, 0xA8, 0xE3, 0x81, 0x25,  // 0......%
-                /* 0668 */  0x9F, 0x21, 0x10, 0x90, 0x0C, 0xE4, 0x5C, 0x7C,  // .!....\|
-                /* 0670 */  0x27, 0xF0, 0xAC, 0x4C, 0x50, 0xE4, 0x21, 0x02,  // '..LP.!.
-                /* 0678 */  0x25, 0x8F, 0x42, 0xE2, 0x0E, 0x11, 0x28, 0x39,  // %.B...(9
-                /* 0680 */  0x70, 0x14, 0xC4, 0x87, 0x08, 0x47, 0x3D, 0x10,  // p....G=.
-                /* 0688 */  0xA1, 0x4F, 0x07, 0x9E, 0xC2, 0xB1, 0x79, 0x0E,  // .O....y.
-                /* 0690 */  0x07, 0x16, 0xE4, 0x24, 0x1C, 0xEC, 0x1E, 0x46,  // ...$...F
-                /* 0698 */  0x4F, 0xAA, 0x70, 0xEF, 0x0F, 0x1E, 0x34, 0x38,  // O.p...48
-                /* 06A0 */  0xC6, 0x81, 0x3D, 0x58, 0x62, 0xC6, 0xC9, 0x0F,  // ..=Xb...
-                /* 06A8 */  0xC0, 0xC0, 0xE1, 0x44, 0x01, 0x3C, 0x44, 0x9F,  // ...D.<D.
-                /* 06B0 */  0x28, 0x40, 0xE7, 0xE1, 0x44, 0x01, 0xF2, 0xFF,  // (@..D...
-                /* 06B8 */  0xFF, 0x89, 0x02, 0x8C, 0x21, 0x4F, 0x03, 0xA0,  // ....!O..
-                /* 06C0 */  0x19, 0x8E, 0x87, 0xF1, 0x6C, 0xE3, 0x03, 0x05,  // ....l...
-                /* 06C8 */  0x66, 0x26, 0x8F, 0x38, 0xC6, 0xC2, 0x9C, 0x26,  // f&.8...&
-                /* 06D0 */  0x70, 0x60, 0x75, 0xC1, 0xE8, 0xE0, 0x74, 0x7C,  // p`u...t|
-                /* 06D8 */  0x67, 0x1D, 0xE5, 0x81, 0xB1, 0x3D, 0x01, 0xC6,  // g....=..
-                /* 06E0 */  0x80, 0x34, 0x03, 0xAC, 0xD5, 0xF1, 0x13, 0xC0,  // .4......
-                /* 06E8 */  0x83, 0x8D, 0x8A, 0xC1, 0x8C, 0x6A, 0x24, 0xC3,  // .....j$.
-                /* 06F0 */  0x62, 0x4F, 0x02, 0x6C, 0x1E, 0xFC, 0xB4, 0xE0,  // bO.l....
-                /* 06F8 */  0xC3, 0x0D, 0x56, 0xD4, 0xD9, 0x07, 0x2D, 0xE8,  // ..V...-.
-                /* 0700 */  0x38, 0xA0, 0x19, 0x1E, 0xC0, 0x11, 0xBE, 0xFB,  // 8.......
-                /* 0708 */  0x18, 0xE4, 0x35, 0xC1, 0x97, 0x3D, 0x5F, 0x06,  // ..5..=_.
-                /* 0710 */  0xC9, 0x39, 0x03, 0x15, 0x1F, 0x42, 0xE1, 0xAF,  // .9...B..
-                /* 0718 */  0x9D, 0xA8, 0xB8, 0x60, 0x14, 0xC4, 0xE7, 0x0C,  // ...`....
-                /* 0720 */  0x47, 0xB9, 0x76, 0xA2, 0xCF, 0x0C, 0x3E, 0x1F,  // G.v...>.
-                /* 0728 */  0x79, 0x12, 0xAF, 0x49, 0x46, 0x49, 0xE0, 0x7B,  // y..IFI.{
-                /* 0730 */  0x27, 0xB8, 0x09, 0x7C, 0xEF, 0x04, 0x26, 0xFF,  // '..|..&.
-                /* 0738 */  0xFF, 0x73, 0x05, 0xD8, 0x2E, 0xAD, 0x3E, 0x57,  // .s....>W
-                /* 0740 */  0x80, 0x4B, 0xC5, 0xB9, 0x02, 0xE8, 0x8E, 0xEE,  // .K......
-                /* 0748 */  0xB9, 0x02, 0x2C, 0xC3, 0x7D, 0x54, 0xF0, 0x1C,  // ..,.}T..
-                /* 0750 */  0xCE, 0xF3, 0x84, 0x8C, 0xF8, 0x5E, 0xC1, 0x3C,  // .....^.<
-                /* 0758 */  0xDE, 0x16, 0xE8, 0xF9, 0xC1, 0xC3, 0xC1, 0x88,  // ........
-                /* 0760 */  0x3E, 0x3A, 0xA0, 0x05, 0x1F, 0x1D, 0x20, 0x4D,  // >:.... M
-                /* 0768 */  0xC9, 0x27, 0x1E, 0xC0, 0xD9, 0xFF, 0xFF, 0xC4,  // .'......
-                /* 0770 */  0x03, 0x58, 0x39, 0x4A, 0x80, 0x6F, 0xDC, 0x3E,  // .X9J.o.>
-                /* 0778 */  0x4A, 0x00, 0x56, 0x46, 0x7A, 0xAC, 0x8F, 0x12,  // J.VFz...
-                /* 0780 */  0x30, 0x07, 0x79, 0x18, 0x18, 0x89, 0x47, 0x09,  // 0.y...G.
-                /* 0788 */  0x94, 0xA8, 0x93, 0x8A, 0x8F, 0x12, 0x28, 0xF4,  // ......(.
-                /* 0790 */  0x03, 0x60, 0xB0, 0x86, 0x78, 0x5A, 0x0C, 0xE2,  // .`..xZ..
-                /* 0798 */  0xFB, 0xC1, 0x7B, 0x0D, 0x3F, 0xD8, 0x80, 0xFB,  // ..{.?...
-                /* 07A0 */  0xFF, 0x7F, 0xB0, 0x01, 0x6C, 0x2E, 0xD5, 0xC7,  // ....l...
-                /* 07A8 */  0x07, 0x70, 0x9D, 0x13, 0x7C, 0x7C, 0x00, 0xAE,  // .p..||..
-                /* 07B0 */  0x82, 0x0F, 0x36, 0x20, 0xC7, 0xE1, 0x37, 0x06,  // ..6 ..7.
-                /* 07B8 */  0xEC, 0xDD, 0x06, 0x17, 0xE2, 0x04, 0x81, 0x16,  // ........
-                /* 07C0 */  0x7E, 0x82, 0x00, 0xC1, 0xFF, 0xFF, 0x7A, 0xC3,  // ~.....z.
-                /* 07C8 */  0xCF, 0x37, 0x00, 0x93, 0x8E, 0xC0, 0x3E, 0x51,  // .7....>Q
-                /* 07D0 */  0x80, 0xEB, 0x18, 0xEC, 0x13, 0x05, 0x70, 0x3D,  // ......p=
-                /* 07D8 */  0xE4, 0x91, 0xB1, 0x20, 0xFE, 0xFF, 0xE7, 0x1B,  // ... ....
-                /* 07E0 */  0xF0, 0x9D, 0x28, 0xE0, 0x5D, 0x71, 0x70, 0x67,  // ..(.]qpg
-                /* 07E8 */  0x00, 0x1D, 0x29, 0x50, 0x1C, 0x16, 0x75, 0xA4,  // ..)P..u.
-                /* 07F0 */  0x40, 0x81, 0xC4, 0x7F, 0x5B, 0x09, 0x72, 0xC6,  // @...[.r.
-                /* 07F8 */  0x1E, 0xD3, 0x13, 0x0E, 0xC0, 0x88, 0x03, 0x04,  // ........
-                /* 0800 */  0xF8, 0x74, 0x1C, 0x20, 0x40, 0xFE, 0xFF, 0x3F,  // .t. @..?
-                /* 0808 */  0x40, 0x00, 0xB7, 0x13, 0x0E, 0x1C, 0xAC, 0x40,  // @......@
-                /* 0810 */  0x07, 0x1F, 0xE4, 0x74, 0x8F, 0xF0, 0x74, 0x0C,  // ...t..t.
-                /* 0818 */  0x76, 0x8C, 0x9E, 0xDA, 0xB3, 0xB5, 0x8F, 0x38,  // v......8
-                /* 0820 */  0x98, 0x08, 0x07, 0x08, 0xF4, 0xA9, 0xD7, 0x07,  // ........
-                /* 0828 */  0x08, 0x78, 0x07, 0x1C, 0x80, 0x3D, 0xFF, 0xFF,  // .x...=..
-                /* 0830 */  0x03, 0x05, 0x8C, 0x23, 0x89, 0x0F, 0x14, 0xE0,  // ...#....
-                /* 0838 */  0xF2, 0x71, 0xA0, 0x00, 0xBA, 0xE3, 0x79, 0xA0,  // .q....y.
-                /* 0840 */  0x00, 0x5E, 0x27, 0x1C, 0xB0, 0x69, 0x3B, 0xE1,  // .^'..i;.
-                /* 0848 */  0x00, 0x12, 0xFF, 0xFF, 0x27, 0x1C, 0xC0, 0xC2,  // ....'...
-                /* 0850 */  0x58, 0x7C, 0xC2, 0x01, 0x6C, 0xDD, 0x17, 0x9E,  // X|..l...
-                /* 0858 */  0x70, 0xC0, 0x7F, 0x80, 0xC0, 0x9D, 0x70, 0x80,  // p.....p.
-                /* 0860 */  0xF9, 0xFF, 0xFF, 0x84, 0x03, 0xB0, 0xE0, 0x08,  // ........
-                /* 0868 */  0xE0, 0x13, 0x0E, 0x60, 0xEB, 0x40, 0x01, 0xEF,  // ...`.@..
-                /* 0870 */  0x84, 0x83, 0x15, 0x77, 0xA2, 0x40, 0x9D, 0x0C,  // ...w.@..
-                /* 0878 */  0x2C, 0xE9, 0x08, 0x06, 0xE1, 0xFF, 0x0F, 0x12,  // ,.......
-                /* 0880 */  0x3B, 0x6C, 0xF8, 0xC7, 0x19, 0x1F, 0xA1, 0x01,  // ;l......
-                /* 0888 */  0xE6, 0x28, 0x39, 0x42, 0x03, 0xB2, 0x4E, 0x5C,  // .(9B..N\
-                /* 0890 */  0x1C, 0xDB, 0xFF, 0xFF, 0xEB, 0x02, 0x83, 0xA9,  // ........
-                /* 0898 */  0x15, 0x43, 0x30, 0x6F, 0x05, 0x8F, 0x0F, 0x60,  // .C0o...`
-                /* 08A0 */  0x39, 0xDF, 0xF8, 0xF8, 0x00, 0x70, 0xC8, 0xC9,  // 9....p..
-                /* 08A8 */  0xF1, 0x01, 0x10, 0xF0, 0xFF, 0x3F, 0xCE, 0x80,  // .....?..
-                /* 08B0 */  0xF3, 0xF8, 0x00, 0x53, 0xDE, 0xF1, 0x01, 0x35,  // ...S...5
-                /* 08B8 */  0x10, 0x0B, 0x3A, 0xD0, 0x23, 0x4F, 0x0A, 0xD8,  // ..:.#O..
-                /* 08C0 */  0xD3, 0x03, 0xC0, 0x83, 0xB3, 0x15, 0xF8, 0xBC,  // ........
-                /* 08C8 */  0x9C, 0x1E, 0x80, 0xCC, 0xFF, 0xFF, 0x6C, 0x05,  // ......l.
-                /* 08D0 */  0x5C, 0x0E, 0xEF, 0x70, 0x70, 0x83, 0xFA, 0xE8,  // \..pp...
-                /* 08D8 */  0x1E, 0xEA, 0xFD, 0x9D, 0x9D, 0x0E, 0x30, 0x87,  // ......0.
-                /* 08E0 */  0x08, 0x8F, 0x23, 0xD8, 0x29, 0x74, 0x7D, 0xF2,  // ..#.)t}.
-                /* 08E8 */  0x63, 0xE7, 0x07, 0x88, 0xC6, 0xEE, 0x0F, 0x10,  // c.......
-                /* 08F0 */  0xCE, 0x0F, 0x00, 0x0F, 0x62, 0x43, 0xE8, 0xFC,  // ....bC..
-                /* 08F8 */  0x00, 0x2E, 0x38, 0x9F, 0x1F, 0xB0, 0xFF, 0xFF,  // ..8.....
-                /* 0900 */  0xF3, 0x03, 0xB0, 0x9B, 0xE3, 0xF3, 0x03, 0xB8,  // ........
-                /* 0908 */  0x8E, 0x0A, 0x2F, 0x0E, 0x70, 0x0F, 0x0E, 0x30,  // ../.p..0
-                /* 0910 */  0x6F, 0x78, 0x3E, 0x38, 0x00, 0xBC, 0xF9, 0xFF,  // ox>8....
-                /* 0918 */  0x1F, 0x1C, 0xB0, 0x66, 0x0E, 0x0E, 0x80, 0x9C,  // ...f....
-                /* 0920 */  0xD3, 0x9D, 0x0F, 0x0E, 0x30, 0xA5, 0x1C, 0x1C,  // ....0...
-                /* 0928 */  0x50, 0x52, 0x8E, 0xBE, 0xF4, 0x3C, 0xC5, 0x27,  // PR...<.'
-                /* 0930 */  0xE3, 0x19, 0xFA, 0x38, 0x05, 0x70, 0x21, 0xF2,  // ...8.p!.
-                /* 0938 */  0xB9, 0x81, 0xFC, 0xFF, 0xCF, 0x0D, 0x60, 0x52,  // ......`R
-                /* 0940 */  0x73, 0x6E, 0x00, 0xBA, 0xC7, 0x6A, 0xF0, 0x1C,  // sn...j..
-                /* 0948 */  0xA7, 0x38, 0x60, 0x90, 0x43, 0x0D, 0x11, 0xE5,  // .8`.C...
-                /* 0950 */  0x5D, 0x01, 0x23, 0xEC, 0x88, 0x09, 0xC5, 0x33,  // ].#....3
-                /* 0958 */  0x9A, 0x66, 0x74, 0x4E, 0xBE, 0x0E, 0x3C, 0xBE,  // .ftN..<.
-                /* 0960 */  0x00, 0x0C, 0xF8, 0xFF, 0x9F, 0x1B, 0x60, 0x0D,  // ......`.
-                /* 0968 */  0xD7, 0xE7, 0x06, 0x70, 0xB9, 0x39, 0x37, 0x00,  // ...p.97.
-                /* 0970 */  0x5D, 0xB1, 0xE7, 0x06, 0xD0, 0x4C, 0xF3, 0x74,  // ]....L.t
-                /* 0978 */  0x8F, 0xA1, 0xC7, 0xC1, 0x0A, 0xF1, 0x48, 0xA3,  // ......H.
-                /* 0980 */  0x04, 0x7A, 0x09, 0x78, 0x82, 0x81, 0x7B, 0x78,  // .z.x..{x
-                /* 0988 */  0x80, 0x8B, 0xF9, 0xF0, 0x00, 0x38, 0xFD, 0xFF,  // .....8..
-                /* 0990 */  0x1F, 0x1E, 0x80, 0xF5, 0x08, 0x7D, 0x78, 0x00,  // .....}x.
-                /* 0998 */  0x1C, 0x89, 0x3C, 0x3C, 0x40, 0x97, 0x75, 0xAA,  // ..<<@.u.
-                /* 09A0 */  0x43, 0x9F, 0xA6, 0x70, 0x83, 0x08, 0x7C, 0x8A,  // C..p..|.
-                /* 09A8 */  0x15, 0x5F, 0x37, 0x09, 0x81, 0x25, 0x9C, 0x1D,  // ._7..%..
-                /* 09B0 */  0x50, 0x83, 0x77, 0xF4, 0xB3, 0x03, 0x2A, 0x2C,  // P.w...*,
-                /* 09B8 */  0x18, 0x05, 0xF1, 0xD9, 0xC1, 0x41, 0x20, 0x64,  // .....A d
-                /* 09C0 */  0xE4, 0xEC, 0x80, 0x1E, 0xC6, 0x91, 0x79, 0x46,  // ......yF
-                /* 09C8 */  0xE7, 0x10, 0xE4, 0xCC, 0x13, 0x84, 0xF0, 0xD9,  // ........
-                /* 09D0 */  0x01, 0xCE, 0x45, 0xC1, 0xC3, 0xE6, 0x67, 0x07,  // ..E...g.
-                /* 09D8 */  0xB8, 0x07, 0x02, 0x43, 0xFD, 0xFF, 0x9F, 0x1D,  // ...C....
-                /* 09E0 */  0x60, 0xCE, 0xEF, 0xD9, 0x81, 0x89, 0x3B, 0x3A,  // `.....;:
-                /* 09E8 */  0x00, 0x95, 0x93, 0x87, 0x8F, 0x0E, 0xE0, 0xB2,  // ........
-                /* 09F0 */  0x73, 0x74, 0x00, 0xBA, 0x72, 0xCF, 0xBA, 0x20,  // st..r.. 
-                /* 09F8 */  0xD7, 0x79, 0x59, 0x40, 0xC1, 0x79, 0x1E, 0xC7,  // .yY@.y..
-                /* 0A00 */  0x61, 0xFC, 0x17, 0x60, 0x13, 0x94, 0x7C, 0x76,  // a..`..|v
-                /* 0A08 */  0x40, 0x49, 0x1A, 0xA6, 0x1F, 0x0B, 0x1A, 0x57,  // @I.....W
-                /* 0A10 */  0xE4, 0xF3, 0x3A, 0x0B, 0x8F, 0xFF, 0xF1, 0xC1,  // ..:.....
-                /* 0A18 */  0xB3, 0x0C, 0x73, 0x00, 0xF1, 0xDF, 0x25, 0x3C,  // ..s...%<
-                /* 0A20 */  0x16, 0x7E, 0x92, 0x01, 0xFF, 0xFD, 0x02, 0x77,  // .~.....w
-                /* 0A28 */  0x92, 0x81, 0xF1, 0xFF, 0x3F, 0xC9, 0x00, 0xA6,  // ....?...
-                /* 0A30 */  0xCE, 0x44, 0x3E, 0x3F, 0x80, 0x0B, 0xC2, 0xE7,  // .D>?....
-                /* 0A38 */  0x07, 0xE0, 0x1A, 0xE1, 0xFC, 0x00, 0x1A, 0x97,  // ........
-                /* 0A40 */  0x28, 0xBA, 0xBF, 0xF8, 0x68, 0xE7, 0x2B, 0x8C,  // (...h.+.
-                /* 0A48 */  0x41, 0x5E, 0x17, 0x60, 0x81, 0xC5, 0xA8, 0x19,  // A^.`....
-                /* 0A50 */  0x43, 0x23, 0x38, 0xB6, 0x58, 0xD1, 0x82, 0x85,  // C#8.X...
-                /* 0A58 */  0x39, 0x6F, 0x0F, 0xFD, 0x2C, 0xA3, 0x9C, 0x97,  // 9o..,...
-                /* 0A60 */  0x4F, 0x09, 0x06, 0x89, 0xEA, 0x29, 0xB0, 0x73,  // O....).s
-                /* 0A68 */  0x82, 0x4E, 0x9C, 0x50, 0x06, 0x70, 0x84, 0x8F,  // .N.P.p..
-                /* 0A70 */  0x57, 0x30, 0xFF, 0xFF, 0xA7, 0x08, 0xC0, 0xBE,  // W0......
-                /* 0A78 */  0xC0, 0x53, 0x04, 0xE8, 0x42, 0x9E, 0x22, 0x80,  // .S..B.".
-                /* 0A80 */  0x6E, 0xA0, 0x53, 0x04, 0x68, 0x86, 0xF9, 0xCE,  // n.S.h...
-                /* 0A88 */  0x00, 0xE3, 0xFA, 0xE0, 0xE3, 0x15, 0xEE, 0x0E,  // ........
-                /* 0A90 */  0xC1, 0x06, 0x7C, 0x04, 0x31, 0x4E, 0x28, 0xB0,  // ..|.1N(.
-                /* 0A98 */  0x6F, 0x58, 0xFE, 0xFF, 0xDF, 0x22, 0x3C, 0x85,  // oX..."<.
-                /* 0AA0 */  0xF7, 0x00, 0xEB, 0x42, 0xD1, 0x85, 0xBC, 0x3A,  // ...B...:
-                /* 0AA8 */  0x0C, 0x41, 0x07, 0x8E, 0xF0, 0x86, 0x63, 0xBC,  // .A....c.
-                /* 0AB0 */  0x67, 0x09, 0xDF, 0x0B, 0x62, 0x19, 0xDA, 0xB6,  // g...b...
-                /* 0AB8 */  0xE0, 0x90, 0x04, 0x85, 0x1E, 0x26, 0x50, 0xA2,  // .....&P.
-                /* 0AC0 */  0x20, 0x24, 0xEE, 0xC0, 0x45, 0xE6, 0xF3, 0x70,  //  $..E..p
-                /* 0AC8 */  0xE1, 0xE3, 0x5F, 0x4C, 0x9F, 0x08, 0x82, 0x18,  // .._L....
-                /* 0AD0 */  0xF6, 0x89, 0xD8, 0xB3, 0x32, 0xD2, 0x3B, 0x86,  // ....2.;.
-                /* 0AD8 */  0xCF, 0x57, 0x16, 0x72, 0xA2, 0x40, 0x9D, 0xBB,  // .W.r.@..
-                /* 0AE0 */  0x4C, 0xE2, 0x13, 0x05, 0x3F, 0xD7, 0x9A, 0xC9,  // L...?...
-                /* 0AE8 */  0x20, 0x3E, 0x51, 0x38, 0xCE, 0x89, 0x02, 0x3D,  //  >Q8...=
-                /* 0AF0 */  0x66, 0xDF, 0x54, 0xF9, 0x28, 0x3C, 0x53, 0x76,  // f.T.(<Sv
-                /* 0AF8 */  0x0F, 0xF0, 0x99, 0x02, 0x30, 0x37, 0x62, 0x9F,  // ....07b.
-                /* 0B00 */  0x29, 0xC0, 0x75, 0x80, 0xF2, 0x99, 0x02, 0x18,  // ).u.....
-                /* 0B08 */  0xFC, 0xFF, 0xCF, 0x14, 0x60, 0x42, 0xF5, 0x99,  // ....`B..
-                /* 0B10 */  0x02, 0x9C, 0x37, 0x03, 0x38, 0x77, 0x0A, 0x7E,  // ..7.8w.~
-                /* 0B18 */  0x76, 0xC0, 0x12, 0x94, 0x7F, 0x20, 0x45, 0x4B,  // v.... EK
-                /* 0B20 */  0x3E, 0xE0, 0x10, 0xC8, 0x13, 0xF1, 0xCD, 0x82,  // >.......
-                /* 0B28 */  0xA1, 0xBE, 0x02, 0x1C, 0xC4, 0x19, 0x7B, 0x58,  // ......{X
-                /* 0B30 */  0x16, 0x79, 0x82, 0x40, 0xC9, 0xA3, 0xD0, 0x81,  // .y.@....
-                /* 0B38 */  0xC2, 0x27, 0x08, 0x7E, 0xDE, 0x31, 0x98, 0x41,  // .'.~.1.A
-                /* 0B40 */  0x7C, 0x82, 0x70, 0xD4, 0x53, 0x20, 0x28, 0x82,  // |.p.S (.
-                /* 0B48 */  0x1D, 0x09, 0x7C, 0x0A, 0x84, 0x7E, 0xAC, 0x06,  // ..|..~..
-                /* 0B50 */  0xCF, 0x38, 0xB0, 0xAB, 0x7C, 0x4F, 0x6A, 0xFE,  // .8..|Oj.
-                /* 0B58 */  0x0E, 0x40, 0x8F, 0x85, 0x80, 0x8B, 0xFF, 0xFF,  // .@......
-                /* 0B60 */  0x79, 0x02, 0xAC, 0xB6, 0xCE, 0x13, 0x80, 0x96,  // y.......
-                /* 0B68 */  0x59, 0x3E, 0x3B, 0x60, 0x87, 0x71, 0x7C, 0xCF,  // Y>;`.q|.
-                /* 0B70 */  0x0E, 0xEC, 0x9E, 0xC3, 0xC7, 0x7B, 0x5A, 0xEC,  // .....{Z.
-                /* 0B78 */  0x62, 0xE8, 0x63, 0x8E, 0x4F, 0x87, 0x7D, 0x0D,  // b.c.O.}.
-                /* 0B80 */  0x5B, 0x47, 0x14, 0x72, 0xC6, 0x41, 0x0B, 0x3B,  // [G.r.A.;
-                /* 0B88 */  0xE3, 0x40, 0x05, 0x7B, 0xC4, 0xF0, 0x0C, 0x3D,  // .@.{...=
-                /* 0B90 */  0x07, 0x1F, 0xC2, 0x80, 0xC1, 0x20, 0xF0, 0x27,  // ..... .'
-                /* 0B98 */  0x1C, 0x60, 0xFA, 0xFF, 0x3F, 0xE1, 0x00, 0x9B,  // .`..?...
-                /* 0BA0 */  0x83, 0x2A, 0xF8, 0x74, 0x1D, 0x21, 0x80, 0xEE,  // .*.t.!..
-                /* 0BA8 */  0x41, 0x15, 0x3C, 0x27, 0x1C, 0xEC, 0xBD, 0x00,  // A.<'....
-                /* 0BB0 */  0x7B, 0xBE, 0x81, 0x27, 0xF1, 0x00, 0x81, 0xE2,  // {..'....
-                /* 0BB8 */  0xB0, 0xC4, 0x03, 0x04, 0xD4, 0x01, 0x9C, 0xD6,  // ........
-                /* 0BC0 */  0x53, 0x26, 0x3F, 0x3E, 0x70, 0x31, 0x14, 0x92,  // S&?>p1..
-                /* 0BC8 */  0x72, 0xC0, 0x41, 0x9D, 0x20, 0x7C, 0x76, 0xE6,  // r.A. |v.
-                /* 0BD0 */  0xC7, 0x07, 0x9F, 0x6B, 0x6C, 0xE3, 0xF8, 0x80,  // ...kl...
-                /* 0BD8 */  0x3A, 0x28, 0xFA, 0x12, 0x70, 0x1E, 0x8F, 0xD2,  // :(..p...
-                /* 0BE0 */  0x1E, 0xC4, 0x23, 0x46, 0x94, 0x83, 0x37, 0xC1,  // ..#F..7.
-                /* 0BE8 */  0x10, 0xE7, 0x07, 0x90, 0xFD, 0xFF, 0xCF, 0x0F,  // ........
-                /* 0BF0 */  0x30, 0x4E, 0xDB, 0xCF, 0x0F, 0xB0, 0x87, 0xF0,  // 0N......
-                /* 0BF8 */  0x8A, 0x53, 0xF5, 0xF9, 0x8D, 0x1E, 0x40, 0x4E,  // .S....@N
-                /* 0C00 */  0x08, 0x83, 0x17, 0xE5, 0x31, 0xD3, 0x18, 0x67,  // ....1..g
-                /* 0C08 */  0xEA, 0x53, 0x04, 0x30, 0x89, 0x7D, 0x8A, 0x00,  // .S.0.}..
-                /* 0C10 */  0x9D, 0xAF, 0x53, 0x04, 0xD0, 0x9D, 0xE3, 0x53,  // ..S....S
-                /* 0C18 */  0x04, 0x38, 0x4F, 0x00, 0xEF, 0x5C, 0xBE, 0xD2,  // .8O..\..
-                /* 0C20 */  0xB0, 0x63, 0x53, 0xA0, 0x1A, 0x07, 0xA9, 0x13,  // .cS.....
-                /* 0C28 */  0x04, 0x76, 0x84, 0x3E, 0x04, 0xC2, 0x3D, 0xCA,  // .v.>..=.
-                /* 0C30 */  0xB3, 0xD3, 0x80, 0xE7, 0xE4, 0x11, 0x1C, 0x18,  // ........
-                /* 0C38 */  0x39, 0x44, 0xA0, 0x28, 0x7C, 0x28, 0xF1, 0x21,  // 9D.(|(.!
-                /* 0C40 */  0x82, 0x07, 0x06, 0xA3, 0x20, 0x3E, 0x44, 0x38,  // .... >D8
-                /* 0C48 */  0xCC, 0x21, 0x80, 0xFC, 0xFF, 0x0F, 0x11, 0xD8,  // .!......
-                /* 0C50 */  0x51, 0xC0, 0x39, 0xD3, 0x00, 0xDE, 0x8E, 0x1F,  // Q.9.....
-                /* 0C58 */  0x3E, 0x3E, 0x80, 0xEB, 0xB0, 0xE4, 0xE3, 0x03,  // >>......
-                /* 0C60 */  0x70, 0x15, 0x7B, 0x7C, 0x00, 0x12, 0x97, 0x03,  // p.{|....
-                /* 0C68 */  0x18, 0x47, 0x2C, 0x1C, 0x87, 0x45, 0x0D, 0x53,  // .G,..E.S
-                /* 0C70 */  0x68, 0xEF, 0x06, 0xBE, 0x42, 0x18, 0xD6, 0x87,  // h...B...
-                /* 0C78 */  0x66, 0xDC, 0xFF, 0xFF, 0xD0, 0x0C, 0xB0, 0xE1,  // f.......
-                /* 0C80 */  0xC8, 0x07, 0xBE, 0x20, 0x27, 0x52, 0x40, 0xD3,  // ... 'R@.
-                /* 0C88 */  0xA1, 0x19, 0xE6, 0xFF, 0x7F, 0xC6, 0xAF, 0x0D,  // ........
-                /* 0C90 */  0xFC, 0x80, 0xE4, 0x81, 0xF8, 0x00, 0x01, 0xE7,  // ........
-                /* 0C98 */  0x96, 0x74, 0x00, 0xCF, 0x11, 0xCF, 0x13, 0x61,  // .t.....a
-                /* 0CA0 */  0x5F, 0x69, 0x7C, 0x80, 0x00, 0x98, 0x54, 0xE4,  // _i|...T.
-                /* 0CA8 */  0x00, 0x01, 0x08, 0xF8, 0xFF, 0x1F, 0x20, 0xC0,  // ...... .
-                /* 0CB0 */  0xEF, 0xF2, 0xDA, 0x40, 0x14, 0x5E, 0x1B, 0x10,  // ...@.^..
-                /* 0CB8 */  0x04, 0xA5, 0x1E, 0x20, 0x50, 0x92, 0x0E, 0x10,  // ... P...
-                /* 0CC0 */  0xF4, 0x74, 0xC5, 0x41, 0x9E, 0xDF, 0x3D, 0x8A,  // .t.A..=.
-                /* 0CC8 */  0x18, 0x81, 0xE3, 0x3E, 0x94, 0xBE, 0x61, 0xB1,  // ...>..a.
-                /* 0CD0 */  0xB1, 0x1E, 0xCE, 0xF1, 0xB3, 0x13, 0x04, 0x3F,  // .......?
-                /* 0CD8 */  0x40, 0x38, 0xFA, 0x09, 0x02, 0x15, 0x16, 0x8C,  // @8......
-                /* 0CE0 */  0x82, 0xF8, 0x04, 0xE1, 0x20, 0x27, 0x08, 0xF4,  // .... '..
-                /* 0CE8 */  0x58, 0xAD, 0x75, 0x0A, 0x64, 0x5C, 0x4F, 0xEC,  // X.u.d\O.
-                /* 0CF0 */  0x80, 0xBB, 0x13, 0xA3, 0x0F, 0x10, 0xE0, 0x4A,  // .......J
-                /* 0CF8 */  0x72, 0x80, 0x00, 0x02, 0xFF, 0xFF, 0x03, 0x04,  // r.......
-                /* 0D00 */  0xD8, 0xC4, 0x1F, 0x20, 0x40, 0xEE, 0xF1, 0xBE,  // ... @...
-                /* 0D08 */  0x80, 0x9C, 0xF3, 0x03, 0x43, 0xA8, 0x13, 0x7F,  // ....C...
-                /* 0D10 */  0x60, 0x60, 0xE7, 0x98, 0x07, 0x77, 0x36, 0x01,  // ``...w6.
-                /* 0D18 */  0x06, 0xF6, 0x8E, 0x80, 0x3B, 0x45, 0x80, 0xEB,  // ....;E..
-                /* 0D20 */  0x50, 0xF0, 0x14, 0x01, 0xB0, 0xE5, 0xFF, 0x7F,  // P.......
-                /* 0D28 */  0x8A, 0x80, 0xD1, 0xE4, 0x14, 0x01, 0xC8, 0x1B,  // ........
-                /* 0D30 */  0xFF, 0x53, 0x04, 0x78, 0x44, 0x4A, 0x18, 0x0D,  // .S.xDJ..
-                /* 0D38 */  0x13, 0x3B, 0x58, 0xC3, 0xA0, 0x34, 0x9C, 0x14,  // .;X..4..
-                /* 0D40 */  0xA0, 0x8C, 0xFD, 0xD0, 0x8F, 0xF8, 0xE0, 0xD8,  // ........
-                /* 0D48 */  0x81, 0xC2, 0x70, 0xFC, 0x58, 0xE0, 0xC1, 0x3D,  // ..p.X..=
-                /* 0D50 */  0xF0, 0x9C, 0xC7, 0xFB, 0xB0, 0x87, 0x72, 0x76,  // ......rv
-                /* 0D58 */  0x21, 0x99, 0xB4, 0x51, 0xA2, 0x8E, 0xA1, 0x3E,  // !..Q...>
-                /* 0D60 */  0x19, 0x9C, 0xD2, 0x11, 0xD5, 0x8E, 0xA8, 0x33,  // .......3
-                /* 0D68 */  0xBD, 0xEF, 0xCE, 0x3E, 0x10, 0x70, 0x34, 0x0E,  // ...>.p4.
-                /* 0D70 */  0x8D, 0x1D, 0x86, 0x6F, 0x0A, 0xC1, 0x5E, 0x31,  // ...o..^1
-                /* 0D78 */  0xD8, 0xE0, 0xD8, 0x84, 0x1E, 0x13, 0x1E, 0xB0,  // ........
-                /* 0D80 */  0xDF, 0x20, 0x0E, 0x3E, 0x6A, 0x8C, 0xE6, 0xA0,  // . .>j...
-                /* 0D88 */  0x88, 0xBC, 0xF1, 0x83, 0xE6, 0xD6, 0x70, 0xD4,  // ......p.
-                /* 0D90 */  0x07, 0x1C, 0xEE, 0x50, 0x5E, 0xE4, 0x39, 0xC1,  // ...P^.9.
-                /* 0D98 */  0x61, 0x84, 0xF7, 0xFF, 0xFF, 0x58, 0x80, 0xB9,  // a....X..
-                /* 0DA0 */  0x02, 0xB4, 0x7A, 0xB8, 0x40, 0xB8, 0x9F, 0x88,  // ..z.@...
-                /* 0DA8 */  0xEE, 0x49, 0x0F, 0x26, 0xCF, 0x14, 0xAD, 0x21,  // .I.&...!
-                /* 0DB0 */  0xC8, 0xDB, 0x2D, 0x40, 0xB6, 0x20, 0x04, 0x12,  // ..-@. ..
-                /* 0DB8 */  0xE9, 0x00, 0xA3, 0x1C, 0xD0, 0x19, 0x84, 0x88,  // ........
-                /* 0DC0 */  0x10, 0xE5, 0x8C, 0x22, 0x05, 0x39, 0x98, 0x28,  // ...".9.(
-                /* 0DC8 */  0x51, 0x43, 0xD5, 0x36, 0x37, 0x41, 0x44, 0x78,  // QC.67ADx
-                /* 0DD0 */  0x1C, 0x88, 0x14, 0x2B, 0x5A, 0x10, 0xDB, 0x1F,  // ...+Z...
-                /* 0DD8 */  0x04, 0x89, 0xFA, 0x10, 0xD1, 0x31, 0xC0, 0x91,  // .....1..
-                /* 0DE0 */  0x46, 0x83, 0x3A, 0x64, 0xF8, 0x28, 0xE0, 0xD1,  // F.:d.(..
-                /* 0DE8 */  0xBC, 0x1F, 0xF8, 0x1A, 0x65, 0x90, 0xC0, 0x67,  // ....e..g
-                /* 0DF0 */  0xF0, 0x8A, 0x8D, 0x39, 0x5E, 0xFA, 0x34, 0x02,  // ...9^.4.
-                /* 0DF8 */  0xEB, 0x50, 0xC7, 0x0E, 0x14, 0x60, 0x39, 0x8E,  // .P...`9.
-                /* 0E00 */  0x80, 0x61, 0x26, 0x07, 0xEF, 0xF9, 0xBC, 0xC2,  // .a&.....
-                /* 0E08 */  0x24, 0xB0, 0xFC, 0x41, 0xA0, 0x0E, 0x76, 0xFC,  // $..A..v.
-                /* 0E10 */  0x1E, 0xF2, 0xAE, 0x6D, 0xC8, 0x07, 0x00, 0x1F,  // ...m....
-                /* 0E18 */  0x1D, 0xC8, 0xE9, 0x85, 0x8E, 0x07, 0xFC, 0xC7,  // ........
-                /* 0E20 */  0x2F, 0x23, 0xBC, 0x28, 0x78, 0xBE, 0x3E, 0x17,  // /#.(x.>.
-                /* 0E28 */  0x33, 0x27, 0xE3, 0x41, 0x83, 0xBE, 0x1D, 0xF0,  // 3'.A....
-                /* 0E30 */  0x7B, 0x01, 0x8B, 0x37, 0x6A, 0x2A, 0xEA, 0x90,  // {..7j*..
-                /* 0E38 */  0x82, 0x3A, 0x49, 0xF8, 0x10, 0xC1, 0x10, 0x5F,  // .:I...._
-                /* 0E40 */  0x36, 0x0C, 0xF1, 0x8C, 0xC2, 0x0E, 0x3A, 0x3E,  // 6.....:>
-                /* 0E48 */  0xED, 0xC3, 0xFE, 0xFF, 0x9F, 0x1C, 0x30, 0xC7,  // ......0.
-                /* 0E50 */  0x81, 0x20, 0x71, 0x7C, 0x5C, 0x78, 0xC4, 0xF0,  // . q|\x..
-                /* 0E58 */  0xF1, 0x03, 0x87, 0xF3, 0xDE, 0xE2, 0xBB, 0x88,  // ........
-                /* 0E60 */  0xE1, 0xDE, 0x2D, 0x3C, 0x94, 0x28, 0x2F, 0x11,  // ..-<.(/.
-                /* 0E68 */  0x1E, 0x28, 0x18, 0xCE, 0x22, 0x4F, 0x39, 0x60,  // .(.."O9`
-                /* 0E70 */  0x04, 0x39, 0x80, 0x23, 0x0B, 0x75, 0x22, 0xC6,  // .9.#.u".
-                /* 0E78 */  0xF0, 0xED, 0x24, 0xC4, 0x71, 0x85, 0x7A, 0xAE,  // ..$.q.z.
-                /* 0E80 */  0xC7, 0x8F, 0xD1, 0x03, 0xE0, 0x80, 0x0F, 0x3C,  // .......<
-                /* 0E88 */  0x6C, 0x00, 0xEF, 0x3C, 0x06, 0x3F, 0x1E, 0x4F,  // l..<.?.O
-                /* 0E90 */  0xCD, 0x93, 0xF4, 0x80, 0x8F, 0xCF, 0xD3, 0x3B,  // .......;
-                /* 0E98 */  0xC9, 0x73, 0x7A, 0x15, 0x78, 0xDE, 0x60, 0x47,  // .sz.x.`G
-                /* 0EA0 */  0x00, 0x0F, 0x81, 0x9F, 0x23, 0x3C, 0x04, 0x3E,  // ....#<.>
-                /* 0EA8 */  0x80, 0x27, 0x8E, 0xD3, 0xF3, 0x59, 0xE6, 0xA4,  // .'...Y..
-                /* 0EB0 */  0x70, 0x07, 0x16, 0x7E, 0x25, 0xC0, 0x1C, 0x84,  // p..~%...
-                /* 0EB8 */  0x70, 0x0A, 0x6D, 0xFA, 0xD4, 0x68, 0xD4, 0xAA,  // p.m..h..
-                /* 0EC0 */  0x41, 0x99, 0x1A, 0x65, 0x1A, 0xD4, 0xEA, 0x53,  // A..e...S
-                /* 0EC8 */  0xA9, 0x31, 0x63, 0x7A, 0x8F, 0x1A, 0x7E, 0x37,  // .1cz..~7
-                /* 0ED0 */  0xE8, 0x5C, 0xE0, 0xE0, 0xCF, 0x21, 0x81, 0x58,  // .\...!.X
-                /* 0ED8 */  0x90, 0x09, 0x10, 0x16, 0xF4, 0xED, 0x20, 0x10,  // ...... .
-                /* 0EE0 */  0xCB, 0x7C, 0x3B, 0x08, 0xC4, 0xA1, 0x6C, 0x40,  // .|;...l@
-                /* 0EE8 */  0x34, 0x02, 0xA2, 0x88, 0x20, 0x02, 0xB2, 0x98,  // 4... ...
-                /* 0EF0 */  0x55, 0x0B, 0xC8, 0xCA, 0x40, 0x04, 0xE4, 0x3C,  // U...@..<
-                /* 0EF8 */  0x40, 0x34, 0x1C, 0x10, 0x4D, 0x41, 0x23, 0x20,  // @4..MA# 
-                /* 0F00 */  0x67, 0xA2, 0x10, 0x90, 0x13, 0xBE, 0x1D, 0x04,  // g.......
-                /* 0F08 */  0xE4, 0xBC, 0x20, 0x02, 0xB2, 0xCE, 0x27, 0x83,  // .. ...'.
-                /* 0F10 */  0x80, 0xAC, 0x1A, 0x44, 0x40, 0x4E, 0x0B, 0x44,  // ...D@N.D
-                /* 0F18 */  0xB3, 0x03, 0x51, 0x15, 0x5E, 0x80, 0x98, 0x24,  // ..Q.^..$
-                /* 0F20 */  0x10, 0x01, 0x39, 0x88, 0x97, 0xFF, 0x3F, 0x10,  // ..9...?.
-                /* 0F28 */  0x4B, 0x05, 0x44, 0xE5, 0xBF, 0x02, 0x04, 0xE4,  // K.D.....
-                /* 0F30 */  0x30, 0x20, 0x02, 0x72, 0x30, 0x35, 0x40, 0x2C,  // 0 .r05@,
-                /* 0F38 */  0x25, 0x88, 0x80, 0xAC, 0xCD, 0x0D, 0x10, 0x13,  // %.......
-                /* 0F40 */  0x0A, 0x22, 0x20, 0x2B, 0x5A, 0xBF, 0x80, 0xAC,  // ." +Z...
-                /* 0F48 */  0x0F, 0x44, 0x40, 0xD6, 0xAD, 0x07, 0x88, 0xA5,  // .D@.....
-                /* 0F50 */  0x00, 0x11, 0x90, 0x15, 0x18, 0x02, 0x62, 0x7A,  // ......bz
-                /* 0F58 */  0x40, 0x04, 0xE4, 0x34, 0x8E, 0x80, 0x58, 0x36,  // @..4..X6
-                /* 0F60 */  0x10, 0x01, 0x59, 0x83, 0x26, 0x20, 0xA6, 0x08,  // ..Y.& ..
-                /* 0F68 */  0x44, 0x40, 0x56, 0xF7, 0xCA, 0x10, 0x90, 0xB5,  // D@V.....
-                /* 0F70 */  0x82, 0x68, 0xA0, 0x44, 0xD5, 0x40, 0x29, 0x88,  // .h.D.@).
-                /* 0F78 */  0x80, 0x9C, 0xFF, 0x59, 0x25, 0x20, 0xAB, 0x79,  // ...Y% .y
-                /* 0F80 */  0xCC, 0x04, 0x22, 0x09, 0x7C, 0x01, 0xB1, 0x3C,  // ..".|..<
-                /* 0F88 */  0x20, 0x02, 0x26, 0xAF, 0x99, 0xC0, 0x0C, 0x44,  //  .&....D
-                /* 0F90 */  0x40, 0xD6, 0xF8, 0x0A, 0x12, 0x90, 0x15, 0x83,  // @.......
-                /* 0F98 */  0x08, 0x98, 0xBC, 0x6B, 0x02, 0x33, 0x10, 0x01,  // ...k.3..
-                /* 0FA0 */  0x39, 0x9D, 0x38, 0x20, 0x96, 0x15, 0x44, 0x40,  // 9.8 ..D@
-                /* 0FA8 */  0xCE, 0xAD, 0x0E, 0x88, 0xA9, 0x70, 0x07, 0xC4,  // .....p..
-                /* 0FB0 */  0x54, 0xD9, 0x03, 0x62, 0x1A, 0x41, 0x04, 0x64,  // T..b.A.d
-                /* 0FB8 */  0x95, 0xFE, 0x80, 0x98, 0x66, 0x10, 0x01, 0x59,  // ....f..Y
-                /* 0FC0 */  0xF3, 0xC7, 0x21, 0x10, 0x49, 0x00, 0xA2, 0x81,  // ..!.I...
-                /* 0FC8 */  0x90, 0x57, 0x87, 0x06, 0x42, 0x40, 0x04, 0xE4,  // .W..B@..
-                /* 0FD0 */  0x64, 0x4F, 0x0A, 0x01, 0x39, 0x27, 0x88, 0x80,  // dO..9'..
-                /* 0FD8 */  0x9C, 0xF7, 0x25, 0x14, 0x88, 0xA4, 0x07, 0x11,  // ..%.....
-                /* 0FE0 */  0x90, 0xB5, 0xA8, 0x3C, 0x2C, 0x50, 0x10, 0x01,  // ...<,P..
-                /* 0FE8 */  0x59, 0xF5, 0x6B, 0x22, 0x10, 0xC9, 0x00, 0x22,  // Y.k"..."
-                /* 0FF0 */  0x20, 0x67, 0x7F, 0x66, 0x04, 0x22, 0x4A, 0x7C,  //  g.f."J|
-                /* 0FF8 */  0x02, 0x31, 0xED, 0x46, 0x81, 0x58, 0x12, 0x10,  // .1.F.X..
-                /* 1000 */  0x0D, 0x90, 0xFC, 0x2B, 0x34, 0x40, 0x02, 0x22,  // ...+4@."
-                /* 1008 */  0x60, 0xF2, 0xBF, 0x08, 0xCC, 0x5E, 0x1F, 0x07,  // `....^..
-                /* 1010 */  0xCC, 0x9E, 0x36, 0x1A, 0x30, 0x01, 0x11, 0x90,  // ..6.0...
-                /* 1018 */  0xD5, 0xAB, 0x05, 0x62, 0x59, 0x40, 0x34, 0x00,  // ...bY@4.
-                /* 1020 */  0x22, 0xF7, 0xFF, 0x3F, 0x00, 0x0A, 0x22, 0x20,  // "..?.." 
-                /* 1028 */  0xA7, 0x7F, 0x5F, 0x08, 0xC8, 0x5A, 0xBE, 0x1C,  // .._..Z..
-                /* 1030 */  0x0F, 0x11, 0xEC, 0xF5, 0xF1, 0x10, 0xC1, 0x40,  // .......@
-                /* 1038 */  0x04, 0xE4, 0xC4, 0xAF, 0x18, 0x81, 0x58, 0xEF,  // ......X.
-                /* 1040 */  0x8F, 0x47, 0x20, 0xD6, 0xF7, 0x0B, 0x09, 0x42,  // .G ....B
-                /* 1048 */  0xFE, 0xFF                                       // ..
-            })
-        }
-
         OperationRegion (CP17, SystemMemory, 0x0357F000, 0x10)
         Field (CP17, DWordAcc, NoLock, Preserve)
         {
@@ -88788,36 +87187,8 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             Name (_CID, "ACPI\\PNP0D15")  // _CID: Compatible ID
             Name (_UID, One)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
-            Name (_S0W, 0x03)  // _S0W: S0 Device Wake State
             Name (_ADR, Zero)  // _ADR: Address
-            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
-            {
-                Name (RBUF, ResourceTemplate ()
-                {
-                    Memory32Fixed (ReadWrite,
-                        0x0A800000,         // Address Base
-                        0x000FFFFF,         // Address Length
-                        )
-                    Interrupt (ResourceConsumer, Level, ActiveHigh, Shared, ,, )
-                    {
-                        0x000000A3,
-                    }
-                })
-                Local0 = RBUF /* \_SB_.USB0._CRS.RBUF */
-                ConcatenateResTemplate (Local0, ResourceTemplate ()
-                    {
-                        Interrupt (ResourceConsumer, Level, ActiveHigh, SharedAndWake, ,, )
-                        {
-                            0x0000017B,
-                        }
-                        Interrupt (ResourceConsumer, Level, ActiveHigh, SharedAndWake, ,, )
-                        {
-                            0x00000113,
-                        }
-                    }, Local1)
-                Return (Local1)
-            }
-
+            Name (_S0W, 0x03)  // _S0W: S0 Device Wake State
             Name (_PLD, Package (0x01)  // _PLD: Physical Location of Device
             {
                 ToPLD (
@@ -88857,95 +87228,49 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 Zero, 
                 Zero
             })
-            Name (STVL, 0x0F)
+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+            {
+                Memory32Fixed (ReadWrite,
+                    0x0A800000,         // Address Base
+                    0x000FFFFF,         // Address Length
+                    )
+                Interrupt (ResourceConsumer, Level, ActiveHigh, Shared, ,, )
+                {
+                    0x000000A3,
+                }
+                Interrupt (ResourceConsumer, Level, ActiveHigh, SharedAndWake, ,, )
+                {
+                    0x0000017B,
+                }
+                Interrupt (ResourceConsumer, Level, ActiveHigh, SharedAndWake, ,, )
+                {
+                    0x00000113,
+                }
+            })
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
-                Return (STVL) /* \_SB_.USB0.STVL */
+                Return (0x0F)
             }
 
-            Method (_DIS, 0, NotSerialized)  // _DIS: Disable Device
+            Method (CCVL, 0, NotSerialized)
             {
+                Return (\_SB.CCST)
             }
 
-            Method (REMD, 0, NotSerialized)
+            Method (HSEN, 0, NotSerialized)
             {
-                STVL = Zero
-                Notify (\_SB.USB0, One) // Device Check
-            }
-
-            Method (ADDD, 0, NotSerialized)
-            {
-                STVL = 0x0F
-                Notify (\_SB.USB0, One) // Device Check
-            }
-
-            Device (RHUB)
-            {
-                Name (_ADR, Zero)  // _ADR: Address
-                Device (PRT1)
-                {
-                    Name (_ADR, One)  // _ADR: Address
-                    Name (_UPC, Package (0x04)  // _UPC: USB Port Capabilities
-                    {
-                        Zero, 
-                        0xFF, 
-                        Zero, 
-                        Zero
-                    })
-                    Device (HS02)
-                    {
-                        Name (_ADR, 0x02)  // _ADR: Address
-                        Device (DCAM)
-                        {
-                            Name (_ADR, 0x02)  // _ADR: Address
-                            Name (_PLD, Package (0x01)  // _PLD: Physical Location of Device
-                            {
-                                ToPLD (
-                                    PLD_Revision           = 0x2,
-                                    PLD_IgnoreColor        = 0x1,
-                                    PLD_Red                = 0x0,
-                                    PLD_Green              = 0x0,
-                                    PLD_Blue               = 0x0,
-                                    PLD_Width              = 0x0,
-                                    PLD_Height             = 0x0,
-                                    PLD_UserVisible        = 0x0,
-                                    PLD_Dock               = 0x0,
-                                    PLD_Lid                = 0x0,
-                                    PLD_Panel              = "FRONT",
-                                    PLD_VerticalPosition   = "UPPER",
-                                    PLD_HorizontalPosition = "LEFT",
-                                    PLD_Shape              = "UNKNOWN",
-                                    PLD_GroupOrientation   = 0x0,
-                                    PLD_GroupToken         = 0x0,
-                                    PLD_GroupPosition      = 0x0,
-                                    PLD_Bay                = 0x0,
-                                    PLD_Ejectable          = 0x0,
-                                    PLD_EjectRequired      = 0x0,
-                                    PLD_CabinetNumber      = 0x0,
-                                    PLD_CardCageNumber     = 0x0,
-                                    PLD_Reference          = 0x0,
-                                    PLD_Rotation           = 0x0,
-                                    PLD_Order              = 0x0)
-
-                            })
-                        }
-                    }
-                }
-
-                Device (PRT2)
-                {
-                    Name (_ADR, 0x02)  // _ADR: Address
-                    Name (_UPC, Package (0x04)  // _UPC: USB Port Capabilities
-                    {
-                        Zero, 
-                        0xFF, 
-                        Zero, 
-                        Zero
-                    })
-                }
+                Return (\_SB.HSFL)
             }
         }
-
+        Name (CCST, Buffer (One)
+        {
+             0x02                                             // .
+        })
+        Name (HSFL, Buffer (One)
+        {
+             0x00                                             // .
+        })
+        
         Device (SEN1)
         {
             Name (_DEP, Package (0x02)  // _DEP: Dependencies
