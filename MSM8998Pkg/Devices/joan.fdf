@@ -231,9 +231,18 @@ APRIORI DXE {
         SECTION RAW = MSM8998Pkg/AcpiTables/joan/dsdt.aml
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/Csrt.acp
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/dbg2.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/asus/Facp.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/asus/Facs.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/asus/Gtdt.acp
+        #SECTION RAW = MSM8998Pkg/AcpiTables/asus/Facp.acp
+        #SECTION RAW = MSM8998Pkg/AcpiTables/asus/Facs.acp
+        
+		SECTION RAW = MSM8998Pkg/AcpiTables/joan/TEST/acpi-hp-envy-x2-facs.dat
+		SECTION RAW = MSM8998Pkg/AcpiTables/joan/TEST/acpi-hp-envy-x2-facp.dat
+		#SECTION RAW = MSM8998Pkg/AcpiTables/joan/TEST/acpi-hp-envy-x2-ssdt.dat
+		SECTION RAW = MSM8998Pkg/AcpiTables/joan/TEST/acpi-hp-envy-x2-ssdt1.dat
+		SECTION RAW = MSM8998Pkg/AcpiTables/joan/TEST/acpi-hp-envy-x2-ssdt2.dat
+		SECTION RAW = MSM8998Pkg/AcpiTables/joan/TEST/acpi-hp-envy-x2-ssdt3.dat
+		SECTION RAW = MSM8998Pkg/AcpiTables/joan/TEST/acpi-hp-envy-x2-xsdt.dat
+		
+		SECTION RAW = MSM8998Pkg/AcpiTables/asus/Gtdt.acp
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/IORT.acp
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/Madt.acp
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/Mcfg.acp

@@ -5,49 +5,49 @@
 
     FILE DRIVER = f541d663-4a48-40aa-aabf-ff158ccae34c {
     SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/SmemDxe/SmemDxe.depex
-    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/SmemDxe/SmemDxe.efi
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/joan/SmemDxe.efi
     SECTION UI = "SmemDxe"
     }
 
     FILE DRIVER = 8e9bd160-b184-11df-94e2-0800200c9a66 {
     SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/DALSys/DALSys.depex
-    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/DALSys/DALSys.efi
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/joan/DALSys.efi
     SECTION UI = "DALSys"
     }
 
     FILE DRIVER = af9763a2-033b-4109-8e17-56a98d380c92 {
     SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/HWIODxeDriver/HWIODxeDriver.depex
-    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/HWIODxeDriver/HWIODxeDriver.efi
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/joan/HWIODxeDriver.efi
     SECTION UI = "HWIODxeDriver"
     }
 
     FILE DRIVER = 10e193df-9966-44e7-b17c-59dd831e20fc {
     SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/ChipInfo/ChipInfo.depex
-    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/ChipInfo/ChipInfo.efi
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/joan/ChipInfo.efi
     SECTION UI = "ChipInfo"
     }
 
     FILE DRIVER = b105211b-bbbd-4add-a3b0-d1cf4a52154c {
     SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/PlatformInfoDxeDriver/PlatformInfoDxeDriver.depex
-    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/PlatformInfoDxeDriver/PlatformInfoDxeDriver.efi
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/joan/PlatformInfoDxeDriver.efi
     SECTION UI = "PlatformInfoDxeDriver"
     }
 
     FILE DRIVER = 7942a7eb-b7d5-4e2e-b908-831e4de55b58 {
     SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/GlinkDxe/GlinkDxe.depex
-    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/GlinkDxe/GlinkDxe.efi
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/joan/GlinkDxe.efi
     SECTION UI = "GlinkDxe"
     }
 
     FILE DRIVER = e43128a8-8692-42b6-8afa-676158578d18 {
     SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/ULogDxe/ULogDxe.depex
-    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/ULogDxe/ULogDxe.efi
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/joan/ULogDxe.efi
     SECTION UI = "ULogDxe"
     }
 
     FILE DRIVER = cb29f4d1-7f37-4692-a416-93e82e219711 {
     SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/NpaDxe/NpaDxe.depex
-    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/NpaDxe/NpaDxe.efi
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/joan/NpaDxe.efi
     SECTION UI = "NpaDxe"
     }
 
@@ -65,13 +65,13 @@
 
     FILE DRIVER = 8681cc5a-0df6-441e-b4b8-e915c538f067 {
     SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/DALTLMM/DALTLMM.depex
-    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/DALTLMM/DALTLMM.efi
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/joan/DALTLMM.efi
     SECTION UI = "DALTLMM"
     }
 
     FILE DRIVER = 2a7b4bef-80cd-49e1-b473-374ba4d673fc {
     SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/SPMI/SPMI.depex
-    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/SPMI/SPMI.efi
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/joan/SPMI.efi
     SECTION UI = "SPMI"
     }
 
@@ -83,19 +83,19 @@
 
     FILE DRIVER = C44697D5-B4AA-4030-9749-29860844183D {
     SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/PmicDxe/PmicDxe.depex
-    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/PmicDxe/PmicDxe.efi
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/joan/PmicDxe.efi
     SECTION UI = "PmicDxe"
     }
 
     FILE DRIVER = 7a32bd23-f735-4f57-aa1a-447d2fe3be0d {
     SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/SPI/SPI.depex
-    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/SPI/SPI.efi
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/joan/SPI.efi
     SECTION UI = "SPI"
     }
 
     FILE DRIVER = 04de8591-d2b3-4077-bbbe-b12070094eb6 {
     SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/I2C/I2C.depex
-    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/I2C/I2C.efi
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/joan/I2C.efi
     SECTION UI = "I2C"
     }
 
@@ -107,7 +107,7 @@
 
     FILE DRIVER = 88ABF42E-EFA7-4D72-A9C8-8B29ACDCF64F {
     SECTION DXE_DEPEX = MSM8998Pkg/Devices_Binary/wp/MpPowerDxe/MpPowerDxe.depex
-    SECTION PE32 = MSM8998Pkg/Devices_Binary/wp/MpPowerDxe/MpPowerDxe.efi
+    SECTION PE32 = MSM8998Pkg/Devices_Binary/joan/MpPowerDxe.efi
     SECTION UI = "MpPowerDxe"
     }
 
@@ -188,3 +188,13 @@
     # SECTION PE32 = MSM8998Pkg/Binary/SerialDxe/SerialDxe.efi
     # SECTION UI = "SerialDxe"
     # } 
+	
+	FILE FREEFORM = a91d838e-a5fa-4138-825d-455e2303079e {
+	SECTION UI = "BDS_Menu.cfg"
+	SECTION RAW = MSM8998Pkg/Devices_Binary/joan/BDS_Menu.cfg.raw
+    }
+
+    FILE FREEFORM = a1e235de-e825-4591-9623-c43175811826 {
+	SECTION UI = "SecParti.cfg"
+	SECTION RAW = MSM8998Pkg/Devices_Binary/joan/SecParti.cfg.raw
+    }

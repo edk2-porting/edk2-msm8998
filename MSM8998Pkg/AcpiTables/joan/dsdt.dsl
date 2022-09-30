@@ -694,21 +694,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOM", "SDM835", 0x00000003)
                 })
                 Return (RBUF) /* \_SB_.PEIC._CRS.RBUF */
             }
-
-            Method (PMCF, 0, NotSerialized)
-            {
-                Name (CFG0, Package (0x02)
-                {
-                    Zero, 
-                    0x02
-                })
-                Return (CFG0) /* \_SB_.PEIC.PMCF.CFG0 */
-            }
-
-            Method (_STA, 0, NotSerialized)  // _STA: Status
-            {
-                Return (Zero)
-            }
         }
 
         Device (PMBT)

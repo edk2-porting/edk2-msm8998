@@ -42,10 +42,8 @@ Name (PCFG, Buffer(){"
  <DSIDSCMajor>1</DSIDSCMajor>
  <DSIDSCMinor>1</DSIDSCMinor>
  <DSIDSCScr>1</DSIDSCScr>
- <DSIDSCProfileID>7</DSIDSCProfileID>
+ <DSIDSCProfileID>6</DSIDSCProfileID>
  <DSILP11AtInit>True</DSILP11AtInit>
- <DSIDSCSliceWidth>720</DSIDSCSliceWidth>
- <DSIDSCSliceHeight>16</DSIDSCSliceHeight>
  <DSITECheckEnable>True</DSITECheckEnable>
  <DSITEUsingDedicatedTEPin>True</DSITEUsingDedicatedTEPin>
  <DSITEvSyncStartPos>2880</DSITEvSyncStartPos>
