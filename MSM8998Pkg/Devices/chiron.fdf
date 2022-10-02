@@ -229,7 +229,7 @@ APRIORI DXE {
     # INF RuleOverride = ACPITABLE MSM8998Pkg/AcpiTables/AcpiTables.inf
 
     FILE FREEFORM = 7E374E25-8E01-4FEE-87F2-390C23C606CD {
-        SECTION RAW = MSM8998Pkg/AcpiTables/xiaomi/sagit/dsdt.aml
+        SECTION RAW = MSM8998Pkg/AcpiTables/xiaomi/chiron/dsdt.aml
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/bgrt.acp
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/Csrt.acp
         SECTION RAW = MSM8998Pkg/AcpiTables/asus/dbg2.acp
