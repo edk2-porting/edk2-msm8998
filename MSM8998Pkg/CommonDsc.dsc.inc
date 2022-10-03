@@ -303,8 +303,11 @@
   #  DEBUG_EVENT     0x00080000  // Event messages
   #  DEBUG_ERROR     0x80000000  // Error
 
-  gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x800B458F
-  # gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x8FFFFFFF
+!if $(TARGET) != RELEASE
+  gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x80000040
+!else
+  gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x80000000
+!endif
   gEfiMdePkgTokenSpaceGuid.PcdReportStatusCodePropertyMask|0x06
 
   #
