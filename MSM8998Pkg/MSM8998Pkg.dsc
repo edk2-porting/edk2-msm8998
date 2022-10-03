@@ -33,12 +33,6 @@
   DxeServicesLib|MdePkg/Library/DxeServicesLib/DxeServicesLib.inf
   BootLogoLib|MdeModulePkg/Library/BootLogoLib/BootLogoLib.inf
 
-!if $(TARGET) != RELEASE
-  SerialPortLib|MSM8998Pkg/Library/InMemorySerialPortLib/InMemorySerialPortLib.inf
-!else
-  SerialPortLib|MdePkg/Library/BaseSerialPortLibNull/BaseSerialPortLibNull.inf
-!endif
-
   RealTimeClockLib|EmbeddedPkg/Library/VirtualRealTimeClockLib/VirtualRealTimeClockLib.inf
   TimeBaseLib|EmbeddedPkg/Library/TimeBaseLib/TimeBaseLib.inf
 
@@ -61,9 +55,7 @@
   # SimpleFbDxe
   FrameBufferBltLib|MdeModulePkg/Library/FrameBufferBltLib/FrameBufferBltLib.inf
 
-!if $(TARGET) != RELEASE
   SerialPortLib|MSM8998Pkg/Library/FrameBufferSerialPortLib/FrameBufferSerialPortLib.inf
-!endif
 
   PlatformBootManagerLib|MSM8998Pkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
   MemoryInitPeiLib|MSM8998Pkg/Library/MemoryInitPeiLib/PeiMemoryAllocationLib.inf
@@ -96,15 +88,12 @@
 
   gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString|L"Alpha"
 
+  gSimpleInitTokenSpaceGuid.PcdDeviceTreeStore|0xE0000000
   gArmTokenSpaceGuid.PcdSystemMemoryBase|0x80000000
 
   # We bring up eight cores here!
   gArmPlatformTokenSpaceGuid.PcdCoreCount|8
   gArmPlatformTokenSpaceGuid.PcdClusterCount|2
-
-  #
-  # ARM PrimeCell
-  #
 
   #
   # ARM General Interrupt Controller
@@ -302,6 +291,8 @@
   ShellPkg/DynamicCommand/TftpDynamicCommand/TftpDynamicCommand.inf
 !endif #$(INCLUDE_TFTP_COMMAND)
 
+  MSM8998Pkg/Binary/LinuxSimpleMassStorage/LinuxSimpleMassStorage.inf
+
 [BuildOptions.common]
   # FIXME: msm8998 doesn't support lse instructions, however build fails without it
-  GCC:*_*_AARCH64_CC_FLAGS = -Wno-unused-variable -march=armv8-a+lse -moutline-atomics -mtune=cortex-a73.cortex-a53
+  GCC:*_*_AARCH64_CC_FLAGS = -Wno-unused-variable -march=armv8-a+lse -moutline-atomics -mtune=cortex-a73.cortex-a53 -DENABLE_LINUX_SIMPLE_MASS_STORAGE

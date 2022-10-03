@@ -25,6 +25,7 @@
   MdePkg/MdePkg.dec
   MdeModulePkg/MdeModulePkg.dec
   MSM8998Pkg/MSM8998Pkg.dec
+  SimpleInit.dec
 
 [LibraryClasses]
   ArmLib
@@ -45,3 +46,4 @@
   gArmTokenSpaceGuid.PcdSystemMemorySize
   gArmTokenSpaceGuid.PcdFdBaseAddress
   gArmTokenSpaceGuid.PcdFdSize
+  gSimpleInitTokenSpaceGuid.PcdDeviceTreeStore
