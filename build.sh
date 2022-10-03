@@ -39,7 +39,6 @@ function _build(){
 	shift
 	source "${_EDK2}/edksetup.sh"
 	[ -d "${WORKSPACE}" ]||mkdir "${WORKSPACE}"
-	rm -r workspace/* -rf
 	set -x
 	make -C "${_EDK2}/BaseTools" -j "$(nproc)"||exit "$?"
 	if "${GEN_ACPI}" && ! iasl -ve "MSM8998Pkg/AcpiTables/${DEVICE}/Dsdt.asl"
