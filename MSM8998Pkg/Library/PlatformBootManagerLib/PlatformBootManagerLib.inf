@@ -79,6 +79,7 @@
   gEfiTtyTermGuid
   gUefiShellFileGuid
   gSimpleInitFileGuid
+  gLinuxSimpleMassStorageGuid
 
 [Protocols]
   gEdkiiNonDiscoverableDeviceProtocolGuid

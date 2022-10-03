@@ -274,6 +274,8 @@ APRIORI DXE {
     INF ShellPkg/DynamicCommand/TftpDynamicCommand/TftpDynamicCommand.inf
 !endif #$(INCLUDE_TFTP_COMMAND)
 
+    INF MSM8998Pkg/Binary/LinuxSimpleMassStorage/LinuxSimpleMassStorage.inf
+
     #
     # Bds
     #
@@ -290,6 +292,8 @@ APRIORI DXE {
   # Simple Init GUI
   #
   INF src/main/SimpleInitMain.inf
+  // Boom
+  # INF src/kernelfdt/KernelFdtDxe.inf
 
 [FV.FVMAIN_COMPACT]
 FvAlignment        = 8
