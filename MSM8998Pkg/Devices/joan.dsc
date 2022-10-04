@@ -17,6 +17,7 @@
 
 [PcdsFixedAtBuild.common]
   # System Memory (4GB)
+  gArmTokenSpaceGuid.PcdSystemMemoryBase|0x40000000
   gArmTokenSpaceGuid.PcdSystemMemorySize|0xF0000000
 
   gSimpleInitTokenSpaceGuid.PcdGuiDefaultDPI|550

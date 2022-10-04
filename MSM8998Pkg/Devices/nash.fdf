@@ -229,7 +229,7 @@ APRIORI DXE {
     # INF RuleOverride = ACPITABLE MSM8998Pkg/AcpiTables/AcpiTables.inf
 
     FILE FREEFORM = 7E374E25-8E01-4FEE-87F2-390C23C606CD {
-        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/DSDT.aml
+        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/Dsdt.aml
         SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/bgrt.acp
         SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/Csrt.acp
         SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/dbg2.acp
