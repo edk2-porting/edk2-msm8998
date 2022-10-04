@@ -83528,11 +83528,9 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
         Device (ARPC)
         {
-            Name (_DEP, Package (0x04)  // _DEP: Dependencies
+            Name (_DEP, Package (0x02)  // _DEP: Dependencies
             {
                 \_SB.MMU2, 
-                \_SB.ADSP, 
-                \_SB.SCSS, 
                 \_SB.GLNK
             })
             Name (_HID, "QCOM0097")  // _HID: Hardware ID
@@ -83541,10 +83539,9 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
         Device (ARPD)
         {
-            Name (_DEP, Package (0x03)  // _DEP: Dependencies
+            Name (_DEP, Package (0x02)  // _DEP: Dependencies
             {
                 \_SB.ADSP, 
-                \_SB.GLNK, 
                 \_SB.ARPC
             })
             Name (_HID, "QCOM00F8")  // _HID: Hardware ID
