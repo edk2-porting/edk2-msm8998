@@ -5,6 +5,14 @@ A broken but working EDK2 implementation for Snapdragon 835 platform.
 中国人请看中文版
 [Chinese version (中文版)](https://github.com/edk2-porting/edk2-msm8998/blob/master/README.zh.md)
 
+## WARNING
+- **22H2 is the end point of ARMv8.0 system, and Qualcomm 835 is also affected,This means that Windows will no longer be started in a later version**
+
+- **DO NOT EVER TRY TO PORT IT TO *SONY, SAMSUNG* DEVICES**
+
+- **YOUR UFS WILL BE WIPED CLEAN!!!**
+
+
 ## Resources
 
 [Telegram group (recommended)](https://t.me/joinchat/MNjTmBqHIokjweeN0SpoyA)
@@ -16,12 +24,6 @@ QQ chinese group: 697666196 (Main group, full)  996450026 (Second group)  737223
 [Project website](https://renegade-project.org/)
 
 [Project forum](https://forum.renegade-project.org/)
-
-## WARNING
-
-**DO NOT EVER TRY TO PORT IT TO *SONY, SAMSUNG* DEVICES**
-
-**YOUR UFS WILL BE WIPED CLEAN!!!**
 
 ## Supported devices
 

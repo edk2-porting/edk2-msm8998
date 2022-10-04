@@ -2,6 +2,12 @@
 
 **在编译该项目前，请确定你有一定的Linux常识，以下步骤已经是最简单的方法，如果你看不懂，那么请使用Releases中的编译成品**
 
+## 警告
+- **22H2是ARMv8.0系统的终点，高通835也受到影响，这意味着Windows将不再在更高版本中启动**
+- **请勿尝试移植到任何索尼和谷歌设备上**
+
+- **你的UFS会被清空!!!**
+
 ## 资源
 
 [Telegram英语交流群](https://t.me/joinchat/MNjTmBqHIokjweeN0SpoyA)
@@ -19,13 +25,6 @@ QQ中文交流群:
 [项目官网](https://renegade-project.org/)
 
 [项目论坛](https://forum.renegade-project.org/)
-
-
-## 警告
-
-**请勿尝试移植到任何索尼和谷歌设备上**
-
-**你的UFS会被清空!!!**
 
 ## 已支持的设备
 1. 摩托罗拉 Z2 Force  (nash)
