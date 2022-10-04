@@ -230,16 +230,16 @@ APRIORI DXE {
 
     FILE FREEFORM = 7E374E25-8E01-4FEE-87F2-390C23C606CD {
         SECTION RAW = MSM8998Pkg/AcpiTables/xiaomi/chiron/dsdt.aml
-        SECTION RAW = MSM8998Pkg/AcpiTables/asus/bgrt.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/asus/Csrt.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/asus/dbg2.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/asus/Facp.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/asus/Facs.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/asus/Gtdt.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/asus/IORT.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/asus/Madt.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/asus/Mcfg.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/asus/TPM2.acp
+        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/bgrt.acp
+        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/Csrt.acp
+        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/dbg2.acp
+        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/Facp.acp
+        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/Facs.acp
+        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/Gtdt.acp
+        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/IORT.acp
+        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/Madt.acp
+        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/Mcfg.acp
+        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/TPM2.acp
         SECTION UI = "AcpiTables"
     }
 

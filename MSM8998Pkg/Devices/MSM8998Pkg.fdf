@@ -406,14 +406,14 @@ APRIORI DXE {
     INF RuleOverride = ACPITABLE MSM8998Pkg/AcpiTables/AcpiTables.inf
 
 #    FILE FREEFORM = 7E374E25-8E01-4FEE-87F2-390C23C606CD {
-#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/DBG2.aml
-#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/DSDT.aml
-#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/FACS.aml
-#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/FADT.aml
-#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/GTDT.aml
-#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/MADT.aml
-#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/MCFG.aml
-#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/CSRT.aml
+#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/DBG2.aml
+#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/DSDT.aml
+#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/FACS.aml
+#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/FADT.aml
+#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/GTDT.aml
+#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/MADT.aml
+#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/MCFG.aml
+#        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/CSRT.aml
 #        SECTION UI = "AcpiTables"
 #    }
 

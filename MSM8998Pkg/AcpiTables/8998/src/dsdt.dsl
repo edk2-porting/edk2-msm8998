@@ -5,52 +5,63 @@
  * 
  * Disassembling to symbolic ASL+ operators
  *
- * Disassembly of dsdt.aml, Fri Oct 15 18:15:42 2021
+ * Disassembly of dsdt.aml, Tue Oct  4 13:31:03 2022
  *
  * Original Table Header:
  *     Signature        "DSDT"
- *     Length           0x00050CED (330989)
+ *     Length           0x00062D1A (404762)
  *     Revision         0x02
- *     Checksum         0x03
- *     OEM ID           "QCOMM"
- *     OEM Table ID     "MSM8998"
+ *     Checksum         0xCD
+ *     OEM ID           "QCOMM "
+ *     OEM Table ID     "MSM8998 "
  *     OEM Revision     0x00000003 (3)
- *     Compiler ID      "INTL"
- *     Compiler Version 0x20190509 (538510601)
+ *     Compiler ID      "MSFT"
+ *     Compiler Version 0x05000000 (83886080)
  */
-DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
+DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 {
-    Scope (_SB)
+    External (BLCK, IntObj)
+    External (PCF1, IntObj)
+    External (PCF2, IntObj)
+    External (PCF3, IntObj)
+    External (PCF6, IntObj)
+    External (PCF7, IntObj)
+
+    Scope (\_SB)
     {
         Name (PSUB, "CLS08998")
-        Name (SOID, 0x0124)
-        Name (SIDS, "MSM8998")
-        Name (SIDV, 0x00020001)
-        Name (SVMJ, 0x02)
-        Name (SVMI, One)
-        Name (SDFE, 0x43)
+        Name (SOID, 0xFFFFFFFF)
+        Name (SIDS, "899800000000000")
+        Name (SIDV, 0xFFFFFFFF)
+        Name (SVMJ, 0xFFFF)
+        Name (SVMI, 0xFFFF)
+        Name (SDFE, 0xFFFF)
         Name (SFES, "899800000000000")
-        Name (SIDM, 0x0000000FFFFF00FF)
-        Name (SOSN, 0x000003F229EFCFE6)
-        Name (RMTB, 0x85E00000)
-        Name (RMTX, 0x00200000)
-        Name (RFMB, Zero)
-        Name (RFMS, Zero)
-        Name (RFAB, Zero)
-        Name (RFAS, Zero)
-        Name (PRP0, Zero)
+        Name (SIDM, 0x0000000FFFFFFFFF)
+        Name (SOSN, 0xAAAAAAAABBBBBBBB)
+        Name (RMTB, 0xAAAAAAAA)
+        Name (RMTX, 0xBBBBBBBB)
+        Name (RFMB, 0xCCCCCCCC)
+        Name (RFMS, 0xDDDDDDDD)
+        Name (RFAB, 0xEEEEEEEE)
+        Name (RFAS, 0x77777777)
+        Name (PRP0, 0xFFFFFFFF)
         Name (WLEN, One)
         Device (HAL0)
         {
             Name (_HID, "QCOM0009")  // _HID: Hardware ID
             Name (_UID, Zero)  // _UID: Unique ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
         }
 
         Device (UFS0)
         {
+            Name (_DEP, Package (One)  // _DEP: Dependencies
+            {
+                \_SB.PEP0
+            })
             Name (_HID, "QCOM24A5")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_CID, "ACPIQCOM24A5")  // _CID: Compatible ID
             Name (_UID, Zero)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
@@ -88,11 +99,11 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         {
             Name (_DEP, Package (0x02)  // _DEP: Dependencies
             {
-                PEP0, 
-                GIO0
+                \_SB.PEP0, 
+                \_SB.GIO0
             })
             Name (_HID, "QCOM2466")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_CID, "ACPIQCOM2466")  // _CID: Compatible ID
             Name (_UID, One)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
@@ -164,12 +175,12 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Name (PM3E, One)
         Device (PMIC)
         {
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                SPMI
+                \_SB.SPMI
             })
             Name (_HID, "QCOM0063")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
                 Return (0x0B)
@@ -199,15 +210,15 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (PM01)
         {
             Name (_HID, "QCOM0066")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, One)  // _UID: Unique ID
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                PMIC
+                \_SB.PMIC
             })
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
-                If ((PM1E == Zero))
+                If ((\_SB.PM1E == Zero))
                 {
                     Return (Zero)
                 }
@@ -264,7 +275,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 While (One)
                 {
-                    Name (_T_0, Buffer (One)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    Name (_T_0, Buffer (0x01)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
                     {
                          0x00                                             // .
                     })
@@ -273,7 +284,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     {
                         While (One)
                         {
-                            Name (_T_1, Zero)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                            Name (_T_1, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
                             _T_1 = ToInteger (Arg2)
                             If ((_T_1 == Zero))
                             {
@@ -314,13 +325,13 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         {
             Name (_HID, "QCOM0066")  // _HID: Hardware ID
             Name (_UID, 0x02)  // _UID: Unique ID
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                PMIC
+                \_SB.PMIC
             })
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
-                If ((PM2E == Zero))
+                If ((\_SB.PM2E == Zero))
                 {
                     Return (Zero)
                 }
@@ -377,7 +388,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 While (One)
                 {
-                    Name (_T_0, Buffer (One)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    Name (_T_0, Buffer (0x01)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
                     {
                          0x00                                             // .
                     })
@@ -386,7 +397,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     {
                         While (One)
                         {
-                            Name (_T_1, Zero)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                            Name (_T_1, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
                             _T_1 = ToInteger (Arg2)
                             If ((_T_1 == Zero))
                             {
@@ -427,15 +438,15 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (PM03)
         {
             Name (_HID, "QCOM0066")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x03)  // _UID: Unique ID
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                PMIC
+                \_SB.PMIC
             })
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
-                If ((PM3E == Zero))
+                If ((\_SB.PM3E == Zero))
                 {
                     Return (Zero)
                 }
@@ -492,7 +503,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 While (One)
                 {
-                    Name (_T_0, Buffer (One)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    Name (_T_0, Buffer (0x01)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
                     {
                          0x00                                             // .
                     })
@@ -501,7 +512,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     {
                         While (One)
                         {
-                            Name (_T_1, Zero)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                            Name (_T_1, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
                             _T_1 = ToInteger (Arg2)
                             If ((_T_1 == Zero))
                             {
@@ -543,12 +554,12 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         {
             Name (_DEP, Package (0x03)  // _DEP: Dependencies
             {
-                PMIC, 
-                ABD, 
-                SCM0
+                \_SB.PMIC, 
+                \_SB.ABD, 
+                \_SB.SCM0
             })
             Name (_HID, "QCOM0065")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
                 Return (0x0B)
@@ -576,17 +587,17 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (PRTC)
         {
             Name (_HID, "ACPI000E" /* Time and Alarm Device */)  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_DEP, Package (0x01)  // _DEP: Dependencies
             {
-                PMAP
+                "\\_SB.PMAP"
             })
             Method (_GCP, 0, NotSerialized)  // _GCP: Get Capabilities
             {
-                Return (0x04)
+                Return (0x05)
             }
 
-            Field (^ABD.ROP1, BufferAcc, NoLock, Preserve)
+            Field (\_SB.ABD.ROP1, BufferAcc, NoLock, Preserve)
             {
                 Connection (
                     I2cSerialBusV2 (0x0002, ControllerInitiated, 0x00000000,
@@ -608,6 +619,50 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 Return (TME1) /* \_SB_.PRTC._GRT.TME1 */
             }
 
+            Method (_TIV, 0, NotSerialized)  // _TIV: Timer Values
+            {
+                Name (BUFF, Buffer (0x1A){})
+                CreateField (BUFF, 0x10, 0x80, TME1)
+                CreateField (BUFF, 0x90, 0x20, ACT1)
+                CreateField (BUFF, 0xB0, 0x20, ACW1)
+                BUFF = FLD0 /* \_SB_.PRTC.FLD0 */
+                Return (ACT1) /* \_SB_.PRTC._TIV.ACT1 */
+            }
+
+            Method (_GWS, 0, NotSerialized)  // _GWS: Get Wake Status
+            {
+                Name (BUFF, Buffer (0x1A){})
+                CreateField (BUFF, 0x10, 0x80, TME1)
+                CreateField (BUFF, 0x90, 0x20, ACT1)
+                CreateField (BUFF, 0xB0, 0x20, ACW1)
+                BUFF = FLD0 /* \_SB_.PRTC.FLD0 */
+                Return (ACW1) /* \_SB_.PRTC._GWS.ACW1 */
+            }
+
+            Method (_STV, 2, NotSerialized)  // _STV: Set Timer Value
+            {
+                If ((Arg0 == Zero))
+                {
+                    Name (BUFF, Buffer (0x32){})
+                    CreateByteField (BUFF, Zero, STAT)
+                    CreateField (BUFF, 0x10, 0x80, TME1)
+                    CreateField (BUFF, 0x90, 0x20, ACT1)
+                    CreateField (BUFF, 0xB0, 0x20, ACW1)
+                    ACT1 = Arg1
+                    TME1 = Zero
+                    ACW1 = Zero
+                    BUFF = FLD0 = BUFF /* \_SB_.PRTC._STV.BUFF */
+                    If ((STAT != Zero))
+                    {
+                        Return (One)
+                    }
+
+                    Return (Zero)
+                }
+
+                Return (One)
+            }
+
             Method (_SRT, 1, NotSerialized)  // _SRT: Set Real Time
             {
                 Name (BUFF, Buffer (0x32){})
@@ -626,11 +681,27 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
 
                 Return (Zero)
             }
+
+            Method (_CWS, 1, NotSerialized)  // _CWS: Clear Wake Alarm Status
+            {
+                Name (BUFF, Buffer (0x32){})
+                CreateByteField (BUFF, Zero, STAT)
+                CreateField (BUFF, 0x10, 0x80, TME1)
+                CreateField (BUFF, 0x90, 0x20, ACT1)
+                CreateField (BUFF, 0xB0, 0x20, ACW1)
+                ACT1 = Zero
+                TME1 = Zero
+                ACW1 = Arg0
+                BUFF = FLD0 = BUFF /* \_SB_.PRTC._CWS.BUFF */
+                If ((STAT != Zero))
+                {
+                    Return (One)
+                }
+
+                Return (Zero)
+            }
         }
 
-        Name (BVLO, 0x0BB8)
-        Name (BLOP, 0x14)
-        Name (BNOP, 0x16)
         Name (BFCC, 0x3336)
         Name (PCT1, 0x05)
         Name (PCT2, 0x09)
@@ -640,6 +711,9 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Name (EMPT, 0x0C80)
         Name (DCMA, 0x0384)
         Name (BOCP, 0x1194)
+        Name (BVLO, 0x0BB8)
+        Name (BLOP, 0x14)
+        Name (BNOP, 0x16)
         Name (IFGD, 0x32)
         Name (VFGD, 0x32)
         Name (VDD1, 0x10FE)
@@ -655,7 +729,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (PEIC)
         {
             Name (_HID, "QCOM00D8")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
@@ -687,12 +761,12 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (PMBT)
         {
             Name (_HID, "QCOM0061")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_DEP, Package (0x03)  // _DEP: Dependencies
             {
-                PMIC, 
-                ADC1, 
-                PEIC
+                \_SB.PMIC, 
+                \_SB.ADC1, 
+                \_SB.PEIC
             })
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
@@ -960,15 +1034,15 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         Zero
                     }
                 })
-                BCT1 [Zero] = VDD1 /* \_SB_.VDD1 */
-                BCT1 [One] = FCC1 /* \_SB_.FCC1 */
-                BCT1 [0x02] = HCLI /* \_SB_.HCLI */
-                BCT1 [0x03] = SCLI /* \_SB_.SCLI */
-                BCT1 [0x04] = SHLI /* \_SB_.SHLI */
-                BCT1 [0x05] = HHLI /* \_SB_.HHLI */
-                BCT1 [0x06] = FVC1 /* \_SB_.FVC1 */
-                BCT1 [0x09] = CCC1 /* \_SB_.CCC1 */
-                CFG0 [0x02] = BCT1 /* \_SB_.PMBT.BCT1 */
+                \_SB.PMBT.BCT1 [Zero] = VDD1 /* \_SB_.VDD1 */
+                \_SB.PMBT.BCT1 [One] = FCC1 /* \_SB_.FCC1 */
+                \_SB.PMBT.BCT1 [0x02] = HCLI /* \_SB_.HCLI */
+                \_SB.PMBT.BCT1 [0x03] = SCLI /* \_SB_.SCLI */
+                \_SB.PMBT.BCT1 [0x04] = SHLI /* \_SB_.SHLI */
+                \_SB.PMBT.BCT1 [0x05] = HHLI /* \_SB_.HHLI */
+                \_SB.PMBT.BCT1 [0x06] = FVC1 /* \_SB_.FVC1 */
+                \_SB.PMBT.BCT1 [0x09] = CCC1 /* \_SB_.CCC1 */
+                CFG0 [0x02] = \_SB.PMBT.BCT1
                 Return (CFG0) /* \_SB_.PMBT.BJTA.CFG0 */
             }
 
@@ -1001,7 +1075,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         Zero
                     }
                 })
-                CFG0 [0x04] = BCT1 /* \_SB_.PMBT.BCT1 */
+                CFG0 [0x04] = \_SB.PMBT.BCT1
                 Return (CFG0) /* \_SB_.PMBT.BAT1.CFG0 */
             }
 
@@ -1068,10 +1142,10 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (PMBM)
         {
             Name (_HID, "QCOM0060")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Alias (\_SB.PSUB, _SUB)
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                PMBT
+                \_SB.PMBT
             })
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -1091,10 +1165,10 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (BCL1)
         {
             Name (_HID, "QCOM00DB")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Alias (\_SB.PSUB, _SUB)
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                PMIC
+                \_SB.PMIC
             })
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
@@ -1254,14 +1328,14 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (PTCC)
         {
             Name (_HID, "QCOM00EB")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Alias (\_SB.PSUB, _SUB)
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                PMIC
+                \_SB.PMIC
             })
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
-                Return (Zero)
+                Return (0x0B)
             }
 
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
@@ -1322,13 +1396,25 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         {   // Pin list
                             0x0089
                         }
+                    GpioInt (Edge, ActiveBoth, Exclusive, PullUp, 0x0000,
+                        "\\_SB.PM02", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x00B7
+                        }
+                    GpioInt (Edge, ActiveHigh, Exclusive, PullUp, 0x0000,
+                        "\\_SB.PM02", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x009B
+                        }
                 })
                 Return (RBUF) /* \_SB_.PTCC._CRS.RBUF */
             }
 
             Method (PIEN, 0, NotSerialized)
             {
-                Name (CFG0, Package (0x09)
+                Name (CFG0, Package (0x0B)
                 {
                     "CCStChg", 
                     "MsgRxDiscd", 
@@ -1338,7 +1424,9 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     "MsgSent", 
                     "SgnlRecv", 
                     "SgnlSent", 
-                    "OtgOc"
+                    "OtgOc", 
+                    "SwtchInt", 
+                    "UsbOvInt"
                 })
                 Return (CFG0) /* \_SB_.PTCC.PIEN.CFG0 */
             }
@@ -1350,7 +1438,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (_CID, "PNP0D80" /* Windows-compatible System Power Management Controller */)  // _CID: Compatible ID
             Name (_DEP, Package (0x01)  // _DEP: Dependencies
             {
-                PMIC
+                \_SB.PMIC
             })
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -1403,7 +1491,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 })
             }
 
-            Field (^ABD.ROP1, BufferAcc, NoLock, Preserve)
+            Field (\_SB.ABD.ROP1, BufferAcc, NoLock, Preserve)
             {
                 Connection (
                     I2cSerialBusV2 (0x0001, ControllerInitiated, 0x00000000,
@@ -1427,8 +1515,8 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (ROST, Zero)
             Method (NPUR, 1, NotSerialized)
             {
-                ^^AGR0._PUR [One] = Arg0
-                Notify (AGR0, 0x80) // Status Change
+                \_SB.AGR0._PUR [One] = Arg0
+                Notify (\_SB.AGR0, 0x80) // Status Change
             }
 
             Method (INTR, 0, NotSerialized)
@@ -1480,38 +1568,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 "DMPP", 
                 "GBDL", 
                 "SRDL"
-            })
-            Method (STND, 0, NotSerialized)
-            {
-                Return (STNX) /* \_SB_.PEP0.STNX */
-            }
-
-            Name (STNX, Package (0x18)
-            {
-                "DMSB", 
-                "DMMS", 
-                "DMPA", 
-                "DMPC", 
-                "DMPB", 
-                "DM0G", 
-                "DM1G", 
-                "DM2G", 
-                "DM3G", 
-                "DM4G", 
-                "DM5G", 
-                "DM6G", 
-                "DM7G", 
-                "DM8G", 
-                "DM9G", 
-                "DMKG", 
-                "DMPS", 
-                "DMRC", 
-                "DMPL", 
-                "DMDQ", 
-                "DMPI", 
-                "DMWE", 
-                "XMPC", 
-                "XMPL"
             })
             Method (CTPM, 0, NotSerialized)
             {
@@ -2214,7 +2270,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (V0M1, 0, NotSerialized)
             {
@@ -12071,7 +12127,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (V2M1, 0, NotSerialized)
             {
@@ -17226,7 +17282,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (V8M1, 0, NotSerialized)
             {
@@ -24821,7 +24877,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (V4M1, 0, NotSerialized)
             {
@@ -29196,7 +29252,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (V3M1, 0, NotSerialized)
             {
@@ -33219,7 +33275,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (V1M1, 0, NotSerialized)
             {
@@ -34438,7 +34494,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (V5M1, 0, NotSerialized)
             {
@@ -34891,7 +34947,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (V6M1, 0, NotSerialized)
             {
@@ -35076,7 +35132,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (V7M1, 0, NotSerialized)
             {
@@ -38413,7 +38469,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (LMPM, 0, NotSerialized)
             {
@@ -38440,7 +38496,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 Package (0x02)
                 {
                     "MPM_INTERRUPT_CONFIG", 
-                    Package (0x07)
+                    Package (0x08)
                     {
                         Package (0x04)
                         {
@@ -38496,13 +38552,21 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                             0x0166, 
                             Zero, 
                             0x04
+                        }, 
+
+                        Package (0x04)
+                        {
+                            0x0D, 
+                            0x25, 
+                            One, 
+                            Zero
                         }
                     }
                 }
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (LSPM, 0, NotSerialized)
             {
@@ -38540,7 +38604,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (LVDD, 0, NotSerialized)
             {
@@ -38575,7 +38639,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (LLMH, 0, NotSerialized)
             {
@@ -38610,7 +38674,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Name (DVMP, Package (0x02)
             {
@@ -38694,7 +38758,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (LDBG, 0, NotSerialized)
             {
@@ -38773,7 +38837,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     Package (0x02)
                     {
                         "INSTANCES", 
-                        "\\_SB.USB0"
+                        "\\_SB.URS0"
                     }, 
 
                     Package (0x16)
@@ -39054,7 +39118,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (LDRS, 0, NotSerialized)
             {
@@ -39237,7 +39301,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (UIDL, 0, NotSerialized)
             {
@@ -40444,7 +40508,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (CPRZ, 0, NotSerialized)
             {
@@ -41017,7 +41081,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (CPR4, 0, NotSerialized)
             {
@@ -41498,7 +41562,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Name (NDCV, Package (0x04)
             {
@@ -41730,7 +41794,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (CTSN, 0, NotSerialized)
             {
@@ -42190,7 +42254,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (APMD, 0, NotSerialized)
             {
@@ -42624,16 +42688,154 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     {
                         "COMPONENT", 
                         0x0D, 
-                        Package (0x02)
+                        Package (0x07)
                         {
                             "FSTATE", 
-                            Zero
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3A, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3B, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3D, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3C, 
+                                    One, 
+                                    One, 
+                                    Zero, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3E, 
+                                    One, 
+                                    One, 
+                                    Zero, 
+                                    One, 
+                                    Zero
+                                }
+                            }
                         }, 
 
-                        Package (0x02)
+                        Package (0x07)
                         {
                             "FSTATE", 
-                            One
+                            One, 
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3A, 
+                                    Zero, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3B, 
+                                    Zero, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3D, 
+                                    Zero, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3C, 
+                                    Zero, 
+                                    One, 
+                                    Zero, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3E, 
+                                    Zero, 
+                                    One, 
+                                    Zero, 
+                                    One, 
+                                    Zero
+                                }
+                            }
                         }
                     }, 
 
@@ -42641,16 +42843,98 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     {
                         "COMPONENT", 
                         0x0E, 
-                        Package (0x02)
+                        Package (0x05)
                         {
                             "FSTATE", 
-                            Zero
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3A, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3B, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3D, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero
+                                }
+                            }
                         }, 
 
-                        Package (0x02)
+                        Package (0x05)
                         {
                             "FSTATE", 
-                            One
+                            One, 
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3A, 
+                                    Zero, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3B, 
+                                    Zero, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x3D, 
+                                    Zero, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero
+                                }
+                            }
                         }
                     }, 
 
@@ -42810,7 +43094,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (GPMD, 0, NotSerialized)
             {
@@ -43068,7 +43352,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                                     }
                                 }, 
 
-                                Package (0x0E)
+                                Package (0x0F)
                                 {
                                     "EXIT", 
                                     Package (0x02)
@@ -43216,6 +43500,15 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                                             One, 
                                             0x03, 
                                             0x02
+                                        }
+                                    }, 
+
+                                    Package (0x02)
+                                    {
+                                        "DELAY", 
+                                        Package (0x01)
+                                        {
+                                            0xC8
                                         }
                                     }, 
 
@@ -46921,7 +47214,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         0x05
                     }
                 })
-                If ((SIDV < 0x00020000))
+                If ((\_SB.SIDV < 0x00020000))
                 {
                     DerefOf (DerefOf (DerefOf (DerefOf (GPCC [Zero]
                         ) [0x02]) [0x03]) [0x02]) [0x08] = P001 /* \_SB_.PEP0.G1MD.P001 */
@@ -46932,7 +47225,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         ) [0x02]) [0x03]) [0x02]) [0x08] = P002 /* \_SB_.PEP0.G1MD.P002 */
                 }
 
-                If ((SIDV < 0x00020000))
+                If ((\_SB.SIDV < 0x00020000))
                 {
                     DerefOf (DerefOf (GPCC [Zero]) [0x02]) [0x09]
                          = P003 /* \_SB_.PEP0.G1MD.P003 */
@@ -46943,7 +47236,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                          = P004 /* \_SB_.PEP0.G1MD.P004 */
                 }
 
-                If ((SIDV < 0x00020000))
+                If ((\_SB.SIDV < 0x00020000))
                 {
                     DerefOf (DerefOf (GPCC [Zero]) [0x02]) [0x0A]
                          = P005 /* \_SB_.PEP0.G1MD.P005 */
@@ -50450,7 +50743,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                             {
                                 "FSTATE", 
                                 0x02, 
-                                Package (0x1B)
+                                Package (0x15)
                                 {
                                     "ENTER", 
                                     Package (0x01)
@@ -50475,72 +50768,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                                         {
                                             0x03, 
                                             0x3C
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_core_clk", 
-                                            0x09, 
-                                            0x13
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_core_clk", 
-                                            0x09, 
-                                            0x15
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore0_clk", 
-                                            0x09, 
-                                            0x13
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore0_clk", 
-                                            0x09, 
-                                            0x15
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore1_clk", 
-                                            0x09, 
-                                            0x13
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore1_clk", 
-                                            0x09, 
-                                            0x15
                                         }
                                     }, 
 
@@ -50717,7 +50944,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                                     }
                                 }, 
 
-                                Package (0x1A)
+                                Package (0x14)
                                 {
                                     "EXIT", 
                                     Package (0x02)
@@ -50899,72 +51126,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                                         {
                                             "mmss_video_subcore0_clk", 
                                             One
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_core_clk", 
-                                            0x09, 
-                                            0x12
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_core_clk", 
-                                            0x09, 
-                                            0x14
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore0_clk", 
-                                            0x09, 
-                                            0x12
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore0_clk", 
-                                            0x09, 
-                                            0x14
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore1_clk", 
-                                            0x09, 
-                                            0x12
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore1_clk", 
-                                            0x09, 
-                                            0x14
                                         }
                                     }, 
 
@@ -53281,7 +53442,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                             {
                                 "FSTATE", 
                                 0x02, 
-                                Package (0x1B)
+                                Package (0x15)
                                 {
                                     "ENTER", 
                                     Package (0x01)
@@ -53306,72 +53467,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                                         {
                                             0x03, 
                                             0x3C
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_core_clk", 
-                                            0x09, 
-                                            0x13
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_core_clk", 
-                                            0x09, 
-                                            0x15
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore0_clk", 
-                                            0x09, 
-                                            0x13
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore0_clk", 
-                                            0x09, 
-                                            0x15
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore1_clk", 
-                                            0x09, 
-                                            0x13
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore1_clk", 
-                                            0x09, 
-                                            0x15
                                         }
                                     }, 
 
@@ -53548,7 +53643,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                                     }
                                 }, 
 
-                                Package (0x1C)
+                                Package (0x16)
                                 {
                                     "EXIT", 
                                     Package (0x02)
@@ -53752,72 +53847,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                                         {
                                             "mmss_video_subcore0_clk", 
                                             One
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_core_clk", 
-                                            0x09, 
-                                            0x12
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_core_clk", 
-                                            0x09, 
-                                            0x14
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore0_clk", 
-                                            0x09, 
-                                            0x12
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore0_clk", 
-                                            0x09, 
-                                            0x14
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore1_clk", 
-                                            0x09, 
-                                            0x12
-                                        }
-                                    }, 
-
-                                    Package (0x02)
-                                    {
-                                        "CLOCK", 
-                                        Package (0x03)
-                                        {
-                                            "mmss_video_subcore1_clk", 
-                                            0x09, 
-                                            0x14
                                         }
                                     }, 
 
@@ -60274,7 +60303,187 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
+        {
+            Method (LPMX, 0, NotSerialized)
+            {
+                Return (LPXC) /* \_SB_.PEP0.LPXC */
+            }
+
+            Name (LPXC, Package (0x01)
+            {
+                Package (0x04)
+                {
+                    "DEVICE", 
+                    "\\_SB.TSC1", 
+                    Package (0x08)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                0x015E
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x5D, 
+                                One, 
+                                Zero, 
+                                One, 
+                                0x03, 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                0x14
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO14_A", 
+                                One, 
+                                0x001B7740, 
+                                0x0004E200, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                0x14
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO19_A", 
+                                One, 
+                                0x00325AA0, 
+                                0x4E20, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x08)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                0x14
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO14_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                0x14
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x5D, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                0x14
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO19_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
         {
             Method (SMMD, 0, NotSerialized)
             {
@@ -60529,7 +60738,27 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
+        {
+            Method (MPMD, 0, NotSerialized)
+            {
+                Return (MPCC) /* \_SB_.PEP0.MPCC */
+            }
+
+            Name (MPCC, Package (0x00){})
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (OPMD, 0, NotSerialized)
+            {
+                Return (OPCC) /* \_SB_.PEP0.OPCC */
+            }
+
+            Name (OPCC, Package (0x00){})
+        }
+
+        Scope (\_SB.PEP0)
         {
             Method (SPMD, 0, NotSerialized)
             {
@@ -60923,7 +61152,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (PPMD, 0, NotSerialized)
             {
@@ -61046,7 +61275,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (BPMD, 0, NotSerialized)
             {
@@ -61503,7 +61732,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                             {
                                 "PPP_RESOURCE_ID_LDO20_A", 
                                 One, 
-                                0x002D2A80, 
+                                0x002D0370, 
                                 0x000B71B0, 
                                 One, 
                                 Zero, 
@@ -65554,7 +65783,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                                 "PPP_RESOURCE_ID_LDO2_A", 
                                 One, 
                                 0x00124F80, 
-                                Zero, 
+                                0x02, 
                                 One, 
                                 Zero, 
                                 Zero, 
@@ -65761,7 +65990,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                                 "PPP_RESOURCE_ID_LDO2_A", 
                                 One, 
                                 0x00124F80, 
-                                Zero, 
+                                0x02, 
                                 One, 
                                 Zero, 
                                 Zero, 
@@ -65790,7 +66019,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         }
                     }, 
 
-                    Package (0x12)
+                    Package (0x11)
                     {
                         "DSTATE", 
                         0x03, 
@@ -65823,8 +66052,8 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                             {
                                 "gcc_usb30_master_clk", 
                                 0x03, 
-                                0x00927C00, 
-                                One
+                                0x2580, 
+                                0x05
                             }
                         }, 
 
@@ -65892,16 +66121,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
 
                         Package (0x02)
                         {
-                            "FOOTSWITCH", 
-                            Package (0x02)
-                            {
-                                "VDD_USB_30", 
-                                0x02
-                            }
-                        }, 
-
-                        Package (0x02)
-                        {
                             "BUSARB", 
                             Package (0x05)
                             {
@@ -65929,11 +66148,11 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                             "PMICVREGVOTE", 
                             Package (0x0A)
                             {
-                                "PPP_RESOURCE_ID_LDO24_A", 
+                                "PPP_RESOURCE_ID_LDO12_A", 
                                 One, 
-                                Zero, 
-                                Zero, 
-                                Zero, 
+                                0x001B7740, 
+                                0x02, 
+                                One, 
                                 Zero, 
                                 Zero, 
                                 Zero, 
@@ -65947,11 +66166,11 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                             "PMICVREGVOTE", 
                             Package (0x0A)
                             {
-                                "PPP_RESOURCE_ID_LDO12_A", 
+                                "PPP_RESOURCE_ID_LDO24_A", 
                                 One, 
-                                Zero, 
-                                Zero, 
-                                Zero, 
+                                0x002EEBB8, 
+                                0x10, 
+                                One, 
                                 Zero, 
                                 Zero, 
                                 Zero, 
@@ -65967,9 +66186,9 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                             {
                                 "PPP_RESOURCE_ID_LDO2_A", 
                                 One, 
-                                Zero, 
-                                Zero, 
-                                Zero, 
+                                0x00124F80, 
+                                0x02, 
+                                One, 
                                 Zero, 
                                 Zero, 
                                 Zero, 
@@ -65985,9 +66204,9 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                             {
                                 "PPP_RESOURCE_ID_LDO1_A", 
                                 One, 
-                                Zero, 
-                                Zero, 
-                                Zero, 
+                                0x000D6D80, 
+                                0x044C, 
+                                One, 
                                 Zero, 
                                 Zero, 
                                 Zero, 
@@ -66006,7 +66225,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
         {
             Method (IPMD, 0, NotSerialized)
             {
@@ -66059,7 +66278,88 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
-        Scope (PEP0)
+        Scope (\_SB.PEP0)
+        {
+            Method (CRMD, 0, NotSerialized)
+            {
+                Return (CRCC) /* \_SB_.PEP0.CRCC */
+            }
+
+            Name (CRCC, Package (0x01)
+            {
+                Package (0x03)
+                {
+                    "DEVICE", 
+                    "\\_SB.QBCC", 
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x04)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_APPSS_PROC", 
+                                    "ICBID_SLAVE_PRNG", 
+                                    0x2FAF0800, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_prng_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "BUSARB", 
+                                Package (0x05)
+                                {
+                                    0x03, 
+                                    "ICBID_MASTER_APPSS_PROC", 
+                                    "ICBID_SLAVE_PRNG", 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "gcc_prng_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    One
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
         {
             Method (EWMD, 0, NotSerialized)
             {
@@ -66795,10 +67095,6267 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
+        Scope (\_SB.PEP0)
+        {
+            Method (STND, 0, NotSerialized)
+            {
+                Return (STNX) /* \_SB_.PEP0.STNX */
+            }
+
+            Name (STNX, Package (0x18)
+            {
+                "DMSB", 
+                "DMMS", 
+                "DMPA", 
+                "DMPC", 
+                "DMPB", 
+                "DM0G", 
+                "DM1G", 
+                "DM2G", 
+                "DM3G", 
+                "DM4G", 
+                "DM5G", 
+                "DM6G", 
+                "DM7G", 
+                "DM8G", 
+                "DM9G", 
+                "DMKG", 
+                "DMPS", 
+                "DMRC", 
+                "DMPL", 
+                "DMDQ", 
+                "DMPI", 
+                "DMWE", 
+                "XMPC", 
+                "XMPL"
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+            Method (CPMD, 0, NotSerialized)
+            {
+                Return (CPCC) /* \_SB_.PEP0.CPCC */
+            }
+
+            Method (CPMX, 0, NotSerialized)
+            {
+                Return (CPXC) /* \_SB_.PEP0.CPXC */
+            }
+
+            Name (CPCC, Package (0x04)
+            {
+                Package (0x04)
+                {
+                    "DEVICE", 
+                    "\\_SB.JPGE", 
+                    Package (0x06)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x0B)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_jpeg0_clk", 
+                                    0x09, 
+                                    0x12
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_jpeg0_clk", 
+                                    0x09, 
+                                    0x14
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_jpeg_axi_clk", 
+                                    0x09, 
+                                    0x12
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_jpeg_axi_clk", 
+                                    0x09, 
+                                    0x14
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    One, 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_jpeg0_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_jpeg_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_jpeg_axi_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    0x02
+                                }
+                            }
+                        }, 
+
+                        Package (0x0A)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "mmss_camss_jpeg0_clk", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "mmss_camss_jpeg_ahb_clk", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "mmss_camss_jpeg_axi_clk", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    One, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_jpeg_axi_clk", 
+                                    0x09, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_jpeg_axi_clk", 
+                                    0x09, 
+                                    0x13
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_jpeg0_clk", 
+                                    0x09, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_jpeg0_clk", 
+                                    0x09, 
+                                    0x13
+                                }
+                            }
+                        }, 
+
+                        Package (0x06)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_jpeg0_clk", 
+                                        0x03, 
+                                        0x1C9C3800, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_jpeg0_clk", 
+                                        0x03, 
+                                        0x1312D000, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_jpeg0_clk", 
+                                        0x03, 
+                                        0x08F0D180, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_jpeg0_clk", 
+                                        0x03, 
+                                        0x047868C0, 
+                                        0x03
+                                    }
+                                }
+                            }
+                        }, 
+
+                        Package (0x18)
+                        {
+                            "PSTATE_SET", 
+                            One, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xEE6B2800, 
+                                        0xEE6B2800
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xD09DC300, 
+                                        0xD09DC300
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xC4B20100, 
+                                        0xC4B20100
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xB8C63F00, 
+                                        0xB8C63F00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x04, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xACDA7D00, 
+                                        0xACDA7D00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x05, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xA0EEBB00, 
+                                        0xA0EEBB00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x06, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x9502F900, 
+                                        0x9502F900
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x07, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x89173700, 
+                                        0x89173700
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x08, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x7D2B7500, 
+                                        0x7D2B7500
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x09, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x713FB300, 
+                                        0x713FB300
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0A, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x6553F100, 
+                                        0x6553F100
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0B, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x59682F00, 
+                                        0x59682F00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0C, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x4D7C6D00, 
+                                        0x4D7C6D00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0D, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x4190AB00, 
+                                        0x4190AB00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0E, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x35A4E900, 
+                                        0x35A4E900
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0F, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x29B92700, 
+                                        0x29B92700
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x10, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x1DCD6500, 
+                                        0x1DCD6500
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x11, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x17D78400, 
+                                        0x17D78400
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x12, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x11E1A300, 
+                                        0x11E1A300
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x13, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x0BEBC200, 
+                                        0x0BEBC200
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x14, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x05F5E100, 
+                                        0x05F5E100
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x15, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x06)
+                    {
+                        "COMPONENT", 
+                        One, 
+                        Package (0x11)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_TOP", 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_VFE0", 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_VFE1", 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_CPP", 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_jpeg0_clk", 
+                                    0x09, 
+                                    0x12
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_jpeg0_clk", 
+                                    0x09, 
+                                    0x14
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_axi", 
+                                    0x4B00
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_ahb", 
+                                    0x9C40
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    One, 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_top_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_jpeg0_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_jpeg_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_jpeg_axi_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    0x02
+                                }
+                            }
+                        }, 
+
+                        Package (0x10)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "mmss_camss_ahb_clk", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "mmss_camss_top_ahb_clk", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "mmss_camss_jpeg0_clk", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "mmss_camss_jpeg_ahb_clk", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "mmss_camss_jpeg_axi_clk", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    One, 
+                                    0x03
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_jpeg0_clk", 
+                                    0x09, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_jpeg0_clk", 
+                                    0x09, 
+                                    0x13
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_CPP", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_VFE1", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_VFE0", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_TOP", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_ahb", 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_axi", 
+                                    Zero
+                                }
+                            }
+                        }, 
+
+                        Package (0x05)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_jpeg0_clk", 
+                                        0x03, 
+                                        0x1C9C3800, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_jpeg0_clk", 
+                                        0x03, 
+                                        0x1312D000, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_jpeg0_clk", 
+                                        0x03, 
+                                        0x047868C0, 
+                                        0x03
+                                    }
+                                }
+                            }
+                        }, 
+
+                        Package (0x06)
+                        {
+                            "PSTATE_SET", 
+                            One, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_JPEG", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x376EAC80, 
+                                        0x376EAC80
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_JPEG", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x2625A000, 
+                                        0x2625A000
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_JPEG", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x07A12000, 
+                                        0x07A12000
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_JPEG", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x03)
+                {
+                    "DEVICE", 
+                    "\\_SB.CAMP", 
+                    Package (0x05)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x12)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_axi", 
+                                    0x4B00
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_ahb", 
+                                    0x9C40
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_TOP", 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_top_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cci_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cci_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x11, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    0x03, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x12, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    0x03, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x13, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    0x03, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x14, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    0x03, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x1C, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    0x03, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x0D, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero, 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x0E, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero, 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x0F, 
+                                    One, 
+                                    One, 
+                                    One, 
+                                    Zero, 
+                                    0x02
+                                }
+                            }
+                        }, 
+
+                        Package (0x11)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x0F, 
+                                    Zero, 
+                                    Zero, 
+                                    Zero, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x0E, 
+                                    Zero, 
+                                    Zero, 
+                                    Zero, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x0D, 
+                                    Zero, 
+                                    Zero, 
+                                    Zero, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x14, 
+                                    Zero, 
+                                    Zero, 
+                                    Zero, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x13, 
+                                    Zero, 
+                                    Zero, 
+                                    Zero, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x12, 
+                                    Zero, 
+                                    Zero, 
+                                    Zero, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x11, 
+                                    Zero, 
+                                    Zero, 
+                                    Zero, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "TLMMGPIO", 
+                                Package (0x06)
+                                {
+                                    0x1C, 
+                                    Zero, 
+                                    Zero, 
+                                    Zero, 
+                                    One, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "mmss_camss_cci_ahb_clk", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "mmss_camss_cci_clk", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "mmss_camss_ahb_clk", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x02)
+                                {
+                                    "mmss_camss_top_ahb_clk", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_ahb", 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_axi", 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_TOP", 
+                                    0x02
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_cci_clk", 
+                                        0x03, 
+                                        0x0124F800, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_cci_clk", 
+                                        0x03, 
+                                        0x0237A080, 
+                                        0x03
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x09)
+                {
+                    "DEVICE", 
+                    "\\_SB.MPCS", 
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x0D)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x12
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x14
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x12
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x14
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi0_clk", 
+                                    0x08, 
+                                    0x0F424000, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cphy_csid0_clk", 
+                                    0x08, 
+                                    0x0F424000, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi0pix_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi0rdi_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi0_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x0D)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi0_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi0rdi_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi0pix_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cphy_csid0_clk", 
+                                    0x0C, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi0_clk", 
+                                    0x0C, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x13
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x13
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        One, 
+                        Package (0x0D)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x12
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x14
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x12
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x14
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi1_clk", 
+                                    0x08, 
+                                    0x0F424000, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cphy_csid1_clk", 
+                                    0x08, 
+                                    0x0F424000, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi1pix_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi1rdi_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi1_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x0D)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi1_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi1rdi_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi1pix_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cphy_csid1_clk", 
+                                    0x0C, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi1_clk", 
+                                    0x0C, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x13
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x13
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        0x02, 
+                        Package (0x0D)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x12
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x14
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x12
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x14
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi2_clk", 
+                                    0x08, 
+                                    0x0F424000, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cphy_csid2_clk", 
+                                    0x08, 
+                                    0x0F424000, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi2pix_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi2rdi_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi2_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x0D)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi2_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi2rdi_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi2pix_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cphy_csid2_clk", 
+                                    0x0C, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi2_clk", 
+                                    0x0C, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x13
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x13
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        0x03, 
+                        Package (0x0C)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x12
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x14
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x12
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x14
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi3_clk", 
+                                    0x08, 
+                                    0x0F424000, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi3pix_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi3rdi_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi3_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x0C)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi3_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi3rdi_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi3pix_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi3_clk", 
+                                    0x0C, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe0_clk", 
+                                    0x09, 
+                                    0x13
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_csi_vfe1_clk", 
+                                    0x09, 
+                                    0x13
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        0x04, 
+                        Package (0x04)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi0phytimer_clk", 
+                                    0x08, 
+                                    0x0BEBC200, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csiphy0_clk", 
+                                    0x08, 
+                                    0x0BEBC200, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csiphy0_clk", 
+                                    0x0C, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi0phytimer_clk", 
+                                    0x0C, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        0x05, 
+                        Package (0x04)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi1phytimer_clk", 
+                                    0x08, 
+                                    0x0BEBC200, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csiphy1_clk", 
+                                    0x08, 
+                                    0x0BEBC200, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csiphy1_clk", 
+                                    0x0C, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi1phytimer_clk", 
+                                    0x0C, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        0x06, 
+                        Package (0x04)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi2phytimer_clk", 
+                                    0x08, 
+                                    0x0BEBC200, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csiphy2_clk", 
+                                    0x08, 
+                                    0x0F424000, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csiphy2_clk", 
+                                    0x0C, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_csi2phytimer_clk", 
+                                    0x0C, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x06)
+                {
+                    "DEVICE", 
+                    "\\_SB.VFE0", 
+                    Package (0x06)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x0D)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_axi", 
+                                    0x4B00
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_ahb", 
+                                    0x9C40
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_VFE0", 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    One, 
+                                    0x03
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_top_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe_vbif_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe_vbif_axi_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe0_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    0x05
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe0_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x0D)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe0_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    0x08
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe0_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    One, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe_vbif_axi_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe_vbif_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_top_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_VFE0", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_ahb", 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_axi", 
+                                    Zero
+                                }
+                            }
+                        }, 
+
+                        Package (0x0B)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe0_clk", 
+                                        0x03, 
+                                        0x23C34600, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe0_clk", 
+                                        0x03, 
+                                        0x22551000, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe0_clk", 
+                                        0x03, 
+                                        0x1C9C3800, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe0_clk", 
+                                        0x03, 
+                                        0x18148D00, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x04, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe0_clk", 
+                                        0x03, 
+                                        0x16E36000, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x05, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe0_clk", 
+                                        0x03, 
+                                        0x1312D000, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x06, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe0_clk", 
+                                        0x03, 
+                                        0x11E1A300, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x07, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe0_clk", 
+                                        0x03, 
+                                        0x0BEBC200, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x08, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe0_clk", 
+                                        0x03, 
+                                        Zero, 
+                                        0x03
+                                    }
+                                }
+                            }
+                        }, 
+
+                        Package (0x18)
+                        {
+                            "PSTATE_SET", 
+                            One, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xEE6B2800, 
+                                        0xEE6B2800
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xD09DC300, 
+                                        0xD09DC300
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xC4B20100, 
+                                        0xC4B20100
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xB8C63F00, 
+                                        0xB8C63F00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x04, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xACDA7D00, 
+                                        0xACDA7D00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x05, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xA0EEBB00, 
+                                        0xA0EEBB00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x06, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x9502F900, 
+                                        0x9502F900
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x07, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x89173700, 
+                                        0x89173700
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x08, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x7D2B7500, 
+                                        0x7D2B7500
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x09, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x713FB300, 
+                                        0x713FB300
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0A, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x6553F100, 
+                                        0x6553F100
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0B, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x59682F00, 
+                                        0x59682F00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0C, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x4D7C6D00, 
+                                        0x4D7C6D00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0D, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x4190AB00, 
+                                        0x4190AB00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0E, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x35A4E900, 
+                                        0x35A4E900
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0F, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x29B92700, 
+                                        0x29B92700
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x10, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x1DCD6500, 
+                                        0x1DCD6500
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x11, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x17D78400, 
+                                        0x17D78400
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x12, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x11E1A300, 
+                                        0x11E1A300
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x13, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x0BEBC200, 
+                                        0x0BEBC200
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x14, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x05F5E100, 
+                                        0x05F5E100
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x15, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x06)
+                    {
+                        "COMPONENT", 
+                        One, 
+                        Package (0x0D)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_axi", 
+                                    0x4B00
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_ahb", 
+                                    0x9C40
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_VFE1", 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    One, 
+                                    0x03
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe_vbif_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe_vbif_axi_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_top_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe1_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    0x05
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe1_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x0D)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe1_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    0x08
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe1_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    One, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_top_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe_vbif_axi_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_vfe_vbif_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_VFE1", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_ahb", 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_axi", 
+                                    Zero
+                                }
+                            }
+                        }, 
+
+                        Package (0x0B)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe1_clk", 
+                                        0x03, 
+                                        0x23C34600, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe1_clk", 
+                                        0x03, 
+                                        0x22551000, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe1_clk", 
+                                        0x03, 
+                                        0x1C9C3800, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe1_clk", 
+                                        0x03, 
+                                        0x18148D00, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x04, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe1_clk", 
+                                        0x03, 
+                                        0x16E36000, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x05, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe1_clk", 
+                                        0x03, 
+                                        0x1312D000, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x06, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe1_clk", 
+                                        0x03, 
+                                        0x11E1A300, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x07, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe1_clk", 
+                                        0x03, 
+                                        0x0BEBC200, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x08, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_vfe1_clk", 
+                                        0x03, 
+                                        Zero, 
+                                        0x03
+                                    }
+                                }
+                            }
+                        }, 
+
+                        Package (0x18)
+                        {
+                            "PSTATE_SET", 
+                            One, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xEE6B2800, 
+                                        0xEE6B2800
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xD09DC300, 
+                                        0xD09DC300
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xC4B20100, 
+                                        0xC4B20100
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xB8C63F00, 
+                                        0xB8C63F00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x04, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xACDA7D00, 
+                                        0xACDA7D00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x05, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xA0EEBB00, 
+                                        0xA0EEBB00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x06, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x9502F900, 
+                                        0x9502F900
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x07, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x89173700, 
+                                        0x89173700
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x08, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x7D2B7500, 
+                                        0x7D2B7500
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x09, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x713FB300, 
+                                        0x713FB300
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0A, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x6553F100, 
+                                        0x6553F100
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0B, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x59682F00, 
+                                        0x59682F00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0C, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x4D7C6D00, 
+                                        0x4D7C6D00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0D, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x4190AB00, 
+                                        0x4190AB00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0E, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x35A4E900, 
+                                        0x35A4E900
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0F, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x29B92700, 
+                                        0x29B92700
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x10, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x1DCD6500, 
+                                        0x1DCD6500
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x11, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x17D78400, 
+                                        0x17D78400
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x12, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x11E1A300, 
+                                        0x11E1A300
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x13, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x0BEBC200, 
+                                        0x0BEBC200
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x14, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x05F5E100, 
+                                        0x05F5E100
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x15, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "COMPONENT", 
+                        0x02, 
+                        Package (0x16)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_axi", 
+                                    0x4B00
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_ahb", 
+                                    0x9C40
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_CPP", 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_cpp_clk", 
+                                    0x09, 
+                                    0x12
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_cpp_clk", 
+                                    0x09, 
+                                    0x14
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_cpp_axi_clk", 
+                                    0x09, 
+                                    0x12
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_cpp_axi_clk", 
+                                    0x09, 
+                                    0x14
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_micro_ahb_clk", 
+                                    0x09, 
+                                    0x12
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_micro_ahb_clk", 
+                                    0x09, 
+                                    0x14
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    One, 
+                                    0x04
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_top_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cpp_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cpp_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cpp_vbif_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cpp_axi_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_micro_ahb_clk", 
+                                    0x0A, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_micro_ahb_clk", 
+                                    0x0B, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_micro_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x14)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_micro_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cpp_axi_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cpp_vbif_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cpp_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    Zero, 
+                                    0x07
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cpp_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_top_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "PSTATE_ADJUST", 
+                                Package (0x02)
+                                {
+                                    One, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_micro_ahb_clk", 
+                                    0x09, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_micro_ahb_clk", 
+                                    0x09, 
+                                    0x13
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_cpp_axi_clk", 
+                                    0x09, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_cpp_axi_clk", 
+                                    0x09, 
+                                    0x13
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_cpp_clk", 
+                                    0x09, 
+                                    0x15
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x03)
+                                {
+                                    "mmss_camss_cpp_clk", 
+                                    0x09, 
+                                    0x13
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_CPP", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_ahb", 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_axi", 
+                                    Zero
+                                }
+                            }
+                        }, 
+
+                        Package (0x0A)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_cpp_clk", 
+                                        0x03, 
+                                        0x23C34600, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_cpp_clk", 
+                                        0x03, 
+                                        0x22551000, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_cpp_clk", 
+                                        0x03, 
+                                        0x1C9C3800, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_cpp_clk", 
+                                        0x03, 
+                                        0x18148D00, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x04, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_cpp_clk", 
+                                        0x03, 
+                                        0x16E36000, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x05, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_cpp_clk", 
+                                        0x03, 
+                                        0x0BEBC200, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x06, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_cpp_clk", 
+                                        0x03, 
+                                        0x05F5E100, 
+                                        0x03
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x07, 
+                                Package (0x02)
+                                {
+                                    "CLOCK", 
+                                    Package (0x04)
+                                    {
+                                        "mmss_camss_cpp_clk", 
+                                        0x03, 
+                                        Zero, 
+                                        0x03
+                                    }
+                                }
+                            }
+                        }, 
+
+                        Package (0x18)
+                        {
+                            "PSTATE_SET", 
+                            One, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xEE6B2800, 
+                                        0xEE6B2800
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xD09DC300, 
+                                        0xD09DC300
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x02, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xC4B20100, 
+                                        0xC4B20100
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x03, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xB8C63F00, 
+                                        0xB8C63F00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x04, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xACDA7D00, 
+                                        0xACDA7D00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x05, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0xA0EEBB00, 
+                                        0xA0EEBB00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x06, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x9502F900, 
+                                        0x9502F900
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x07, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x89173700, 
+                                        0x89173700
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x08, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x7D2B7500, 
+                                        0x7D2B7500
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x09, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x713FB300, 
+                                        0x713FB300
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0A, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x6553F100, 
+                                        0x6553F100
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0B, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x59682F00, 
+                                        0x59682F00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0C, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x4D7C6D00, 
+                                        0x4D7C6D00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0D, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x4190AB00, 
+                                        0x4190AB00
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0E, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x35A4E900, 
+                                        0x35A4E900
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x0F, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x29B92700, 
+                                        0x29B92700
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x10, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x1DCD6500, 
+                                        0x1DCD6500
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x11, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x17D78400, 
+                                        0x17D78400
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x12, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x11E1A300, 
+                                        0x11E1A300
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x13, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x0BEBC200, 
+                                        0x0BEBC200
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x14, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        0x05F5E100, 
+                                        0x05F5E100
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                0x15, 
+                                Package (0x02)
+                                {
+                                    "BUSARB", 
+                                    Package (0x05)
+                                    {
+                                        0x03, 
+                                        "ICBID_MASTER_VFE", 
+                                        "ICBID_SLAVE_EBI1", 
+                                        Zero, 
+                                        Zero
+                                    }
+                                }
+                            }
+                        }, 
+
+                        Package (0x04)
+                        {
+                            "PSTATE_SET", 
+                            0x02, 
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                Package (0x02)
+                                {
+                                    "REQUIRED_RESOURCE", 
+                                    Package (0x03)
+                                    {
+                                        One, 
+                                        "/clk/mmnoc_ahb", 
+                                        0x00013880
+                                    }
+                                }
+                            }, 
+
+                            Package (0x03)
+                            {
+                                "PSTATE", 
+                                One, 
+                                Package (0x02)
+                                {
+                                    "REQUIRED_RESOURCE", 
+                                    Package (0x03)
+                                    {
+                                        One, 
+                                        "/clk/mmnoc_ahb", 
+                                        0x9C40
+                                    }
+                                }
+                            }
+                        }
+                    }, 
+
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        0x03, 
+                        Package (0x0D)
+                        {
+                            "FSTATE", 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_axi", 
+                                    0x4B00
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_ahb", 
+                                    0x9C40
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_TOP", 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_fd_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_fd_core_uar_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_fd_core_clk", 
+                                    0x08, 
+                                    0x17D78400, 
+                                    0x03
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cpp_axi_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_top_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cpp_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cpp_vbif_ahb_clk", 
+                                    One, 
+                                    Zero, 
+                                    One
+                                }
+                            }
+                        }, 
+
+                        Package (0x0D)
+                        {
+                            "FSTATE", 
+                            One, 
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_fd_core_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_fd_core_uar_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_fd_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cpp_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cpp_vbif_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_top_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_ahb_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "CLOCK", 
+                                Package (0x04)
+                                {
+                                    "mmss_camss_cpp_axi_clk", 
+                                    0x02, 
+                                    Zero, 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "FOOTSWITCH", 
+                                Package (0x02)
+                                {
+                                    "VDD_CAMSS_TOP", 
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_ahb", 
+                                    Zero
+                                }
+                            }, 
+
+                            Package (0x02)
+                            {
+                                "REQUIRED_RESOURCE", 
+                                Package (0x03)
+                                {
+                                    One, 
+                                    "/clk/mmnoc_axi", 
+                                    Zero
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+            Name (CPXC, Package (0x03)
+            {
+                Package (0x04)
+                {
+                    "DEVICE", 
+                    "\\_SB.CAMS", 
+                    Package (0x07)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x06)
+                            {
+                                "PPP_RESOURCE_ID_LVS1_A", 
+                                0x04, 
+                                0x001B7740, 
+                                0x000186A0, 
+                                One, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICGPIO", 
+                            Package (0x08)
+                            {
+                                "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT", 
+                                Zero, 
+                                0x13, 
+                                Zero, 
+                                One, 
+                                One, 
+                                0x03, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                0x0A
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "mmss_camss_mclk0_clk", 
+                                0x08, 
+                                0x016E3600, 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "mmss_camss_ispif_ahb_clk", 
+                                One, 
+                                Zero, 
+                                One
+                            }
+                        }
+                    }, 
+
+                    Package (0x06)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "mmss_camss_ispif_ahb_clk", 
+                                0x02, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "mmss_camss_mclk0_clk", 
+                                0x0C, 
+                                Zero, 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x06)
+                            {
+                                "PPP_RESOURCE_ID_LVS1_A", 
+                                0x04, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICGPIO", 
+                            Package (0x08)
+                            {
+                                "IOCTL_PM_GPIO_CONFIG_DIGITAL_OUTPUT", 
+                                Zero, 
+                                0x13, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                Zero
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x04)
+                {
+                    "DEVICE", 
+                    "\\_SB.CAMF", 
+                    Package (0x08)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x06)
+                            {
+                                "PPP_RESOURCE_ID_LVS1_A", 
+                                0x04, 
+                                0x001B7740, 
+                                0x000186A0, 
+                                One, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO22_A", 
+                                One, 
+                                0x002AB980, 
+                                0xEA60, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x17, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                0x0A
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "mmss_camss_mclk2_clk", 
+                                0x08, 
+                                0x016E3600, 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "mmss_camss_ispif_ahb_clk", 
+                                One, 
+                                Zero, 
+                                One
+                            }
+                        }
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "mmss_camss_ispif_ahb_clk", 
+                                0x02, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "mmss_camss_mclk2_clk", 
+                                0x0C, 
+                                Zero, 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x17, 
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x0A)
+                            {
+                                "PPP_RESOURCE_ID_LDO22_A", 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x06)
+                            {
+                                "PPP_RESOURCE_ID_LVS1_A", 
+                                0x04, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }
+                }, 
+
+                Package (0x04)
+                {
+                    "DEVICE", 
+                    "\\_SB.CAMI", 
+                    Package (0x07)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x06)
+                            {
+                                "PPP_RESOURCE_ID_LVS1_A", 
+                                0x04, 
+                                0x001B7740, 
+                                0x000186A0, 
+                                One, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x08, 
+                                One, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "DELAY", 
+                            Package (0x01)
+                            {
+                                0x0A
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "mmss_camss_mclk1_clk", 
+                                0x08, 
+                                0x016E3600, 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "mmss_camss_ispif_ahb_clk", 
+                                One, 
+                                Zero, 
+                                One
+                            }
+                        }
+                    }, 
+
+                    Package (0x06)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "mmss_camss_ispif_ahb_clk", 
+                                0x02, 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "mmss_camss_mclk1_clk", 
+                                0x0C, 
+                                Zero, 
+                                0x03
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x08, 
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "PMICVREGVOTE", 
+                            Package (0x06)
+                            {
+                                "PPP_RESOURCE_ID_LVS1_A", 
+                                0x04, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero
+                            }
+                        }
+                    }
+                }
+            })
+        }
+
+        Scope (\_SB.PEP0)
+        {
+        }
+
         Device (BAM1)
         {
             Name (_HID, "QCOM0012")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, One)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
@@ -66821,7 +73378,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (BAM3)
         {
             Name (_HID, "QCOM0012")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x03)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
@@ -66844,7 +73401,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (BAM4)
         {
             Name (_HID, "QCOM0012")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x04)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
@@ -66867,7 +73424,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (BAM5)
         {
             Name (_HID, "QCOM0012")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x05)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
@@ -66890,7 +73447,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (BAM6)
         {
             Name (_HID, "QCOM0012")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x06)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
@@ -66913,7 +73470,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (BAM7)
         {
             Name (_HID, "QCOM0012")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x07)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
@@ -66936,7 +73493,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (BAMD)
         {
             Name (_HID, "QCOM0012")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x0D)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
@@ -66959,7 +73516,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (BAME)
         {
             Name (_HID, "QCOM0012")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x0E)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
@@ -66982,12 +73539,12 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (UAR3)
         {
             Name (_HID, "QCOM0034")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x03)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
             Name (_DEP, Package (0x01)  // _DEP: Dependencies
             {
-                PEP0
+                \_SB.PEP0
             })
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -67047,12 +73604,12 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (UAR5)
         {
             Name (_HID, "QCOM0034")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x05)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
             Name (_DEP, Package (0x01)  // _DEP: Dependencies
             {
-                PEP0
+                \_SB.PEP0
             })
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -67103,22 +73660,17 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 })
                 Return (RBUF) /* \_SB_.UAR5.PROP.RBUF */
             }
-
-            Method (_STA, 0, NotSerialized)  // _STA: Status
-            {
-                Return (0x0F)
-            }
         }
 
         Device (I2C5)
         {
             Name (_HID, "QCOM001F")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x05)  // _UID: Unique ID
             Name (_DEP, Package (0x02)  // _DEP: Dependencies
             {
-                BAM3, 
-                PEP0
+                \_SB.BAM3, 
+                \_SB.PEP0
             })
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -67150,12 +73702,12 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (I2C6)
         {
             Name (_HID, "QCOM001F")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x06)  // _UID: Unique ID
             Name (_DEP, Package (0x02)  // _DEP: Dependencies
             {
-                BAM3, 
-                PEP0
+                \_SB.BAM3, 
+                \_SB.PEP0
             })
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -67187,12 +73739,12 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (I2C7)
         {
             Name (_HID, "QCOM001F")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x07)  // _UID: Unique ID
             Name (_DEP, Package (0x02)  // _DEP: Dependencies
             {
-                BAM4, 
-                PEP0
+                \_SB.BAM4, 
+                \_SB.PEP0
             })
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -67221,14 +73773,50 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (PEP0)
+        Device (I2CA)
+        {
+            Name (_HID, "QCOM001F")  // _HID: Hardware ID
+            Name (_UID, 0x0A)  // _UID: Unique ID
+            Name (_DEP, Package (0x02)  // _DEP: Dependencies
+            {
+                \_SB.BAM4, 
+                \_SB.PEP0
+            })
+            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            {
+                Name (RBUF, ResourceTemplate ()
+                {
+                    Memory32Fixed (ReadWrite,
+                        0x0C1B8000,         // Address Base
+                        0x00000600,         // Address Length
+                        )
+                    Interrupt (ResourceConsumer, Level, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x00000088,
+                    }
+                })
+                Return (RBUF) /* \_SB_.I2CA._CRS.RBUF */
+            }
+
+            Method (FNOC, 0, NotSerialized)
+            {
+                Name (RBUF, Buffer (0x0E)
+                {
+                    /* 0000 */  0x0A, 0x00, 0x00, 0x40, 0x18, 0x0C, 0x0D, 0x0C,  // ...@....
+                    /* 0008 */  0x00, 0x04, 0x00, 0xF8, 0x24, 0x01               // ....$.
+                })
+                Return (RBUF) /* \_SB_.I2CA.FNOC.RBUF */
+            }
+        }
+
+        Scope (\_SB.PEP0)
         {
             Method (BSMD, 0, NotSerialized)
             {
                 Return (BSRC) /* \_SB_.PEP0.BSRC */
             }
 
-            Name (BSRC, Package (0x05)
+            Name (BSRC, Package (0x06)
             {
                 Package (0x04)
                 {
@@ -68482,6 +75070,168 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                             }
                         }
                     }
+                }, 
+
+                Package (0x07)
+                {
+                    "DEVICE", 
+                    "\\_SB.I2CA", 
+                    Package (0x03)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "FSTATE", 
+                            Zero
+                        }
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "DSTATE", 
+                        Zero, 
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_blsp2_ahb_clk", 
+                                One
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x04)
+                            {
+                                "gcc_blsp2_qup4_i2c_apps_clk", 
+                                0x08, 
+                                0x0124F800, 
+                                0x04
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_BLSP_2", 
+                                "ICBID_SLAVE_EBI1", 
+                                0x0927C000, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x43, 
+                                One, 
+                                0x04, 
+                                One, 
+                                0x03, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x44, 
+                                One, 
+                                0x04, 
+                                One, 
+                                0x03, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        One
+                    }, 
+
+                    Package (0x02)
+                    {
+                        "DSTATE", 
+                        0x02
+                    }, 
+
+                    Package (0x07)
+                    {
+                        "DSTATE", 
+                        0x03, 
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_blsp2_ahb_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "CLOCK", 
+                            Package (0x02)
+                            {
+                                "gcc_blsp2_qup4_i2c_apps_clk", 
+                                0x02
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "BUSARB", 
+                            Package (0x05)
+                            {
+                                0x03, 
+                                "ICBID_MASTER_BLSP_2", 
+                                "ICBID_SLAVE_EBI1", 
+                                Zero, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x44, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                0x03, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x02)
+                        {
+                            "TLMMGPIO", 
+                            Package (0x06)
+                            {
+                                0x43, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                0x03, 
+                                Zero
+                            }
+                        }
+                    }
                 }
             })
         }
@@ -68489,13 +75239,13 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (RPEN)
         {
             Name (_HID, "QCOM006A")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
         }
 
         Device (PILC)
         {
             Name (_HID, "QCOM0039")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Method (PILX, 0, NotSerialized)
             {
                 Return (PILP) /* \_SB_.PILC.PILP */
@@ -68526,26 +75276,26 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         {
             Name (_DEP, Package (0x02)  // _DEP: Dependencies
             {
-                PILC, 
-                RPEN
+                \_SB.PILC, 
+                \_SB.RPEN
             })
             Name (_HID, "QCOM0069")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
         }
 
         Device (SCSS)
         {
             Name (_DEP, Package (0x06)  // _DEP: Dependencies
             {
-                PEP0, 
-                PILC, 
-                GLNK, 
-                IPC0, 
-                RPEN, 
-                SSDD
+                \_SB.PEP0, 
+                \_SB.PILC, 
+                \_SB.GLNK, 
+                \_SB.IPC0, 
+                \_SB.RPEN, 
+                \_SB.SSDD
             })
             Name (_HID, "QCOM00C3")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
@@ -68563,16 +75313,16 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         {
             Name (_DEP, Package (0x07)  // _DEP: Dependencies
             {
-                PEP0, 
-                PILC, 
-                GLNK, 
-                IPC0, 
-                RPEN, 
-                SSDD, 
-                PDSR
+                \_SB.PEP0, 
+                \_SB.PILC, 
+                \_SB.GLNK, 
+                \_SB.IPC0, 
+                \_SB.RPEN, 
+                \_SB.SSDD, 
+                \_SB.PDSR
             })
             Name (_HID, "QCOM003B")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
             Method (WDIR, 0, NotSerialized)
             {
                 Return (Package (0x04)
@@ -68600,7 +75350,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 Name (_ADR, Zero)  // _ADR: Address
                 Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
-                Alias (PSUB, _SUB)
+                Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
                 Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
                 {
                     Name (RBUF, ResourceTemplate ()
@@ -68627,24 +75377,24 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
 
                 Device (ADCM)
                 {
-                    Alias (PSUB, _SUB)
+                    Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
                     Name (_ADR, Zero)  // _ADR: Address
                     Name (_DEP, Package (0x01)  // _DEP: Dependencies
                     {
-                        MMU2
+                        \_SB.MMU2
                     })
                     Method (CHLD, 0, NotSerialized)
                     {
                         Return (Package (0x01)
                         {
-                            "ADCM\\QCOM00FB"
+                            "ADCM\\ASUS00FB"
                         })
                     }
 
                     Device (AUDD)
                     {
                         Name (_ADR, Zero)  // _ADR: Address
-                        Alias (PSUB, _SUB)
+                        Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
                         Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
                         {
                             Name (RBUF, ResourceTemplate ()
@@ -68661,17 +75411,11 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                                     {   // Pin list
                                         0x0036
                                     }
-                                GpioIo (Exclusive, PullDown, 0x0000, 0x0000, IoRestrictionNone,
+                                GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
                                     "\\_SB.GIO0", 0x00, ResourceConsumer, ,
                                     )
                                     {   // Pin list
-                                        0x0041
-                                    }
-                                GpioIo (Exclusive, PullDown, 0x0000, 0x0000, IoRestrictionNone,
-                                    "\\_SB.GIO0", 0x00, ResourceConsumer, ,
-                                    )
-                                    {   // Pin list
-                                        0x0042
+                                        0x001A
                                     }
                             })
                             Return (RBUF) /* \_SB_.ADSP.SLM1.ADCM.AUDD._CRS.RBUF */
@@ -68681,8 +75425,8 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         {
                             Name (CH, Package (0x02)
                             {
-                                "AUDD\\QCOM0075", 
-                                "AUDD\\QCOM005F"
+                                "AUDD\\ASUS0075", 
+                                "AUDD\\ASUS005F"
                             })
                             Return (CH) /* \_SB_.ADSP.SLM1.ADCM.AUDD.CHLD.CH__ */
                         }
@@ -68740,25 +75484,25 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
             Name (_DEP, Package (0x08)  // _DEP: Dependencies
             {
-                PEP0, 
-                GLNK, 
-                IPC0, 
-                PILC, 
-                RFS0, 
-                RPEN, 
-                SSDD, 
-                PDSR
+                \_SB.PEP0, 
+                \_SB.GLNK, 
+                \_SB.IPC0, 
+                \_SB.PILC, 
+                \_SB.RFS0, 
+                \_SB.RPEN, 
+                \_SB.SSDD, 
+                \_SB.PDSR
             })
             Name (_HID, "QCOM003C")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
             Method (_HRV, 0, NotSerialized)  // _HRV: Hardware Revision
             {
-                Return (_BID ())
+                Return (One)
             }
 
             Method (RPEM, 0, NotSerialized)
             {
-                If ((SOID == 0x0124))
+                If ((\_SB.SOID == 0x0124))
                 {
                     Return (Package (0x01)
                     {
@@ -68806,9 +75550,9 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 })
                 Name (_S0W, 0x02)  // _S0W: S0 Device Wake State
                 Name (_S4W, 0x02)  // _S4W: S4 Device Wake State
-                Name (_PRR, Package (0x01)  // _PRR: Power Resource for Reset
+                Name (_PRR, Package (One)  // _PRR: Power Resource for Reset
                 {
-                    WRST
+                    \_SB.AMSS.QWLN.WRST
                 })
                 Method (_STA, 0, NotSerialized)  // _STA: Status
                 {
@@ -68817,7 +75561,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
 
                 Method (_ADR, 0, NotSerialized)  // _ADR: Address
                 {
-                    If ((SOID == 0x0124))
+                    If ((\_SB.SOID == 0x0124))
                     {
                         Return (Zero)
                     }
@@ -68939,27 +75683,18 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     }
                 }
             }
-
-            Scope (\_SB)
-            {
-                Device (COEX)
-                {
-                    Name (_HID, "QCOM0094")  // _HID: Hardware ID
-                    Alias (PSUB, _SUB)
-                }
-            }
         }
 
         Device (QSM)
         {
             Name (_HID, "QCOM00BD")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
             Name (_DEP, Package (0x04)  // _DEP: Dependencies
             {
-                GLNK, 
-                IPC0, 
-                PILC, 
-                RPEN
+                \_SB.GLNK, 
+                \_SB.IPC0, 
+                \_SB.PILC, 
+                \_SB.RPEN
             })
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -68977,33 +75712,33 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (SSDD)
         {
             Name (_HID, "QCOM00D6")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
             Name (_DEP, Package (0x02)  // _DEP: Dependencies
             {
-                GLNK, 
-                TFTP
+                \_SB.GLNK, 
+                \_SB.TFTP
             })
         }
 
         Device (PDSR)
         {
             Name (_HID, "QCOM00D3")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_DEP, Package (0x03)  // _DEP: Dependencies
             {
-                PEP0, 
-                GLNK, 
-                IPC0
+                \_SB.PEP0, 
+                \_SB.GLNK, 
+                \_SB.IPC0
             })
         }
 
         Device (TFTP)
         {
             Name (_HID, "QCOM00FE")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Alias (\_SB.PSUB, _SUB)
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                IPC0
+                \_SB.IPC0
             })
         }
 
@@ -69011,44 +75746,40 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         {
             Name (_DEP, Package (0x02)  // _DEP: Dependencies
             {
-                IPC0, 
-                QDIG
+                \_SB.IPC0, 
+                \_SB.QDIG
             })
             Name (_HID, "QCOM0107")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_CID, "ACPIQCOM0107")  // _CID: Compatible ID
             Name (_UID, Zero)  // _UID: Unique ID
-            Method (_STA, 0, NotSerialized)  // _STA: Status
-            {
-                Return (0x0F)
-            }
         }
 
-        Scope (PILC)
+        Scope (\_SB.ADSP)
         {
         }
 
-        Scope (ADSP)
+        Scope (\_SB.AMSS)
         {
         }
 
-        Scope (SCSS)
+        Scope (\_SB.SCSS)
         {
         }
 
-        Scope (PILC)
+        Scope (\_SB.PILC)
         {
         }
 
-        Scope (CDI)
+        Scope (\_SB.CDI)
         {
         }
 
-        Scope (RPEN)
+        Scope (\_SB.RPEN)
         {
         }
 
-        Scope (ADSP)
+        Scope (\_SB.ADSP)
         {
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
@@ -69056,7 +75787,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (AMSS)
+        Scope (\_SB.AMSS)
         {
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
@@ -69067,11 +75798,11 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (MMU0)
         {
             Name (_HID, "QCOM0011")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, Zero)  // _UID: Unique ID
             Name (_DEP, Package (0x01)  // _DEP: Dependencies
             {
-                PEP0
+                \_SB.PEP0
             })
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -69156,11 +75887,11 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (MMU1)
         {
             Name (_HID, "QCOM0011")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x03)  // _UID: Unique ID
             Name (_DEP, Package (0x01)  // _DEP: Dependencies
             {
-                PEP0
+                \_SB.PEP0
             })
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -69189,11 +75920,11 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (MMU2)
         {
             Name (_HID, "QCOM0011")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x07)  // _UID: Unique ID
             Name (_DEP, Package (0x01)  // _DEP: Dependencies
             {
-                PEP0
+                \_SB.PEP0
             })
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -69262,11 +75993,11 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (MMU3)
         {
             Name (_HID, "QCOM0011")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, 0x08)  // _UID: Unique ID
             Name (_DEP, Package (0x01)  // _DEP: Dependencies
             {
-                PEP0
+                \_SB.PEP0
             })
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -69311,9 +76042,10 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (GPU0)
         {
             Name (_HID, "QCOM007C")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_CID, "ACPIQCOM007C")  // _CID: Compatible ID
             Name (_UID, Zero)  // _UID: Unique ID
+            Name (_CLS, 0x0003000000000000)  // _CLS: Class Code
             Name (_HRV, 0x7C)  // _HRV: Hardware Revision
             Device (MON0)
             {
@@ -69325,14 +76057,14 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
 
             Name (_DEP, Package (0x08)  // _DEP: Dependencies
             {
-                MMU0, 
-                MMU1, 
-                PEP0, 
-                PMIC, 
-                PILC, 
-                RPEN, 
-                TREE, 
-                SCM0
+                \_SB.MMU0, 
+                \_SB.MMU1, 
+                \_SB.PEP0, 
+                \_SB.PMIC, 
+                \_SB.PILC, 
+                \_SB.RPEN, 
+                \_SB.TREE, 
+                \_SB.SCM0
             })
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -69458,8 +76190,8 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 {
                     0x03, 
                     0x02, 
-                    0x0033000A, 
-                    Package (0x07)
+                    0x0032000A, 
+                    Package (0x08)
                     {
                         "ENGINES", 
                         0x06, 
@@ -69746,6 +76478,29 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         Package (0x08)
                         {
                             "ENGINE", 
+                            "CRYPTO", 
+                            "Crypto1.0", 
+                            0x05, 
+                            One, 
+                            Zero, 
+                            Package (0x02)
+                            {
+                                "PERF_CONTROLS", 
+                                Package (0x01)
+                                {
+                                    0x02
+                                }
+                            }, 
+
+                            Package (0x01)
+                            {
+                                "THERMAL_DOMAINS"
+                            }
+                        }, 
+
+                        Package (0x08)
+                        {
+                            "ENGINE", 
                             "VIDEO_ENCODER", 
                             "Venus", 
                             0x06, 
@@ -69772,7 +76527,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         }
                     }, 
 
-                    Package (0x07)
+                    Package (0x08)
                     {
                         "DISPLAYS", 
                         "MDP5.x", 
@@ -69832,6 +76587,33 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                                 Package (0x01)
                                 {
                                     0x04
+                                }
+                            }, 
+
+                            Package (0x01)
+                            {
+                                "THERMAL_DOMAINS"
+                            }
+                        }, 
+
+                        Package (0x07)
+                        {
+                            "DISPLAY", 
+                            "EXTERNAL1", 
+                            0x08, 
+                            One, 
+                            Zero, 
+                            Package (0x03)
+                            {
+                                "PERF_CONTROLS", 
+                                Package (0x01)
+                                {
+                                    0x02
+                                }, 
+
+                                Package (0x01)
+                                {
+                                    0x03
                                 }
                             }, 
 
@@ -75501,7 +82283,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         }
                     }
                 })
-                If ((SIDV < 0x00020000))
+                If ((\_SB.SIDV < 0x00020000))
                 {
                     DerefOf (RBUF [0x04]) [0x0C] = P001 /* \_SB_.GPU0.PMCL.P001 */
                 }
@@ -75510,7 +82292,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     DerefOf (RBUF [0x04]) [0x0C] = P002 /* \_SB_.GPU0.PMCL.P002 */
                 }
 
-                If ((SIDV < 0x00020000))
+                If ((\_SB.SIDV < 0x00020000))
                 {
                     DerefOf (RBUF [0x04]) [0x0D] = P003 /* \_SB_.GPU0.PMCL.P003 */
                 }
@@ -75524,561 +82306,2492 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
 
             Method (_ROM, 3, NotSerialized)  // _ROM: Read-Only Memory
             {
-                Name (PCFG, Buffer (0x1137)
+                Name (PCFG, Buffer (0x132F)
                 {
                     /* 0000 */  0x3C, 0x3F, 0x78, 0x6D, 0x6C, 0x20, 0x76, 0x65,  // <?xml ve
-                    /* 0008 */  0x72, 0x73, 0x69, 0x6F, 0x6E, 0x3D, 0x22, 0x31,  // rsion="1
-                    /* 0010 */  0x2E, 0x30, 0x22, 0x20, 0x65, 0x6E, 0x63, 0x6F,  // .0" enco
-                    /* 0018 */  0x64, 0x69, 0x6E, 0x67, 0x3D, 0x22, 0x75, 0x74,  // ding="ut
-                    /* 0020 */  0x66, 0x2D, 0x38, 0x22, 0x3F, 0x3E, 0x0A, 0x3C,  // f-8"?>.<
-                    /* 0028 */  0x50, 0x61, 0x6E, 0x65, 0x6C, 0x4E, 0x61, 0x6D,  // PanelNam
-                    /* 0030 */  0x65, 0x3E, 0x6D, 0x69, 0x70, 0x69, 0x5F, 0x6D,  // e>mipi_m
-                    /* 0038 */  0x6F, 0x74, 0x5F, 0x63, 0x6D, 0x64, 0x5F, 0x73,  // ot_cmd_s
-                    /* 0040 */  0x6D, 0x64, 0x5F, 0x51, 0x48, 0x44, 0x5F, 0x35,  // md_QHD_5
-                    /* 0048 */  0x34, 0x36, 0x5F, 0x67, 0x3C, 0x2F, 0x50, 0x61,  // 46_g</Pa
-                    /* 0050 */  0x6E, 0x65, 0x6C, 0x4E, 0x61, 0x6D, 0x65, 0x3E,  // nelName>
-                    /* 0058 */  0x0A, 0x3C, 0x50, 0x61, 0x6E, 0x65, 0x6C, 0x44,  // .<PanelD
-                    /* 0060 */  0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69,  // escripti
-                    /* 0068 */  0x6F, 0x6E, 0x3E, 0x53, 0x4D, 0x44, 0x20, 0x35,  // on>SMD 5
-                    /* 0070 */  0x34, 0x36, 0x20, 0x51, 0x48, 0x44, 0x20, 0x53,  // 46 QHD S
-                    /* 0078 */  0x69, 0x6E, 0x67, 0x6C, 0x65, 0x20, 0x44, 0x53,  // ingle DS
-                    /* 0080 */  0x49, 0x20, 0x43, 0x6F, 0x6D, 0x6D, 0x61, 0x6E,  // I Comman
-                    /* 0088 */  0x64, 0x20, 0x4D, 0x6F, 0x64, 0x65, 0x20, 0x44,  // d Mode D
-                    /* 0090 */  0x53, 0x43, 0x20, 0x50, 0x61, 0x6E, 0x65, 0x6C,  // SC Panel
-                    /* 0098 */  0x20, 0x28, 0x31, 0x34, 0x34, 0x30, 0x78, 0x32,  //  (1440x2
-                    /* 00A0 */  0x35, 0x36, 0x30, 0x20, 0x32, 0x34, 0x62, 0x70,  // 560 24bp
-                    /* 00A8 */  0x70, 0x29, 0x3C, 0x2F, 0x50, 0x61, 0x6E, 0x65,  // p)</Pane
-                    /* 00B0 */  0x6C, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70,  // lDescrip
-                    /* 00B8 */  0x74, 0x69, 0x6F, 0x6E, 0x3E, 0x0A, 0x3C, 0x47,  // tion>.<G
-                    /* 00C0 */  0x72, 0x6F, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3D,  // roup id=
-                    /* 00C8 */  0x27, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x20,  // 'Active 
-                    /* 00D0 */  0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x27, 0x3E,  // Timing'>
-                    /* 00D8 */  0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x48,  //  .    <H
-                    /* 00E0 */  0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61,  // orizonta
-                    /* 00E8 */  0x6C, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x3E,  // lActive>
-                    /* 00F0 */  0x31, 0x34, 0x34, 0x30, 0x3C, 0x2F, 0x48, 0x6F,  // 1440</Ho
-                    /* 00F8 */  0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C,  // rizontal
-                    /* 0100 */  0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x3E, 0x20,  // Active> 
-                    /* 0108 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F,  // .    <Ho
-                    /* 0110 */  0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C,  // rizontal
-                    /* 0118 */  0x46, 0x72, 0x6F, 0x6E, 0x74, 0x50, 0x6F, 0x72,  // FrontPor
-                    /* 0120 */  0x63, 0x68, 0x3E, 0x31, 0x32, 0x30, 0x3C, 0x2F,  // ch>120</
-                    /* 0128 */  0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74,  // Horizont
-                    /* 0130 */  0x61, 0x6C, 0x46, 0x72, 0x6F, 0x6E, 0x74, 0x50,  // alFrontP
-                    /* 0138 */  0x6F, 0x72, 0x63, 0x68, 0x3E, 0x20, 0x0A, 0x20,  // orch> . 
-                    /* 0140 */  0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69,  //    <Hori
-                    /* 0148 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x42, 0x61,  // zontalBa
-                    /* 0150 */  0x63, 0x6B, 0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E,  // ckPorch>
-                    /* 0158 */  0x34, 0x34, 0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69,  // 44</Hori
-                    /* 0160 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x42, 0x61,  // zontalBa
-                    /* 0168 */  0x63, 0x6B, 0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E,  // ckPorch>
-                    /* 0170 */  0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x48,  //  .    <H
-                    /* 0178 */  0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61,  // orizonta
-                    /* 0180 */  0x6C, 0x53, 0x79, 0x6E, 0x63, 0x50, 0x75, 0x6C,  // lSyncPul
-                    /* 0188 */  0x73, 0x65, 0x3E, 0x31, 0x36, 0x3C, 0x2F, 0x48,  // se>16</H
-                    /* 0190 */  0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61,  // orizonta
-                    /* 0198 */  0x6C, 0x53, 0x79, 0x6E, 0x63, 0x50, 0x75, 0x6C,  // lSyncPul
-                    /* 01A0 */  0x73, 0x65, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20,  // se> .   
-                    /* 01A8 */  0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  //  <Horizo
-                    /* 01B0 */  0x6E, 0x74, 0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63,  // ntalSync
-                    /* 01B8 */  0x53, 0x6B, 0x65, 0x77, 0x3E, 0x30, 0x3C, 0x2F,  // Skew>0</
-                    /* 01C0 */  0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74,  // Horizont
-                    /* 01C8 */  0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63, 0x53, 0x6B,  // alSyncSk
-                    /* 01D0 */  0x65, 0x77, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20,  // ew> .   
-                    /* 01D8 */  0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  //  <Horizo
-                    /* 01E0 */  0x6E, 0x74, 0x61, 0x6C, 0x4C, 0x65, 0x66, 0x74,  // ntalLeft
-                    /* 01E8 */  0x42, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E, 0x30,  // Border>0
-                    /* 01F0 */  0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  // </Horizo
-                    /* 01F8 */  0x6E, 0x74, 0x61, 0x6C, 0x4C, 0x65, 0x66, 0x74,  // ntalLeft
-                    /* 0200 */  0x42, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E, 0x20,  // Border> 
-                    /* 0208 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F,  // .    <Ho
-                    /* 0210 */  0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C,  // rizontal
-                    /* 0218 */  0x52, 0x69, 0x67, 0x68, 0x74, 0x42, 0x6F, 0x72,  // RightBor
-                    /* 0220 */  0x64, 0x65, 0x72, 0x3E, 0x30, 0x3C, 0x2F, 0x48,  // der>0</H
-                    /* 0228 */  0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61,  // orizonta
-                    /* 0230 */  0x6C, 0x52, 0x69, 0x67, 0x68, 0x74, 0x42, 0x6F,  // lRightBo
-                    /* 0238 */  0x72, 0x64, 0x65, 0x72, 0x3E, 0x20, 0x0A, 0x20,  // rder> . 
-                    /* 0240 */  0x20, 0x20, 0x20, 0x3C, 0x56, 0x65, 0x72, 0x74,  //    <Vert
-                    /* 0248 */  0x69, 0x63, 0x61, 0x6C, 0x41, 0x63, 0x74, 0x69,  // icalActi
-                    /* 0250 */  0x76, 0x65, 0x3E, 0x32, 0x35, 0x36, 0x30, 0x3C,  // ve>2560<
-                    /* 0258 */  0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,  // /Vertica
-                    /* 0260 */  0x6C, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x3E,  // lActive>
-                    /* 0268 */  0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x56,  //  .    <V
-                    /* 0270 */  0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x46,  // erticalF
-                    /* 0278 */  0x72, 0x6F, 0x6E, 0x74, 0x50, 0x6F, 0x72, 0x63,  // rontPorc
-                    /* 0280 */  0x68, 0x3E, 0x38, 0x3C, 0x2F, 0x56, 0x65, 0x72,  // h>8</Ver
-                    /* 0288 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x46, 0x72, 0x6F,  // ticalFro
-                    /* 0290 */  0x6E, 0x74, 0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E,  // ntPorch>
-                    /* 0298 */  0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x56,  //  .    <V
-                    /* 02A0 */  0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x42,  // erticalB
-                    /* 02A8 */  0x61, 0x63, 0x6B, 0x50, 0x6F, 0x72, 0x63, 0x68,  // ackPorch
-                    /* 02B0 */  0x3E, 0x34, 0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74,  // >4</Vert
-                    /* 02B8 */  0x69, 0x63, 0x61, 0x6C, 0x42, 0x61, 0x63, 0x6B,  // icalBack
-                    /* 02C0 */  0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E, 0x20, 0x0A,  // Porch> .
-                    /* 02C8 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65, 0x72,  //     <Ver
-                    /* 02D0 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x53, 0x79, 0x6E,  // ticalSyn
-                    /* 02D8 */  0x63, 0x50, 0x75, 0x6C, 0x73, 0x65, 0x3E, 0x34,  // cPulse>4
-                    /* 02E0 */  0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  // </Vertic
-                    /* 02E8 */  0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63, 0x50, 0x75,  // alSyncPu
-                    /* 02F0 */  0x6C, 0x73, 0x65, 0x3E, 0x20, 0x0A, 0x20, 0x20,  // lse> .  
-                    /* 02F8 */  0x20, 0x20, 0x3C, 0x56, 0x65, 0x72, 0x74, 0x69,  //   <Verti
-                    /* 0300 */  0x63, 0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63, 0x53,  // calSyncS
-                    /* 0308 */  0x6B, 0x65, 0x77, 0x3E, 0x30, 0x3C, 0x2F, 0x56,  // kew>0</V
-                    /* 0310 */  0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x53,  // erticalS
-                    /* 0318 */  0x79, 0x6E, 0x63, 0x53, 0x6B, 0x65, 0x77, 0x3E,  // yncSkew>
-                    /* 0320 */  0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x56,  //  .    <V
-                    /* 0328 */  0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x54,  // erticalT
-                    /* 0330 */  0x6F, 0x70, 0x42, 0x6F, 0x72, 0x64, 0x65, 0x72,  // opBorder
-                    /* 0338 */  0x3E, 0x30, 0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74,  // >0</Vert
-                    /* 0340 */  0x69, 0x63, 0x61, 0x6C, 0x54, 0x6F, 0x70, 0x42,  // icalTopB
-                    /* 0348 */  0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E, 0x20, 0x0A,  // order> .
-                    /* 0350 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65, 0x72,  //     <Ver
-                    /* 0358 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x42, 0x6F, 0x74,  // ticalBot
-                    /* 0360 */  0x74, 0x6F, 0x6D, 0x42, 0x6F, 0x72, 0x64, 0x65,  // tomBorde
-                    /* 0368 */  0x72, 0x3E, 0x30, 0x3C, 0x2F, 0x56, 0x65, 0x72,  // r>0</Ver
-                    /* 0370 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x42, 0x6F, 0x74,  // ticalBot
-                    /* 0378 */  0x74, 0x6F, 0x6D, 0x42, 0x6F, 0x72, 0x64, 0x65,  // tomBorde
-                    /* 0380 */  0x72, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20,  // r> .    
-                    /* 0388 */  0x3C, 0x49, 0x6E, 0x76, 0x65, 0x72, 0x74, 0x44,  // <InvertD
-                    /* 0390 */  0x61, 0x74, 0x61, 0x50, 0x6F, 0x6C, 0x61, 0x72,  // ataPolar
-                    /* 0398 */  0x69, 0x74, 0x79, 0x3E, 0x46, 0x61, 0x6C, 0x73,  // ity>Fals
-                    /* 03A0 */  0x65, 0x3C, 0x2F, 0x49, 0x6E, 0x76, 0x65, 0x72,  // e</Inver
-                    /* 03A8 */  0x74, 0x44, 0x61, 0x74, 0x61, 0x50, 0x6F, 0x6C,  // tDataPol
-                    /* 03B0 */  0x61, 0x72, 0x69, 0x74, 0x79, 0x3E, 0x20, 0x0A,  // arity> .
-                    /* 03B8 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x49, 0x6E, 0x76,  //     <Inv
-                    /* 03C0 */  0x65, 0x72, 0x74, 0x56, 0x73, 0x79, 0x6E, 0x63,  // ertVsync
-                    /* 03C8 */  0x50, 0x6F, 0x6C, 0x61, 0x69, 0x72, 0x74, 0x79,  // Polairty
-                    /* 03D0 */  0x3E, 0x46, 0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F,  // >False</
-                    /* 03D8 */  0x49, 0x6E, 0x76, 0x65, 0x72, 0x74, 0x56, 0x73,  // InvertVs
-                    /* 03E0 */  0x79, 0x6E, 0x63, 0x50, 0x6F, 0x6C, 0x61, 0x69,  // yncPolai
-                    /* 03E8 */  0x72, 0x74, 0x79, 0x3E, 0x20, 0x0A, 0x20, 0x20,  // rty> .  
-                    /* 03F0 */  0x20, 0x20, 0x3C, 0x49, 0x6E, 0x76, 0x65, 0x72,  //   <Inver
-                    /* 03F8 */  0x74, 0x48, 0x73, 0x79, 0x6E, 0x63, 0x50, 0x6F,  // tHsyncPo
-                    /* 0400 */  0x6C, 0x61, 0x72, 0x69, 0x74, 0x79, 0x3E, 0x46,  // larity>F
-                    /* 0408 */  0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F, 0x49, 0x6E,  // alse</In
-                    /* 0410 */  0x76, 0x65, 0x72, 0x74, 0x48, 0x73, 0x79, 0x6E,  // vertHsyn
-                    /* 0418 */  0x63, 0x50, 0x6F, 0x6C, 0x61, 0x72, 0x69, 0x74,  // cPolarit
-                    /* 0420 */  0x79, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20,  // y> .    
-                    /* 0428 */  0x3C, 0x42, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x43,  // <BorderC
-                    /* 0430 */  0x6F, 0x6C, 0x6F, 0x72, 0x3E, 0x30, 0x78, 0x30,  // olor>0x0
-                    /* 0438 */  0x3C, 0x2F, 0x42, 0x6F, 0x72, 0x64, 0x65, 0x72,  // </Border
-                    /* 0440 */  0x43, 0x6F, 0x6C, 0x6F, 0x72, 0x3E, 0x0A, 0x3C,  // Color>.<
-                    /* 0448 */  0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x3E, 0x0A,  // /Group>.
-                    /* 0450 */  0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x20, 0x69,  // <Group i
-                    /* 0458 */  0x64, 0x3D, 0x27, 0x44, 0x69, 0x73, 0x70, 0x6C,  // d='Displ
-                    /* 0460 */  0x61, 0x79, 0x20, 0x49, 0x6E, 0x74, 0x65, 0x72,  // ay Inter
-                    /* 0468 */  0x66, 0x61, 0x63, 0x65, 0x27, 0x3E, 0x20, 0x0A,  // face'> .
-                    /* 0470 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x49, 0x6E, 0x74,  //     <Int
-                    /* 0478 */  0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x54, 0x79,  // erfaceTy
-                    /* 0480 */  0x70, 0x65, 0x3E, 0x39, 0x3C, 0x2F, 0x49, 0x6E,  // pe>9</In
-                    /* 0488 */  0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x54,  // terfaceT
-                    /* 0490 */  0x79, 0x70, 0x65, 0x3E, 0x20, 0x0A, 0x20, 0x20,  // ype> .  
-                    /* 0498 */  0x20, 0x20, 0x3C, 0x49, 0x6E, 0x74, 0x65, 0x72,  //   <Inter
-                    /* 04A0 */  0x66, 0x61, 0x63, 0x65, 0x43, 0x6F, 0x6C, 0x6F,  // faceColo
-                    /* 04A8 */  0x72, 0x46, 0x6F, 0x72, 0x6D, 0x61, 0x74, 0x3E,  // rFormat>
-                    /* 04B0 */  0x33, 0x3C, 0x2F, 0x49, 0x6E, 0x74, 0x65, 0x72,  // 3</Inter
-                    /* 04B8 */  0x66, 0x61, 0x63, 0x65, 0x43, 0x6F, 0x6C, 0x6F,  // faceColo
-                    /* 04C0 */  0x72, 0x46, 0x6F, 0x72, 0x6D, 0x61, 0x74, 0x3E,  // rFormat>
-                    /* 04C8 */  0x0A, 0x3C, 0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70,  // .</Group
-                    /* 04D0 */  0x3E, 0x0A, 0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70,  // >.<Group
-                    /* 04D8 */  0x20, 0x69, 0x64, 0x3D, 0x27, 0x44, 0x53, 0x49,  //  id='DSI
-                    /* 04E0 */  0x20, 0x49, 0x6E, 0x74, 0x65, 0x72, 0x66, 0x61,  //  Interfa
-                    /* 04E8 */  0x63, 0x65, 0x27, 0x3E, 0x20, 0x0A, 0x20, 0x20,  // ce'> .  
-                    /* 04F0 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x43, 0x68,  //   <DSICh
-                    /* 04F8 */  0x61, 0x6E, 0x6E, 0x65, 0x6C, 0x49, 0x64, 0x3E,  // annelId>
-                    /* 0500 */  0x32, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x43, 0x68,  // 2</DSICh
-                    /* 0508 */  0x61, 0x6E, 0x6E, 0x65, 0x6C, 0x49, 0x64, 0x3E,  // annelId>
-                    /* 0510 */  0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //  .    <D
-                    /* 0518 */  0x53, 0x49, 0x56, 0x69, 0x72, 0x74, 0x75, 0x61,  // SIVirtua
-                    /* 0520 */  0x6C, 0x49, 0x64, 0x3E, 0x30, 0x3C, 0x2F, 0x44,  // lId>0</D
-                    /* 0528 */  0x53, 0x49, 0x56, 0x69, 0x72, 0x74, 0x75, 0x61,  // SIVirtua
-                    /* 0530 */  0x6C, 0x49, 0x64, 0x3E, 0x20, 0x0A, 0x20, 0x20,  // lId> .  
-                    /* 0538 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x4C, 0x50,  //   <DSILP
-                    /* 0540 */  0x31, 0x31, 0x41, 0x74, 0x49, 0x6E, 0x69, 0x74,  // 11AtInit
-                    /* 0548 */  0x3E, 0x54, 0x72, 0x75, 0x65, 0x3C, 0x2F, 0x44,  // >True</D
-                    /* 0550 */  0x53, 0x49, 0x4C, 0x50, 0x31, 0x31, 0x41, 0x74,  // SILP11At
-                    /* 0558 */  0x49, 0x6E, 0x69, 0x74, 0x3E, 0x20, 0x0A, 0x20,  // Init> . 
-                    /* 0560 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x43,  //    <DSIC
-                    /* 0568 */  0x6F, 0x6C, 0x6F, 0x72, 0x46, 0x6F, 0x72, 0x6D,  // olorForm
-                    /* 0570 */  0x61, 0x74, 0x3E, 0x33, 0x36, 0x3C, 0x2F, 0x44,  // at>36</D
-                    /* 0578 */  0x53, 0x49, 0x43, 0x6F, 0x6C, 0x6F, 0x72, 0x46,  // SIColorF
-                    /* 0580 */  0x6F, 0x72, 0x6D, 0x61, 0x74, 0x3E, 0x20, 0x0A,  // ormat> .
-                    /* 0588 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
-                    /* 0590 */  0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x4D,  // TrafficM
-                    /* 0598 */  0x6F, 0x64, 0x65, 0x3E, 0x31, 0x3C, 0x2F, 0x44,  // ode>1</D
-                    /* 05A0 */  0x53, 0x49, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69,  // SITraffi
-                    /* 05A8 */  0x63, 0x4D, 0x6F, 0x64, 0x65, 0x3E, 0x20, 0x0A,  // cMode> .
-                    /* 05B0 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
-                    /* 05B8 */  0x4C, 0x61, 0x6E, 0x65, 0x73, 0x3E, 0x34, 0x3C,  // Lanes>4<
-                    /* 05C0 */  0x2F, 0x44, 0x53, 0x49, 0x4C, 0x61, 0x6E, 0x65,  // /DSILane
-                    /* 05C8 */  0x73, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20,  // s> .    
-                    /* 05D0 */  0x3C, 0x44, 0x53, 0x49, 0x52, 0x65, 0x66, 0x72,  // <DSIRefr
-                    /* 05D8 */  0x65, 0x73, 0x68, 0x52, 0x61, 0x74, 0x65, 0x3E,  // eshRate>
-                    /* 05E0 */  0x30, 0x78, 0x33, 0x43, 0x30, 0x30, 0x30, 0x30,  // 0x3C0000
-                    /* 05E8 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x52, 0x65, 0x66,  // </DSIRef
-                    /* 05F0 */  0x72, 0x65, 0x73, 0x68, 0x52, 0x61, 0x74, 0x65,  // reshRate
-                    /* 05F8 */  0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // > .    <
-                    /* 0600 */  0x44, 0x53, 0x49, 0x50, 0x68, 0x79, 0x44, 0x43,  // DSIPhyDC
-                    /* 0608 */  0x44, 0x43, 0x4D, 0x6F, 0x64, 0x65, 0x3E, 0x54,  // DCMode>T
-                    /* 0610 */  0x72, 0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // rue</DSI
-                    /* 0618 */  0x50, 0x68, 0x79, 0x44, 0x43, 0x44, 0x43, 0x4D,  // PhyDCDCM
-                    /* 0620 */  0x6F, 0x64, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ode>.   
-                    /* 0628 */  0x20, 0x3C, 0x44, 0x53, 0x49, 0x43, 0x4D, 0x44,  //  <DSICMD
-                    /* 0630 */  0x53, 0x77, 0x61, 0x70, 0x49, 0x6E, 0x74, 0x65,  // SwapInte
-                    /* 0638 */  0x72, 0x66, 0x61, 0x63, 0x65, 0x3E, 0x46, 0x61,  // rface>Fa
-                    /* 0640 */  0x6C, 0x73, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // lse</DSI
-                    /* 0648 */  0x43, 0x4D, 0x44, 0x53, 0x77, 0x61, 0x70, 0x49,  // CMDSwapI
-                    /* 0650 */  0x6E, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65,  // nterface
-                    /* 0658 */  0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // > .    <
-                    /* 0660 */  0x44, 0x53, 0x49, 0x43, 0x4D, 0x44, 0x55, 0x73,  // DSICMDUs
-                    /* 0668 */  0x69, 0x6E, 0x67, 0x54, 0x72, 0x69, 0x67, 0x67,  // ingTrigg
-                    /* 0670 */  0x65, 0x72, 0x3E, 0x46, 0x61, 0x6C, 0x73, 0x65,  // er>False
-                    /* 0678 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x43, 0x4D, 0x44,  // </DSICMD
-                    /* 0680 */  0x55, 0x73, 0x69, 0x6E, 0x67, 0x54, 0x72, 0x69,  // UsingTri
-                    /* 0688 */  0x67, 0x67, 0x65, 0x72, 0x3E, 0x20, 0x0A, 0x20,  // gger> . 
-                    /* 0690 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x50,  //    <DSIP
-                    /* 0698 */  0x61, 0x63, 0x6B, 0x65, 0x74, 0x54, 0x72, 0x61,  // acketTra
-                    /* 06A0 */  0x6E, 0x73, 0x66, 0x65, 0x72, 0x48, 0x53, 0x3E,  // nsferHS>
-                    /* 06A8 */  0x54, 0x72, 0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53,  // True</DS
-                    /* 06B0 */  0x49, 0x50, 0x61, 0x63, 0x6B, 0x65, 0x74, 0x54,  // IPacketT
-                    /* 06B8 */  0x72, 0x61, 0x6E, 0x73, 0x66, 0x65, 0x72, 0x48,  // ransferH
-                    /* 06C0 */  0x53, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20,  // S> .    
-                    /* 06C8 */  0x3C, 0x44, 0x53, 0x49, 0x45, 0x6E, 0x61, 0x62,  // <DSIEnab
-                    /* 06D0 */  0x6C, 0x65, 0x41, 0x75, 0x74, 0x6F, 0x52, 0x65,  // leAutoRe
-                    /* 06D8 */  0x66, 0x72, 0x65, 0x73, 0x68, 0x3E, 0x54, 0x72,  // fresh>Tr
-                    /* 06E0 */  0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x45,  // ue</DSIE
-                    /* 06E8 */  0x6E, 0x61, 0x62, 0x6C, 0x65, 0x41, 0x75, 0x74,  // nableAut
-                    /* 06F0 */  0x6F, 0x52, 0x65, 0x66, 0x72, 0x65, 0x73, 0x68,  // oRefresh
-                    /* 06F8 */  0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // > .    <
-                    /* 0700 */  0x44, 0x53, 0x49, 0x41, 0x75, 0x74, 0x6F, 0x52,  // DSIAutoR
-                    /* 0708 */  0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x46, 0x72,  // efreshFr
-                    /* 0710 */  0x61, 0x6D, 0x65, 0x4E, 0x75, 0x6D, 0x44, 0x69,  // ameNumDi
-                    /* 0718 */  0x76, 0x3E, 0x31, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // v>1</DSI
-                    /* 0720 */  0x41, 0x75, 0x74, 0x6F, 0x52, 0x65, 0x66, 0x72,  // AutoRefr
-                    /* 0728 */  0x65, 0x73, 0x68, 0x46, 0x72, 0x61, 0x6D, 0x65,  // eshFrame
-                    /* 0730 */  0x4E, 0x75, 0x6D, 0x44, 0x69, 0x76, 0x3E, 0x20,  // NumDiv> 
-                    /* 0738 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53,  // .    <DS
-                    /* 0740 */  0x49, 0x54, 0x45, 0x43, 0x68, 0x65, 0x63, 0x6B,  // ITECheck
-                    /* 0748 */  0x45, 0x6E, 0x61, 0x62, 0x6C, 0x65, 0x3E, 0x54,  // Enable>T
-                    /* 0750 */  0x72, 0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // rue</DSI
-                    /* 0758 */  0x54, 0x45, 0x43, 0x68, 0x65, 0x63, 0x6B, 0x45,  // TECheckE
-                    /* 0760 */  0x6E, 0x61, 0x62, 0x6C, 0x65, 0x3E, 0x20, 0x0A,  // nable> .
-                    /* 0768 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
-                    /* 0770 */  0x54, 0x45, 0x55, 0x73, 0x69, 0x6E, 0x67, 0x44,  // TEUsingD
-                    /* 0778 */  0x65, 0x64, 0x69, 0x63, 0x61, 0x74, 0x65, 0x64,  // edicated
-                    /* 0780 */  0x54, 0x45, 0x50, 0x69, 0x6E, 0x3E, 0x54, 0x72,  // TEPin>Tr
-                    /* 0788 */  0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54,  // ue</DSIT
-                    /* 0790 */  0x45, 0x55, 0x73, 0x69, 0x6E, 0x67, 0x44, 0x65,  // EUsingDe
-                    /* 0798 */  0x64, 0x69, 0x63, 0x61, 0x74, 0x65, 0x64, 0x54,  // dicatedT
-                    /* 07A0 */  0x45, 0x50, 0x69, 0x6E, 0x3E, 0x20, 0x0A, 0x20,  // EPin> . 
-                    /* 07A8 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x54,  //    <DSIT
-                    /* 07B0 */  0x45, 0x76, 0x53, 0x79, 0x6E, 0x63, 0x53, 0x74,  // EvSyncSt
-                    /* 07B8 */  0x61, 0x72, 0x74, 0x50, 0x6F, 0x73, 0x3E, 0x32,  // artPos>2
-                    /* 07C0 */  0x35, 0x36, 0x30, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // 560</DSI
-                    /* 07C8 */  0x54, 0x45, 0x76, 0x53, 0x79, 0x6E, 0x63, 0x53,  // TEvSyncS
-                    /* 07D0 */  0x74, 0x61, 0x72, 0x74, 0x50, 0x6F, 0x73, 0x3E,  // tartPos>
-                    /* 07D8 */  0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //  .    <D
-                    /* 07E0 */  0x53, 0x49, 0x54, 0x45, 0x76, 0x53, 0x79, 0x6E,  // SITEvSyn
-                    /* 07E8 */  0x63, 0x49, 0x6E, 0x69, 0x74, 0x56, 0x61, 0x6C,  // cInitVal
-                    /* 07F0 */  0x3E, 0x32, 0x35, 0x36, 0x30, 0x3C, 0x2F, 0x44,  // >2560</D
-                    /* 07F8 */  0x53, 0x49, 0x54, 0x45, 0x76, 0x53, 0x79, 0x6E,  // SITEvSyn
-                    /* 0800 */  0x63, 0x49, 0x6E, 0x69, 0x74, 0x56, 0x61, 0x6C,  // cInitVal
-                    /* 0808 */  0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // > .    <
-                    /* 0810 */  0x44, 0x53, 0x49, 0x44, 0x53, 0x43, 0x45, 0x6E,  // DSIDSCEn
-                    /* 0818 */  0x61, 0x62, 0x6C, 0x65, 0x3E, 0x54, 0x72, 0x75,  // able>Tru
-                    /* 0820 */  0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x44, 0x53,  // e</DSIDS
-                    /* 0828 */  0x43, 0x45, 0x6E, 0x61, 0x62, 0x6C, 0x65, 0x3E,  // CEnable>
-                    /* 0830 */  0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //  .    <D
-                    /* 0838 */  0x53, 0x49, 0x44, 0x53, 0x43, 0x4D, 0x61, 0x6A,  // SIDSCMaj
-                    /* 0840 */  0x6F, 0x72, 0x3E, 0x31, 0x3C, 0x2F, 0x44, 0x53,  // or>1</DS
-                    /* 0848 */  0x49, 0x44, 0x53, 0x43, 0x4D, 0x61, 0x6A, 0x6F,  // IDSCMajo
-                    /* 0850 */  0x72, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20,  // r> .    
-                    /* 0858 */  0x3C, 0x44, 0x53, 0x49, 0x44, 0x53, 0x43, 0x4D,  // <DSIDSCM
-                    /* 0860 */  0x69, 0x6E, 0x6F, 0x72, 0x3E, 0x31, 0x3C, 0x2F,  // inor>1</
-                    /* 0868 */  0x44, 0x53, 0x49, 0x44, 0x53, 0x43, 0x4D, 0x69,  // DSIDSCMi
-                    /* 0870 */  0x6E, 0x6F, 0x72, 0x3E, 0x20, 0x0A, 0x20, 0x20,  // nor> .  
-                    /* 0878 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x44, 0x53,  //   <DSIDS
-                    /* 0880 */  0x43, 0x53, 0x63, 0x72, 0x3E, 0x30, 0x3C, 0x2F,  // CScr>0</
-                    /* 0888 */  0x44, 0x53, 0x49, 0x44, 0x53, 0x43, 0x53, 0x63,  // DSIDSCSc
-                    /* 0890 */  0x72, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20,  // r> .    
-                    /* 0898 */  0x3C, 0x44, 0x53, 0x49, 0x44, 0x53, 0x43, 0x50,  // <DSIDSCP
-                    /* 08A0 */  0x72, 0x6F, 0x66, 0x69, 0x6C, 0x65, 0x49, 0x44,  // rofileID
-                    /* 08A8 */  0x3E, 0x34, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x44,  // >4</DSID
-                    /* 08B0 */  0x53, 0x43, 0x50, 0x72, 0x6F, 0x66, 0x69, 0x6C,  // SCProfil
-                    /* 08B8 */  0x65, 0x49, 0x44, 0x3E, 0x20, 0x0A, 0x20, 0x20,  // eID> .  
-                    /* 08C0 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x44, 0x53,  //   <DSIDS
-                    /* 08C8 */  0x43, 0x53, 0x6C, 0x69, 0x63, 0x65, 0x57, 0x69,  // CSliceWi
-                    /* 08D0 */  0x64, 0x74, 0x68, 0x3E, 0x31, 0x34, 0x34, 0x30,  // dth>1440
-                    /* 08D8 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x44, 0x53, 0x43,  // </DSIDSC
-                    /* 08E0 */  0x53, 0x6C, 0x69, 0x63, 0x65, 0x57, 0x69, 0x64,  // SliceWid
-                    /* 08E8 */  0x74, 0x68, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20,  // th> .   
-                    /* 08F0 */  0x20, 0x3C, 0x44, 0x53, 0x49, 0x44, 0x53, 0x43,  //  <DSIDSC
-                    /* 08F8 */  0x53, 0x6C, 0x69, 0x63, 0x65, 0x48, 0x65, 0x69,  // SliceHei
-                    /* 0900 */  0x67, 0x68, 0x74, 0x3E, 0x31, 0x36, 0x3C, 0x2F,  // ght>16</
-                    /* 0908 */  0x44, 0x53, 0x49, 0x44, 0x53, 0x43, 0x53, 0x6C,  // DSIDSCSl
-                    /* 0910 */  0x69, 0x63, 0x65, 0x48, 0x65, 0x69, 0x67, 0x68,  // iceHeigh
-                    /* 0918 */  0x74, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20,  // t> .    
-                    /* 0920 */  0x3C, 0x44, 0x53, 0x49, 0x43, 0x6F, 0x6E, 0x74,  // <DSICont
-                    /* 0928 */  0x72, 0x6F, 0x6C, 0x6C, 0x65, 0x72, 0x4D, 0x61,  // rollerMa
-                    /* 0930 */  0x70, 0x70, 0x69, 0x6E, 0x67, 0x3E, 0x30, 0x30,  // pping>00
-                    /* 0938 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x43, 0x6F, 0x6E,  // </DSICon
-                    /* 0940 */  0x74, 0x72, 0x6F, 0x6C, 0x6C, 0x65, 0x72, 0x4D,  // trollerM
-                    /* 0948 */  0x61, 0x70, 0x70, 0x69, 0x6E, 0x67, 0x3E, 0x0A,  // apping>.
-                    /* 0950 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
-                    /* 0958 */  0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x43, 0x4C,  // TimingCL
-                    /* 0960 */  0x4B, 0x5A, 0x65, 0x72, 0x6F, 0x4F, 0x76, 0x65,  // KZeroOve
-                    /* 0968 */  0x72, 0x72, 0x69, 0x64, 0x65, 0x3E, 0x54, 0x72,  // rride>Tr
-                    /* 0970 */  0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54,  // ue</DSIT
-                    /* 0978 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x43, 0x4C, 0x4B,  // imingCLK
-                    /* 0980 */  0x5A, 0x65, 0x72, 0x6F, 0x4F, 0x76, 0x65, 0x72,  // ZeroOver
-                    /* 0988 */  0x72, 0x69, 0x64, 0x65, 0x3E, 0x20, 0x0A, 0x20,  // ride> . 
-                    /* 0990 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x54,  //    <DSIT
-                    /* 0998 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x43, 0x4C, 0x4B,  // imingCLK
-                    /* 09A0 */  0x5A, 0x65, 0x72, 0x6F, 0x56, 0x61, 0x6C, 0x75,  // ZeroValu
-                    /* 09A8 */  0x65, 0x3E, 0x31, 0x38, 0x3C, 0x2F, 0x44, 0x53,  // e>18</DS
-                    /* 09B0 */  0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x43,  // ITimingC
-                    /* 09B8 */  0x4C, 0x4B, 0x5A, 0x65, 0x72, 0x6F, 0x56, 0x61,  // LKZeroVa
-                    /* 09C0 */  0x6C, 0x75, 0x65, 0x3E, 0x20, 0x0A, 0x20, 0x20,  // lue> .  
-                    /* 09C8 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x54, 0x69,  //   <DSITi
-                    /* 09D0 */  0x6D, 0x69, 0x6E, 0x67, 0x43, 0x4C, 0x4B, 0x50,  // mingCLKP
-                    /* 09D8 */  0x72, 0x65, 0x70, 0x61, 0x72, 0x65, 0x4F, 0x76,  // repareOv
-                    /* 09E0 */  0x65, 0x72, 0x72, 0x69, 0x64, 0x65, 0x3E, 0x54,  // erride>T
-                    /* 09E8 */  0x72, 0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // rue</DSI
-                    /* 09F0 */  0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x43, 0x4C,  // TimingCL
-                    /* 09F8 */  0x4B, 0x50, 0x72, 0x65, 0x70, 0x61, 0x72, 0x65,  // KPrepare
-                    /* 0A00 */  0x4F, 0x76, 0x65, 0x72, 0x72, 0x69, 0x64, 0x65,  // Override
-                    /* 0A08 */  0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // > .    <
-                    /* 0A10 */  0x44, 0x53, 0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // DSITimin
-                    /* 0A18 */  0x67, 0x43, 0x4C, 0x4B, 0x50, 0x72, 0x65, 0x70,  // gCLKPrep
-                    /* 0A20 */  0x61, 0x72, 0x65, 0x56, 0x61, 0x6C, 0x75, 0x65,  // areValue
-                    /* 0A28 */  0x3E, 0x34, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54,  // >4</DSIT
-                    /* 0A30 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x43, 0x4C, 0x4B,  // imingCLK
-                    /* 0A38 */  0x50, 0x72, 0x65, 0x70, 0x61, 0x72, 0x65, 0x56,  // PrepareV
-                    /* 0A40 */  0x61, 0x6C, 0x75, 0x65, 0x3E, 0x20, 0x0A, 0x20,  // alue> . 
-                    /* 0A48 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x54,  //    <DSIT
-                    /* 0A50 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x43, 0x4C, 0x4B,  // imingCLK
-                    /* 0A58 */  0x54, 0x72, 0x61, 0x69, 0x6C, 0x4F, 0x76, 0x65,  // TrailOve
-                    /* 0A60 */  0x72, 0x72, 0x69, 0x64, 0x65, 0x3E, 0x54, 0x72,  // rride>Tr
-                    /* 0A68 */  0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54,  // ue</DSIT
-                    /* 0A70 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x43, 0x4C, 0x4B,  // imingCLK
-                    /* 0A78 */  0x54, 0x72, 0x61, 0x69, 0x6C, 0x4F, 0x76, 0x65,  // TrailOve
-                    /* 0A80 */  0x72, 0x72, 0x69, 0x64, 0x65, 0x3E, 0x20, 0x0A,  // rride> .
-                    /* 0A88 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
-                    /* 0A90 */  0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x43, 0x4C,  // TimingCL
-                    /* 0A98 */  0x4B, 0x54, 0x72, 0x61, 0x69, 0x6C, 0x56, 0x61,  // KTrailVa
-                    /* 0AA0 */  0x6C, 0x75, 0x65, 0x3E, 0x34, 0x3C, 0x2F, 0x44,  // lue>4</D
-                    /* 0AA8 */  0x53, 0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67,  // SITiming
-                    /* 0AB0 */  0x43, 0x4C, 0x4B, 0x54, 0x72, 0x61, 0x69, 0x6C,  // CLKTrail
-                    /* 0AB8 */  0x56, 0x61, 0x6C, 0x75, 0x65, 0x3E, 0x20, 0x0A,  // Value> .
-                    /* 0AC0 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
-                    /* 0AC8 */  0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x48, 0x53,  // TimingHS
-                    /* 0AD0 */  0x45, 0x78, 0x69, 0x74, 0x4F, 0x76, 0x65, 0x72,  // ExitOver
-                    /* 0AD8 */  0x72, 0x69, 0x64, 0x65, 0x3E, 0x54, 0x72, 0x75,  // ride>Tru
-                    /* 0AE0 */  0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54, 0x69,  // e</DSITi
-                    /* 0AE8 */  0x6D, 0x69, 0x6E, 0x67, 0x48, 0x53, 0x45, 0x78,  // mingHSEx
-                    /* 0AF0 */  0x69, 0x74, 0x4F, 0x76, 0x65, 0x72, 0x72, 0x69,  // itOverri
-                    /* 0AF8 */  0x64, 0x65, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20,  // de> .   
-                    /* 0B00 */  0x20, 0x3C, 0x44, 0x53, 0x49, 0x54, 0x69, 0x6D,  //  <DSITim
-                    /* 0B08 */  0x69, 0x6E, 0x67, 0x48, 0x53, 0x45, 0x78, 0x69,  // ingHSExi
-                    /* 0B10 */  0x74, 0x56, 0x61, 0x6C, 0x75, 0x65, 0x3E, 0x37,  // tValue>7
-                    /* 0B18 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54, 0x69, 0x6D,  // </DSITim
-                    /* 0B20 */  0x69, 0x6E, 0x67, 0x48, 0x53, 0x45, 0x78, 0x69,  // ingHSExi
-                    /* 0B28 */  0x74, 0x56, 0x61, 0x6C, 0x75, 0x65, 0x3E, 0x20,  // tValue> 
-                    /* 0B30 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53,  // .    <DS
-                    /* 0B38 */  0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x48,  // ITimingH
-                    /* 0B40 */  0x53, 0x5A, 0x65, 0x72, 0x6F, 0x4F, 0x76, 0x65,  // SZeroOve
-                    /* 0B48 */  0x72, 0x72, 0x69, 0x64, 0x65, 0x3E, 0x54, 0x72,  // rride>Tr
-                    /* 0B50 */  0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54,  // ue</DSIT
-                    /* 0B58 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x48, 0x53, 0x5A,  // imingHSZ
-                    /* 0B60 */  0x65, 0x72, 0x6F, 0x4F, 0x76, 0x65, 0x72, 0x72,  // eroOverr
-                    /* 0B68 */  0x69, 0x64, 0x65, 0x3E, 0x20, 0x0A, 0x20, 0x20,  // ide> .  
-                    /* 0B70 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x54, 0x69,  //   <DSITi
-                    /* 0B78 */  0x6D, 0x69, 0x6E, 0x67, 0x48, 0x53, 0x5A, 0x65,  // mingHSZe
-                    /* 0B80 */  0x72, 0x6F, 0x56, 0x61, 0x6C, 0x75, 0x65, 0x3E,  // roValue>
-                    /* 0B88 */  0x31, 0x33, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54,  // 13</DSIT
-                    /* 0B90 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x48, 0x53, 0x5A,  // imingHSZ
-                    /* 0B98 */  0x65, 0x72, 0x6F, 0x56, 0x61, 0x6C, 0x75, 0x65,  // eroValue
-                    /* 0BA0 */  0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // > .    <
-                    /* 0BA8 */  0x44, 0x53, 0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // DSITimin
-                    /* 0BB0 */  0x67, 0x48, 0x53, 0x50, 0x72, 0x65, 0x70, 0x61,  // gHSPrepa
-                    /* 0BB8 */  0x72, 0x65, 0x4F, 0x76, 0x65, 0x72, 0x72, 0x69,  // reOverri
-                    /* 0BC0 */  0x64, 0x65, 0x3E, 0x54, 0x72, 0x75, 0x65, 0x3C,  // de>True<
-                    /* 0BC8 */  0x2F, 0x44, 0x53, 0x49, 0x54, 0x69, 0x6D, 0x69,  // /DSITimi
-                    /* 0BD0 */  0x6E, 0x67, 0x48, 0x53, 0x50, 0x72, 0x65, 0x70,  // ngHSPrep
-                    /* 0BD8 */  0x61, 0x72, 0x65, 0x4F, 0x76, 0x65, 0x72, 0x72,  // areOverr
-                    /* 0BE0 */  0x69, 0x64, 0x65, 0x3E, 0x20, 0x0A, 0x20, 0x20,  // ide> .  
-                    /* 0BE8 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x54, 0x69,  //   <DSITi
-                    /* 0BF0 */  0x6D, 0x69, 0x6E, 0x67, 0x48, 0x53, 0x50, 0x72,  // mingHSPr
-                    /* 0BF8 */  0x65, 0x70, 0x61, 0x72, 0x65, 0x56, 0x61, 0x6C,  // epareVal
-                    /* 0C00 */  0x75, 0x65, 0x3E, 0x34, 0x3C, 0x2F, 0x44, 0x53,  // ue>4</DS
-                    /* 0C08 */  0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x48,  // ITimingH
-                    /* 0C10 */  0x53, 0x50, 0x72, 0x65, 0x70, 0x61, 0x72, 0x65,  // SPrepare
-                    /* 0C18 */  0x56, 0x61, 0x6C, 0x75, 0x65, 0x3E, 0x20, 0x0A,  // Value> .
-                    /* 0C20 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
-                    /* 0C28 */  0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x48, 0x53,  // TimingHS
-                    /* 0C30 */  0x54, 0x72, 0x61, 0x69, 0x6C, 0x4F, 0x76, 0x65,  // TrailOve
-                    /* 0C38 */  0x72, 0x72, 0x69, 0x64, 0x65, 0x3E, 0x54, 0x72,  // rride>Tr
-                    /* 0C40 */  0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54,  // ue</DSIT
-                    /* 0C48 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x48, 0x53, 0x54,  // imingHST
-                    /* 0C50 */  0x72, 0x61, 0x69, 0x6C, 0x4F, 0x76, 0x65, 0x72,  // railOver
-                    /* 0C58 */  0x72, 0x69, 0x64, 0x65, 0x3E, 0x20, 0x0A, 0x20,  // ride> . 
-                    /* 0C60 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x54,  //    <DSIT
-                    /* 0C68 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x48, 0x53, 0x54,  // imingHST
-                    /* 0C70 */  0x72, 0x61, 0x69, 0x6C, 0x56, 0x61, 0x6C, 0x75,  // railValu
-                    /* 0C78 */  0x65, 0x3E, 0x35, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // e>5</DSI
-                    /* 0C80 */  0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x48, 0x53,  // TimingHS
-                    /* 0C88 */  0x54, 0x72, 0x61, 0x69, 0x6C, 0x56, 0x61, 0x6C,  // TrailVal
-                    /* 0C90 */  0x75, 0x65, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20,  // ue> .   
-                    /* 0C98 */  0x20, 0x3C, 0x44, 0x53, 0x49, 0x54, 0x69, 0x6D,  //  <DSITim
-                    /* 0CA0 */  0x69, 0x6E, 0x67, 0x48, 0x53, 0x52, 0x65, 0x71,  // ingHSReq
-                    /* 0CA8 */  0x75, 0x65, 0x73, 0x74, 0x4F, 0x76, 0x65, 0x72,  // uestOver
-                    /* 0CB0 */  0x72, 0x69, 0x64, 0x65, 0x3E, 0x54, 0x72, 0x75,  // ride>Tru
-                    /* 0CB8 */  0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54, 0x69,  // e</DSITi
-                    /* 0CC0 */  0x6D, 0x69, 0x6E, 0x67, 0x48, 0x53, 0x52, 0x65,  // mingHSRe
-                    /* 0CC8 */  0x71, 0x75, 0x65, 0x73, 0x74, 0x4F, 0x76, 0x65,  // questOve
-                    /* 0CD0 */  0x72, 0x72, 0x69, 0x64, 0x65, 0x3E, 0x20, 0x0A,  // rride> .
-                    /* 0CD8 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
-                    /* 0CE0 */  0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x48, 0x53,  // TimingHS
-                    /* 0CE8 */  0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x56,  // RequestV
-                    /* 0CF0 */  0x61, 0x6C, 0x75, 0x65, 0x3E, 0x33, 0x3C, 0x2F,  // alue>3</
-                    /* 0CF8 */  0x44, 0x53, 0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // DSITimin
-                    /* 0D00 */  0x67, 0x48, 0x53, 0x52, 0x65, 0x71, 0x75, 0x65,  // gHSReque
-                    /* 0D08 */  0x73, 0x74, 0x56, 0x61, 0x6C, 0x75, 0x65, 0x3E,  // stValue>
-                    /* 0D10 */  0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //  .    <D
-                    /* 0D18 */  0x53, 0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67,  // SITiming
-                    /* 0D20 */  0x54, 0x41, 0x53, 0x75, 0x72, 0x65, 0x4F, 0x76,  // TASureOv
-                    /* 0D28 */  0x65, 0x72, 0x72, 0x69, 0x64, 0x65, 0x3E, 0x54,  // erride>T
-                    /* 0D30 */  0x72, 0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // rue</DSI
-                    /* 0D38 */  0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x54, 0x41,  // TimingTA
-                    /* 0D40 */  0x53, 0x75, 0x72, 0x65, 0x4F, 0x76, 0x65, 0x72,  // SureOver
-                    /* 0D48 */  0x72, 0x69, 0x64, 0x65, 0x3E, 0x20, 0x0A, 0x20,  // ride> . 
-                    /* 0D50 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x54,  //    <DSIT
-                    /* 0D58 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x54, 0x41, 0x53,  // imingTAS
-                    /* 0D60 */  0x75, 0x72, 0x65, 0x56, 0x61, 0x6C, 0x75, 0x65,  // ureValue
-                    /* 0D68 */  0x3E, 0x30, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54,  // >0</DSIT
-                    /* 0D70 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x54, 0x41, 0x53,  // imingTAS
-                    /* 0D78 */  0x75, 0x72, 0x65, 0x56, 0x61, 0x6C, 0x75, 0x65,  // ureValue
-                    /* 0D80 */  0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // > .    <
-                    /* 0D88 */  0x44, 0x53, 0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // DSITimin
-                    /* 0D90 */  0x67, 0x54, 0x41, 0x47, 0x6F, 0x4F, 0x76, 0x65,  // gTAGoOve
-                    /* 0D98 */  0x72, 0x72, 0x69, 0x64, 0x65, 0x3E, 0x54, 0x72,  // rride>Tr
-                    /* 0DA0 */  0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54,  // ue</DSIT
-                    /* 0DA8 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x54, 0x41, 0x47,  // imingTAG
-                    /* 0DB0 */  0x6F, 0x4F, 0x76, 0x65, 0x72, 0x72, 0x69, 0x64,  // oOverrid
-                    /* 0DB8 */  0x65, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20,  // e> .    
-                    /* 0DC0 */  0x3C, 0x44, 0x53, 0x49, 0x54, 0x69, 0x6D, 0x69,  // <DSITimi
-                    /* 0DC8 */  0x6E, 0x67, 0x54, 0x41, 0x47, 0x6F, 0x56, 0x61,  // ngTAGoVa
-                    /* 0DD0 */  0x6C, 0x75, 0x65, 0x3E, 0x33, 0x3C, 0x2F, 0x44,  // lue>3</D
-                    /* 0DD8 */  0x53, 0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67,  // SITiming
-                    /* 0DE0 */  0x54, 0x41, 0x47, 0x6F, 0x56, 0x61, 0x6C, 0x75,  // TAGoValu
-                    /* 0DE8 */  0x65, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20,  // e> .    
-                    /* 0DF0 */  0x3C, 0x44, 0x53, 0x49, 0x54, 0x69, 0x6D, 0x69,  // <DSITimi
-                    /* 0DF8 */  0x6E, 0x67, 0x54, 0x41, 0x47, 0x65, 0x74, 0x4F,  // ngTAGetO
-                    /* 0E00 */  0x76, 0x65, 0x72, 0x72, 0x69, 0x64, 0x65, 0x3E,  // verride>
-                    /* 0E08 */  0x54, 0x72, 0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53,  // True</DS
-                    /* 0E10 */  0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x54,  // ITimingT
-                    /* 0E18 */  0x41, 0x47, 0x65, 0x74, 0x4F, 0x76, 0x65, 0x72,  // AGetOver
-                    /* 0E20 */  0x72, 0x69, 0x64, 0x65, 0x3E, 0x20, 0x0A, 0x20,  // ride> . 
-                    /* 0E28 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x54,  //    <DSIT
-                    /* 0E30 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x54, 0x41, 0x47,  // imingTAG
-                    /* 0E38 */  0x65, 0x74, 0x56, 0x61, 0x6C, 0x75, 0x65, 0x3E,  // etValue>
-                    /* 0E40 */  0x34, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54, 0x69,  // 4</DSITi
-                    /* 0E48 */  0x6D, 0x69, 0x6E, 0x67, 0x54, 0x41, 0x47, 0x65,  // mingTAGe
-                    /* 0E50 */  0x74, 0x56, 0x61, 0x6C, 0x75, 0x65, 0x3E, 0x20,  // tValue> 
-                    /* 0E58 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53,  // .    <DS
-                    /* 0E60 */  0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x43,  // ITimingC
-                    /* 0E68 */  0x4C, 0x4B, 0x50, 0x72, 0x65, 0x4F, 0x76, 0x65,  // LKPreOve
-                    /* 0E70 */  0x72, 0x72, 0x69, 0x64, 0x65, 0x3E, 0x54, 0x72,  // rride>Tr
-                    /* 0E78 */  0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54,  // ue</DSIT
-                    /* 0E80 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x43, 0x4C, 0x4B,  // imingCLK
-                    /* 0E88 */  0x50, 0x72, 0x65, 0x4F, 0x76, 0x65, 0x72, 0x72,  // PreOverr
-                    /* 0E90 */  0x69, 0x64, 0x65, 0x3E, 0x20, 0x0A, 0x20, 0x20,  // ide> .  
-                    /* 0E98 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x54, 0x69,  //   <DSITi
-                    /* 0EA0 */  0x6D, 0x69, 0x6E, 0x67, 0x43, 0x4C, 0x4B, 0x50,  // mingCLKP
-                    /* 0EA8 */  0x72, 0x65, 0x56, 0x61, 0x6C, 0x75, 0x65, 0x3E,  // reValue>
-                    /* 0EB0 */  0x32, 0x38, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x54,  // 28</DSIT
-                    /* 0EB8 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x43, 0x4C, 0x4B,  // imingCLK
-                    /* 0EC0 */  0x50, 0x72, 0x65, 0x56, 0x61, 0x6C, 0x75, 0x65,  // PreValue
-                    /* 0EC8 */  0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // > .    <
-                    /* 0ED0 */  0x44, 0x53, 0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // DSITimin
-                    /* 0ED8 */  0x67, 0x43, 0x4C, 0x4B, 0x50, 0x6F, 0x73, 0x74,  // gCLKPost
-                    /* 0EE0 */  0x4F, 0x76, 0x65, 0x72, 0x72, 0x69, 0x64, 0x65,  // Override
-                    /* 0EE8 */  0x3E, 0x54, 0x72, 0x75, 0x65, 0x3C, 0x2F, 0x44,  // >True</D
-                    /* 0EF0 */  0x53, 0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67,  // SITiming
-                    /* 0EF8 */  0x43, 0x4C, 0x4B, 0x50, 0x6F, 0x73, 0x74, 0x4F,  // CLKPostO
-                    /* 0F00 */  0x76, 0x65, 0x72, 0x72, 0x69, 0x64, 0x65, 0x3E,  // verride>
-                    /* 0F08 */  0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //  .    <D
-                    /* 0F10 */  0x53, 0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67,  // SITiming
-                    /* 0F18 */  0x43, 0x4C, 0x4B, 0x50, 0x6F, 0x73, 0x74, 0x56,  // CLKPostV
-                    /* 0F20 */  0x61, 0x6C, 0x75, 0x65, 0x3E, 0x35, 0x3C, 0x2F,  // alue>5</
-                    /* 0F28 */  0x44, 0x53, 0x49, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // DSITimin
-                    /* 0F30 */  0x67, 0x43, 0x4C, 0x4B, 0x50, 0x6F, 0x73, 0x74,  // gCLKPost
-                    /* 0F38 */  0x56, 0x61, 0x6C, 0x75, 0x65, 0x3E, 0x0A, 0x3C,  // Value>.<
-                    /* 0F40 */  0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x3E, 0x0A,  // /Group>.
-                    /* 0F48 */  0x3C, 0x44, 0x53, 0x49, 0x49, 0x6E, 0x69, 0x74,  // <DSIInit
-                    /* 0F50 */  0x53, 0x65, 0x71, 0x75, 0x65, 0x6E, 0x63, 0x65,  // Sequence
-                    /* 0F58 */  0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x33,  // > .    3
-                    /* 0F60 */  0x39, 0x20, 0x46, 0x30, 0x20, 0x35, 0x41, 0x20,  // 9 F0 5A 
-                    /* 0F68 */  0x35, 0x41, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x33,  // 5A.    3
-                    /* 0F70 */  0x39, 0x20, 0x46, 0x43, 0x20, 0x35, 0x41, 0x20,  // 9 FC 5A 
-                    /* 0F78 */  0x35, 0x41, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x31,  // 5A.    1
-                    /* 0F80 */  0x35, 0x20, 0x46, 0x39, 0x20, 0x30, 0x30, 0x0A,  // 5 F9 00.
-                    /* 0F88 */  0x20, 0x20, 0x20, 0x20, 0x31, 0x35, 0x20, 0x46,  //     15 F
-                    /* 0F90 */  0x45, 0x20, 0x33, 0x30, 0x0A, 0x20, 0x20, 0x20,  // E 30.   
-                    /* 0F98 */  0x20, 0x31, 0x35, 0x20, 0x46, 0x45, 0x20, 0x42,  //  15 FE B
-                    /* 0FA0 */  0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x30, 0x37,  // 0.    07
-                    /* 0FA8 */  0x20, 0x30, 0x31, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  01.    
-                    /* 0FB0 */  0x30, 0x35, 0x20, 0x31, 0x31, 0x20, 0x30, 0x30,  // 05 11 00
-                    /* 0FB8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x66, 0x66, 0x20,  // .    ff 
-                    /* 0FC0 */  0x37, 0x38, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x31,  // 78.    1
-                    /* 0FC8 */  0x35, 0x20, 0x42, 0x30, 0x20, 0x32, 0x46, 0x0A,  // 5 B0 2F.
-                    /* 0FD0 */  0x20, 0x20, 0x20, 0x20, 0x31, 0x35, 0x20, 0x46,  //     15 F
-                    /* 0FD8 */  0x45, 0x20, 0x32, 0x31, 0x0A, 0x20, 0x20, 0x20,  // E 21.   
-                    /* 0FE0 */  0x20, 0x31, 0x35, 0x20, 0x45, 0x36, 0x20, 0x30,  //  15 E6 0
-                    /* 0FE8 */  0x31, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x31, 0x35,  // 1.    15
-                    /* 0FF0 */  0x20, 0x33, 0x35, 0x20, 0x30, 0x30, 0x0A, 0x20,  //  35 00. 
-                    /* 0FF8 */  0x20, 0x20, 0x20, 0x33, 0x39, 0x20, 0x43, 0x32,  //    39 C2
-                    /* 1000 */  0x20, 0x30, 0x30, 0x20, 0x30, 0x38, 0x20, 0x44,  //  00 08 D
-                    /* 1008 */  0x38, 0x20, 0x44, 0x38, 0x20, 0x30, 0x30, 0x20,  // 8 D8 00 
-                    /* 1010 */  0x38, 0x30, 0x20, 0x32, 0x42, 0x20, 0x30, 0x35,  // 80 2B 05
-                    /* 1018 */  0x20, 0x30, 0x38, 0x20, 0x30, 0x45, 0x20, 0x30,  //  08 0E 0
-                    /* 1020 */  0x37, 0x20, 0x30, 0x42, 0x20, 0x30, 0x35, 0x20,  // 7 0B 05 
-                    /* 1028 */  0x30, 0x44, 0x20, 0x30, 0x41, 0x20, 0x31, 0x35,  // 0D 0A 15
-                    /* 1030 */  0x20, 0x31, 0x33, 0x20, 0x32, 0x30, 0x20, 0x31,  //  13 20 1
-                    /* 1038 */  0x45, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x31, 0x35,  // E.    15
-                    /* 1040 */  0x20, 0x35, 0x33, 0x20, 0x32, 0x30, 0x0A, 0x20,  //  53 20. 
-                    /* 1048 */  0x20, 0x20, 0x20, 0x31, 0x35, 0x20, 0x35, 0x31,  //    15 51
-                    /* 1050 */  0x20, 0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  00.    
-                    /* 1058 */  0x31, 0x35, 0x20, 0x35, 0x35, 0x20, 0x30, 0x30,  // 15 55 00
-                    /* 1060 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x30, 0x35, 0x20,  // .    05 
-                    /* 1068 */  0x32, 0x39, 0x20, 0x30, 0x30, 0x0A, 0x20, 0x20,  // 29 00.  
-                    /* 1070 */  0x20, 0x20, 0x66, 0x66, 0x20, 0x32, 0x38, 0x0A,  //   ff 28.
-                    /* 1078 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x49, 0x6E, 0x69,  // </DSIIni
-                    /* 1080 */  0x74, 0x53, 0x65, 0x71, 0x75, 0x65, 0x6E, 0x63,  // tSequenc
-                    /* 1088 */  0x65, 0x3E, 0x0A, 0x3C, 0x44, 0x53, 0x49, 0x54,  // e>.<DSIT
-                    /* 1090 */  0x65, 0x72, 0x6D, 0x53, 0x65, 0x71, 0x75, 0x65,  // ermSeque
-                    /* 1098 */  0x6E, 0x63, 0x65, 0x3E, 0x20, 0x0A, 0x20, 0x20,  // nce> .  
-                    /* 10A0 */  0x20, 0x20, 0x30, 0x35, 0x20, 0x30, 0x30, 0x20,  //   05 00 
-                    /* 10A8 */  0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x30,  // 00.    0
-                    /* 10B0 */  0x35, 0x20, 0x32, 0x38, 0x20, 0x30, 0x30, 0x0A,  // 5 28 00.
-                    /* 10B8 */  0x20, 0x20, 0x20, 0x20, 0x30, 0x35, 0x20, 0x31,  //     05 1
-                    /* 10C0 */  0x30, 0x20, 0x30, 0x30, 0x0A, 0x20, 0x20, 0x20,  // 0 00.   
-                    /* 10C8 */  0x20, 0x66, 0x66, 0x20, 0x37, 0x38, 0x0A, 0x3C,  //  ff 78.<
-                    /* 10D0 */  0x2F, 0x44, 0x53, 0x49, 0x54, 0x65, 0x72, 0x6D,  // /DSITerm
-                    /* 10D8 */  0x53, 0x65, 0x71, 0x75, 0x65, 0x6E, 0x63, 0x65,  // Sequence
-                    /* 10E0 */  0x3E, 0x0A, 0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70,  // >.<Group
-                    /* 10E8 */  0x20, 0x69, 0x64, 0x3D, 0x27, 0x42, 0x61, 0x63,  //  id='Bac
-                    /* 10F0 */  0x6B, 0x6C, 0x69, 0x67, 0x68, 0x74, 0x20, 0x43,  // klight C
-                    /* 10F8 */  0x6F, 0x6E, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61,  // onfigura
-                    /* 1100 */  0x74, 0x69, 0x6F, 0x6E, 0x27, 0x3E, 0x20, 0x0A,  // tion'> .
-                    /* 1108 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x42, 0x61, 0x63,  //     <Bac
-                    /* 1110 */  0x6B, 0x6C, 0x69, 0x67, 0x68, 0x74, 0x54, 0x79,  // klightTy
-                    /* 1118 */  0x70, 0x65, 0x3E, 0x33, 0x3C, 0x2F, 0x42, 0x61,  // pe>3</Ba
-                    /* 1120 */  0x63, 0x6B, 0x6C, 0x69, 0x67, 0x68, 0x74, 0x54,  // cklightT
-                    /* 1128 */  0x79, 0x70, 0x65, 0x3E, 0x0A, 0x3C, 0x2F, 0x47,  // ype>.</G
-                    /* 1130 */  0x72, 0x6F, 0x75, 0x70, 0x3E, 0x0A, 0x00         // roup>..
+                    /* 0008 */  0x72, 0x73, 0x69, 0x6F, 0x6E, 0x3D, 0x27, 0x31,  // rsion='1
+                    /* 0010 */  0x2E, 0x30, 0x27, 0x20, 0x65, 0x6E, 0x63, 0x6F,  // .0' enco
+                    /* 0018 */  0x64, 0x69, 0x6E, 0x67, 0x3D, 0x27, 0x75, 0x74,  // ding='ut
+                    /* 0020 */  0x66, 0x2D, 0x38, 0x27, 0x3F, 0x3E, 0x0A, 0x3C,  // f-8'?>.<
+                    /* 0028 */  0x47, 0x72, 0x6F, 0x75, 0x70, 0x20, 0x69, 0x64,  // Group id
+                    /* 0030 */  0x3D, 0x27, 0x4D, 0x61, 0x69, 0x6E, 0x20, 0x50,  // ='Main P
+                    /* 0038 */  0x61, 0x6E, 0x65, 0x6C, 0x27, 0x3E, 0x0A, 0x20,  // anel'>. 
+                    /* 0040 */  0x20, 0x20, 0x20, 0x3C, 0x50, 0x61, 0x6E, 0x65,  //    <Pane
+                    /* 0048 */  0x6C, 0x4E, 0x61, 0x6D, 0x65, 0x3E, 0x53, 0x4E,  // lName>SN
+                    /* 0050 */  0x36, 0x35, 0x44, 0x53, 0x49, 0x58, 0x36, 0x3C,  // 65DSIX6<
+                    /* 0058 */  0x2F, 0x50, 0x61, 0x6E, 0x65, 0x6C, 0x4E, 0x61,  // /PanelNa
+                    /* 0060 */  0x6D, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // me>.    
+                    /* 0068 */  0x3C, 0x50, 0x61, 0x6E, 0x65, 0x6C, 0x44, 0x65,  // <PanelDe
+                    /* 0070 */  0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6F,  // scriptio
+                    /* 0078 */  0x6E, 0x3E, 0x53, 0x4E, 0x36, 0x35, 0x44, 0x53,  // n>SN65DS
+                    /* 0080 */  0x49, 0x78, 0x36, 0x20, 0x44, 0x75, 0x61, 0x6C,  // Ix6 Dual
+                    /* 0088 */  0x20, 0x44, 0x53, 0x49, 0x20, 0x74, 0x6F, 0x20,  //  DSI to 
+                    /* 0090 */  0x65, 0x44, 0x50, 0x20, 0x28, 0x33, 0x30, 0x30,  // eDP (300
+                    /* 0098 */  0x30, 0x78, 0x32, 0x30, 0x30, 0x30, 0x20, 0x32,  // 0x2000 2
+                    /* 00A0 */  0x34, 0x62, 0x70, 0x70, 0x29, 0x3C, 0x2F, 0x50,  // 4bpp)</P
+                    /* 00A8 */  0x61, 0x6E, 0x65, 0x6C, 0x44, 0x65, 0x73, 0x63,  // anelDesc
+                    /* 00B0 */  0x72, 0x69, 0x70, 0x74, 0x69, 0x6F, 0x6E, 0x3E,  // ription>
+                    /* 00B8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x47, 0x72,  // .    <Gr
+                    /* 00C0 */  0x6F, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3D, 0x27,  // oup id='
+                    /* 00C8 */  0x45, 0x44, 0x49, 0x44, 0x20, 0x43, 0x6F, 0x6E,  // EDID Con
+                    /* 00D0 */  0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69,  // figurati
+                    /* 00D8 */  0x6F, 0x6E, 0x27, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // on'>.   
+                    /* 00E0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x4D, 0x61,  //      <Ma
+                    /* 00E8 */  0x6E, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72,  // nufactur
+                    /* 00F0 */  0x65, 0x49, 0x44, 0x3E, 0x30, 0x78, 0x45, 0x34,  // eID>0xE4
+                    /* 00F8 */  0x33, 0x30, 0x3C, 0x2F, 0x4D, 0x61, 0x6E, 0x75,  // 30</Manu
+                    /* 0100 */  0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x49,  // factureI
+                    /* 0108 */  0x44, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // D>.     
+                    /* 0110 */  0x20, 0x20, 0x20, 0x3C, 0x50, 0x72, 0x6F, 0x64,  //    <Prod
+                    /* 0118 */  0x75, 0x63, 0x74, 0x43, 0x6F, 0x64, 0x65, 0x3E,  // uctCode>
+                    /* 0120 */  0x30, 0x78, 0x30, 0x35, 0x35, 0x44, 0x3C, 0x2F,  // 0x055D</
+                    /* 0128 */  0x50, 0x72, 0x6F, 0x64, 0x75, 0x63, 0x74, 0x43,  // ProductC
+                    /* 0130 */  0x6F, 0x64, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ode>.   
+                    /* 0138 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x53, 0x65,  //      <Se
+                    /* 0140 */  0x72, 0x69, 0x61, 0x6C, 0x4E, 0x75, 0x6D, 0x62,  // rialNumb
+                    /* 0148 */  0x65, 0x72, 0x3E, 0x30, 0x78, 0x30, 0x30, 0x30,  // er>0x000
+                    /* 0150 */  0x30, 0x30, 0x30, 0x3C, 0x2F, 0x53, 0x65, 0x72,  // 000</Ser
+                    /* 0158 */  0x69, 0x61, 0x6C, 0x4E, 0x75, 0x6D, 0x62, 0x65,  // ialNumbe
+                    /* 0160 */  0x72, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // r>.     
+                    /* 0168 */  0x20, 0x20, 0x20, 0x3C, 0x57, 0x65, 0x65, 0x6B,  //    <Week
+                    /* 0170 */  0x6F, 0x66, 0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61,  // ofManufa
+                    /* 0178 */  0x63, 0x74, 0x75, 0x72, 0x65, 0x3E, 0x30, 0x78,  // cture>0x
+                    /* 0180 */  0x30, 0x30, 0x3C, 0x2F, 0x57, 0x65, 0x65, 0x6B,  // 00</Week
+                    /* 0188 */  0x6F, 0x66, 0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61,  // ofManufa
+                    /* 0190 */  0x63, 0x74, 0x75, 0x72, 0x65, 0x3E, 0x0A, 0x20,  // cture>. 
+                    /* 0198 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 01A0 */  0x59, 0x65, 0x61, 0x72, 0x6F, 0x66, 0x4D, 0x61,  // YearofMa
+                    /* 01A8 */  0x6E, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72,  // nufactur
+                    /* 01B0 */  0x65, 0x3E, 0x30, 0x78, 0x31, 0x41, 0x3C, 0x2F,  // e>0x1A</
+                    /* 01B8 */  0x59, 0x65, 0x61, 0x72, 0x6F, 0x66, 0x4D, 0x61,  // YearofMa
+                    /* 01C0 */  0x6E, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72,  // nufactur
+                    /* 01C8 */  0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // e>.     
+                    /* 01D0 */  0x20, 0x20, 0x20, 0x3C, 0x45, 0x44, 0x49, 0x44,  //    <EDID
+                    /* 01D8 */  0x56, 0x65, 0x72, 0x73, 0x69, 0x6F, 0x6E, 0x3E,  // Version>
+                    /* 01E0 */  0x31, 0x3C, 0x2F, 0x45, 0x44, 0x49, 0x44, 0x56,  // 1</EDIDV
+                    /* 01E8 */  0x65, 0x72, 0x73, 0x69, 0x6F, 0x6E, 0x3E, 0x0A,  // ersion>.
+                    /* 01F0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 01F8 */  0x3C, 0x45, 0x44, 0x49, 0x44, 0x52, 0x65, 0x76,  // <EDIDRev
+                    /* 0200 */  0x69, 0x73, 0x69, 0x6F, 0x6E, 0x3E, 0x34, 0x3C,  // ision>4<
+                    /* 0208 */  0x2F, 0x45, 0x44, 0x49, 0x44, 0x52, 0x65, 0x76,  // /EDIDRev
+                    /* 0210 */  0x69, 0x73, 0x69, 0x6F, 0x6E, 0x3E, 0x0A, 0x20,  // ision>. 
+                    /* 0218 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0220 */  0x56, 0x69, 0x64, 0x65, 0x6F, 0x49, 0x6E, 0x70,  // VideoInp
+                    /* 0228 */  0x75, 0x74, 0x44, 0x65, 0x66, 0x69, 0x6E, 0x69,  // utDefini
+                    /* 0230 */  0x74, 0x69, 0x6F, 0x6E, 0x3E, 0x30, 0x78, 0x41,  // tion>0xA
+                    /* 0238 */  0x35, 0x3C, 0x2F, 0x56, 0x69, 0x64, 0x65, 0x6F,  // 5</Video
+                    /* 0240 */  0x49, 0x6E, 0x70, 0x75, 0x74, 0x44, 0x65, 0x66,  // InputDef
+                    /* 0248 */  0x69, 0x6E, 0x69, 0x74, 0x69, 0x6F, 0x6E, 0x3E,  // inition>
+                    /* 0250 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0258 */  0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  //  <Horizo
+                    /* 0260 */  0x6E, 0x74, 0x61, 0x6C, 0x53, 0x63, 0x72, 0x65,  // ntalScre
+                    /* 0268 */  0x65, 0x6E, 0x53, 0x69, 0x7A, 0x65, 0x3E, 0x30,  // enSize>0
+                    /* 0270 */  0x78, 0x31, 0x41, 0x3C, 0x2F, 0x48, 0x6F, 0x72,  // x1A</Hor
+                    /* 0278 */  0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x53,  // izontalS
+                    /* 0280 */  0x63, 0x72, 0x65, 0x65, 0x6E, 0x53, 0x69, 0x7A,  // creenSiz
+                    /* 0288 */  0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // e>.     
+                    /* 0290 */  0x20, 0x20, 0x20, 0x3C, 0x56, 0x65, 0x72, 0x74,  //    <Vert
+                    /* 0298 */  0x69, 0x63, 0x61, 0x6C, 0x53, 0x63, 0x72, 0x65,  // icalScre
+                    /* 02A0 */  0x65, 0x6E, 0x53, 0x69, 0x7A, 0x65, 0x3E, 0x30,  // enSize>0
+                    /* 02A8 */  0x78, 0x31, 0x31, 0x3C, 0x2F, 0x56, 0x65, 0x72,  // x11</Ver
+                    /* 02B0 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x53, 0x63, 0x72,  // ticalScr
+                    /* 02B8 */  0x65, 0x65, 0x6E, 0x53, 0x69, 0x7A, 0x65, 0x3E,  // eenSize>
+                    /* 02C0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 02C8 */  0x20, 0x3C, 0x44, 0x69, 0x73, 0x70, 0x6C, 0x61,  //  <Displa
+                    /* 02D0 */  0x79, 0x54, 0x72, 0x61, 0x6E, 0x73, 0x66, 0x65,  // yTransfe
+                    /* 02D8 */  0x72, 0x43, 0x68, 0x61, 0x72, 0x61, 0x63, 0x74,  // rCharact
+                    /* 02E0 */  0x65, 0x72, 0x69, 0x73, 0x74, 0x69, 0x63, 0x73,  // eristics
+                    /* 02E8 */  0x3E, 0x30, 0x78, 0x37, 0x38, 0x3C, 0x2F, 0x44,  // >0x78</D
+                    /* 02F0 */  0x69, 0x73, 0x70, 0x6C, 0x61, 0x79, 0x54, 0x72,  // isplayTr
+                    /* 02F8 */  0x61, 0x6E, 0x73, 0x66, 0x65, 0x72, 0x43, 0x68,  // ansferCh
+                    /* 0300 */  0x61, 0x72, 0x61, 0x63, 0x74, 0x65, 0x72, 0x69,  // aracteri
+                    /* 0308 */  0x73, 0x74, 0x69, 0x63, 0x73, 0x3E, 0x0A, 0x20,  // stics>. 
+                    /* 0310 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0318 */  0x46, 0x65, 0x61, 0x74, 0x75, 0x72, 0x65, 0x53,  // FeatureS
+                    /* 0320 */  0x75, 0x70, 0x70, 0x6F, 0x72, 0x74, 0x3E, 0x30,  // upport>0
+                    /* 0328 */  0x78, 0x30, 0x32, 0x3C, 0x2F, 0x46, 0x65, 0x61,  // x02</Fea
+                    /* 0330 */  0x74, 0x75, 0x72, 0x65, 0x53, 0x75, 0x70, 0x70,  // tureSupp
+                    /* 0338 */  0x6F, 0x72, 0x74, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ort>.   
+                    /* 0340 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x52, 0x65,  //      <Re
+                    /* 0348 */  0x64, 0x2E, 0x47, 0x72, 0x65, 0x65, 0x6E, 0x42,  // d.GreenB
+                    /* 0350 */  0x69, 0x74, 0x73, 0x3E, 0x30, 0x78, 0x35, 0x35,  // its>0x55
+                    /* 0358 */  0x3C, 0x2F, 0x52, 0x65, 0x64, 0x2E, 0x47, 0x72,  // </Red.Gr
+                    /* 0360 */  0x65, 0x65, 0x6E, 0x42, 0x69, 0x74, 0x73, 0x3E,  // eenBits>
+                    /* 0368 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0370 */  0x20, 0x3C, 0x42, 0x6C, 0x75, 0x65, 0x2E, 0x57,  //  <Blue.W
+                    /* 0378 */  0x68, 0x69, 0x74, 0x65, 0x42, 0x69, 0x74, 0x73,  // hiteBits
+                    /* 0380 */  0x3E, 0x30, 0x78, 0x35, 0x35, 0x3C, 0x2F, 0x42,  // >0x55</B
+                    /* 0388 */  0x6C, 0x75, 0x65, 0x2E, 0x57, 0x68, 0x69, 0x74,  // lue.Whit
+                    /* 0390 */  0x65, 0x42, 0x69, 0x74, 0x73, 0x3E, 0x0A, 0x20,  // eBits>. 
+                    /* 0398 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 03A0 */  0x52, 0x65, 0x64, 0x58, 0x3E, 0x30, 0x78, 0x30,  // RedX>0x0
+                    /* 03A8 */  0x3C, 0x2F, 0x52, 0x65, 0x64, 0x58, 0x3E, 0x0A,  // </RedX>.
+                    /* 03B0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 03B8 */  0x3C, 0x52, 0x65, 0x64, 0x59, 0x3E, 0x30, 0x78,  // <RedY>0x
+                    /* 03C0 */  0x30, 0x3C, 0x2F, 0x52, 0x65, 0x64, 0x59, 0x3E,  // 0</RedY>
+                    /* 03C8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 03D0 */  0x20, 0x3C, 0x47, 0x72, 0x65, 0x65, 0x6E, 0x58,  //  <GreenX
+                    /* 03D8 */  0x3E, 0x30, 0x78, 0x30, 0x3C, 0x2F, 0x47, 0x72,  // >0x0</Gr
+                    /* 03E0 */  0x65, 0x65, 0x6E, 0x58, 0x3E, 0x0A, 0x20, 0x20,  // eenX>.  
+                    /* 03E8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x47,  //       <G
+                    /* 03F0 */  0x72, 0x65, 0x65, 0x6E, 0x59, 0x3E, 0x30, 0x78,  // reenY>0x
+                    /* 03F8 */  0x30, 0x3C, 0x2F, 0x47, 0x72, 0x65, 0x65, 0x6E,  // 0</Green
+                    /* 0400 */  0x59, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // Y>.     
+                    /* 0408 */  0x20, 0x20, 0x20, 0x3C, 0x42, 0x6C, 0x75, 0x65,  //    <Blue
+                    /* 0410 */  0x58, 0x3E, 0x30, 0x78, 0x30, 0x3C, 0x2F, 0x42,  // X>0x0</B
+                    /* 0418 */  0x6C, 0x75, 0x65, 0x58, 0x3E, 0x0A, 0x20, 0x20,  // lueX>.  
+                    /* 0420 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x42,  //       <B
+                    /* 0428 */  0x6C, 0x75, 0x65, 0x59, 0x3E, 0x30, 0x78, 0x30,  // lueY>0x0
+                    /* 0430 */  0x3C, 0x2F, 0x42, 0x6C, 0x75, 0x65, 0x59, 0x3E,  // </BlueY>
+                    /* 0438 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0440 */  0x20, 0x3C, 0x57, 0x68, 0x69, 0x74, 0x65, 0x58,  //  <WhiteX
+                    /* 0448 */  0x3E, 0x30, 0x78, 0x35, 0x30, 0x3C, 0x2F, 0x57,  // >0x50</W
+                    /* 0450 */  0x68, 0x69, 0x74, 0x65, 0x58, 0x3E, 0x0A, 0x20,  // hiteX>. 
+                    /* 0458 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0460 */  0x57, 0x68, 0x69, 0x74, 0x65, 0x59, 0x3E, 0x30,  // WhiteY>0
+                    /* 0468 */  0x78, 0x35, 0x34, 0x3C, 0x2F, 0x57, 0x68, 0x69,  // x54</Whi
+                    /* 0470 */  0x74, 0x65, 0x59, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // teY>.   
+                    /* 0478 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x45, 0x73,  //      <Es
+                    /* 0480 */  0x74, 0x61, 0x62, 0x6C, 0x69, 0x73, 0x68, 0x65,  // tablishe
+                    /* 0488 */  0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73,  // dTimings
+                    /* 0490 */  0x49, 0x3E, 0x30, 0x78, 0x30, 0x3C, 0x2F, 0x45,  // I>0x0</E
+                    /* 0498 */  0x73, 0x74, 0x61, 0x62, 0x6C, 0x69, 0x73, 0x68,  // stablish
+                    /* 04A0 */  0x65, 0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67,  // edTiming
+                    /* 04A8 */  0x73, 0x49, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // sI>.    
+                    /* 04B0 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x45, 0x73, 0x74,  //     <Est
+                    /* 04B8 */  0x61, 0x62, 0x6C, 0x69, 0x73, 0x68, 0x65, 0x64,  // ablished
+                    /* 04C0 */  0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73, 0x49,  // TimingsI
+                    /* 04C8 */  0x49, 0x3E, 0x30, 0x78, 0x30, 0x3C, 0x2F, 0x45,  // I>0x0</E
+                    /* 04D0 */  0x73, 0x74, 0x61, 0x62, 0x6C, 0x69, 0x73, 0x68,  // stablish
+                    /* 04D8 */  0x65, 0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67,  // edTiming
+                    /* 04E0 */  0x73, 0x49, 0x49, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // sII>.   
+                    /* 04E8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x4D, 0x61,  //      <Ma
+                    /* 04F0 */  0x6E, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72,  // nufactur
+                    /* 04F8 */  0x65, 0x73, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67,  // esTiming
+                    /* 0500 */  0x3E, 0x30, 0x78, 0x30, 0x3C, 0x2F, 0x4D, 0x61,  // >0x0</Ma
+                    /* 0508 */  0x6E, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72,  // nufactur
+                    /* 0510 */  0x65, 0x73, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67,  // esTiming
+                    /* 0518 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0520 */  0x20, 0x20, 0x3C, 0x53, 0x74, 0x61, 0x6E, 0x64,  //   <Stand
+                    /* 0528 */  0x61, 0x72, 0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // ardTimin
+                    /* 0530 */  0x67, 0x73, 0x31, 0x2F, 0x3E, 0x0A, 0x20, 0x20,  // gs1/>.  
+                    /* 0538 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x53,  //       <S
+                    /* 0540 */  0x74, 0x61, 0x6E, 0x64, 0x61, 0x72, 0x64, 0x54,  // tandardT
+                    /* 0548 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73, 0x32, 0x2F,  // imings2/
+                    /* 0550 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0558 */  0x20, 0x20, 0x3C, 0x53, 0x74, 0x61, 0x6E, 0x64,  //   <Stand
+                    /* 0560 */  0x61, 0x72, 0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // ardTimin
+                    /* 0568 */  0x67, 0x73, 0x33, 0x2F, 0x3E, 0x0A, 0x20, 0x20,  // gs3/>.  
+                    /* 0570 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x53,  //       <S
+                    /* 0578 */  0x74, 0x61, 0x6E, 0x64, 0x61, 0x72, 0x64, 0x54,  // tandardT
+                    /* 0580 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73, 0x34, 0x2F,  // imings4/
+                    /* 0588 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0590 */  0x20, 0x20, 0x3C, 0x53, 0x74, 0x61, 0x6E, 0x64,  //   <Stand
+                    /* 0598 */  0x61, 0x72, 0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // ardTimin
+                    /* 05A0 */  0x67, 0x73, 0x35, 0x2F, 0x3E, 0x0A, 0x20, 0x20,  // gs5/>.  
+                    /* 05A8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x53,  //       <S
+                    /* 05B0 */  0x74, 0x61, 0x6E, 0x64, 0x61, 0x72, 0x64, 0x54,  // tandardT
+                    /* 05B8 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73, 0x36, 0x2F,  // imings6/
+                    /* 05C0 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 05C8 */  0x20, 0x20, 0x3C, 0x53, 0x74, 0x61, 0x6E, 0x64,  //   <Stand
+                    /* 05D0 */  0x61, 0x72, 0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // ardTimin
+                    /* 05D8 */  0x67, 0x73, 0x37, 0x2F, 0x3E, 0x0A, 0x20, 0x20,  // gs7/>.  
+                    /* 05E0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x53,  //       <S
+                    /* 05E8 */  0x69, 0x67, 0x6E, 0x61, 0x6C, 0x54, 0x69, 0x6D,  // ignalTim
+                    /* 05F0 */  0x69, 0x6E, 0x67, 0x49, 0x6E, 0x74, 0x65, 0x72,  // ingInter
+                    /* 05F8 */  0x66, 0x61, 0x63, 0x65, 0x2F, 0x3E, 0x0A, 0x20,  // face/>. 
+                    /* 0600 */  0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47, 0x72, 0x6F,  //    </Gro
+                    /* 0608 */  0x75, 0x70, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // up>.    
+                    /* 0610 */  0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x20, 0x69,  // <Group i
+                    /* 0618 */  0x64, 0x3D, 0x27, 0x44, 0x65, 0x74, 0x61, 0x69,  // d='Detai
+                    /* 0620 */  0x6C, 0x65, 0x64, 0x20, 0x54, 0x69, 0x6D, 0x69,  // led Timi
+                    /* 0628 */  0x6E, 0x67, 0x27, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ng'>.   
+                    /* 0630 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F,  //      <Ho
+                    /* 0638 */  0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C,  // rizontal
+                    /* 0640 */  0x53, 0x63, 0x72, 0x65, 0x65, 0x6E, 0x53, 0x69,  // ScreenSi
+                    /* 0648 */  0x7A, 0x65, 0x4D, 0x4D, 0x3E, 0x30, 0x78, 0x30,  // zeMM>0x0
+                    /* 0650 */  0x33, 0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A,  // 3</Horiz
+                    /* 0658 */  0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x53, 0x63, 0x72,  // ontalScr
+                    /* 0660 */  0x65, 0x65, 0x6E, 0x53, 0x69, 0x7A, 0x65, 0x4D,  // eenSizeM
+                    /* 0668 */  0x4D, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // M>.     
+                    /* 0670 */  0x20, 0x20, 0x20, 0x3C, 0x56, 0x65, 0x72, 0x74,  //    <Vert
+                    /* 0678 */  0x69, 0x63, 0x61, 0x6C, 0x53, 0x63, 0x72, 0x65,  // icalScre
+                    /* 0680 */  0x65, 0x6E, 0x53, 0x69, 0x7A, 0x65, 0x4D, 0x4D,  // enSizeMM
+                    /* 0688 */  0x3E, 0x30, 0x78, 0x41, 0x44, 0x3C, 0x2F, 0x56,  // >0xAD</V
+                    /* 0690 */  0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x53,  // erticalS
+                    /* 0698 */  0x63, 0x72, 0x65, 0x65, 0x6E, 0x53, 0x69, 0x7A,  // creenSiz
+                    /* 06A0 */  0x65, 0x4D, 0x4D, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // eMM>.   
+                    /* 06A8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F,  //      <Ho
+                    /* 06B0 */  0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C,  // rizontal
+                    /* 06B8 */  0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C,  // Vertical
+                    /* 06C0 */  0x53, 0x63, 0x72, 0x65, 0x65, 0x6E, 0x53, 0x69,  // ScreenSi
+                    /* 06C8 */  0x7A, 0x65, 0x4D, 0x4D, 0x3E, 0x30, 0x78, 0x31,  // zeMM>0x1
+                    /* 06D0 */  0x30, 0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A,  // 0</Horiz
+                    /* 06D8 */  0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x56, 0x65, 0x72,  // ontalVer
+                    /* 06E0 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x53, 0x63, 0x72,  // ticalScr
+                    /* 06E8 */  0x65, 0x65, 0x6E, 0x53, 0x69, 0x7A, 0x65, 0x4D,  // eenSizeM
+                    /* 06F0 */  0x4D, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // M>.    <
+                    /* 06F8 */  0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x3E, 0x0A,  // /Group>.
+                    /* 0700 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x47, 0x72, 0x6F,  //     <Gro
+                    /* 0708 */  0x75, 0x70, 0x20, 0x69, 0x64, 0x3D, 0x27, 0x41,  // up id='A
+                    /* 0710 */  0x63, 0x74, 0x69, 0x76, 0x65, 0x20, 0x54, 0x69,  // ctive Ti
+                    /* 0718 */  0x6D, 0x69, 0x6E, 0x67, 0x27, 0x3E, 0x0A, 0x20,  // ming'>. 
+                    /* 0720 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0728 */  0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74,  // Horizont
+                    /* 0730 */  0x61, 0x6C, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65,  // alActive
+                    /* 0738 */  0x3E, 0x33, 0x30, 0x30, 0x30, 0x3C, 0x2F, 0x48,  // >3000</H
+                    /* 0740 */  0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61,  // orizonta
+                    /* 0748 */  0x6C, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x3E,  // lActive>
+                    /* 0750 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0758 */  0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  //  <Horizo
+                    /* 0760 */  0x6E, 0x74, 0x61, 0x6C, 0x46, 0x72, 0x6F, 0x6E,  // ntalFron
+                    /* 0768 */  0x74, 0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E, 0x34,  // tPorch>4
+                    /* 0770 */  0x38, 0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A,  // 8</Horiz
+                    /* 0778 */  0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x46, 0x72, 0x6F,  // ontalFro
+                    /* 0780 */  0x6E, 0x74, 0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E,  // ntPorch>
+                    /* 0788 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0790 */  0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  //  <Horizo
+                    /* 0798 */  0x6E, 0x74, 0x61, 0x6C, 0x42, 0x61, 0x63, 0x6B,  // ntalBack
+                    /* 07A0 */  0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E, 0x38, 0x30,  // Porch>80
+                    /* 07A8 */  0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  // </Horizo
+                    /* 07B0 */  0x6E, 0x74, 0x61, 0x6C, 0x42, 0x61, 0x63, 0x6B,  // ntalBack
+                    /* 07B8 */  0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E, 0x0A, 0x20,  // Porch>. 
+                    /* 07C0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 07C8 */  0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74,  // Horizont
+                    /* 07D0 */  0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63, 0x50, 0x75,  // alSyncPu
+                    /* 07D8 */  0x6C, 0x73, 0x65, 0x3E, 0x33, 0x32, 0x3C, 0x2F,  // lse>32</
+                    /* 07E0 */  0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74,  // Horizont
+                    /* 07E8 */  0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63, 0x50, 0x75,  // alSyncPu
+                    /* 07F0 */  0x6C, 0x73, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // lse>.   
+                    /* 07F8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F,  //      <Ho
+                    /* 0800 */  0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C,  // rizontal
+                    /* 0808 */  0x53, 0x79, 0x6E, 0x63, 0x53, 0x6B, 0x65, 0x77,  // SyncSkew
+                    /* 0810 */  0x3E, 0x30, 0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69,  // >0</Hori
+                    /* 0818 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x53, 0x79,  // zontalSy
+                    /* 0820 */  0x6E, 0x63, 0x53, 0x6B, 0x65, 0x77, 0x3E, 0x0A,  // ncSkew>.
+                    /* 0828 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0830 */  0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E,  // <Horizon
+                    /* 0838 */  0x74, 0x61, 0x6C, 0x4C, 0x65, 0x66, 0x74, 0x42,  // talLeftB
+                    /* 0840 */  0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E, 0x30, 0x3C,  // order>0<
+                    /* 0848 */  0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E,  // /Horizon
+                    /* 0850 */  0x74, 0x61, 0x6C, 0x4C, 0x65, 0x66, 0x74, 0x42,  // talLeftB
+                    /* 0858 */  0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E, 0x0A, 0x20,  // order>. 
+                    /* 0860 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0868 */  0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74,  // Horizont
+                    /* 0870 */  0x61, 0x6C, 0x52, 0x69, 0x67, 0x68, 0x74, 0x42,  // alRightB
+                    /* 0878 */  0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E, 0x30, 0x3C,  // order>0<
+                    /* 0880 */  0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E,  // /Horizon
+                    /* 0888 */  0x74, 0x61, 0x6C, 0x52, 0x69, 0x67, 0x68, 0x74,  // talRight
+                    /* 0890 */  0x42, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E, 0x0A,  // Border>.
+                    /* 0898 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 08A0 */  0x3C, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,  // <Vertica
+                    /* 08A8 */  0x6C, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x3E,  // lActive>
+                    /* 08B0 */  0x32, 0x30, 0x30, 0x30, 0x3C, 0x2F, 0x56, 0x65,  // 2000</Ve
+                    /* 08B8 */  0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x41, 0x63,  // rticalAc
+                    /* 08C0 */  0x74, 0x69, 0x76, 0x65, 0x3E, 0x0A, 0x20, 0x20,  // tive>.  
+                    /* 08C8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x56,  //       <V
+                    /* 08D0 */  0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x46,  // erticalF
+                    /* 08D8 */  0x72, 0x6F, 0x6E, 0x74, 0x50, 0x6F, 0x72, 0x63,  // rontPorc
+                    /* 08E0 */  0x68, 0x3E, 0x33, 0x3C, 0x2F, 0x56, 0x65, 0x72,  // h>3</Ver
+                    /* 08E8 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x46, 0x72, 0x6F,  // ticalFro
+                    /* 08F0 */  0x6E, 0x74, 0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E,  // ntPorch>
+                    /* 08F8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0900 */  0x20, 0x3C, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  //  <Vertic
+                    /* 0908 */  0x61, 0x6C, 0x42, 0x61, 0x63, 0x6B, 0x50, 0x6F,  // alBackPo
+                    /* 0910 */  0x72, 0x63, 0x68, 0x3E, 0x34, 0x34, 0x3C, 0x2F,  // rch>44</
+                    /* 0918 */  0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C,  // Vertical
+                    /* 0920 */  0x42, 0x61, 0x63, 0x6B, 0x50, 0x6F, 0x72, 0x63,  // BackPorc
+                    /* 0928 */  0x68, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // h>.     
+                    /* 0930 */  0x20, 0x20, 0x20, 0x3C, 0x56, 0x65, 0x72, 0x74,  //    <Vert
+                    /* 0938 */  0x69, 0x63, 0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63,  // icalSync
+                    /* 0940 */  0x50, 0x75, 0x6C, 0x73, 0x65, 0x3E, 0x31, 0x30,  // Pulse>10
+                    /* 0948 */  0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  // </Vertic
+                    /* 0950 */  0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63, 0x50, 0x75,  // alSyncPu
+                    /* 0958 */  0x6C, 0x73, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // lse>.   
+                    /* 0960 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65,  //      <Ve
+                    /* 0968 */  0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x53, 0x79,  // rticalSy
+                    /* 0970 */  0x6E, 0x63, 0x53, 0x6B, 0x65, 0x77, 0x3E, 0x30,  // ncSkew>0
+                    /* 0978 */  0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  // </Vertic
+                    /* 0980 */  0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63, 0x53, 0x6B,  // alSyncSk
+                    /* 0988 */  0x65, 0x77, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // ew>.    
+                    /* 0990 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65, 0x72,  //     <Ver
+                    /* 0998 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x54, 0x6F, 0x70,  // ticalTop
+                    /* 09A0 */  0x42, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E, 0x30,  // Border>0
+                    /* 09A8 */  0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  // </Vertic
+                    /* 09B0 */  0x61, 0x6C, 0x54, 0x6F, 0x70, 0x42, 0x6F, 0x72,  // alTopBor
+                    /* 09B8 */  0x64, 0x65, 0x72, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // der>.   
+                    /* 09C0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65,  //      <Ve
+                    /* 09C8 */  0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x42, 0x6F,  // rticalBo
+                    /* 09D0 */  0x74, 0x74, 0x6F, 0x6D, 0x42, 0x6F, 0x72, 0x64,  // ttomBord
+                    /* 09D8 */  0x65, 0x72, 0x3E, 0x30, 0x3C, 0x2F, 0x56, 0x65,  // er>0</Ve
+                    /* 09E0 */  0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x42, 0x6F,  // rticalBo
+                    /* 09E8 */  0x74, 0x74, 0x6F, 0x6D, 0x42, 0x6F, 0x72, 0x64,  // ttomBord
+                    /* 09F0 */  0x65, 0x72, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // er>.    
+                    /* 09F8 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x49, 0x6E, 0x76,  //     <Inv
+                    /* 0A00 */  0x65, 0x72, 0x74, 0x44, 0x61, 0x74, 0x61, 0x50,  // ertDataP
+                    /* 0A08 */  0x6F, 0x6C, 0x61, 0x72, 0x69, 0x74, 0x79, 0x3E,  // olarity>
+                    /* 0A10 */  0x46, 0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F, 0x49,  // False</I
+                    /* 0A18 */  0x6E, 0x76, 0x65, 0x72, 0x74, 0x44, 0x61, 0x74,  // nvertDat
+                    /* 0A20 */  0x61, 0x50, 0x6F, 0x6C, 0x61, 0x72, 0x69, 0x74,  // aPolarit
+                    /* 0A28 */  0x79, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // y>.     
+                    /* 0A30 */  0x20, 0x20, 0x20, 0x3C, 0x49, 0x6E, 0x76, 0x65,  //    <Inve
+                    /* 0A38 */  0x72, 0x74, 0x56, 0x73, 0x79, 0x6E, 0x63, 0x50,  // rtVsyncP
+                    /* 0A40 */  0x6F, 0x6C, 0x61, 0x69, 0x72, 0x74, 0x79, 0x3E,  // olairty>
+                    /* 0A48 */  0x46, 0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F, 0x49,  // False</I
+                    /* 0A50 */  0x6E, 0x76, 0x65, 0x72, 0x74, 0x56, 0x73, 0x79,  // nvertVsy
+                    /* 0A58 */  0x6E, 0x63, 0x50, 0x6F, 0x6C, 0x61, 0x69, 0x72,  // ncPolair
+                    /* 0A60 */  0x74, 0x79, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // ty>.    
+                    /* 0A68 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x49, 0x6E, 0x76,  //     <Inv
+                    /* 0A70 */  0x65, 0x72, 0x74, 0x48, 0x73, 0x79, 0x6E, 0x63,  // ertHsync
+                    /* 0A78 */  0x50, 0x6F, 0x6C, 0x61, 0x72, 0x69, 0x74, 0x79,  // Polarity
+                    /* 0A80 */  0x3E, 0x46, 0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F,  // >False</
+                    /* 0A88 */  0x49, 0x6E, 0x76, 0x65, 0x72, 0x74, 0x48, 0x73,  // InvertHs
+                    /* 0A90 */  0x79, 0x6E, 0x63, 0x50, 0x6F, 0x6C, 0x61, 0x72,  // yncPolar
+                    /* 0A98 */  0x69, 0x74, 0x79, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ity>.   
+                    /* 0AA0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x42, 0x6F,  //      <Bo
+                    /* 0AA8 */  0x72, 0x64, 0x65, 0x72, 0x43, 0x6F, 0x6C, 0x6F,  // rderColo
+                    /* 0AB0 */  0x72, 0x3E, 0x30, 0x78, 0x30, 0x3C, 0x2F, 0x42,  // r>0x0</B
+                    /* 0AB8 */  0x6F, 0x72, 0x64, 0x65, 0x72, 0x43, 0x6F, 0x6C,  // orderCol
+                    /* 0AC0 */  0x6F, 0x72, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // or>.    
+                    /* 0AC8 */  0x3C, 0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x3E,  // </Group>
+                    /* 0AD0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x47, 0x72,  // .    <Gr
+                    /* 0AD8 */  0x6F, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3D, 0x27,  // oup id='
+                    /* 0AE0 */  0x44, 0x69, 0x73, 0x70, 0x6C, 0x61, 0x79, 0x20,  // Display 
+                    /* 0AE8 */  0x49, 0x6E, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63,  // Interfac
+                    /* 0AF0 */  0x65, 0x27, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // e'>.    
+                    /* 0AF8 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x49, 0x6E, 0x74,  //     <Int
+                    /* 0B00 */  0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x54, 0x79,  // erfaceTy
+                    /* 0B08 */  0x70, 0x65, 0x3E, 0x38, 0x3C, 0x2F, 0x49, 0x6E,  // pe>8</In
+                    /* 0B10 */  0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x54,  // terfaceT
+                    /* 0B18 */  0x79, 0x70, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ype>.   
+                    /* 0B20 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x49, 0x6E,  //      <In
+                    /* 0B28 */  0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x43,  // terfaceC
+                    /* 0B30 */  0x6F, 0x6C, 0x6F, 0x72, 0x46, 0x6F, 0x72, 0x6D,  // olorForm
+                    /* 0B38 */  0x61, 0x74, 0x3E, 0x33, 0x3C, 0x2F, 0x49, 0x6E,  // at>3</In
+                    /* 0B40 */  0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x43,  // terfaceC
+                    /* 0B48 */  0x6F, 0x6C, 0x6F, 0x72, 0x46, 0x6F, 0x72, 0x6D,  // olorForm
+                    /* 0B50 */  0x61, 0x74, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // at>.    
+                    /* 0B58 */  0x3C, 0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x3E,  // </Group>
+                    /* 0B60 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x47, 0x72,  // .    <Gr
+                    /* 0B68 */  0x6F, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3D, 0x27,  // oup id='
+                    /* 0B70 */  0x44, 0x53, 0x49, 0x20, 0x49, 0x6E, 0x74, 0x65,  // DSI Inte
+                    /* 0B78 */  0x72, 0x66, 0x61, 0x63, 0x65, 0x27, 0x3E, 0x0A,  // rface'>.
+                    /* 0B80 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0B88 */  0x3C, 0x44, 0x53, 0x49, 0x43, 0x68, 0x61, 0x6E,  // <DSIChan
+                    /* 0B90 */  0x6E, 0x65, 0x6C, 0x49, 0x64, 0x3E, 0x31, 0x3C,  // nelId>1<
+                    /* 0B98 */  0x2F, 0x44, 0x53, 0x49, 0x43, 0x68, 0x61, 0x6E,  // /DSIChan
+                    /* 0BA0 */  0x6E, 0x65, 0x6C, 0x49, 0x64, 0x3E, 0x0A, 0x20,  // nelId>. 
+                    /* 0BA8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0BB0 */  0x44, 0x53, 0x49, 0x56, 0x69, 0x72, 0x74, 0x75,  // DSIVirtu
+                    /* 0BB8 */  0x61, 0x6C, 0x49, 0x64, 0x3E, 0x30, 0x3C, 0x2F,  // alId>0</
+                    /* 0BC0 */  0x44, 0x53, 0x49, 0x56, 0x69, 0x72, 0x74, 0x75,  // DSIVirtu
+                    /* 0BC8 */  0x61, 0x6C, 0x49, 0x64, 0x3E, 0x0A, 0x20, 0x20,  // alId>.  
+                    /* 0BD0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //       <D
+                    /* 0BD8 */  0x53, 0x49, 0x43, 0x6F, 0x6C, 0x6F, 0x72, 0x46,  // SIColorF
+                    /* 0BE0 */  0x6F, 0x72, 0x6D, 0x61, 0x74, 0x3E, 0x33, 0x36,  // ormat>36
+                    /* 0BE8 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x43, 0x6F, 0x6C,  // </DSICol
+                    /* 0BF0 */  0x6F, 0x72, 0x46, 0x6F, 0x72, 0x6D, 0x61, 0x74,  // orFormat
+                    /* 0BF8 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0C00 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x54, 0x72,  //   <DSITr
+                    /* 0C08 */  0x61, 0x66, 0x66, 0x69, 0x63, 0x4D, 0x6F, 0x64,  // afficMod
+                    /* 0C10 */  0x65, 0x3E, 0x31, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // e>1</DSI
+                    /* 0C18 */  0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x4D,  // TrafficM
+                    /* 0C20 */  0x6F, 0x64, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ode>.   
+                    /* 0C28 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53,  //      <DS
+                    /* 0C30 */  0x49, 0x4C, 0x61, 0x6E, 0x65, 0x73, 0x3E, 0x34,  // ILanes>4
+                    /* 0C38 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x4C, 0x61, 0x6E,  // </DSILan
+                    /* 0C40 */  0x65, 0x73, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // es>.    
+                    /* 0C48 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
+                    /* 0C50 */  0x4C, 0x50, 0x31, 0x31, 0x41, 0x74, 0x49, 0x6E,  // LP11AtIn
+                    /* 0C58 */  0x69, 0x74, 0x3E, 0x54, 0x72, 0x75, 0x65, 0x3C,  // it>True<
+                    /* 0C60 */  0x2F, 0x44, 0x53, 0x49, 0x4C, 0x50, 0x31, 0x31,  // /DSILP11
+                    /* 0C68 */  0x41, 0x74, 0x49, 0x6E, 0x69, 0x74, 0x3E, 0x0A,  // AtInit>.
+                    /* 0C70 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0C78 */  0x3C, 0x44, 0x53, 0x49, 0x48, 0x73, 0x61, 0x48,  // <DSIHsaH
+                    /* 0C80 */  0x73, 0x65, 0x41, 0x66, 0x74, 0x65, 0x72, 0x56,  // seAfterV
+                    /* 0C88 */  0x73, 0x56, 0x65, 0x3E, 0x46, 0x61, 0x6C, 0x73,  // sVe>Fals
+                    /* 0C90 */  0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x48, 0x73,  // e</DSIHs
+                    /* 0C98 */  0x61, 0x48, 0x73, 0x65, 0x41, 0x66, 0x74, 0x65,  // aHseAfte
+                    /* 0CA0 */  0x72, 0x56, 0x73, 0x56, 0x65, 0x3E, 0x0A, 0x20,  // rVsVe>. 
+                    /* 0CA8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0CB0 */  0x44, 0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F,  // DSILowPo
+                    /* 0CB8 */  0x77, 0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49,  // werModeI
+                    /* 0CC0 */  0x6E, 0x48, 0x46, 0x50, 0x3E, 0x46, 0x61, 0x6C,  // nHFP>Fal
+                    /* 0CC8 */  0x73, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x4C,  // se</DSIL
+                    /* 0CD0 */  0x6F, 0x77, 0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D,  // owPowerM
+                    /* 0CD8 */  0x6F, 0x64, 0x65, 0x49, 0x6E, 0x48, 0x46, 0x50,  // odeInHFP
+                    /* 0CE0 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0CE8 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x4C, 0x6F,  //   <DSILo
+                    /* 0CF0 */  0x77, 0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F,  // wPowerMo
+                    /* 0CF8 */  0x64, 0x65, 0x49, 0x6E, 0x48, 0x42, 0x50, 0x3E,  // deInHBP>
+                    /* 0D00 */  0x46, 0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F, 0x44,  // False</D
+                    /* 0D08 */  0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F, 0x77,  // SILowPow
+                    /* 0D10 */  0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49, 0x6E,  // erModeIn
+                    /* 0D18 */  0x48, 0x42, 0x50, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // HBP>.   
+                    /* 0D20 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53,  //      <DS
+                    /* 0D28 */  0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F, 0x77, 0x65,  // ILowPowe
+                    /* 0D30 */  0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49, 0x6E, 0x48,  // rModeInH
+                    /* 0D38 */  0x53, 0x41, 0x3E, 0x46, 0x61, 0x6C, 0x73, 0x65,  // SA>False
+                    /* 0D40 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x4C, 0x6F, 0x77,  // </DSILow
+                    /* 0D48 */  0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F, 0x64,  // PowerMod
+                    /* 0D50 */  0x65, 0x49, 0x6E, 0x48, 0x53, 0x41, 0x3E, 0x0A,  // eInHSA>.
+                    /* 0D58 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0D60 */  0x3C, 0x44, 0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50,  // <DSILowP
+                    /* 0D68 */  0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65,  // owerMode
+                    /* 0D70 */  0x49, 0x6E, 0x42, 0x4C, 0x4C, 0x50, 0x45, 0x4F,  // InBLLPEO
+                    /* 0D78 */  0x46, 0x3E, 0x54, 0x72, 0x75, 0x65, 0x3C, 0x2F,  // F>True</
+                    /* 0D80 */  0x44, 0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F,  // DSILowPo
+                    /* 0D88 */  0x77, 0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49,  // werModeI
+                    /* 0D90 */  0x6E, 0x42, 0x4C, 0x4C, 0x50, 0x45, 0x4F, 0x46,  // nBLLPEOF
+                    /* 0D98 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0DA0 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x4C, 0x6F,  //   <DSILo
+                    /* 0DA8 */  0x77, 0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F,  // wPowerMo
+                    /* 0DB0 */  0x64, 0x65, 0x49, 0x6E, 0x42, 0x4C, 0x4C, 0x50,  // deInBLLP
+                    /* 0DB8 */  0x3E, 0x54, 0x72, 0x75, 0x65, 0x3C, 0x2F, 0x44,  // >True</D
+                    /* 0DC0 */  0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F, 0x77,  // SILowPow
+                    /* 0DC8 */  0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49, 0x6E,  // erModeIn
+                    /* 0DD0 */  0x42, 0x4C, 0x4C, 0x50, 0x3E, 0x0A, 0x20, 0x20,  // BLLP>.  
+                    /* 0DD8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //       <D
+                    /* 0DE0 */  0x53, 0x49, 0x52, 0x65, 0x66, 0x72, 0x65, 0x73,  // SIRefres
+                    /* 0DE8 */  0x68, 0x52, 0x61, 0x74, 0x65, 0x3E, 0x30, 0x78,  // hRate>0x
+                    /* 0DF0 */  0x33, 0x43, 0x30, 0x30, 0x30, 0x30, 0x3C, 0x2F,  // 3C0000</
+                    /* 0DF8 */  0x44, 0x53, 0x49, 0x52, 0x65, 0x66, 0x72, 0x65,  // DSIRefre
+                    /* 0E00 */  0x73, 0x68, 0x52, 0x61, 0x74, 0x65, 0x3E, 0x0A,  // shRate>.
+                    /* 0E08 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0E10 */  0x3C, 0x44, 0x53, 0x49, 0x49, 0x6E, 0x69, 0x74,  // <DSIInit
+                    /* 0E18 */  0x4D, 0x61, 0x73, 0x74, 0x65, 0x72, 0x54, 0x69,  // MasterTi
+                    /* 0E20 */  0x6D, 0x65, 0x3E, 0x33, 0x30, 0x3C, 0x2F, 0x44,  // me>30</D
+                    /* 0E28 */  0x53, 0x49, 0x49, 0x6E, 0x69, 0x74, 0x4D, 0x61,  // SIInitMa
+                    /* 0E30 */  0x73, 0x74, 0x65, 0x72, 0x54, 0x69, 0x6D, 0x65,  // sterTime
+                    /* 0E38 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0E40 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x43, 0x6F,  //   <DSICo
+                    /* 0E48 */  0x6E, 0x74, 0x72, 0x6F, 0x6C, 0x6C, 0x65, 0x72,  // ntroller
+                    /* 0E50 */  0x4D, 0x61, 0x70, 0x70, 0x69, 0x6E, 0x67, 0x3E,  // Mapping>
+                    /* 0E58 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0E60 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x30, 0x30, 0x20,  //      00 
+                    /* 0E68 */  0x30, 0x31, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 01.     
+                    /* 0E70 */  0x20, 0x20, 0x20, 0x3C, 0x2F, 0x44, 0x53, 0x49,  //    </DSI
+                    /* 0E78 */  0x43, 0x6F, 0x6E, 0x74, 0x72, 0x6F, 0x6C, 0x6C,  // Controll
+                    /* 0E80 */  0x65, 0x72, 0x4D, 0x61, 0x70, 0x70, 0x69, 0x6E,  // erMappin
+                    /* 0E88 */  0x67, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20, 0x20,  // g> .    
+                    /* 0E90 */  0x3C, 0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x3E,  // </Group>
+                    /* 0E98 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53,  // .    <DS
+                    /* 0EA0 */  0x49, 0x49, 0x6E, 0x69, 0x74, 0x53, 0x65, 0x71,  // IInitSeq
+                    /* 0EA8 */  0x75, 0x65, 0x6E, 0x63, 0x65, 0x3E, 0x0A, 0x20,  // uence>. 
+                    /* 0EB0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 0EB8 */  0x33, 0x20, 0x30, 0x41, 0x20, 0x30, 0x32, 0x0A,  // 3 0A 02.
+                    /* 0EC0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0EC8 */  0x32, 0x33, 0x20, 0x31, 0x30, 0x20, 0x38, 0x30,  // 23 10 80
+                    /* 0ED0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0ED8 */  0x20, 0x32, 0x33, 0x20, 0x31, 0x32, 0x20, 0x37,  //  23 12 7
+                    /* 0EE0 */  0x35, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // 5.      
+                    /* 0EE8 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x31, 0x33, 0x20,  //   23 13 
+                    /* 0EF0 */  0x37, 0x35, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 75.     
+                    /* 0EF8 */  0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x35, 0x41,  //    23 5A
+                    /* 0F00 */  0x20, 0x30, 0x35, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  05.    
+                    /* 0F08 */  0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x35,  //     23 5
+                    /* 0F10 */  0x43, 0x20, 0x30, 0x31, 0x0A, 0x20, 0x20, 0x20,  // C 01.   
+                    /* 0F18 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20,  //      23 
+                    /* 0F20 */  0x39, 0x33, 0x20, 0x33, 0x30, 0x0A, 0x20, 0x20,  // 93 30.  
+                    /* 0F28 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33,  //       23
+                    /* 0F30 */  0x20, 0x39, 0x34, 0x20, 0x45, 0x30, 0x0A, 0x20,  //  94 E0. 
+                    /* 0F38 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 0F40 */  0x33, 0x20, 0x30, 0x44, 0x20, 0x30, 0x31, 0x0A,  // 3 0D 01.
+                    /* 0F48 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0F50 */  0x46, 0x46, 0x20, 0x30, 0x41, 0x0A, 0x20, 0x20,  // FF 0A.  
+                    /* 0F58 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33,  //       23
+                    /* 0F60 */  0x20, 0x39, 0x35, 0x20, 0x30, 0x30, 0x0A, 0x20,  //  95 00. 
+                    /* 0F68 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 0F70 */  0x33, 0x20, 0x36, 0x34, 0x20, 0x30, 0x31, 0x0A,  // 3 64 01.
+                    /* 0F78 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0F80 */  0x32, 0x33, 0x20, 0x37, 0x34, 0x20, 0x30, 0x30,  // 23 74 00
+                    /* 0F88 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0F90 */  0x20, 0x32, 0x33, 0x20, 0x37, 0x35, 0x20, 0x30,  //  23 75 0
+                    /* 0F98 */  0x31, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // 1.      
+                    /* 0FA0 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x37, 0x36, 0x20,  //   23 76 
+                    /* 0FA8 */  0x30, 0x41, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 0A.     
+                    /* 0FB0 */  0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x37, 0x37,  //    23 77
+                    /* 0FB8 */  0x20, 0x30, 0x31, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  01.    
+                    /* 0FC0 */  0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x37,  //     23 7
+                    /* 0FC8 */  0x38, 0x20, 0x38, 0x31, 0x0A, 0x20, 0x20, 0x20,  // 8 81.   
+                    /* 0FD0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20,  //      23 
+                    /* 0FD8 */  0x39, 0x36, 0x20, 0x30, 0x41, 0x0A, 0x20, 0x20,  // 96 0A.  
+                    /* 0FE0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x46, 0x46,  //       FF
+                    /* 0FE8 */  0x20, 0x31, 0x34, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  14.    
+                    /* 0FF0 */  0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x32,  //     23 2
+                    /* 0FF8 */  0x30, 0x20, 0x44, 0x43, 0x0A, 0x20, 0x20, 0x20,  // 0 DC.   
+                    /* 1000 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20,  //      23 
+                    /* 1008 */  0x32, 0x31, 0x20, 0x30, 0x35, 0x0A, 0x20, 0x20,  // 21 05.  
+                    /* 1010 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33,  //       23
+                    /* 1018 */  0x20, 0x32, 0x32, 0x20, 0x44, 0x43, 0x0A, 0x20,  //  22 DC. 
+                    /* 1020 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 1028 */  0x33, 0x20, 0x32, 0x33, 0x20, 0x30, 0x35, 0x0A,  // 3 23 05.
+                    /* 1030 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 1038 */  0x32, 0x33, 0x20, 0x32, 0x34, 0x20, 0x44, 0x30,  // 23 24 D0
+                    /* 1040 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 1048 */  0x20, 0x32, 0x33, 0x20, 0x32, 0x35, 0x20, 0x30,  //  23 25 0
+                    /* 1050 */  0x37, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // 7.      
+                    /* 1058 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x32, 0x43, 0x20,  //   23 2C 
+                    /* 1060 */  0x32, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 20.     
+                    /* 1068 */  0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x32, 0x44,  //    23 2D
+                    /* 1070 */  0x20, 0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  00.    
+                    /* 1078 */  0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x33,  //     23 3
+                    /* 1080 */  0x30, 0x20, 0x30, 0x41, 0x0A, 0x20, 0x20, 0x20,  // 0 0A.   
+                    /* 1088 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20,  //      23 
+                    /* 1090 */  0x33, 0x31, 0x20, 0x38, 0x30, 0x0A, 0x20, 0x20,  // 31 80.  
+                    /* 1098 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33,  //       23
+                    /* 10A0 */  0x20, 0x33, 0x34, 0x20, 0x35, 0x30, 0x0A, 0x20,  //  34 50. 
+                    /* 10A8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 10B0 */  0x33, 0x20, 0x33, 0x36, 0x20, 0x32, 0x43, 0x0A,  // 3 36 2C.
+                    /* 10B8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 10C0 */  0x32, 0x33, 0x20, 0x33, 0x38, 0x20, 0x33, 0x30,  // 23 38 30
+                    /* 10C8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 10D0 */  0x20, 0x32, 0x33, 0x20, 0x33, 0x41, 0x20, 0x30,  //  23 3A 0
+                    /* 10D8 */  0x33, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // 3.      
+                    /* 10E0 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x35, 0x42, 0x20,  //   23 5B 
+                    /* 10E8 */  0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 00.     
+                    /* 10F0 */  0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x33, 0x43,  //    23 3C
+                    /* 10F8 */  0x20, 0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  00.    
+                    /* 1100 */  0x20, 0x20, 0x20, 0x20, 0x46, 0x46, 0x20, 0x30,  //     FF 0
+                    /* 1108 */  0x41, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // A.      
+                    /* 1110 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x35, 0x41, 0x20,  //   23 5A 
+                    /* 1118 */  0x30, 0x44, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // 0D.    <
+                    /* 1120 */  0x2F, 0x44, 0x53, 0x49, 0x49, 0x6E, 0x69, 0x74,  // /DSIInit
+                    /* 1128 */  0x53, 0x65, 0x71, 0x75, 0x65, 0x6E, 0x63, 0x65,  // Sequence
+                    /* 1130 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  // >.    <D
+                    /* 1138 */  0x53, 0x49, 0x54, 0x65, 0x72, 0x6D, 0x53, 0x65,  // SITermSe
+                    /* 1140 */  0x71, 0x75, 0x65, 0x6E, 0x63, 0x65, 0x3E, 0x0A,  // quence>.
+                    /* 1148 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 1150 */  0x32, 0x33, 0x20, 0x35, 0x41, 0x20, 0x30, 0x35,  // 23 5A 05
+                    /* 1158 */  0x20, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //  .      
+                    /* 1160 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x39, 0x36, 0x20,  //   23 96 
+                    /* 1168 */  0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 00.     
+                    /* 1170 */  0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x39, 0x33,  //    23 93
+                    /* 1178 */  0x20, 0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  00.    
+                    /* 1180 */  0x20, 0x20, 0x20, 0x20, 0x46, 0x46, 0x20, 0x30,  //     FF 0
+                    /* 1188 */  0x41, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // A.      
+                    /* 1190 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x30, 0x44, 0x20,  //   23 0D 
+                    /* 1198 */  0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // 00.    <
+                    /* 11A0 */  0x2F, 0x44, 0x53, 0x49, 0x54, 0x65, 0x72, 0x6D,  // /DSITerm
+                    /* 11A8 */  0x53, 0x65, 0x71, 0x75, 0x65, 0x6E, 0x63, 0x65,  // Sequence
+                    /* 11B0 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x47,  // >.    <G
+                    /* 11B8 */  0x72, 0x6F, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3D,  // roup id=
+                    /* 11C0 */  0x27, 0x42, 0x61, 0x63, 0x6B, 0x6C, 0x69, 0x67,  // 'Backlig
+                    /* 11C8 */  0x68, 0x74, 0x20, 0x43, 0x6F, 0x6E, 0x66, 0x69,  // ht Confi
+                    /* 11D0 */  0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6F, 0x6E,  // guration
+                    /* 11D8 */  0x27, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // '>.     
+                    /* 11E0 */  0x20, 0x20, 0x20, 0x3C, 0x42, 0x61, 0x63, 0x6B,  //    <Back
+                    /* 11E8 */  0x6C, 0x69, 0x67, 0x68, 0x74, 0x54, 0x79, 0x70,  // lightTyp
+                    /* 11F0 */  0x65, 0x3E, 0x34, 0x3C, 0x2F, 0x42, 0x61, 0x63,  // e>4</Bac
+                    /* 11F8 */  0x6B, 0x6C, 0x69, 0x67, 0x68, 0x74, 0x54, 0x79,  // klightTy
+                    /* 1200 */  0x70, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // pe>.    
+                    /* 1208 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x42, 0x61, 0x63,  //     <Bac
+                    /* 1210 */  0x6B, 0x6C, 0x69, 0x67, 0x68, 0x74, 0x53, 0x74,  // klightSt
+                    /* 1218 */  0x65, 0x70, 0x73, 0x3E, 0x31, 0x30, 0x30, 0x3C,  // eps>100<
+                    /* 1220 */  0x2F, 0x42, 0x61, 0x63, 0x6B, 0x6C, 0x69, 0x67,  // /Backlig
+                    /* 1228 */  0x68, 0x74, 0x53, 0x74, 0x65, 0x70, 0x73, 0x3E,  // htSteps>
+                    /* 1230 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 1238 */  0x20, 0x3C, 0x41, 0x64, 0x61, 0x70, 0x74, 0x69,  //  <Adapti
+                    /* 1240 */  0x76, 0x65, 0x42, 0x72, 0x69, 0x67, 0x68, 0x74,  // veBright
+                    /* 1248 */  0x6E, 0x65, 0x73, 0x73, 0x46, 0x65, 0x61, 0x74,  // nessFeat
+                    /* 1250 */  0x75, 0x72, 0x65, 0x3E, 0x31, 0x3C, 0x2F, 0x41,  // ure>1</A
+                    /* 1258 */  0x64, 0x61, 0x70, 0x74, 0x69, 0x76, 0x65, 0x42,  // daptiveB
+                    /* 1260 */  0x72, 0x69, 0x67, 0x68, 0x74, 0x6E, 0x65, 0x73,  // rightnes
+                    /* 1268 */  0x73, 0x46, 0x65, 0x61, 0x74, 0x75, 0x72, 0x65,  // sFeature
+                    /* 1270 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 1278 */  0x20, 0x20, 0x3C, 0x43, 0x41, 0x42, 0x4C, 0x45,  //   <CABLE
+                    /* 1280 */  0x6E, 0x61, 0x62, 0x6C, 0x65, 0x3E, 0x54, 0x72,  // nable>Tr
+                    /* 1288 */  0x75, 0x65, 0x3C, 0x2F, 0x43, 0x41, 0x42, 0x4C,  // ue</CABL
+                    /* 1290 */  0x45, 0x6E, 0x61, 0x62, 0x6C, 0x65, 0x3E, 0x0A,  // Enable>.
+                    /* 1298 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47, 0x72,  //     </Gr
+                    /* 12A0 */  0x6F, 0x75, 0x70, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // oup>.   
+                    /* 12A8 */  0x20, 0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x20,  //  <Group 
+                    /* 12B0 */  0x69, 0x64, 0x3D, 0x27, 0x43, 0x6F, 0x6E, 0x6E,  // id='Conn
+                    /* 12B8 */  0x65, 0x63, 0x74, 0x69, 0x6F, 0x6E, 0x20, 0x43,  // ection C
+                    /* 12C0 */  0x6F, 0x6E, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61,  // onfigura
+                    /* 12C8 */  0x74, 0x69, 0x6F, 0x6E, 0x27, 0x3E, 0x0A, 0x20,  // tion'>. 
+                    /* 12D0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 12D8 */  0x44, 0x69, 0x73, 0x70, 0x6C, 0x61, 0x79, 0x31,  // Display1
+                    /* 12E0 */  0x52, 0x65, 0x73, 0x65, 0x74, 0x31, 0x49, 0x6E,  // Reset1In
+                    /* 12E8 */  0x66, 0x6F, 0x3E, 0x44, 0x53, 0x49, 0x5F, 0x50,  // fo>DSI_P
+                    /* 12F0 */  0x41, 0x4E, 0x45, 0x4C, 0x5F, 0x45, 0x4E, 0x2C,  // ANEL_EN,
+                    /* 12F8 */  0x20, 0x30, 0x2C, 0x20, 0x30, 0x2C, 0x20, 0x54,  //  0, 0, T
+                    /* 1300 */  0x52, 0x55, 0x45, 0x3C, 0x2F, 0x44, 0x69, 0x73,  // RUE</Dis
+                    /* 1308 */  0x70, 0x6C, 0x61, 0x79, 0x31, 0x52, 0x65, 0x73,  // play1Res
+                    /* 1310 */  0x65, 0x74, 0x31, 0x49, 0x6E, 0x66, 0x6F, 0x3E,  // et1Info>
+                    /* 1318 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47,  // .    </G
+                    /* 1320 */  0x72, 0x6F, 0x75, 0x70, 0x3E, 0x0A, 0x3C, 0x2F,  // roup>.</
+                    /* 1328 */  0x47, 0x72, 0x6F, 0x75, 0x70, 0x3E, 0x00         // Group>.
                 })
-                Local2 = PCFG /* \_SB_.GPU0._ROM.PCFG */
+                Name (PCF4, Buffer (0x1336)
+                {
+                    /* 0000 */  0x3C, 0x3F, 0x78, 0x6D, 0x6C, 0x20, 0x76, 0x65,  // <?xml ve
+                    /* 0008 */  0x72, 0x73, 0x69, 0x6F, 0x6E, 0x3D, 0x27, 0x31,  // rsion='1
+                    /* 0010 */  0x2E, 0x30, 0x27, 0x20, 0x65, 0x6E, 0x63, 0x6F,  // .0' enco
+                    /* 0018 */  0x64, 0x69, 0x6E, 0x67, 0x3D, 0x27, 0x75, 0x74,  // ding='ut
+                    /* 0020 */  0x66, 0x2D, 0x38, 0x27, 0x3F, 0x3E, 0x0A, 0x3C,  // f-8'?>.<
+                    /* 0028 */  0x47, 0x72, 0x6F, 0x75, 0x70, 0x20, 0x69, 0x64,  // Group id
+                    /* 0030 */  0x3D, 0x27, 0x4D, 0x61, 0x69, 0x6E, 0x20, 0x50,  // ='Main P
+                    /* 0038 */  0x61, 0x6E, 0x65, 0x6C, 0x27, 0x3E, 0x0A, 0x20,  // anel'>. 
+                    /* 0040 */  0x20, 0x20, 0x20, 0x3C, 0x50, 0x61, 0x6E, 0x65,  //    <Pane
+                    /* 0048 */  0x6C, 0x4E, 0x61, 0x6D, 0x65, 0x3E, 0x53, 0x4E,  // lName>SN
+                    /* 0050 */  0x36, 0x35, 0x44, 0x53, 0x49, 0x58, 0x36, 0x3C,  // 65DSIX6<
+                    /* 0058 */  0x2F, 0x50, 0x61, 0x6E, 0x65, 0x6C, 0x4E, 0x61,  // /PanelNa
+                    /* 0060 */  0x6D, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // me>.    
+                    /* 0068 */  0x3C, 0x50, 0x61, 0x6E, 0x65, 0x6C, 0x44, 0x65,  // <PanelDe
+                    /* 0070 */  0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6F,  // scriptio
+                    /* 0078 */  0x6E, 0x3E, 0x53, 0x4E, 0x36, 0x35, 0x44, 0x53,  // n>SN65DS
+                    /* 0080 */  0x49, 0x78, 0x36, 0x20, 0x44, 0x75, 0x61, 0x6C,  // Ix6 Dual
+                    /* 0088 */  0x20, 0x44, 0x53, 0x49, 0x20, 0x74, 0x6F, 0x20,  //  DSI to 
+                    /* 0090 */  0x65, 0x44, 0x50, 0x20, 0x28, 0x31, 0x30, 0x38,  // eDP (108
+                    /* 0098 */  0x30, 0x70, 0x20, 0x53, 0x68, 0x61, 0x72, 0x70,  // 0p Sharp
+                    /* 00A0 */  0x29, 0x3C, 0x2F, 0x50, 0x61, 0x6E, 0x65, 0x6C,  // )</Panel
+                    /* 00A8 */  0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,  // Descript
+                    /* 00B0 */  0x69, 0x6F, 0x6E, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ion>.   
+                    /* 00B8 */  0x20, 0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x20,  //  <Group 
+                    /* 00C0 */  0x69, 0x64, 0x3D, 0x27, 0x45, 0x44, 0x49, 0x44,  // id='EDID
+                    /* 00C8 */  0x20, 0x43, 0x6F, 0x6E, 0x66, 0x69, 0x67, 0x75,  //  Configu
+                    /* 00D0 */  0x72, 0x61, 0x74, 0x69, 0x6F, 0x6E, 0x27, 0x3E,  // ration'>
+                    /* 00D8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 00E0 */  0x20, 0x3C, 0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61,  //  <Manufa
+                    /* 00E8 */  0x63, 0x74, 0x75, 0x72, 0x65, 0x49, 0x44, 0x3E,  // ctureID>
+                    /* 00F0 */  0x30, 0x78, 0x45, 0x34, 0x33, 0x30, 0x3C, 0x2F,  // 0xE430</
+                    /* 00F8 */  0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61, 0x63, 0x74,  // Manufact
+                    /* 0100 */  0x75, 0x72, 0x65, 0x49, 0x44, 0x3E, 0x0A, 0x20,  // ureID>. 
+                    /* 0108 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0110 */  0x50, 0x72, 0x6F, 0x64, 0x75, 0x63, 0x74, 0x43,  // ProductC
+                    /* 0118 */  0x6F, 0x64, 0x65, 0x3E, 0x30, 0x78, 0x30, 0x35,  // ode>0x05
+                    /* 0120 */  0x35, 0x44, 0x3C, 0x2F, 0x50, 0x72, 0x6F, 0x64,  // 5D</Prod
+                    /* 0128 */  0x75, 0x63, 0x74, 0x43, 0x6F, 0x64, 0x65, 0x3E,  // uctCode>
+                    /* 0130 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0138 */  0x20, 0x3C, 0x53, 0x65, 0x72, 0x69, 0x61, 0x6C,  //  <Serial
+                    /* 0140 */  0x4E, 0x75, 0x6D, 0x62, 0x65, 0x72, 0x3E, 0x30,  // Number>0
+                    /* 0148 */  0x78, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x3C,  // x000000<
+                    /* 0150 */  0x2F, 0x53, 0x65, 0x72, 0x69, 0x61, 0x6C, 0x4E,  // /SerialN
+                    /* 0158 */  0x75, 0x6D, 0x62, 0x65, 0x72, 0x3E, 0x0A, 0x20,  // umber>. 
+                    /* 0160 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0168 */  0x57, 0x65, 0x65, 0x6B, 0x6F, 0x66, 0x4D, 0x61,  // WeekofMa
+                    /* 0170 */  0x6E, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72,  // nufactur
+                    /* 0178 */  0x65, 0x3E, 0x30, 0x78, 0x30, 0x30, 0x3C, 0x2F,  // e>0x00</
+                    /* 0180 */  0x57, 0x65, 0x65, 0x6B, 0x6F, 0x66, 0x4D, 0x61,  // WeekofMa
+                    /* 0188 */  0x6E, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72,  // nufactur
+                    /* 0190 */  0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // e>.     
+                    /* 0198 */  0x20, 0x20, 0x20, 0x3C, 0x59, 0x65, 0x61, 0x72,  //    <Year
+                    /* 01A0 */  0x6F, 0x66, 0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61,  // ofManufa
+                    /* 01A8 */  0x63, 0x74, 0x75, 0x72, 0x65, 0x3E, 0x30, 0x78,  // cture>0x
+                    /* 01B0 */  0x31, 0x41, 0x3C, 0x2F, 0x59, 0x65, 0x61, 0x72,  // 1A</Year
+                    /* 01B8 */  0x6F, 0x66, 0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61,  // ofManufa
+                    /* 01C0 */  0x63, 0x74, 0x75, 0x72, 0x65, 0x3E, 0x0A, 0x20,  // cture>. 
+                    /* 01C8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 01D0 */  0x45, 0x44, 0x49, 0x44, 0x56, 0x65, 0x72, 0x73,  // EDIDVers
+                    /* 01D8 */  0x69, 0x6F, 0x6E, 0x3E, 0x31, 0x3C, 0x2F, 0x45,  // ion>1</E
+                    /* 01E0 */  0x44, 0x49, 0x44, 0x56, 0x65, 0x72, 0x73, 0x69,  // DIDVersi
+                    /* 01E8 */  0x6F, 0x6E, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // on>.    
+                    /* 01F0 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x45, 0x44, 0x49,  //     <EDI
+                    /* 01F8 */  0x44, 0x52, 0x65, 0x76, 0x69, 0x73, 0x69, 0x6F,  // DRevisio
+                    /* 0200 */  0x6E, 0x3E, 0x34, 0x3C, 0x2F, 0x45, 0x44, 0x49,  // n>4</EDI
+                    /* 0208 */  0x44, 0x52, 0x65, 0x76, 0x69, 0x73, 0x69, 0x6F,  // DRevisio
+                    /* 0210 */  0x6E, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // n>.     
+                    /* 0218 */  0x20, 0x20, 0x20, 0x3C, 0x56, 0x69, 0x64, 0x65,  //    <Vide
+                    /* 0220 */  0x6F, 0x49, 0x6E, 0x70, 0x75, 0x74, 0x44, 0x65,  // oInputDe
+                    /* 0228 */  0x66, 0x69, 0x6E, 0x69, 0x74, 0x69, 0x6F, 0x6E,  // finition
+                    /* 0230 */  0x3E, 0x30, 0x78, 0x41, 0x35, 0x3C, 0x2F, 0x56,  // >0xA5</V
+                    /* 0238 */  0x69, 0x64, 0x65, 0x6F, 0x49, 0x6E, 0x70, 0x75,  // ideoInpu
+                    /* 0240 */  0x74, 0x44, 0x65, 0x66, 0x69, 0x6E, 0x69, 0x74,  // tDefinit
+                    /* 0248 */  0x69, 0x6F, 0x6E, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ion>.   
+                    /* 0250 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F,  //      <Ho
+                    /* 0258 */  0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C,  // rizontal
+                    /* 0260 */  0x53, 0x63, 0x72, 0x65, 0x65, 0x6E, 0x53, 0x69,  // ScreenSi
+                    /* 0268 */  0x7A, 0x65, 0x3E, 0x30, 0x78, 0x31, 0x41, 0x3C,  // ze>0x1A<
+                    /* 0270 */  0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E,  // /Horizon
+                    /* 0278 */  0x74, 0x61, 0x6C, 0x53, 0x63, 0x72, 0x65, 0x65,  // talScree
+                    /* 0280 */  0x6E, 0x53, 0x69, 0x7A, 0x65, 0x3E, 0x0A, 0x20,  // nSize>. 
+                    /* 0288 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0290 */  0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C,  // Vertical
+                    /* 0298 */  0x53, 0x63, 0x72, 0x65, 0x65, 0x6E, 0x53, 0x69,  // ScreenSi
+                    /* 02A0 */  0x7A, 0x65, 0x3E, 0x30, 0x78, 0x31, 0x31, 0x3C,  // ze>0x11<
+                    /* 02A8 */  0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,  // /Vertica
+                    /* 02B0 */  0x6C, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6E, 0x53,  // lScreenS
+                    /* 02B8 */  0x69, 0x7A, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ize>.   
+                    /* 02C0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x69,  //      <Di
+                    /* 02C8 */  0x73, 0x70, 0x6C, 0x61, 0x79, 0x54, 0x72, 0x61,  // splayTra
+                    /* 02D0 */  0x6E, 0x73, 0x66, 0x65, 0x72, 0x43, 0x68, 0x61,  // nsferCha
+                    /* 02D8 */  0x72, 0x61, 0x63, 0x74, 0x65, 0x72, 0x69, 0x73,  // racteris
+                    /* 02E0 */  0x74, 0x69, 0x63, 0x73, 0x3E, 0x30, 0x78, 0x37,  // tics>0x7
+                    /* 02E8 */  0x38, 0x3C, 0x2F, 0x44, 0x69, 0x73, 0x70, 0x6C,  // 8</Displ
+                    /* 02F0 */  0x61, 0x79, 0x54, 0x72, 0x61, 0x6E, 0x73, 0x66,  // ayTransf
+                    /* 02F8 */  0x65, 0x72, 0x43, 0x68, 0x61, 0x72, 0x61, 0x63,  // erCharac
+                    /* 0300 */  0x74, 0x65, 0x72, 0x69, 0x73, 0x74, 0x69, 0x63,  // teristic
+                    /* 0308 */  0x73, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // s>.     
+                    /* 0310 */  0x20, 0x20, 0x20, 0x3C, 0x46, 0x65, 0x61, 0x74,  //    <Feat
+                    /* 0318 */  0x75, 0x72, 0x65, 0x53, 0x75, 0x70, 0x70, 0x6F,  // ureSuppo
+                    /* 0320 */  0x72, 0x74, 0x3E, 0x30, 0x78, 0x30, 0x32, 0x3C,  // rt>0x02<
+                    /* 0328 */  0x2F, 0x46, 0x65, 0x61, 0x74, 0x75, 0x72, 0x65,  // /Feature
+                    /* 0330 */  0x53, 0x75, 0x70, 0x70, 0x6F, 0x72, 0x74, 0x3E,  // Support>
+                    /* 0338 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0340 */  0x20, 0x3C, 0x52, 0x65, 0x64, 0x2E, 0x47, 0x72,  //  <Red.Gr
+                    /* 0348 */  0x65, 0x65, 0x6E, 0x42, 0x69, 0x74, 0x73, 0x3E,  // eenBits>
+                    /* 0350 */  0x30, 0x78, 0x35, 0x35, 0x3C, 0x2F, 0x52, 0x65,  // 0x55</Re
+                    /* 0358 */  0x64, 0x2E, 0x47, 0x72, 0x65, 0x65, 0x6E, 0x42,  // d.GreenB
+                    /* 0360 */  0x69, 0x74, 0x73, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // its>.   
+                    /* 0368 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x42, 0x6C,  //      <Bl
+                    /* 0370 */  0x75, 0x65, 0x2E, 0x57, 0x68, 0x69, 0x74, 0x65,  // ue.White
+                    /* 0378 */  0x42, 0x69, 0x74, 0x73, 0x3E, 0x30, 0x78, 0x35,  // Bits>0x5
+                    /* 0380 */  0x35, 0x3C, 0x2F, 0x42, 0x6C, 0x75, 0x65, 0x2E,  // 5</Blue.
+                    /* 0388 */  0x57, 0x68, 0x69, 0x74, 0x65, 0x42, 0x69, 0x74,  // WhiteBit
+                    /* 0390 */  0x73, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // s>.     
+                    /* 0398 */  0x20, 0x20, 0x20, 0x3C, 0x52, 0x65, 0x64, 0x58,  //    <RedX
+                    /* 03A0 */  0x3E, 0x30, 0x78, 0x30, 0x3C, 0x2F, 0x52, 0x65,  // >0x0</Re
+                    /* 03A8 */  0x64, 0x58, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // dX>.    
+                    /* 03B0 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x52, 0x65, 0x64,  //     <Red
+                    /* 03B8 */  0x59, 0x3E, 0x30, 0x78, 0x30, 0x3C, 0x2F, 0x52,  // Y>0x0</R
+                    /* 03C0 */  0x65, 0x64, 0x59, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // edY>.   
+                    /* 03C8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x47, 0x72,  //      <Gr
+                    /* 03D0 */  0x65, 0x65, 0x6E, 0x58, 0x3E, 0x30, 0x78, 0x30,  // eenX>0x0
+                    /* 03D8 */  0x3C, 0x2F, 0x47, 0x72, 0x65, 0x65, 0x6E, 0x58,  // </GreenX
+                    /* 03E0 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 03E8 */  0x20, 0x20, 0x3C, 0x47, 0x72, 0x65, 0x65, 0x6E,  //   <Green
+                    /* 03F0 */  0x59, 0x3E, 0x30, 0x78, 0x30, 0x3C, 0x2F, 0x47,  // Y>0x0</G
+                    /* 03F8 */  0x72, 0x65, 0x65, 0x6E, 0x59, 0x3E, 0x0A, 0x20,  // reenY>. 
+                    /* 0400 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0408 */  0x42, 0x6C, 0x75, 0x65, 0x58, 0x3E, 0x30, 0x78,  // BlueX>0x
+                    /* 0410 */  0x30, 0x3C, 0x2F, 0x42, 0x6C, 0x75, 0x65, 0x58,  // 0</BlueX
+                    /* 0418 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0420 */  0x20, 0x20, 0x3C, 0x42, 0x6C, 0x75, 0x65, 0x59,  //   <BlueY
+                    /* 0428 */  0x3E, 0x30, 0x78, 0x30, 0x3C, 0x2F, 0x42, 0x6C,  // >0x0</Bl
+                    /* 0430 */  0x75, 0x65, 0x59, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ueY>.   
+                    /* 0438 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x57, 0x68,  //      <Wh
+                    /* 0440 */  0x69, 0x74, 0x65, 0x58, 0x3E, 0x30, 0x78, 0x35,  // iteX>0x5
+                    /* 0448 */  0x30, 0x3C, 0x2F, 0x57, 0x68, 0x69, 0x74, 0x65,  // 0</White
+                    /* 0450 */  0x58, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // X>.     
+                    /* 0458 */  0x20, 0x20, 0x20, 0x3C, 0x57, 0x68, 0x69, 0x74,  //    <Whit
+                    /* 0460 */  0x65, 0x59, 0x3E, 0x30, 0x78, 0x35, 0x34, 0x3C,  // eY>0x54<
+                    /* 0468 */  0x2F, 0x57, 0x68, 0x69, 0x74, 0x65, 0x59, 0x3E,  // /WhiteY>
+                    /* 0470 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0478 */  0x20, 0x3C, 0x45, 0x73, 0x74, 0x61, 0x62, 0x6C,  //  <Establ
+                    /* 0480 */  0x69, 0x73, 0x68, 0x65, 0x64, 0x54, 0x69, 0x6D,  // ishedTim
+                    /* 0488 */  0x69, 0x6E, 0x67, 0x73, 0x49, 0x3E, 0x30, 0x78,  // ingsI>0x
+                    /* 0490 */  0x30, 0x3C, 0x2F, 0x45, 0x73, 0x74, 0x61, 0x62,  // 0</Estab
+                    /* 0498 */  0x6C, 0x69, 0x73, 0x68, 0x65, 0x64, 0x54, 0x69,  // lishedTi
+                    /* 04A0 */  0x6D, 0x69, 0x6E, 0x67, 0x73, 0x49, 0x3E, 0x0A,  // mingsI>.
+                    /* 04A8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 04B0 */  0x3C, 0x45, 0x73, 0x74, 0x61, 0x62, 0x6C, 0x69,  // <Establi
+                    /* 04B8 */  0x73, 0x68, 0x65, 0x64, 0x54, 0x69, 0x6D, 0x69,  // shedTimi
+                    /* 04C0 */  0x6E, 0x67, 0x73, 0x49, 0x49, 0x3E, 0x30, 0x78,  // ngsII>0x
+                    /* 04C8 */  0x30, 0x3C, 0x2F, 0x45, 0x73, 0x74, 0x61, 0x62,  // 0</Estab
+                    /* 04D0 */  0x6C, 0x69, 0x73, 0x68, 0x65, 0x64, 0x54, 0x69,  // lishedTi
+                    /* 04D8 */  0x6D, 0x69, 0x6E, 0x67, 0x73, 0x49, 0x49, 0x3E,  // mingsII>
+                    /* 04E0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 04E8 */  0x20, 0x3C, 0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61,  //  <Manufa
+                    /* 04F0 */  0x63, 0x74, 0x75, 0x72, 0x65, 0x73, 0x54, 0x69,  // cturesTi
+                    /* 04F8 */  0x6D, 0x69, 0x6E, 0x67, 0x3E, 0x30, 0x78, 0x30,  // ming>0x0
+                    /* 0500 */  0x3C, 0x2F, 0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61,  // </Manufa
+                    /* 0508 */  0x63, 0x74, 0x75, 0x72, 0x65, 0x73, 0x54, 0x69,  // cturesTi
+                    /* 0510 */  0x6D, 0x69, 0x6E, 0x67, 0x3E, 0x0A, 0x20, 0x20,  // ming>.  
+                    /* 0518 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x53,  //       <S
+                    /* 0520 */  0x74, 0x61, 0x6E, 0x64, 0x61, 0x72, 0x64, 0x54,  // tandardT
+                    /* 0528 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73, 0x31, 0x2F,  // imings1/
+                    /* 0530 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0538 */  0x20, 0x20, 0x3C, 0x53, 0x74, 0x61, 0x6E, 0x64,  //   <Stand
+                    /* 0540 */  0x61, 0x72, 0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // ardTimin
+                    /* 0548 */  0x67, 0x73, 0x32, 0x2F, 0x3E, 0x0A, 0x20, 0x20,  // gs2/>.  
+                    /* 0550 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x53,  //       <S
+                    /* 0558 */  0x74, 0x61, 0x6E, 0x64, 0x61, 0x72, 0x64, 0x54,  // tandardT
+                    /* 0560 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73, 0x33, 0x2F,  // imings3/
+                    /* 0568 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0570 */  0x20, 0x20, 0x3C, 0x53, 0x74, 0x61, 0x6E, 0x64,  //   <Stand
+                    /* 0578 */  0x61, 0x72, 0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // ardTimin
+                    /* 0580 */  0x67, 0x73, 0x34, 0x2F, 0x3E, 0x0A, 0x20, 0x20,  // gs4/>.  
+                    /* 0588 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x53,  //       <S
+                    /* 0590 */  0x74, 0x61, 0x6E, 0x64, 0x61, 0x72, 0x64, 0x54,  // tandardT
+                    /* 0598 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73, 0x35, 0x2F,  // imings5/
+                    /* 05A0 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 05A8 */  0x20, 0x20, 0x3C, 0x53, 0x74, 0x61, 0x6E, 0x64,  //   <Stand
+                    /* 05B0 */  0x61, 0x72, 0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // ardTimin
+                    /* 05B8 */  0x67, 0x73, 0x36, 0x2F, 0x3E, 0x0A, 0x20, 0x20,  // gs6/>.  
+                    /* 05C0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x53,  //       <S
+                    /* 05C8 */  0x74, 0x61, 0x6E, 0x64, 0x61, 0x72, 0x64, 0x54,  // tandardT
+                    /* 05D0 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73, 0x37, 0x2F,  // imings7/
+                    /* 05D8 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 05E0 */  0x20, 0x20, 0x3C, 0x53, 0x69, 0x67, 0x6E, 0x61,  //   <Signa
+                    /* 05E8 */  0x6C, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x49,  // lTimingI
+                    /* 05F0 */  0x6E, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65,  // nterface
+                    /* 05F8 */  0x2F, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // />.    <
+                    /* 0600 */  0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x3E, 0x0A,  // /Group>.
+                    /* 0608 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x47, 0x72, 0x6F,  //     <Gro
+                    /* 0610 */  0x75, 0x70, 0x20, 0x69, 0x64, 0x3D, 0x27, 0x44,  // up id='D
+                    /* 0618 */  0x65, 0x74, 0x61, 0x69, 0x6C, 0x65, 0x64, 0x20,  // etailed 
+                    /* 0620 */  0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x27, 0x3E,  // Timing'>
+                    /* 0628 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0630 */  0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  //  <Horizo
+                    /* 0638 */  0x6E, 0x74, 0x61, 0x6C, 0x53, 0x63, 0x72, 0x65,  // ntalScre
+                    /* 0640 */  0x65, 0x6E, 0x53, 0x69, 0x7A, 0x65, 0x4D, 0x4D,  // enSizeMM
+                    /* 0648 */  0x3E, 0x30, 0x78, 0x30, 0x33, 0x3C, 0x2F, 0x48,  // >0x03</H
+                    /* 0650 */  0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61,  // orizonta
+                    /* 0658 */  0x6C, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6E, 0x53,  // lScreenS
+                    /* 0660 */  0x69, 0x7A, 0x65, 0x4D, 0x4D, 0x3E, 0x0A, 0x20,  // izeMM>. 
+                    /* 0668 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0670 */  0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C,  // Vertical
+                    /* 0678 */  0x53, 0x63, 0x72, 0x65, 0x65, 0x6E, 0x53, 0x69,  // ScreenSi
+                    /* 0680 */  0x7A, 0x65, 0x4D, 0x4D, 0x3E, 0x30, 0x78, 0x41,  // zeMM>0xA
+                    /* 0688 */  0x44, 0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74, 0x69,  // D</Verti
+                    /* 0690 */  0x63, 0x61, 0x6C, 0x53, 0x63, 0x72, 0x65, 0x65,  // calScree
+                    /* 0698 */  0x6E, 0x53, 0x69, 0x7A, 0x65, 0x4D, 0x4D, 0x3E,  // nSizeMM>
+                    /* 06A0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 06A8 */  0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  //  <Horizo
+                    /* 06B0 */  0x6E, 0x74, 0x61, 0x6C, 0x56, 0x65, 0x72, 0x74,  // ntalVert
+                    /* 06B8 */  0x69, 0x63, 0x61, 0x6C, 0x53, 0x63, 0x72, 0x65,  // icalScre
+                    /* 06C0 */  0x65, 0x6E, 0x53, 0x69, 0x7A, 0x65, 0x4D, 0x4D,  // enSizeMM
+                    /* 06C8 */  0x3E, 0x30, 0x78, 0x31, 0x30, 0x3C, 0x2F, 0x48,  // >0x10</H
+                    /* 06D0 */  0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61,  // orizonta
+                    /* 06D8 */  0x6C, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,  // lVertica
+                    /* 06E0 */  0x6C, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6E, 0x53,  // lScreenS
+                    /* 06E8 */  0x69, 0x7A, 0x65, 0x4D, 0x4D, 0x3E, 0x0A, 0x20,  // izeMM>. 
+                    /* 06F0 */  0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47, 0x72, 0x6F,  //    </Gro
+                    /* 06F8 */  0x75, 0x70, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // up>.    
+                    /* 0700 */  0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x20, 0x69,  // <Group i
+                    /* 0708 */  0x64, 0x3D, 0x27, 0x41, 0x63, 0x74, 0x69, 0x76,  // d='Activ
+                    /* 0710 */  0x65, 0x20, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67,  // e Timing
+                    /* 0718 */  0x27, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // '>.     
+                    /* 0720 */  0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69,  //    <Hori
+                    /* 0728 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x41, 0x63,  // zontalAc
+                    /* 0730 */  0x74, 0x69, 0x76, 0x65, 0x3E, 0x31, 0x39, 0x32,  // tive>192
+                    /* 0738 */  0x30, 0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A,  // 0</Horiz
+                    /* 0740 */  0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x41, 0x63, 0x74,  // ontalAct
+                    /* 0748 */  0x69, 0x76, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ive>.   
+                    /* 0750 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F,  //      <Ho
+                    /* 0758 */  0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C,  // rizontal
+                    /* 0760 */  0x46, 0x72, 0x6F, 0x6E, 0x74, 0x50, 0x6F, 0x72,  // FrontPor
+                    /* 0768 */  0x63, 0x68, 0x3E, 0x34, 0x38, 0x3C, 0x2F, 0x48,  // ch>48</H
+                    /* 0770 */  0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61,  // orizonta
+                    /* 0778 */  0x6C, 0x46, 0x72, 0x6F, 0x6E, 0x74, 0x50, 0x6F,  // lFrontPo
+                    /* 0780 */  0x72, 0x63, 0x68, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // rch>.   
+                    /* 0788 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F,  //      <Ho
+                    /* 0790 */  0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C,  // rizontal
+                    /* 0798 */  0x42, 0x61, 0x63, 0x6B, 0x50, 0x6F, 0x72, 0x63,  // BackPorc
+                    /* 07A0 */  0x68, 0x3E, 0x38, 0x30, 0x3C, 0x2F, 0x48, 0x6F,  // h>80</Ho
+                    /* 07A8 */  0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C,  // rizontal
+                    /* 07B0 */  0x42, 0x61, 0x63, 0x6B, 0x50, 0x6F, 0x72, 0x63,  // BackPorc
+                    /* 07B8 */  0x68, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // h>.     
+                    /* 07C0 */  0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69,  //    <Hori
+                    /* 07C8 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x53, 0x79,  // zontalSy
+                    /* 07D0 */  0x6E, 0x63, 0x50, 0x75, 0x6C, 0x73, 0x65, 0x3E,  // ncPulse>
+                    /* 07D8 */  0x33, 0x32, 0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69,  // 32</Hori
+                    /* 07E0 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x53, 0x79,  // zontalSy
+                    /* 07E8 */  0x6E, 0x63, 0x50, 0x75, 0x6C, 0x73, 0x65, 0x3E,  // ncPulse>
+                    /* 07F0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 07F8 */  0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  //  <Horizo
+                    /* 0800 */  0x6E, 0x74, 0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63,  // ntalSync
+                    /* 0808 */  0x53, 0x6B, 0x65, 0x77, 0x3E, 0x30, 0x3C, 0x2F,  // Skew>0</
+                    /* 0810 */  0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74,  // Horizont
+                    /* 0818 */  0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63, 0x53, 0x6B,  // alSyncSk
+                    /* 0820 */  0x65, 0x77, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // ew>.    
+                    /* 0828 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F, 0x72,  //     <Hor
+                    /* 0830 */  0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x4C,  // izontalL
+                    /* 0838 */  0x65, 0x66, 0x74, 0x42, 0x6F, 0x72, 0x64, 0x65,  // eftBorde
+                    /* 0840 */  0x72, 0x3E, 0x30, 0x3C, 0x2F, 0x48, 0x6F, 0x72,  // r>0</Hor
+                    /* 0848 */  0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x4C,  // izontalL
+                    /* 0850 */  0x65, 0x66, 0x74, 0x42, 0x6F, 0x72, 0x64, 0x65,  // eftBorde
+                    /* 0858 */  0x72, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // r>.     
+                    /* 0860 */  0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69,  //    <Hori
+                    /* 0868 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x52, 0x69,  // zontalRi
+                    /* 0870 */  0x67, 0x68, 0x74, 0x42, 0x6F, 0x72, 0x64, 0x65,  // ghtBorde
+                    /* 0878 */  0x72, 0x3E, 0x30, 0x3C, 0x2F, 0x48, 0x6F, 0x72,  // r>0</Hor
+                    /* 0880 */  0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x52,  // izontalR
+                    /* 0888 */  0x69, 0x67, 0x68, 0x74, 0x42, 0x6F, 0x72, 0x64,  // ightBord
+                    /* 0890 */  0x65, 0x72, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // er>.    
+                    /* 0898 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65, 0x72,  //     <Ver
+                    /* 08A0 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x41, 0x63, 0x74,  // ticalAct
+                    /* 08A8 */  0x69, 0x76, 0x65, 0x3E, 0x31, 0x32, 0x38, 0x30,  // ive>1280
+                    /* 08B0 */  0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  // </Vertic
+                    /* 08B8 */  0x61, 0x6C, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65,  // alActive
+                    /* 08C0 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 08C8 */  0x20, 0x20, 0x3C, 0x56, 0x65, 0x72, 0x74, 0x69,  //   <Verti
+                    /* 08D0 */  0x63, 0x61, 0x6C, 0x46, 0x72, 0x6F, 0x6E, 0x74,  // calFront
+                    /* 08D8 */  0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E, 0x33, 0x3C,  // Porch>3<
+                    /* 08E0 */  0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,  // /Vertica
+                    /* 08E8 */  0x6C, 0x46, 0x72, 0x6F, 0x6E, 0x74, 0x50, 0x6F,  // lFrontPo
+                    /* 08F0 */  0x72, 0x63, 0x68, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // rch>.   
+                    /* 08F8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65,  //      <Ve
+                    /* 0900 */  0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x42, 0x61,  // rticalBa
+                    /* 0908 */  0x63, 0x6B, 0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E,  // ckPorch>
+                    /* 0910 */  0x35, 0x37, 0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74,  // 57</Vert
+                    /* 0918 */  0x69, 0x63, 0x61, 0x6C, 0x42, 0x61, 0x63, 0x6B,  // icalBack
+                    /* 0920 */  0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E, 0x0A, 0x20,  // Porch>. 
+                    /* 0928 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0930 */  0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C,  // Vertical
+                    /* 0938 */  0x53, 0x79, 0x6E, 0x63, 0x50, 0x75, 0x6C, 0x73,  // SyncPuls
+                    /* 0940 */  0x65, 0x3E, 0x31, 0x30, 0x3C, 0x2F, 0x56, 0x65,  // e>10</Ve
+                    /* 0948 */  0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x53, 0x79,  // rticalSy
+                    /* 0950 */  0x6E, 0x63, 0x50, 0x75, 0x6C, 0x73, 0x65, 0x3E,  // ncPulse>
+                    /* 0958 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0960 */  0x20, 0x3C, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  //  <Vertic
+                    /* 0968 */  0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63, 0x53, 0x6B,  // alSyncSk
+                    /* 0970 */  0x65, 0x77, 0x3E, 0x30, 0x3C, 0x2F, 0x56, 0x65,  // ew>0</Ve
+                    /* 0978 */  0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x53, 0x79,  // rticalSy
+                    /* 0980 */  0x6E, 0x63, 0x53, 0x6B, 0x65, 0x77, 0x3E, 0x0A,  // ncSkew>.
+                    /* 0988 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0990 */  0x3C, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,  // <Vertica
+                    /* 0998 */  0x6C, 0x54, 0x6F, 0x70, 0x42, 0x6F, 0x72, 0x64,  // lTopBord
+                    /* 09A0 */  0x65, 0x72, 0x3E, 0x30, 0x3C, 0x2F, 0x56, 0x65,  // er>0</Ve
+                    /* 09A8 */  0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x54, 0x6F,  // rticalTo
+                    /* 09B0 */  0x70, 0x42, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E,  // pBorder>
+                    /* 09B8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 09C0 */  0x20, 0x3C, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  //  <Vertic
+                    /* 09C8 */  0x61, 0x6C, 0x42, 0x6F, 0x74, 0x74, 0x6F, 0x6D,  // alBottom
+                    /* 09D0 */  0x42, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E, 0x30,  // Border>0
+                    /* 09D8 */  0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  // </Vertic
+                    /* 09E0 */  0x61, 0x6C, 0x42, 0x6F, 0x74, 0x74, 0x6F, 0x6D,  // alBottom
+                    /* 09E8 */  0x42, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E, 0x0A,  // Border>.
+                    /* 09F0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 09F8 */  0x3C, 0x49, 0x6E, 0x76, 0x65, 0x72, 0x74, 0x44,  // <InvertD
+                    /* 0A00 */  0x61, 0x74, 0x61, 0x50, 0x6F, 0x6C, 0x61, 0x72,  // ataPolar
+                    /* 0A08 */  0x69, 0x74, 0x79, 0x3E, 0x46, 0x61, 0x6C, 0x73,  // ity>Fals
+                    /* 0A10 */  0x65, 0x3C, 0x2F, 0x49, 0x6E, 0x76, 0x65, 0x72,  // e</Inver
+                    /* 0A18 */  0x74, 0x44, 0x61, 0x74, 0x61, 0x50, 0x6F, 0x6C,  // tDataPol
+                    /* 0A20 */  0x61, 0x72, 0x69, 0x74, 0x79, 0x3E, 0x0A, 0x20,  // arity>. 
+                    /* 0A28 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0A30 */  0x49, 0x6E, 0x76, 0x65, 0x72, 0x74, 0x56, 0x73,  // InvertVs
+                    /* 0A38 */  0x79, 0x6E, 0x63, 0x50, 0x6F, 0x6C, 0x61, 0x69,  // yncPolai
+                    /* 0A40 */  0x72, 0x74, 0x79, 0x3E, 0x46, 0x61, 0x6C, 0x73,  // rty>Fals
+                    /* 0A48 */  0x65, 0x3C, 0x2F, 0x49, 0x6E, 0x76, 0x65, 0x72,  // e</Inver
+                    /* 0A50 */  0x74, 0x56, 0x73, 0x79, 0x6E, 0x63, 0x50, 0x6F,  // tVsyncPo
+                    /* 0A58 */  0x6C, 0x61, 0x69, 0x72, 0x74, 0x79, 0x3E, 0x0A,  // lairty>.
+                    /* 0A60 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0A68 */  0x3C, 0x49, 0x6E, 0x76, 0x65, 0x72, 0x74, 0x48,  // <InvertH
+                    /* 0A70 */  0x73, 0x79, 0x6E, 0x63, 0x50, 0x6F, 0x6C, 0x61,  // syncPola
+                    /* 0A78 */  0x72, 0x69, 0x74, 0x79, 0x3E, 0x46, 0x61, 0x6C,  // rity>Fal
+                    /* 0A80 */  0x73, 0x65, 0x3C, 0x2F, 0x49, 0x6E, 0x76, 0x65,  // se</Inve
+                    /* 0A88 */  0x72, 0x74, 0x48, 0x73, 0x79, 0x6E, 0x63, 0x50,  // rtHsyncP
+                    /* 0A90 */  0x6F, 0x6C, 0x61, 0x72, 0x69, 0x74, 0x79, 0x3E,  // olarity>
+                    /* 0A98 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0AA0 */  0x20, 0x3C, 0x42, 0x6F, 0x72, 0x64, 0x65, 0x72,  //  <Border
+                    /* 0AA8 */  0x43, 0x6F, 0x6C, 0x6F, 0x72, 0x3E, 0x30, 0x78,  // Color>0x
+                    /* 0AB0 */  0x30, 0x3C, 0x2F, 0x42, 0x6F, 0x72, 0x64, 0x65,  // 0</Borde
+                    /* 0AB8 */  0x72, 0x43, 0x6F, 0x6C, 0x6F, 0x72, 0x3E, 0x0A,  // rColor>.
+                    /* 0AC0 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47, 0x72,  //     </Gr
+                    /* 0AC8 */  0x6F, 0x75, 0x70, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // oup>.   
+                    /* 0AD0 */  0x20, 0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x20,  //  <Group 
+                    /* 0AD8 */  0x69, 0x64, 0x3D, 0x27, 0x44, 0x69, 0x73, 0x70,  // id='Disp
+                    /* 0AE0 */  0x6C, 0x61, 0x79, 0x20, 0x49, 0x6E, 0x74, 0x65,  // lay Inte
+                    /* 0AE8 */  0x72, 0x66, 0x61, 0x63, 0x65, 0x27, 0x3E, 0x0A,  // rface'>.
+                    /* 0AF0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0AF8 */  0x3C, 0x49, 0x6E, 0x74, 0x65, 0x72, 0x66, 0x61,  // <Interfa
+                    /* 0B00 */  0x63, 0x65, 0x54, 0x79, 0x70, 0x65, 0x3E, 0x38,  // ceType>8
+                    /* 0B08 */  0x3C, 0x2F, 0x49, 0x6E, 0x74, 0x65, 0x72, 0x66,  // </Interf
+                    /* 0B10 */  0x61, 0x63, 0x65, 0x54, 0x79, 0x70, 0x65, 0x3E,  // aceType>
+                    /* 0B18 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0B20 */  0x20, 0x3C, 0x49, 0x6E, 0x74, 0x65, 0x72, 0x66,  //  <Interf
+                    /* 0B28 */  0x61, 0x63, 0x65, 0x43, 0x6F, 0x6C, 0x6F, 0x72,  // aceColor
+                    /* 0B30 */  0x46, 0x6F, 0x72, 0x6D, 0x61, 0x74, 0x3E, 0x33,  // Format>3
+                    /* 0B38 */  0x3C, 0x2F, 0x49, 0x6E, 0x74, 0x65, 0x72, 0x66,  // </Interf
+                    /* 0B40 */  0x61, 0x63, 0x65, 0x43, 0x6F, 0x6C, 0x6F, 0x72,  // aceColor
+                    /* 0B48 */  0x46, 0x6F, 0x72, 0x6D, 0x61, 0x74, 0x3E, 0x0A,  // Format>.
+                    /* 0B50 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47, 0x72,  //     </Gr
+                    /* 0B58 */  0x6F, 0x75, 0x70, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // oup>.   
+                    /* 0B60 */  0x20, 0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x20,  //  <Group 
+                    /* 0B68 */  0x69, 0x64, 0x3D, 0x27, 0x44, 0x53, 0x49, 0x20,  // id='DSI 
+                    /* 0B70 */  0x49, 0x6E, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63,  // Interfac
+                    /* 0B78 */  0x65, 0x27, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // e'>.    
+                    /* 0B80 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
+                    /* 0B88 */  0x43, 0x68, 0x61, 0x6E, 0x6E, 0x65, 0x6C, 0x49,  // ChannelI
+                    /* 0B90 */  0x64, 0x3E, 0x31, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // d>1</DSI
+                    /* 0B98 */  0x43, 0x68, 0x61, 0x6E, 0x6E, 0x65, 0x6C, 0x49,  // ChannelI
+                    /* 0BA0 */  0x64, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // d>.     
+                    /* 0BA8 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x56,  //    <DSIV
+                    /* 0BB0 */  0x69, 0x72, 0x74, 0x75, 0x61, 0x6C, 0x49, 0x64,  // irtualId
+                    /* 0BB8 */  0x3E, 0x30, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x56,  // >0</DSIV
+                    /* 0BC0 */  0x69, 0x72, 0x74, 0x75, 0x61, 0x6C, 0x49, 0x64,  // irtualId
+                    /* 0BC8 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0BD0 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x43, 0x6F,  //   <DSICo
+                    /* 0BD8 */  0x6C, 0x6F, 0x72, 0x46, 0x6F, 0x72, 0x6D, 0x61,  // lorForma
+                    /* 0BE0 */  0x74, 0x3E, 0x33, 0x36, 0x3C, 0x2F, 0x44, 0x53,  // t>36</DS
+                    /* 0BE8 */  0x49, 0x43, 0x6F, 0x6C, 0x6F, 0x72, 0x46, 0x6F,  // IColorFo
+                    /* 0BF0 */  0x72, 0x6D, 0x61, 0x74, 0x3E, 0x0A, 0x20, 0x20,  // rmat>.  
+                    /* 0BF8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //       <D
+                    /* 0C00 */  0x53, 0x49, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69,  // SITraffi
+                    /* 0C08 */  0x63, 0x4D, 0x6F, 0x64, 0x65, 0x3E, 0x31, 0x3C,  // cMode>1<
+                    /* 0C10 */  0x2F, 0x44, 0x53, 0x49, 0x54, 0x72, 0x61, 0x66,  // /DSITraf
+                    /* 0C18 */  0x66, 0x69, 0x63, 0x4D, 0x6F, 0x64, 0x65, 0x3E,  // ficMode>
+                    /* 0C20 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0C28 */  0x20, 0x3C, 0x44, 0x53, 0x49, 0x4C, 0x61, 0x6E,  //  <DSILan
+                    /* 0C30 */  0x65, 0x73, 0x3E, 0x34, 0x3C, 0x2F, 0x44, 0x53,  // es>4</DS
+                    /* 0C38 */  0x49, 0x4C, 0x61, 0x6E, 0x65, 0x73, 0x3E, 0x0A,  // ILanes>.
+                    /* 0C40 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0C48 */  0x3C, 0x44, 0x53, 0x49, 0x4C, 0x50, 0x31, 0x31,  // <DSILP11
+                    /* 0C50 */  0x41, 0x74, 0x49, 0x6E, 0x69, 0x74, 0x3E, 0x54,  // AtInit>T
+                    /* 0C58 */  0x72, 0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // rue</DSI
+                    /* 0C60 */  0x4C, 0x50, 0x31, 0x31, 0x41, 0x74, 0x49, 0x6E,  // LP11AtIn
+                    /* 0C68 */  0x69, 0x74, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // it>.    
+                    /* 0C70 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
+                    /* 0C78 */  0x48, 0x73, 0x61, 0x48, 0x73, 0x65, 0x41, 0x66,  // HsaHseAf
+                    /* 0C80 */  0x74, 0x65, 0x72, 0x56, 0x73, 0x56, 0x65, 0x3E,  // terVsVe>
+                    /* 0C88 */  0x46, 0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F, 0x44,  // False</D
+                    /* 0C90 */  0x53, 0x49, 0x48, 0x73, 0x61, 0x48, 0x73, 0x65,  // SIHsaHse
+                    /* 0C98 */  0x41, 0x66, 0x74, 0x65, 0x72, 0x56, 0x73, 0x56,  // AfterVsV
+                    /* 0CA0 */  0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // e>.     
+                    /* 0CA8 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x4C,  //    <DSIL
+                    /* 0CB0 */  0x6F, 0x77, 0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D,  // owPowerM
+                    /* 0CB8 */  0x6F, 0x64, 0x65, 0x49, 0x6E, 0x48, 0x46, 0x50,  // odeInHFP
+                    /* 0CC0 */  0x3E, 0x46, 0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F,  // >False</
+                    /* 0CC8 */  0x44, 0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F,  // DSILowPo
+                    /* 0CD0 */  0x77, 0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49,  // werModeI
+                    /* 0CD8 */  0x6E, 0x48, 0x46, 0x50, 0x3E, 0x0A, 0x20, 0x20,  // nHFP>.  
+                    /* 0CE0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //       <D
+                    /* 0CE8 */  0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F, 0x77,  // SILowPow
+                    /* 0CF0 */  0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49, 0x6E,  // erModeIn
+                    /* 0CF8 */  0x48, 0x42, 0x50, 0x3E, 0x46, 0x61, 0x6C, 0x73,  // HBP>Fals
+                    /* 0D00 */  0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x4C, 0x6F,  // e</DSILo
+                    /* 0D08 */  0x77, 0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F,  // wPowerMo
+                    /* 0D10 */  0x64, 0x65, 0x49, 0x6E, 0x48, 0x42, 0x50, 0x3E,  // deInHBP>
+                    /* 0D18 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0D20 */  0x20, 0x3C, 0x44, 0x53, 0x49, 0x4C, 0x6F, 0x77,  //  <DSILow
+                    /* 0D28 */  0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F, 0x64,  // PowerMod
+                    /* 0D30 */  0x65, 0x49, 0x6E, 0x48, 0x53, 0x41, 0x3E, 0x46,  // eInHSA>F
+                    /* 0D38 */  0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F, 0x44, 0x53,  // alse</DS
+                    /* 0D40 */  0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F, 0x77, 0x65,  // ILowPowe
+                    /* 0D48 */  0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49, 0x6E, 0x48,  // rModeInH
+                    /* 0D50 */  0x53, 0x41, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // SA>.    
+                    /* 0D58 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
+                    /* 0D60 */  0x4C, 0x6F, 0x77, 0x50, 0x6F, 0x77, 0x65, 0x72,  // LowPower
+                    /* 0D68 */  0x4D, 0x6F, 0x64, 0x65, 0x49, 0x6E, 0x42, 0x4C,  // ModeInBL
+                    /* 0D70 */  0x4C, 0x50, 0x45, 0x4F, 0x46, 0x3E, 0x54, 0x72,  // LPEOF>Tr
+                    /* 0D78 */  0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x4C,  // ue</DSIL
+                    /* 0D80 */  0x6F, 0x77, 0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D,  // owPowerM
+                    /* 0D88 */  0x6F, 0x64, 0x65, 0x49, 0x6E, 0x42, 0x4C, 0x4C,  // odeInBLL
+                    /* 0D90 */  0x50, 0x45, 0x4F, 0x46, 0x3E, 0x0A, 0x20, 0x20,  // PEOF>.  
+                    /* 0D98 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //       <D
+                    /* 0DA0 */  0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F, 0x77,  // SILowPow
+                    /* 0DA8 */  0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49, 0x6E,  // erModeIn
+                    /* 0DB0 */  0x42, 0x4C, 0x4C, 0x50, 0x3E, 0x54, 0x72, 0x75,  // BLLP>Tru
+                    /* 0DB8 */  0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x4C, 0x6F,  // e</DSILo
+                    /* 0DC0 */  0x77, 0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F,  // wPowerMo
+                    /* 0DC8 */  0x64, 0x65, 0x49, 0x6E, 0x42, 0x4C, 0x4C, 0x50,  // deInBLLP
+                    /* 0DD0 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0DD8 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x52, 0x65,  //   <DSIRe
+                    /* 0DE0 */  0x66, 0x72, 0x65, 0x73, 0x68, 0x52, 0x61, 0x74,  // freshRat
+                    /* 0DE8 */  0x65, 0x3E, 0x30, 0x78, 0x33, 0x43, 0x30, 0x30,  // e>0x3C00
+                    /* 0DF0 */  0x30, 0x30, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x52,  // 00</DSIR
+                    /* 0DF8 */  0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x52, 0x61,  // efreshRa
+                    /* 0E00 */  0x74, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // te>.    
+                    /* 0E08 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
+                    /* 0E10 */  0x49, 0x6E, 0x69, 0x74, 0x4D, 0x61, 0x73, 0x74,  // InitMast
+                    /* 0E18 */  0x65, 0x72, 0x54, 0x69, 0x6D, 0x65, 0x3E, 0x33,  // erTime>3
+                    /* 0E20 */  0x30, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x49, 0x6E,  // 0</DSIIn
+                    /* 0E28 */  0x69, 0x74, 0x4D, 0x61, 0x73, 0x74, 0x65, 0x72,  // itMaster
+                    /* 0E30 */  0x54, 0x69, 0x6D, 0x65, 0x3E, 0x0A, 0x20, 0x20,  // Time>.  
+                    /* 0E38 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //       <D
+                    /* 0E40 */  0x53, 0x49, 0x43, 0x6F, 0x6E, 0x74, 0x72, 0x6F,  // SIContro
+                    /* 0E48 */  0x6C, 0x6C, 0x65, 0x72, 0x4D, 0x61, 0x70, 0x70,  // llerMapp
+                    /* 0E50 */  0x69, 0x6E, 0x67, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ing>.   
+                    /* 0E58 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0E60 */  0x20, 0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  00.    
+                    /* 0E68 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x2F, 0x44, 0x53,  //     </DS
+                    /* 0E70 */  0x49, 0x43, 0x6F, 0x6E, 0x74, 0x72, 0x6F, 0x6C,  // IControl
+                    /* 0E78 */  0x6C, 0x65, 0x72, 0x4D, 0x61, 0x70, 0x70, 0x69,  // lerMappi
+                    /* 0E80 */  0x6E, 0x67, 0x3E, 0x20, 0x0A, 0x20, 0x20, 0x20,  // ng> .   
+                    /* 0E88 */  0x20, 0x3C, 0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70,  //  </Group
+                    /* 0E90 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  // >.    <D
+                    /* 0E98 */  0x53, 0x49, 0x49, 0x6E, 0x69, 0x74, 0x53, 0x65,  // SIInitSe
+                    /* 0EA0 */  0x71, 0x75, 0x65, 0x6E, 0x63, 0x65, 0x3E, 0x0A,  // quence>.
+                    /* 0EA8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0EB0 */  0x32, 0x33, 0x20, 0x30, 0x41, 0x20, 0x30, 0x32,  // 23 0A 02
+                    /* 0EB8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0EC0 */  0x20, 0x32, 0x33, 0x20, 0x31, 0x30, 0x20, 0x32,  //  23 10 2
+                    /* 0EC8 */  0x36, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // 6.      
+                    /* 0ED0 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x31, 0x32, 0x20,  //   23 12 
+                    /* 0ED8 */  0x36, 0x35, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 65.     
+                    /* 0EE0 */  0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x31, 0x33,  //    23 13
+                    /* 0EE8 */  0x20, 0x36, 0x35, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  65.    
+                    /* 0EF0 */  0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x35,  //     23 5
+                    /* 0EF8 */  0x41, 0x20, 0x30, 0x35, 0x0A, 0x20, 0x20, 0x20,  // A 05.   
+                    /* 0F00 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20,  //      23 
+                    /* 0F08 */  0x35, 0x43, 0x20, 0x30, 0x31, 0x0A, 0x20, 0x20,  // 5C 01.  
+                    /* 0F10 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33,  //       23
+                    /* 0F18 */  0x20, 0x39, 0x33, 0x20, 0x32, 0x30, 0x0A, 0x20,  //  93 20. 
+                    /* 0F20 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 0F28 */  0x33, 0x20, 0x39, 0x34, 0x20, 0x38, 0x30, 0x0A,  // 3 94 80.
+                    /* 0F30 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0F38 */  0x32, 0x33, 0x20, 0x30, 0x44, 0x20, 0x30, 0x31,  // 23 0D 01
+                    /* 0F40 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0F48 */  0x20, 0x46, 0x46, 0x20, 0x30, 0x41, 0x0A, 0x20,  //  FF 0A. 
+                    /* 0F50 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 0F58 */  0x33, 0x20, 0x39, 0x35, 0x20, 0x30, 0x30, 0x0A,  // 3 95 00.
+                    /* 0F60 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0F68 */  0x32, 0x33, 0x20, 0x36, 0x34, 0x20, 0x30, 0x31,  // 23 64 01
+                    /* 0F70 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0F78 */  0x20, 0x32, 0x33, 0x20, 0x37, 0x34, 0x20, 0x30,  //  23 74 0
+                    /* 0F80 */  0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // 0.      
+                    /* 0F88 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x37, 0x35, 0x20,  //   23 75 
+                    /* 0F90 */  0x30, 0x31, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 01.     
+                    /* 0F98 */  0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x37, 0x36,  //    23 76
+                    /* 0FA0 */  0x20, 0x30, 0x41, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  0A.    
+                    /* 0FA8 */  0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x37,  //     23 7
+                    /* 0FB0 */  0x37, 0x20, 0x30, 0x31, 0x0A, 0x20, 0x20, 0x20,  // 7 01.   
+                    /* 0FB8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20,  //      23 
+                    /* 0FC0 */  0x37, 0x38, 0x20, 0x38, 0x31, 0x0A, 0x20, 0x20,  // 78 81.  
+                    /* 0FC8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x46, 0x46,  //       FF
+                    /* 0FD0 */  0x20, 0x30, 0x41, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  0A.    
+                    /* 0FD8 */  0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x39,  //     23 9
+                    /* 0FE0 */  0x36, 0x20, 0x30, 0x41, 0x0A, 0x20, 0x20, 0x20,  // 6 0A.   
+                    /* 0FE8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x46, 0x46, 0x20,  //      FF 
+                    /* 0FF0 */  0x31, 0x34, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 14.     
+                    /* 0FF8 */  0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x32, 0x30,  //    23 20
+                    /* 1000 */  0x20, 0x38, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  80.    
+                    /* 1008 */  0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x32,  //     23 2
+                    /* 1010 */  0x31, 0x20, 0x30, 0x37, 0x0A, 0x20, 0x20, 0x20,  // 1 07.   
+                    /* 1018 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20,  //      23 
+                    /* 1020 */  0x32, 0x32, 0x20, 0x30, 0x30, 0x0A, 0x20, 0x20,  // 22 00.  
+                    /* 1028 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33,  //       23
+                    /* 1030 */  0x20, 0x32, 0x33, 0x20, 0x30, 0x30, 0x0A, 0x20,  //  23 00. 
+                    /* 1038 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 1040 */  0x33, 0x20, 0x32, 0x34, 0x20, 0x30, 0x30, 0x0A,  // 3 24 00.
+                    /* 1048 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 1050 */  0x32, 0x33, 0x20, 0x32, 0x35, 0x20, 0x30, 0x35,  // 23 25 05
+                    /* 1058 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 1060 */  0x20, 0x32, 0x33, 0x20, 0x32, 0x43, 0x20, 0x32,  //  23 2C 2
+                    /* 1068 */  0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // 0.      
+                    /* 1070 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x32, 0x44, 0x20,  //   23 2D 
+                    /* 1078 */  0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 00.     
+                    /* 1080 */  0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x33, 0x30,  //    23 30
+                    /* 1088 */  0x20, 0x30, 0x41, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  0A.    
+                    /* 1090 */  0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x33,  //     23 3
+                    /* 1098 */  0x31, 0x20, 0x30, 0x30, 0x0A, 0x20, 0x20, 0x20,  // 1 00.   
+                    /* 10A0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20,  //      23 
+                    /* 10A8 */  0x33, 0x34, 0x20, 0x35, 0x30, 0x0A, 0x20, 0x20,  // 34 50.  
+                    /* 10B0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33,  //       23
+                    /* 10B8 */  0x20, 0x33, 0x36, 0x20, 0x33, 0x39, 0x0A, 0x20,  //  36 39. 
+                    /* 10C0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 10C8 */  0x33, 0x20, 0x33, 0x38, 0x20, 0x33, 0x30, 0x0A,  // 3 38 30.
+                    /* 10D0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 10D8 */  0x32, 0x33, 0x20, 0x33, 0x41, 0x20, 0x30, 0x33,  // 23 3A 03
+                    /* 10E0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 10E8 */  0x20, 0x32, 0x33, 0x20, 0x35, 0x42, 0x20, 0x30,  //  23 5B 0
+                    /* 10F0 */  0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // 0.      
+                    /* 10F8 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x33, 0x43, 0x20,  //   23 3C 
+                    /* 1100 */  0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 00.     
+                    /* 1108 */  0x20, 0x20, 0x20, 0x46, 0x46, 0x20, 0x30, 0x41,  //    FF 0A
+                    /* 1110 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 1118 */  0x20, 0x32, 0x33, 0x20, 0x35, 0x41, 0x20, 0x30,  //  23 5A 0
+                    /* 1120 */  0x44, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x2F,  // D.    </
+                    /* 1128 */  0x44, 0x53, 0x49, 0x49, 0x6E, 0x69, 0x74, 0x53,  // DSIInitS
+                    /* 1130 */  0x65, 0x71, 0x75, 0x65, 0x6E, 0x63, 0x65, 0x3E,  // equence>
+                    /* 1138 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53,  // .    <DS
+                    /* 1140 */  0x49, 0x54, 0x65, 0x72, 0x6D, 0x53, 0x65, 0x71,  // ITermSeq
+                    /* 1148 */  0x75, 0x65, 0x6E, 0x63, 0x65, 0x3E, 0x0A, 0x20,  // uence>. 
+                    /* 1150 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 1158 */  0x33, 0x20, 0x35, 0x41, 0x20, 0x30, 0x35, 0x20,  // 3 5A 05 
+                    /* 1160 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 1168 */  0x20, 0x32, 0x33, 0x20, 0x39, 0x36, 0x20, 0x30,  //  23 96 0
+                    /* 1170 */  0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // 0.      
+                    /* 1178 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x39, 0x33, 0x20,  //   23 93 
+                    /* 1180 */  0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 00.     
+                    /* 1188 */  0x20, 0x20, 0x20, 0x46, 0x46, 0x20, 0x30, 0x41,  //    FF 0A
+                    /* 1190 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 1198 */  0x20, 0x32, 0x33, 0x20, 0x30, 0x44, 0x20, 0x30,  //  23 0D 0
+                    /* 11A0 */  0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x2F,  // 0.    </
+                    /* 11A8 */  0x44, 0x53, 0x49, 0x54, 0x65, 0x72, 0x6D, 0x53,  // DSITermS
+                    /* 11B0 */  0x65, 0x71, 0x75, 0x65, 0x6E, 0x63, 0x65, 0x3E,  // equence>
+                    /* 11B8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x47, 0x72,  // .    <Gr
+                    /* 11C0 */  0x6F, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3D, 0x27,  // oup id='
+                    /* 11C8 */  0x42, 0x61, 0x63, 0x6B, 0x6C, 0x69, 0x67, 0x68,  // Backligh
+                    /* 11D0 */  0x74, 0x20, 0x43, 0x6F, 0x6E, 0x66, 0x69, 0x67,  // t Config
+                    /* 11D8 */  0x75, 0x72, 0x61, 0x74, 0x69, 0x6F, 0x6E, 0x27,  // uration'
+                    /* 11E0 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 11E8 */  0x20, 0x20, 0x3C, 0x42, 0x61, 0x63, 0x6B, 0x6C,  //   <Backl
+                    /* 11F0 */  0x69, 0x67, 0x68, 0x74, 0x54, 0x79, 0x70, 0x65,  // ightType
+                    /* 11F8 */  0x3E, 0x34, 0x3C, 0x2F, 0x42, 0x61, 0x63, 0x6B,  // >4</Back
+                    /* 1200 */  0x6C, 0x69, 0x67, 0x68, 0x74, 0x54, 0x79, 0x70,  // lightTyp
+                    /* 1208 */  0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // e>.     
+                    /* 1210 */  0x20, 0x20, 0x20, 0x3C, 0x42, 0x61, 0x63, 0x6B,  //    <Back
+                    /* 1218 */  0x6C, 0x69, 0x67, 0x68, 0x74, 0x53, 0x74, 0x65,  // lightSte
+                    /* 1220 */  0x70, 0x73, 0x3E, 0x31, 0x30, 0x30, 0x3C, 0x2F,  // ps>100</
+                    /* 1228 */  0x42, 0x61, 0x63, 0x6B, 0x6C, 0x69, 0x67, 0x68,  // Backligh
+                    /* 1230 */  0x74, 0x53, 0x74, 0x65, 0x70, 0x73, 0x3E, 0x0A,  // tSteps>.
+                    /* 1238 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 1240 */  0x3C, 0x41, 0x64, 0x61, 0x70, 0x74, 0x69, 0x76,  // <Adaptiv
+                    /* 1248 */  0x65, 0x42, 0x72, 0x69, 0x67, 0x68, 0x74, 0x6E,  // eBrightn
+                    /* 1250 */  0x65, 0x73, 0x73, 0x46, 0x65, 0x61, 0x74, 0x75,  // essFeatu
+                    /* 1258 */  0x72, 0x65, 0x3E, 0x31, 0x3C, 0x2F, 0x41, 0x64,  // re>1</Ad
+                    /* 1260 */  0x61, 0x70, 0x74, 0x69, 0x76, 0x65, 0x42, 0x72,  // aptiveBr
+                    /* 1268 */  0x69, 0x67, 0x68, 0x74, 0x6E, 0x65, 0x73, 0x73,  // ightness
+                    /* 1270 */  0x46, 0x65, 0x61, 0x74, 0x75, 0x72, 0x65, 0x3E,  // Feature>
+                    /* 1278 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 1280 */  0x20, 0x3C, 0x43, 0x41, 0x42, 0x4C, 0x45, 0x6E,  //  <CABLEn
+                    /* 1288 */  0x61, 0x62, 0x6C, 0x65, 0x3E, 0x54, 0x72, 0x75,  // able>Tru
+                    /* 1290 */  0x65, 0x3C, 0x2F, 0x43, 0x41, 0x42, 0x4C, 0x45,  // e</CABLE
+                    /* 1298 */  0x6E, 0x61, 0x62, 0x6C, 0x65, 0x3E, 0x0A, 0x20,  // nable>. 
+                    /* 12A0 */  0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47, 0x72, 0x6F,  //    </Gro
+                    /* 12A8 */  0x75, 0x70, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // up>.    
+                    /* 12B0 */  0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x20, 0x69,  // <Group i
+                    /* 12B8 */  0x64, 0x3D, 0x27, 0x43, 0x6F, 0x6E, 0x6E, 0x65,  // d='Conne
+                    /* 12C0 */  0x63, 0x74, 0x69, 0x6F, 0x6E, 0x20, 0x43, 0x6F,  // ction Co
+                    /* 12C8 */  0x6E, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74,  // nfigurat
+                    /* 12D0 */  0x69, 0x6F, 0x6E, 0x27, 0x3E, 0x0A, 0x20, 0x20,  // ion'>.  
+                    /* 12D8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //       <D
+                    /* 12E0 */  0x69, 0x73, 0x70, 0x6C, 0x61, 0x79, 0x31, 0x52,  // isplay1R
+                    /* 12E8 */  0x65, 0x73, 0x65, 0x74, 0x31, 0x49, 0x6E, 0x66,  // eset1Inf
+                    /* 12F0 */  0x6F, 0x3E, 0x44, 0x53, 0x49, 0x5F, 0x50, 0x41,  // o>DSI_PA
+                    /* 12F8 */  0x4E, 0x45, 0x4C, 0x5F, 0x45, 0x4E, 0x2C, 0x20,  // NEL_EN, 
+                    /* 1300 */  0x30, 0x2C, 0x20, 0x30, 0x2C, 0x20, 0x54, 0x52,  // 0, 0, TR
+                    /* 1308 */  0x55, 0x45, 0x3C, 0x2F, 0x44, 0x69, 0x73, 0x70,  // UE</Disp
+                    /* 1310 */  0x6C, 0x61, 0x79, 0x31, 0x52, 0x65, 0x73, 0x65,  // lay1Rese
+                    /* 1318 */  0x74, 0x31, 0x49, 0x6E, 0x66, 0x6F, 0x3E, 0x0A,  // t1Info>.
+                    /* 1320 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47, 0x72,  //     </Gr
+                    /* 1328 */  0x6F, 0x75, 0x70, 0x3E, 0x0A, 0x3C, 0x2F, 0x47,  // oup>.</G
+                    /* 1330 */  0x72, 0x6F, 0x75, 0x70, 0x3E, 0x00               // roup>.
+                })
+                Name (PCF5, Buffer (0x1324)
+                {
+                    /* 0000 */  0x3C, 0x3F, 0x78, 0x6D, 0x6C, 0x20, 0x76, 0x65,  // <?xml ve
+                    /* 0008 */  0x72, 0x73, 0x69, 0x6F, 0x6E, 0x3D, 0x27, 0x31,  // rsion='1
+                    /* 0010 */  0x2E, 0x30, 0x27, 0x20, 0x65, 0x6E, 0x63, 0x6F,  // .0' enco
+                    /* 0018 */  0x64, 0x69, 0x6E, 0x67, 0x3D, 0x27, 0x75, 0x74,  // ding='ut
+                    /* 0020 */  0x66, 0x2D, 0x38, 0x27, 0x3F, 0x3E, 0x0A, 0x3C,  // f-8'?>.<
+                    /* 0028 */  0x47, 0x72, 0x6F, 0x75, 0x70, 0x20, 0x69, 0x64,  // Group id
+                    /* 0030 */  0x3D, 0x27, 0x4D, 0x61, 0x69, 0x6E, 0x20, 0x50,  // ='Main P
+                    /* 0038 */  0x61, 0x6E, 0x65, 0x6C, 0x27, 0x3E, 0x0A, 0x20,  // anel'>. 
+                    /* 0040 */  0x20, 0x20, 0x20, 0x3C, 0x50, 0x61, 0x6E, 0x65,  //    <Pane
+                    /* 0048 */  0x6C, 0x4E, 0x61, 0x6D, 0x65, 0x3E, 0x53, 0x4E,  // lName>SN
+                    /* 0050 */  0x36, 0x35, 0x44, 0x53, 0x49, 0x58, 0x36, 0x3C,  // 65DSIX6<
+                    /* 0058 */  0x2F, 0x50, 0x61, 0x6E, 0x65, 0x6C, 0x4E, 0x61,  // /PanelNa
+                    /* 0060 */  0x6D, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // me>.    
+                    /* 0068 */  0x3C, 0x50, 0x61, 0x6E, 0x65, 0x6C, 0x44, 0x65,  // <PanelDe
+                    /* 0070 */  0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6F,  // scriptio
+                    /* 0078 */  0x6E, 0x3E, 0x53, 0x4E, 0x36, 0x35, 0x44, 0x53,  // n>SN65DS
+                    /* 0080 */  0x49, 0x78, 0x36, 0x20, 0x44, 0x75, 0x61, 0x6C,  // Ix6 Dual
+                    /* 0088 */  0x20, 0x44, 0x53, 0x49, 0x20, 0x74, 0x6F, 0x20,  //  DSI to 
+                    /* 0090 */  0x65, 0x44, 0x50, 0x20, 0x28, 0x31, 0x30, 0x38,  // eDP (108
+                    /* 0098 */  0x30, 0x70, 0x20, 0x42, 0x4F, 0x45, 0x29, 0x3C,  // 0p BOE)<
+                    /* 00A0 */  0x2F, 0x50, 0x61, 0x6E, 0x65, 0x6C, 0x44, 0x65,  // /PanelDe
+                    /* 00A8 */  0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6F,  // scriptio
+                    /* 00B0 */  0x6E, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // n>.    <
+                    /* 00B8 */  0x47, 0x72, 0x6F, 0x75, 0x70, 0x20, 0x69, 0x64,  // Group id
+                    /* 00C0 */  0x3D, 0x27, 0x45, 0x44, 0x49, 0x44, 0x20, 0x43,  // ='EDID C
+                    /* 00C8 */  0x6F, 0x6E, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61,  // onfigura
+                    /* 00D0 */  0x74, 0x69, 0x6F, 0x6E, 0x27, 0x3E, 0x0A, 0x20,  // tion'>. 
+                    /* 00D8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 00E0 */  0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61, 0x63, 0x74,  // Manufact
+                    /* 00E8 */  0x75, 0x72, 0x65, 0x49, 0x44, 0x3E, 0x30, 0x78,  // ureID>0x
+                    /* 00F0 */  0x45, 0x34, 0x33, 0x30, 0x3C, 0x2F, 0x4D, 0x61,  // E430</Ma
+                    /* 00F8 */  0x6E, 0x75, 0x66, 0x61, 0x63, 0x74, 0x75, 0x72,  // nufactur
+                    /* 0100 */  0x65, 0x49, 0x44, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // eID>.   
+                    /* 0108 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x50, 0x72,  //      <Pr
+                    /* 0110 */  0x6F, 0x64, 0x75, 0x63, 0x74, 0x43, 0x6F, 0x64,  // oductCod
+                    /* 0118 */  0x65, 0x3E, 0x30, 0x78, 0x30, 0x35, 0x35, 0x44,  // e>0x055D
+                    /* 0120 */  0x3C, 0x2F, 0x50, 0x72, 0x6F, 0x64, 0x75, 0x63,  // </Produc
+                    /* 0128 */  0x74, 0x43, 0x6F, 0x64, 0x65, 0x3E, 0x0A, 0x20,  // tCode>. 
+                    /* 0130 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0138 */  0x53, 0x65, 0x72, 0x69, 0x61, 0x6C, 0x4E, 0x75,  // SerialNu
+                    /* 0140 */  0x6D, 0x62, 0x65, 0x72, 0x3E, 0x30, 0x78, 0x30,  // mber>0x0
+                    /* 0148 */  0x30, 0x30, 0x30, 0x30, 0x30, 0x3C, 0x2F, 0x53,  // 00000</S
+                    /* 0150 */  0x65, 0x72, 0x69, 0x61, 0x6C, 0x4E, 0x75, 0x6D,  // erialNum
+                    /* 0158 */  0x62, 0x65, 0x72, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ber>.   
+                    /* 0160 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x57, 0x65,  //      <We
+                    /* 0168 */  0x65, 0x6B, 0x6F, 0x66, 0x4D, 0x61, 0x6E, 0x75,  // ekofManu
+                    /* 0170 */  0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x3E,  // facture>
+                    /* 0178 */  0x30, 0x78, 0x30, 0x30, 0x3C, 0x2F, 0x57, 0x65,  // 0x00</We
+                    /* 0180 */  0x65, 0x6B, 0x6F, 0x66, 0x4D, 0x61, 0x6E, 0x75,  // ekofManu
+                    /* 0188 */  0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x3E,  // facture>
+                    /* 0190 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0198 */  0x20, 0x3C, 0x59, 0x65, 0x61, 0x72, 0x6F, 0x66,  //  <Yearof
+                    /* 01A0 */  0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61, 0x63, 0x74,  // Manufact
+                    /* 01A8 */  0x75, 0x72, 0x65, 0x3E, 0x30, 0x78, 0x31, 0x41,  // ure>0x1A
+                    /* 01B0 */  0x3C, 0x2F, 0x59, 0x65, 0x61, 0x72, 0x6F, 0x66,  // </Yearof
+                    /* 01B8 */  0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61, 0x63, 0x74,  // Manufact
+                    /* 01C0 */  0x75, 0x72, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ure>.   
+                    /* 01C8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x45, 0x44,  //      <ED
+                    /* 01D0 */  0x49, 0x44, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6F,  // IDVersio
+                    /* 01D8 */  0x6E, 0x3E, 0x31, 0x3C, 0x2F, 0x45, 0x44, 0x49,  // n>1</EDI
+                    /* 01E0 */  0x44, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6F, 0x6E,  // DVersion
+                    /* 01E8 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 01F0 */  0x20, 0x20, 0x3C, 0x45, 0x44, 0x49, 0x44, 0x52,  //   <EDIDR
+                    /* 01F8 */  0x65, 0x76, 0x69, 0x73, 0x69, 0x6F, 0x6E, 0x3E,  // evision>
+                    /* 0200 */  0x34, 0x3C, 0x2F, 0x45, 0x44, 0x49, 0x44, 0x52,  // 4</EDIDR
+                    /* 0208 */  0x65, 0x76, 0x69, 0x73, 0x69, 0x6F, 0x6E, 0x3E,  // evision>
+                    /* 0210 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0218 */  0x20, 0x3C, 0x56, 0x69, 0x64, 0x65, 0x6F, 0x49,  //  <VideoI
+                    /* 0220 */  0x6E, 0x70, 0x75, 0x74, 0x44, 0x65, 0x66, 0x69,  // nputDefi
+                    /* 0228 */  0x6E, 0x69, 0x74, 0x69, 0x6F, 0x6E, 0x3E, 0x30,  // nition>0
+                    /* 0230 */  0x78, 0x41, 0x35, 0x3C, 0x2F, 0x56, 0x69, 0x64,  // xA5</Vid
+                    /* 0238 */  0x65, 0x6F, 0x49, 0x6E, 0x70, 0x75, 0x74, 0x44,  // eoInputD
+                    /* 0240 */  0x65, 0x66, 0x69, 0x6E, 0x69, 0x74, 0x69, 0x6F,  // efinitio
+                    /* 0248 */  0x6E, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // n>.     
+                    /* 0250 */  0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69,  //    <Hori
+                    /* 0258 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x53, 0x63,  // zontalSc
+                    /* 0260 */  0x72, 0x65, 0x65, 0x6E, 0x53, 0x69, 0x7A, 0x65,  // reenSize
+                    /* 0268 */  0x3E, 0x30, 0x78, 0x31, 0x41, 0x3C, 0x2F, 0x48,  // >0x1A</H
+                    /* 0270 */  0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61,  // orizonta
+                    /* 0278 */  0x6C, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6E, 0x53,  // lScreenS
+                    /* 0280 */  0x69, 0x7A, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ize>.   
+                    /* 0288 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65,  //      <Ve
+                    /* 0290 */  0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x53, 0x63,  // rticalSc
+                    /* 0298 */  0x72, 0x65, 0x65, 0x6E, 0x53, 0x69, 0x7A, 0x65,  // reenSize
+                    /* 02A0 */  0x3E, 0x30, 0x78, 0x31, 0x31, 0x3C, 0x2F, 0x56,  // >0x11</V
+                    /* 02A8 */  0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x53,  // erticalS
+                    /* 02B0 */  0x63, 0x72, 0x65, 0x65, 0x6E, 0x53, 0x69, 0x7A,  // creenSiz
+                    /* 02B8 */  0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // e>.     
+                    /* 02C0 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x69, 0x73, 0x70,  //    <Disp
+                    /* 02C8 */  0x6C, 0x61, 0x79, 0x54, 0x72, 0x61, 0x6E, 0x73,  // layTrans
+                    /* 02D0 */  0x66, 0x65, 0x72, 0x43, 0x68, 0x61, 0x72, 0x61,  // ferChara
+                    /* 02D8 */  0x63, 0x74, 0x65, 0x72, 0x69, 0x73, 0x74, 0x69,  // cteristi
+                    /* 02E0 */  0x63, 0x73, 0x3E, 0x30, 0x78, 0x37, 0x38, 0x3C,  // cs>0x78<
+                    /* 02E8 */  0x2F, 0x44, 0x69, 0x73, 0x70, 0x6C, 0x61, 0x79,  // /Display
+                    /* 02F0 */  0x54, 0x72, 0x61, 0x6E, 0x73, 0x66, 0x65, 0x72,  // Transfer
+                    /* 02F8 */  0x43, 0x68, 0x61, 0x72, 0x61, 0x63, 0x74, 0x65,  // Characte
+                    /* 0300 */  0x72, 0x69, 0x73, 0x74, 0x69, 0x63, 0x73, 0x3E,  // ristics>
+                    /* 0308 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0310 */  0x20, 0x3C, 0x46, 0x65, 0x61, 0x74, 0x75, 0x72,  //  <Featur
+                    /* 0318 */  0x65, 0x53, 0x75, 0x70, 0x70, 0x6F, 0x72, 0x74,  // eSupport
+                    /* 0320 */  0x3E, 0x30, 0x78, 0x30, 0x32, 0x3C, 0x2F, 0x46,  // >0x02</F
+                    /* 0328 */  0x65, 0x61, 0x74, 0x75, 0x72, 0x65, 0x53, 0x75,  // eatureSu
+                    /* 0330 */  0x70, 0x70, 0x6F, 0x72, 0x74, 0x3E, 0x0A, 0x20,  // pport>. 
+                    /* 0338 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0340 */  0x52, 0x65, 0x64, 0x2E, 0x47, 0x72, 0x65, 0x65,  // Red.Gree
+                    /* 0348 */  0x6E, 0x42, 0x69, 0x74, 0x73, 0x3E, 0x30, 0x78,  // nBits>0x
+                    /* 0350 */  0x35, 0x35, 0x3C, 0x2F, 0x52, 0x65, 0x64, 0x2E,  // 55</Red.
+                    /* 0358 */  0x47, 0x72, 0x65, 0x65, 0x6E, 0x42, 0x69, 0x74,  // GreenBit
+                    /* 0360 */  0x73, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // s>.     
+                    /* 0368 */  0x20, 0x20, 0x20, 0x3C, 0x42, 0x6C, 0x75, 0x65,  //    <Blue
+                    /* 0370 */  0x2E, 0x57, 0x68, 0x69, 0x74, 0x65, 0x42, 0x69,  // .WhiteBi
+                    /* 0378 */  0x74, 0x73, 0x3E, 0x30, 0x78, 0x35, 0x35, 0x3C,  // ts>0x55<
+                    /* 0380 */  0x2F, 0x42, 0x6C, 0x75, 0x65, 0x2E, 0x57, 0x68,  // /Blue.Wh
+                    /* 0388 */  0x69, 0x74, 0x65, 0x42, 0x69, 0x74, 0x73, 0x3E,  // iteBits>
+                    /* 0390 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0398 */  0x20, 0x3C, 0x52, 0x65, 0x64, 0x58, 0x3E, 0x30,  //  <RedX>0
+                    /* 03A0 */  0x78, 0x30, 0x3C, 0x2F, 0x52, 0x65, 0x64, 0x58,  // x0</RedX
+                    /* 03A8 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 03B0 */  0x20, 0x20, 0x3C, 0x52, 0x65, 0x64, 0x59, 0x3E,  //   <RedY>
+                    /* 03B8 */  0x30, 0x78, 0x30, 0x3C, 0x2F, 0x52, 0x65, 0x64,  // 0x0</Red
+                    /* 03C0 */  0x59, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // Y>.     
+                    /* 03C8 */  0x20, 0x20, 0x20, 0x3C, 0x47, 0x72, 0x65, 0x65,  //    <Gree
+                    /* 03D0 */  0x6E, 0x58, 0x3E, 0x30, 0x78, 0x30, 0x3C, 0x2F,  // nX>0x0</
+                    /* 03D8 */  0x47, 0x72, 0x65, 0x65, 0x6E, 0x58, 0x3E, 0x0A,  // GreenX>.
+                    /* 03E0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 03E8 */  0x3C, 0x47, 0x72, 0x65, 0x65, 0x6E, 0x59, 0x3E,  // <GreenY>
+                    /* 03F0 */  0x30, 0x78, 0x30, 0x3C, 0x2F, 0x47, 0x72, 0x65,  // 0x0</Gre
+                    /* 03F8 */  0x65, 0x6E, 0x59, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // enY>.   
+                    /* 0400 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x42, 0x6C,  //      <Bl
+                    /* 0408 */  0x75, 0x65, 0x58, 0x3E, 0x30, 0x78, 0x30, 0x3C,  // ueX>0x0<
+                    /* 0410 */  0x2F, 0x42, 0x6C, 0x75, 0x65, 0x58, 0x3E, 0x0A,  // /BlueX>.
+                    /* 0418 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0420 */  0x3C, 0x42, 0x6C, 0x75, 0x65, 0x59, 0x3E, 0x30,  // <BlueY>0
+                    /* 0428 */  0x78, 0x30, 0x3C, 0x2F, 0x42, 0x6C, 0x75, 0x65,  // x0</Blue
+                    /* 0430 */  0x59, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // Y>.     
+                    /* 0438 */  0x20, 0x20, 0x20, 0x3C, 0x57, 0x68, 0x69, 0x74,  //    <Whit
+                    /* 0440 */  0x65, 0x58, 0x3E, 0x30, 0x78, 0x35, 0x30, 0x3C,  // eX>0x50<
+                    /* 0448 */  0x2F, 0x57, 0x68, 0x69, 0x74, 0x65, 0x58, 0x3E,  // /WhiteX>
+                    /* 0450 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0458 */  0x20, 0x3C, 0x57, 0x68, 0x69, 0x74, 0x65, 0x59,  //  <WhiteY
+                    /* 0460 */  0x3E, 0x30, 0x78, 0x35, 0x34, 0x3C, 0x2F, 0x57,  // >0x54</W
+                    /* 0468 */  0x68, 0x69, 0x74, 0x65, 0x59, 0x3E, 0x0A, 0x20,  // hiteY>. 
+                    /* 0470 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0478 */  0x45, 0x73, 0x74, 0x61, 0x62, 0x6C, 0x69, 0x73,  // Establis
+                    /* 0480 */  0x68, 0x65, 0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // hedTimin
+                    /* 0488 */  0x67, 0x73, 0x49, 0x3E, 0x30, 0x78, 0x30, 0x3C,  // gsI>0x0<
+                    /* 0490 */  0x2F, 0x45, 0x73, 0x74, 0x61, 0x62, 0x6C, 0x69,  // /Establi
+                    /* 0498 */  0x73, 0x68, 0x65, 0x64, 0x54, 0x69, 0x6D, 0x69,  // shedTimi
+                    /* 04A0 */  0x6E, 0x67, 0x73, 0x49, 0x3E, 0x0A, 0x20, 0x20,  // ngsI>.  
+                    /* 04A8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x45,  //       <E
+                    /* 04B0 */  0x73, 0x74, 0x61, 0x62, 0x6C, 0x69, 0x73, 0x68,  // stablish
+                    /* 04B8 */  0x65, 0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67,  // edTiming
+                    /* 04C0 */  0x73, 0x49, 0x49, 0x3E, 0x30, 0x78, 0x30, 0x3C,  // sII>0x0<
+                    /* 04C8 */  0x2F, 0x45, 0x73, 0x74, 0x61, 0x62, 0x6C, 0x69,  // /Establi
+                    /* 04D0 */  0x73, 0x68, 0x65, 0x64, 0x54, 0x69, 0x6D, 0x69,  // shedTimi
+                    /* 04D8 */  0x6E, 0x67, 0x73, 0x49, 0x49, 0x3E, 0x0A, 0x20,  // ngsII>. 
+                    /* 04E0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 04E8 */  0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61, 0x63, 0x74,  // Manufact
+                    /* 04F0 */  0x75, 0x72, 0x65, 0x73, 0x54, 0x69, 0x6D, 0x69,  // uresTimi
+                    /* 04F8 */  0x6E, 0x67, 0x3E, 0x30, 0x78, 0x30, 0x3C, 0x2F,  // ng>0x0</
+                    /* 0500 */  0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61, 0x63, 0x74,  // Manufact
+                    /* 0508 */  0x75, 0x72, 0x65, 0x73, 0x54, 0x69, 0x6D, 0x69,  // uresTimi
+                    /* 0510 */  0x6E, 0x67, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // ng>.    
+                    /* 0518 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x53, 0x74, 0x61,  //     <Sta
+                    /* 0520 */  0x6E, 0x64, 0x61, 0x72, 0x64, 0x54, 0x69, 0x6D,  // ndardTim
+                    /* 0528 */  0x69, 0x6E, 0x67, 0x73, 0x31, 0x2F, 0x3E, 0x0A,  // ings1/>.
+                    /* 0530 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0538 */  0x3C, 0x53, 0x74, 0x61, 0x6E, 0x64, 0x61, 0x72,  // <Standar
+                    /* 0540 */  0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73,  // dTimings
+                    /* 0548 */  0x32, 0x2F, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // 2/>.    
+                    /* 0550 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x53, 0x74, 0x61,  //     <Sta
+                    /* 0558 */  0x6E, 0x64, 0x61, 0x72, 0x64, 0x54, 0x69, 0x6D,  // ndardTim
+                    /* 0560 */  0x69, 0x6E, 0x67, 0x73, 0x33, 0x2F, 0x3E, 0x0A,  // ings3/>.
+                    /* 0568 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0570 */  0x3C, 0x53, 0x74, 0x61, 0x6E, 0x64, 0x61, 0x72,  // <Standar
+                    /* 0578 */  0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73,  // dTimings
+                    /* 0580 */  0x34, 0x2F, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // 4/>.    
+                    /* 0588 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x53, 0x74, 0x61,  //     <Sta
+                    /* 0590 */  0x6E, 0x64, 0x61, 0x72, 0x64, 0x54, 0x69, 0x6D,  // ndardTim
+                    /* 0598 */  0x69, 0x6E, 0x67, 0x73, 0x35, 0x2F, 0x3E, 0x0A,  // ings5/>.
+                    /* 05A0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 05A8 */  0x3C, 0x53, 0x74, 0x61, 0x6E, 0x64, 0x61, 0x72,  // <Standar
+                    /* 05B0 */  0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73,  // dTimings
+                    /* 05B8 */  0x36, 0x2F, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // 6/>.    
+                    /* 05C0 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x53, 0x74, 0x61,  //     <Sta
+                    /* 05C8 */  0x6E, 0x64, 0x61, 0x72, 0x64, 0x54, 0x69, 0x6D,  // ndardTim
+                    /* 05D0 */  0x69, 0x6E, 0x67, 0x73, 0x37, 0x2F, 0x3E, 0x0A,  // ings7/>.
+                    /* 05D8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 05E0 */  0x3C, 0x53, 0x69, 0x67, 0x6E, 0x61, 0x6C, 0x54,  // <SignalT
+                    /* 05E8 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x49, 0x6E, 0x74,  // imingInt
+                    /* 05F0 */  0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x2F, 0x3E,  // erface/>
+                    /* 05F8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47,  // .    </G
+                    /* 0600 */  0x72, 0x6F, 0x75, 0x70, 0x3E, 0x0A, 0x20, 0x20,  // roup>.  
+                    /* 0608 */  0x20, 0x20, 0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70,  //   <Group
+                    /* 0610 */  0x20, 0x69, 0x64, 0x3D, 0x27, 0x44, 0x65, 0x74,  //  id='Det
+                    /* 0618 */  0x61, 0x69, 0x6C, 0x65, 0x64, 0x20, 0x54, 0x69,  // ailed Ti
+                    /* 0620 */  0x6D, 0x69, 0x6E, 0x67, 0x27, 0x3E, 0x0A, 0x20,  // ming'>. 
+                    /* 0628 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0630 */  0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74,  // Horizont
+                    /* 0638 */  0x61, 0x6C, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6E,  // alScreen
+                    /* 0640 */  0x53, 0x69, 0x7A, 0x65, 0x4D, 0x4D, 0x3E, 0x30,  // SizeMM>0
+                    /* 0648 */  0x78, 0x30, 0x33, 0x3C, 0x2F, 0x48, 0x6F, 0x72,  // x03</Hor
+                    /* 0650 */  0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x53,  // izontalS
+                    /* 0658 */  0x63, 0x72, 0x65, 0x65, 0x6E, 0x53, 0x69, 0x7A,  // creenSiz
+                    /* 0660 */  0x65, 0x4D, 0x4D, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // eMM>.   
+                    /* 0668 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65,  //      <Ve
+                    /* 0670 */  0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x53, 0x63,  // rticalSc
+                    /* 0678 */  0x72, 0x65, 0x65, 0x6E, 0x53, 0x69, 0x7A, 0x65,  // reenSize
+                    /* 0680 */  0x4D, 0x4D, 0x3E, 0x30, 0x78, 0x41, 0x44, 0x3C,  // MM>0xAD<
+                    /* 0688 */  0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,  // /Vertica
+                    /* 0690 */  0x6C, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6E, 0x53,  // lScreenS
+                    /* 0698 */  0x69, 0x7A, 0x65, 0x4D, 0x4D, 0x3E, 0x0A, 0x20,  // izeMM>. 
+                    /* 06A0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 06A8 */  0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74,  // Horizont
+                    /* 06B0 */  0x61, 0x6C, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  // alVertic
+                    /* 06B8 */  0x61, 0x6C, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6E,  // alScreen
+                    /* 06C0 */  0x53, 0x69, 0x7A, 0x65, 0x4D, 0x4D, 0x3E, 0x30,  // SizeMM>0
+                    /* 06C8 */  0x78, 0x31, 0x30, 0x3C, 0x2F, 0x48, 0x6F, 0x72,  // x10</Hor
+                    /* 06D0 */  0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x56,  // izontalV
+                    /* 06D8 */  0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x53,  // erticalS
+                    /* 06E0 */  0x63, 0x72, 0x65, 0x65, 0x6E, 0x53, 0x69, 0x7A,  // creenSiz
+                    /* 06E8 */  0x65, 0x4D, 0x4D, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // eMM>.   
+                    /* 06F0 */  0x20, 0x3C, 0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70,  //  </Group
+                    /* 06F8 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x47,  // >.    <G
+                    /* 0700 */  0x72, 0x6F, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3D,  // roup id=
+                    /* 0708 */  0x27, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x20,  // 'Active 
+                    /* 0710 */  0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x27, 0x3E,  // Timing'>
+                    /* 0718 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0720 */  0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  //  <Horizo
+                    /* 0728 */  0x6E, 0x74, 0x61, 0x6C, 0x41, 0x63, 0x74, 0x69,  // ntalActi
+                    /* 0730 */  0x76, 0x65, 0x3E, 0x31, 0x39, 0x32, 0x30, 0x3C,  // ve>1920<
+                    /* 0738 */  0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E,  // /Horizon
+                    /* 0740 */  0x74, 0x61, 0x6C, 0x41, 0x63, 0x74, 0x69, 0x76,  // talActiv
+                    /* 0748 */  0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // e>.     
+                    /* 0750 */  0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69,  //    <Hori
+                    /* 0758 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x46, 0x72,  // zontalFr
+                    /* 0760 */  0x6F, 0x6E, 0x74, 0x50, 0x6F, 0x72, 0x63, 0x68,  // ontPorch
+                    /* 0768 */  0x3E, 0x34, 0x38, 0x3C, 0x2F, 0x48, 0x6F, 0x72,  // >48</Hor
+                    /* 0770 */  0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x46,  // izontalF
+                    /* 0778 */  0x72, 0x6F, 0x6E, 0x74, 0x50, 0x6F, 0x72, 0x63,  // rontPorc
+                    /* 0780 */  0x68, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // h>.     
+                    /* 0788 */  0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69,  //    <Hori
+                    /* 0790 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x42, 0x61,  // zontalBa
+                    /* 0798 */  0x63, 0x6B, 0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E,  // ckPorch>
+                    /* 07A0 */  0x38, 0x30, 0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69,  // 80</Hori
+                    /* 07A8 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x42, 0x61,  // zontalBa
+                    /* 07B0 */  0x63, 0x6B, 0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E,  // ckPorch>
+                    /* 07B8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 07C0 */  0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  //  <Horizo
+                    /* 07C8 */  0x6E, 0x74, 0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63,  // ntalSync
+                    /* 07D0 */  0x50, 0x75, 0x6C, 0x73, 0x65, 0x3E, 0x33, 0x32,  // Pulse>32
+                    /* 07D8 */  0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  // </Horizo
+                    /* 07E0 */  0x6E, 0x74, 0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63,  // ntalSync
+                    /* 07E8 */  0x50, 0x75, 0x6C, 0x73, 0x65, 0x3E, 0x0A, 0x20,  // Pulse>. 
+                    /* 07F0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 07F8 */  0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74,  // Horizont
+                    /* 0800 */  0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63, 0x53, 0x6B,  // alSyncSk
+                    /* 0808 */  0x65, 0x77, 0x3E, 0x30, 0x3C, 0x2F, 0x48, 0x6F,  // ew>0</Ho
+                    /* 0810 */  0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C,  // rizontal
+                    /* 0818 */  0x53, 0x79, 0x6E, 0x63, 0x53, 0x6B, 0x65, 0x77,  // SyncSkew
+                    /* 0820 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0828 */  0x20, 0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A,  //   <Horiz
+                    /* 0830 */  0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x4C, 0x65, 0x66,  // ontalLef
+                    /* 0838 */  0x74, 0x42, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E,  // tBorder>
+                    /* 0840 */  0x30, 0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A,  // 0</Horiz
+                    /* 0848 */  0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x4C, 0x65, 0x66,  // ontalLef
+                    /* 0850 */  0x74, 0x42, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E,  // tBorder>
+                    /* 0858 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0860 */  0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  //  <Horizo
+                    /* 0868 */  0x6E, 0x74, 0x61, 0x6C, 0x52, 0x69, 0x67, 0x68,  // ntalRigh
+                    /* 0870 */  0x74, 0x42, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E,  // tBorder>
+                    /* 0878 */  0x30, 0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A,  // 0</Horiz
+                    /* 0880 */  0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x52, 0x69, 0x67,  // ontalRig
+                    /* 0888 */  0x68, 0x74, 0x42, 0x6F, 0x72, 0x64, 0x65, 0x72,  // htBorder
+                    /* 0890 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0898 */  0x20, 0x20, 0x3C, 0x56, 0x65, 0x72, 0x74, 0x69,  //   <Verti
+                    /* 08A0 */  0x63, 0x61, 0x6C, 0x41, 0x63, 0x74, 0x69, 0x76,  // calActiv
+                    /* 08A8 */  0x65, 0x3E, 0x31, 0x32, 0x38, 0x30, 0x3C, 0x2F,  // e>1280</
+                    /* 08B0 */  0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C,  // Vertical
+                    /* 08B8 */  0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x3E, 0x0A,  // Active>.
+                    /* 08C0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 08C8 */  0x3C, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,  // <Vertica
+                    /* 08D0 */  0x6C, 0x46, 0x72, 0x6F, 0x6E, 0x74, 0x50, 0x6F,  // lFrontPo
+                    /* 08D8 */  0x72, 0x63, 0x68, 0x3E, 0x38, 0x3C, 0x2F, 0x56,  // rch>8</V
+                    /* 08E0 */  0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x46,  // erticalF
+                    /* 08E8 */  0x72, 0x6F, 0x6E, 0x74, 0x50, 0x6F, 0x72, 0x63,  // rontPorc
+                    /* 08F0 */  0x68, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // h>.     
+                    /* 08F8 */  0x20, 0x20, 0x20, 0x3C, 0x56, 0x65, 0x72, 0x74,  //    <Vert
+                    /* 0900 */  0x69, 0x63, 0x61, 0x6C, 0x42, 0x61, 0x63, 0x6B,  // icalBack
+                    /* 0908 */  0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E, 0x38, 0x3C,  // Porch>8<
+                    /* 0910 */  0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,  // /Vertica
+                    /* 0918 */  0x6C, 0x42, 0x61, 0x63, 0x6B, 0x50, 0x6F, 0x72,  // lBackPor
+                    /* 0920 */  0x63, 0x68, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // ch>.    
+                    /* 0928 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65, 0x72,  //     <Ver
+                    /* 0930 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x53, 0x79, 0x6E,  // ticalSyn
+                    /* 0938 */  0x63, 0x50, 0x75, 0x6C, 0x73, 0x65, 0x3E, 0x34,  // cPulse>4
+                    /* 0940 */  0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  // </Vertic
+                    /* 0948 */  0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63, 0x50, 0x75,  // alSyncPu
+                    /* 0950 */  0x6C, 0x73, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // lse>.   
+                    /* 0958 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65,  //      <Ve
+                    /* 0960 */  0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x53, 0x79,  // rticalSy
+                    /* 0968 */  0x6E, 0x63, 0x53, 0x6B, 0x65, 0x77, 0x3E, 0x30,  // ncSkew>0
+                    /* 0970 */  0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  // </Vertic
+                    /* 0978 */  0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63, 0x53, 0x6B,  // alSyncSk
+                    /* 0980 */  0x65, 0x77, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // ew>.    
+                    /* 0988 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65, 0x72,  //     <Ver
+                    /* 0990 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x54, 0x6F, 0x70,  // ticalTop
+                    /* 0998 */  0x42, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E, 0x30,  // Border>0
+                    /* 09A0 */  0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  // </Vertic
+                    /* 09A8 */  0x61, 0x6C, 0x54, 0x6F, 0x70, 0x42, 0x6F, 0x72,  // alTopBor
+                    /* 09B0 */  0x64, 0x65, 0x72, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // der>.   
+                    /* 09B8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65,  //      <Ve
+                    /* 09C0 */  0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x42, 0x6F,  // rticalBo
+                    /* 09C8 */  0x74, 0x74, 0x6F, 0x6D, 0x42, 0x6F, 0x72, 0x64,  // ttomBord
+                    /* 09D0 */  0x65, 0x72, 0x3E, 0x30, 0x3C, 0x2F, 0x56, 0x65,  // er>0</Ve
+                    /* 09D8 */  0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x42, 0x6F,  // rticalBo
+                    /* 09E0 */  0x74, 0x74, 0x6F, 0x6D, 0x42, 0x6F, 0x72, 0x64,  // ttomBord
+                    /* 09E8 */  0x65, 0x72, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // er>.    
+                    /* 09F0 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x49, 0x6E, 0x76,  //     <Inv
+                    /* 09F8 */  0x65, 0x72, 0x74, 0x44, 0x61, 0x74, 0x61, 0x50,  // ertDataP
+                    /* 0A00 */  0x6F, 0x6C, 0x61, 0x72, 0x69, 0x74, 0x79, 0x3E,  // olarity>
+                    /* 0A08 */  0x46, 0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F, 0x49,  // False</I
+                    /* 0A10 */  0x6E, 0x76, 0x65, 0x72, 0x74, 0x44, 0x61, 0x74,  // nvertDat
+                    /* 0A18 */  0x61, 0x50, 0x6F, 0x6C, 0x61, 0x72, 0x69, 0x74,  // aPolarit
+                    /* 0A20 */  0x79, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // y>.     
+                    /* 0A28 */  0x20, 0x20, 0x20, 0x3C, 0x49, 0x6E, 0x76, 0x65,  //    <Inve
+                    /* 0A30 */  0x72, 0x74, 0x56, 0x73, 0x79, 0x6E, 0x63, 0x50,  // rtVsyncP
+                    /* 0A38 */  0x6F, 0x6C, 0x61, 0x69, 0x72, 0x74, 0x79, 0x3E,  // olairty>
+                    /* 0A40 */  0x46, 0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F, 0x49,  // False</I
+                    /* 0A48 */  0x6E, 0x76, 0x65, 0x72, 0x74, 0x56, 0x73, 0x79,  // nvertVsy
+                    /* 0A50 */  0x6E, 0x63, 0x50, 0x6F, 0x6C, 0x61, 0x69, 0x72,  // ncPolair
+                    /* 0A58 */  0x74, 0x79, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // ty>.    
+                    /* 0A60 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x49, 0x6E, 0x76,  //     <Inv
+                    /* 0A68 */  0x65, 0x72, 0x74, 0x48, 0x73, 0x79, 0x6E, 0x63,  // ertHsync
+                    /* 0A70 */  0x50, 0x6F, 0x6C, 0x61, 0x72, 0x69, 0x74, 0x79,  // Polarity
+                    /* 0A78 */  0x3E, 0x46, 0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F,  // >False</
+                    /* 0A80 */  0x49, 0x6E, 0x76, 0x65, 0x72, 0x74, 0x48, 0x73,  // InvertHs
+                    /* 0A88 */  0x79, 0x6E, 0x63, 0x50, 0x6F, 0x6C, 0x61, 0x72,  // yncPolar
+                    /* 0A90 */  0x69, 0x74, 0x79, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ity>.   
+                    /* 0A98 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x42, 0x6F,  //      <Bo
+                    /* 0AA0 */  0x72, 0x64, 0x65, 0x72, 0x43, 0x6F, 0x6C, 0x6F,  // rderColo
+                    /* 0AA8 */  0x72, 0x3E, 0x30, 0x78, 0x30, 0x3C, 0x2F, 0x42,  // r>0x0</B
+                    /* 0AB0 */  0x6F, 0x72, 0x64, 0x65, 0x72, 0x43, 0x6F, 0x6C,  // orderCol
+                    /* 0AB8 */  0x6F, 0x72, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // or>.    
+                    /* 0AC0 */  0x3C, 0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x3E,  // </Group>
+                    /* 0AC8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x47, 0x72,  // .    <Gr
+                    /* 0AD0 */  0x6F, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3D, 0x27,  // oup id='
+                    /* 0AD8 */  0x44, 0x69, 0x73, 0x70, 0x6C, 0x61, 0x79, 0x20,  // Display 
+                    /* 0AE0 */  0x49, 0x6E, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63,  // Interfac
+                    /* 0AE8 */  0x65, 0x27, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // e'>.    
+                    /* 0AF0 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x49, 0x6E, 0x74,  //     <Int
+                    /* 0AF8 */  0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x54, 0x79,  // erfaceTy
+                    /* 0B00 */  0x70, 0x65, 0x3E, 0x38, 0x3C, 0x2F, 0x49, 0x6E,  // pe>8</In
+                    /* 0B08 */  0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x54,  // terfaceT
+                    /* 0B10 */  0x79, 0x70, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ype>.   
+                    /* 0B18 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x49, 0x6E,  //      <In
+                    /* 0B20 */  0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x43,  // terfaceC
+                    /* 0B28 */  0x6F, 0x6C, 0x6F, 0x72, 0x46, 0x6F, 0x72, 0x6D,  // olorForm
+                    /* 0B30 */  0x61, 0x74, 0x3E, 0x33, 0x3C, 0x2F, 0x49, 0x6E,  // at>3</In
+                    /* 0B38 */  0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x43,  // terfaceC
+                    /* 0B40 */  0x6F, 0x6C, 0x6F, 0x72, 0x46, 0x6F, 0x72, 0x6D,  // olorForm
+                    /* 0B48 */  0x61, 0x74, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // at>.    
+                    /* 0B50 */  0x3C, 0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x3E,  // </Group>
+                    /* 0B58 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x47, 0x72,  // .    <Gr
+                    /* 0B60 */  0x6F, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3D, 0x27,  // oup id='
+                    /* 0B68 */  0x44, 0x53, 0x49, 0x20, 0x49, 0x6E, 0x74, 0x65,  // DSI Inte
+                    /* 0B70 */  0x72, 0x66, 0x61, 0x63, 0x65, 0x27, 0x3E, 0x0A,  // rface'>.
+                    /* 0B78 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0B80 */  0x3C, 0x44, 0x53, 0x49, 0x43, 0x68, 0x61, 0x6E,  // <DSIChan
+                    /* 0B88 */  0x6E, 0x65, 0x6C, 0x49, 0x64, 0x3E, 0x31, 0x3C,  // nelId>1<
+                    /* 0B90 */  0x2F, 0x44, 0x53, 0x49, 0x43, 0x68, 0x61, 0x6E,  // /DSIChan
+                    /* 0B98 */  0x6E, 0x65, 0x6C, 0x49, 0x64, 0x3E, 0x0A, 0x20,  // nelId>. 
+                    /* 0BA0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0BA8 */  0x44, 0x53, 0x49, 0x56, 0x69, 0x72, 0x74, 0x75,  // DSIVirtu
+                    /* 0BB0 */  0x61, 0x6C, 0x49, 0x64, 0x3E, 0x30, 0x3C, 0x2F,  // alId>0</
+                    /* 0BB8 */  0x44, 0x53, 0x49, 0x56, 0x69, 0x72, 0x74, 0x75,  // DSIVirtu
+                    /* 0BC0 */  0x61, 0x6C, 0x49, 0x64, 0x3E, 0x0A, 0x20, 0x20,  // alId>.  
+                    /* 0BC8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //       <D
+                    /* 0BD0 */  0x53, 0x49, 0x43, 0x6F, 0x6C, 0x6F, 0x72, 0x46,  // SIColorF
+                    /* 0BD8 */  0x6F, 0x72, 0x6D, 0x61, 0x74, 0x3E, 0x33, 0x36,  // ormat>36
+                    /* 0BE0 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x43, 0x6F, 0x6C,  // </DSICol
+                    /* 0BE8 */  0x6F, 0x72, 0x46, 0x6F, 0x72, 0x6D, 0x61, 0x74,  // orFormat
+                    /* 0BF0 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0BF8 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x54, 0x72,  //   <DSITr
+                    /* 0C00 */  0x61, 0x66, 0x66, 0x69, 0x63, 0x4D, 0x6F, 0x64,  // afficMod
+                    /* 0C08 */  0x65, 0x3E, 0x31, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // e>1</DSI
+                    /* 0C10 */  0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x4D,  // TrafficM
+                    /* 0C18 */  0x6F, 0x64, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ode>.   
+                    /* 0C20 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53,  //      <DS
+                    /* 0C28 */  0x49, 0x4C, 0x61, 0x6E, 0x65, 0x73, 0x3E, 0x34,  // ILanes>4
+                    /* 0C30 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x4C, 0x61, 0x6E,  // </DSILan
+                    /* 0C38 */  0x65, 0x73, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // es>.    
+                    /* 0C40 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
+                    /* 0C48 */  0x4C, 0x50, 0x31, 0x31, 0x41, 0x74, 0x49, 0x6E,  // LP11AtIn
+                    /* 0C50 */  0x69, 0x74, 0x3E, 0x54, 0x72, 0x75, 0x65, 0x3C,  // it>True<
+                    /* 0C58 */  0x2F, 0x44, 0x53, 0x49, 0x4C, 0x50, 0x31, 0x31,  // /DSILP11
+                    /* 0C60 */  0x41, 0x74, 0x49, 0x6E, 0x69, 0x74, 0x3E, 0x0A,  // AtInit>.
+                    /* 0C68 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0C70 */  0x3C, 0x44, 0x53, 0x49, 0x48, 0x73, 0x61, 0x48,  // <DSIHsaH
+                    /* 0C78 */  0x73, 0x65, 0x41, 0x66, 0x74, 0x65, 0x72, 0x56,  // seAfterV
+                    /* 0C80 */  0x73, 0x56, 0x65, 0x3E, 0x46, 0x61, 0x6C, 0x73,  // sVe>Fals
+                    /* 0C88 */  0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x48, 0x73,  // e</DSIHs
+                    /* 0C90 */  0x61, 0x48, 0x73, 0x65, 0x41, 0x66, 0x74, 0x65,  // aHseAfte
+                    /* 0C98 */  0x72, 0x56, 0x73, 0x56, 0x65, 0x3E, 0x0A, 0x20,  // rVsVe>. 
+                    /* 0CA0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0CA8 */  0x44, 0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F,  // DSILowPo
+                    /* 0CB0 */  0x77, 0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49,  // werModeI
+                    /* 0CB8 */  0x6E, 0x48, 0x46, 0x50, 0x3E, 0x46, 0x61, 0x6C,  // nHFP>Fal
+                    /* 0CC0 */  0x73, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x4C,  // se</DSIL
+                    /* 0CC8 */  0x6F, 0x77, 0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D,  // owPowerM
+                    /* 0CD0 */  0x6F, 0x64, 0x65, 0x49, 0x6E, 0x48, 0x46, 0x50,  // odeInHFP
+                    /* 0CD8 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0CE0 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x4C, 0x6F,  //   <DSILo
+                    /* 0CE8 */  0x77, 0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F,  // wPowerMo
+                    /* 0CF0 */  0x64, 0x65, 0x49, 0x6E, 0x48, 0x42, 0x50, 0x3E,  // deInHBP>
+                    /* 0CF8 */  0x46, 0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F, 0x44,  // False</D
+                    /* 0D00 */  0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F, 0x77,  // SILowPow
+                    /* 0D08 */  0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49, 0x6E,  // erModeIn
+                    /* 0D10 */  0x48, 0x42, 0x50, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // HBP>.   
+                    /* 0D18 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53,  //      <DS
+                    /* 0D20 */  0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F, 0x77, 0x65,  // ILowPowe
+                    /* 0D28 */  0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49, 0x6E, 0x48,  // rModeInH
+                    /* 0D30 */  0x53, 0x41, 0x3E, 0x46, 0x61, 0x6C, 0x73, 0x65,  // SA>False
+                    /* 0D38 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x4C, 0x6F, 0x77,  // </DSILow
+                    /* 0D40 */  0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F, 0x64,  // PowerMod
+                    /* 0D48 */  0x65, 0x49, 0x6E, 0x48, 0x53, 0x41, 0x3E, 0x0A,  // eInHSA>.
+                    /* 0D50 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0D58 */  0x3C, 0x44, 0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50,  // <DSILowP
+                    /* 0D60 */  0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65,  // owerMode
+                    /* 0D68 */  0x49, 0x6E, 0x42, 0x4C, 0x4C, 0x50, 0x45, 0x4F,  // InBLLPEO
+                    /* 0D70 */  0x46, 0x3E, 0x54, 0x72, 0x75, 0x65, 0x3C, 0x2F,  // F>True</
+                    /* 0D78 */  0x44, 0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F,  // DSILowPo
+                    /* 0D80 */  0x77, 0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49,  // werModeI
+                    /* 0D88 */  0x6E, 0x42, 0x4C, 0x4C, 0x50, 0x45, 0x4F, 0x46,  // nBLLPEOF
+                    /* 0D90 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0D98 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x4C, 0x6F,  //   <DSILo
+                    /* 0DA0 */  0x77, 0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F,  // wPowerMo
+                    /* 0DA8 */  0x64, 0x65, 0x49, 0x6E, 0x42, 0x4C, 0x4C, 0x50,  // deInBLLP
+                    /* 0DB0 */  0x3E, 0x54, 0x72, 0x75, 0x65, 0x3C, 0x2F, 0x44,  // >True</D
+                    /* 0DB8 */  0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F, 0x77,  // SILowPow
+                    /* 0DC0 */  0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49, 0x6E,  // erModeIn
+                    /* 0DC8 */  0x42, 0x4C, 0x4C, 0x50, 0x3E, 0x0A, 0x20, 0x20,  // BLLP>.  
+                    /* 0DD0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //       <D
+                    /* 0DD8 */  0x53, 0x49, 0x49, 0x6E, 0x69, 0x74, 0x4D, 0x61,  // SIInitMa
+                    /* 0DE0 */  0x73, 0x74, 0x65, 0x72, 0x54, 0x69, 0x6D, 0x65,  // sterTime
+                    /* 0DE8 */  0x3E, 0x33, 0x30, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // >30</DSI
+                    /* 0DF0 */  0x49, 0x6E, 0x69, 0x74, 0x4D, 0x61, 0x73, 0x74,  // InitMast
+                    /* 0DF8 */  0x65, 0x72, 0x54, 0x69, 0x6D, 0x65, 0x3E, 0x0A,  // erTime>.
+                    /* 0E00 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0E08 */  0x3C, 0x44, 0x53, 0x49, 0x52, 0x65, 0x66, 0x72,  // <DSIRefr
+                    /* 0E10 */  0x65, 0x73, 0x68, 0x52, 0x61, 0x74, 0x65, 0x3E,  // eshRate>
+                    /* 0E18 */  0x30, 0x78, 0x33, 0x43, 0x30, 0x30, 0x30, 0x30,  // 0x3C0000
+                    /* 0E20 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x52, 0x65, 0x66,  // </DSIRef
+                    /* 0E28 */  0x72, 0x65, 0x73, 0x68, 0x52, 0x61, 0x74, 0x65,  // reshRate
+                    /* 0E30 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0E38 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x43, 0x6F,  //   <DSICo
+                    /* 0E40 */  0x6E, 0x74, 0x72, 0x6F, 0x6C, 0x6C, 0x65, 0x72,  // ntroller
+                    /* 0E48 */  0x4D, 0x61, 0x70, 0x70, 0x69, 0x6E, 0x67, 0x3E,  // Mapping>
+                    /* 0E50 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0E58 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x30, 0x30, 0x0A,  //      00.
+                    /* 0E60 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0E68 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x43, 0x6F, 0x6E,  // </DSICon
+                    /* 0E70 */  0x74, 0x72, 0x6F, 0x6C, 0x6C, 0x65, 0x72, 0x4D,  // trollerM
+                    /* 0E78 */  0x61, 0x70, 0x70, 0x69, 0x6E, 0x67, 0x3E, 0x20,  // apping> 
+                    /* 0E80 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47,  // .    </G
+                    /* 0E88 */  0x72, 0x6F, 0x75, 0x70, 0x3E, 0x0A, 0x20, 0x20,  // roup>.  
+                    /* 0E90 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x49, 0x6E,  //   <DSIIn
+                    /* 0E98 */  0x69, 0x74, 0x53, 0x65, 0x71, 0x75, 0x65, 0x6E,  // itSequen
+                    /* 0EA0 */  0x63, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // ce>.    
+                    /* 0EA8 */  0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x30,  //     23 0
+                    /* 0EB0 */  0x41, 0x20, 0x30, 0x32, 0x0A, 0x20, 0x20, 0x20,  // A 02.   
+                    /* 0EB8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20,  //      23 
+                    /* 0EC0 */  0x31, 0x30, 0x20, 0x32, 0x36, 0x0A, 0x20, 0x20,  // 10 26.  
+                    /* 0EC8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33,  //       23
+                    /* 0ED0 */  0x20, 0x31, 0x32, 0x20, 0x36, 0x31, 0x0A, 0x20,  //  12 61. 
+                    /* 0ED8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 0EE0 */  0x33, 0x20, 0x31, 0x33, 0x20, 0x36, 0x31, 0x0A,  // 3 13 61.
+                    /* 0EE8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0EF0 */  0x32, 0x33, 0x20, 0x35, 0x41, 0x20, 0x30, 0x35,  // 23 5A 05
+                    /* 0EF8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0F00 */  0x20, 0x32, 0x33, 0x20, 0x35, 0x43, 0x20, 0x30,  //  23 5C 0
+                    /* 0F08 */  0x31, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // 1.      
+                    /* 0F10 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x39, 0x33, 0x20,  //   23 93 
+                    /* 0F18 */  0x32, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 20.     
+                    /* 0F20 */  0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x39, 0x34,  //    23 94
+                    /* 0F28 */  0x20, 0x38, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  80.    
+                    /* 0F30 */  0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x30,  //     23 0
+                    /* 0F38 */  0x44, 0x20, 0x30, 0x31, 0x0A, 0x20, 0x20, 0x20,  // D 01.   
+                    /* 0F40 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x46, 0x46, 0x20,  //      FF 
+                    /* 0F48 */  0x30, 0x41, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 0A.     
+                    /* 0F50 */  0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x39, 0x35,  //    23 95
+                    /* 0F58 */  0x20, 0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  00.    
+                    /* 0F60 */  0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x36,  //     23 6
+                    /* 0F68 */  0x34, 0x20, 0x30, 0x31, 0x0A, 0x20, 0x20, 0x20,  // 4 01.   
+                    /* 0F70 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20,  //      23 
+                    /* 0F78 */  0x37, 0x34, 0x20, 0x30, 0x30, 0x0A, 0x20, 0x20,  // 74 00.  
+                    /* 0F80 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33,  //       23
+                    /* 0F88 */  0x20, 0x37, 0x35, 0x20, 0x30, 0x31, 0x0A, 0x20,  //  75 01. 
+                    /* 0F90 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 0F98 */  0x33, 0x20, 0x37, 0x36, 0x20, 0x30, 0x41, 0x0A,  // 3 76 0A.
+                    /* 0FA0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0FA8 */  0x32, 0x33, 0x20, 0x37, 0x37, 0x20, 0x30, 0x31,  // 23 77 01
+                    /* 0FB0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0FB8 */  0x20, 0x32, 0x33, 0x20, 0x37, 0x38, 0x20, 0x38,  //  23 78 8
+                    /* 0FC0 */  0x31, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // 1.      
+                    /* 0FC8 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x39, 0x36, 0x20,  //   23 96 
+                    /* 0FD0 */  0x30, 0x41, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 0A.     
+                    /* 0FD8 */  0x20, 0x20, 0x20, 0x46, 0x46, 0x20, 0x31, 0x34,  //    FF 14
+                    /* 0FE0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0FE8 */  0x20, 0x32, 0x33, 0x20, 0x32, 0x30, 0x20, 0x38,  //  23 20 8
+                    /* 0FF0 */  0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // 0.      
+                    /* 0FF8 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x32, 0x31, 0x20,  //   23 21 
+                    /* 1000 */  0x30, 0x37, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 07.     
+                    /* 1008 */  0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x32, 0x32,  //    23 22
+                    /* 1010 */  0x20, 0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  00.    
+                    /* 1018 */  0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x32,  //     23 2
+                    /* 1020 */  0x33, 0x20, 0x30, 0x30, 0x0A, 0x20, 0x20, 0x20,  // 3 00.   
+                    /* 1028 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20,  //      23 
+                    /* 1030 */  0x32, 0x34, 0x20, 0x30, 0x30, 0x0A, 0x20, 0x20,  // 24 00.  
+                    /* 1038 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33,  //       23
+                    /* 1040 */  0x20, 0x32, 0x35, 0x20, 0x30, 0x35, 0x0A, 0x20,  //  25 05. 
+                    /* 1048 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 1050 */  0x33, 0x20, 0x32, 0x43, 0x20, 0x32, 0x30, 0x0A,  // 3 2C 20.
+                    /* 1058 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 1060 */  0x32, 0x33, 0x20, 0x32, 0x44, 0x20, 0x30, 0x30,  // 23 2D 00
+                    /* 1068 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 1070 */  0x20, 0x32, 0x33, 0x20, 0x33, 0x30, 0x20, 0x30,  //  23 30 0
+                    /* 1078 */  0x34, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // 4.      
+                    /* 1080 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x33, 0x31, 0x20,  //   23 31 
+                    /* 1088 */  0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 00.     
+                    /* 1090 */  0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x33, 0x34,  //    23 34
+                    /* 1098 */  0x20, 0x35, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20,  //  50.    
+                    /* 10A0 */  0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20, 0x33,  //     23 3
+                    /* 10A8 */  0x36, 0x20, 0x30, 0x38, 0x0A, 0x20, 0x20, 0x20,  // 6 08.   
+                    /* 10B0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20,  //      23 
+                    /* 10B8 */  0x33, 0x38, 0x20, 0x33, 0x30, 0x0A, 0x20, 0x20,  // 38 30.  
+                    /* 10C0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33,  //       23
+                    /* 10C8 */  0x20, 0x33, 0x41, 0x20, 0x30, 0x38, 0x0A, 0x20,  //  3A 08. 
+                    /* 10D0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 10D8 */  0x33, 0x20, 0x35, 0x42, 0x20, 0x30, 0x30, 0x0A,  // 3 5B 00.
+                    /* 10E0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 10E8 */  0x32, 0x33, 0x20, 0x33, 0x43, 0x20, 0x30, 0x30,  // 23 3C 00
+                    /* 10F0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 10F8 */  0x20, 0x46, 0x46, 0x20, 0x30, 0x41, 0x0A, 0x20,  //  FF 0A. 
+                    /* 1100 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 1108 */  0x33, 0x20, 0x35, 0x41, 0x20, 0x30, 0x44, 0x0A,  // 3 5A 0D.
+                    /* 1110 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x2F, 0x44, 0x53,  //     </DS
+                    /* 1118 */  0x49, 0x49, 0x6E, 0x69, 0x74, 0x53, 0x65, 0x71,  // IInitSeq
+                    /* 1120 */  0x75, 0x65, 0x6E, 0x63, 0x65, 0x3E, 0x0A, 0x20,  // uence>. 
+                    /* 1128 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x54,  //    <DSIT
+                    /* 1130 */  0x65, 0x72, 0x6D, 0x53, 0x65, 0x71, 0x75, 0x65,  // ermSeque
+                    /* 1138 */  0x6E, 0x63, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // nce>.   
+                    /* 1140 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x32, 0x33, 0x20,  //      23 
+                    /* 1148 */  0x35, 0x41, 0x20, 0x30, 0x35, 0x20, 0x0A, 0x20,  // 5A 05 . 
+                    /* 1150 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 1158 */  0x33, 0x20, 0x39, 0x36, 0x20, 0x30, 0x30, 0x0A,  // 3 96 00.
+                    /* 1160 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 1168 */  0x32, 0x33, 0x20, 0x39, 0x33, 0x20, 0x30, 0x30,  // 23 93 00
+                    /* 1170 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 1178 */  0x20, 0x46, 0x46, 0x20, 0x30, 0x41, 0x0A, 0x20,  //  FF 0A. 
+                    /* 1180 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x32,  //        2
+                    /* 1188 */  0x33, 0x20, 0x30, 0x44, 0x20, 0x30, 0x30, 0x0A,  // 3 0D 00.
+                    /* 1190 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x2F, 0x44, 0x53,  //     </DS
+                    /* 1198 */  0x49, 0x54, 0x65, 0x72, 0x6D, 0x53, 0x65, 0x71,  // ITermSeq
+                    /* 11A0 */  0x75, 0x65, 0x6E, 0x63, 0x65, 0x3E, 0x0A, 0x20,  // uence>. 
+                    /* 11A8 */  0x20, 0x20, 0x20, 0x3C, 0x47, 0x72, 0x6F, 0x75,  //    <Grou
+                    /* 11B0 */  0x70, 0x20, 0x69, 0x64, 0x3D, 0x27, 0x42, 0x61,  // p id='Ba
+                    /* 11B8 */  0x63, 0x6B, 0x6C, 0x69, 0x67, 0x68, 0x74, 0x20,  // cklight 
+                    /* 11C0 */  0x43, 0x6F, 0x6E, 0x66, 0x69, 0x67, 0x75, 0x72,  // Configur
+                    /* 11C8 */  0x61, 0x74, 0x69, 0x6F, 0x6E, 0x27, 0x3E, 0x0A,  // ation'>.
+                    /* 11D0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 11D8 */  0x3C, 0x42, 0x61, 0x63, 0x6B, 0x6C, 0x69, 0x67,  // <Backlig
+                    /* 11E0 */  0x68, 0x74, 0x54, 0x79, 0x70, 0x65, 0x3E, 0x34,  // htType>4
+                    /* 11E8 */  0x3C, 0x2F, 0x42, 0x61, 0x63, 0x6B, 0x6C, 0x69,  // </Backli
+                    /* 11F0 */  0x67, 0x68, 0x74, 0x54, 0x79, 0x70, 0x65, 0x3E,  // ghtType>
+                    /* 11F8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 1200 */  0x20, 0x3C, 0x42, 0x61, 0x63, 0x6B, 0x6C, 0x69,  //  <Backli
+                    /* 1208 */  0x67, 0x68, 0x74, 0x53, 0x74, 0x65, 0x70, 0x73,  // ghtSteps
+                    /* 1210 */  0x3E, 0x31, 0x30, 0x30, 0x3C, 0x2F, 0x42, 0x61,  // >100</Ba
+                    /* 1218 */  0x63, 0x6B, 0x6C, 0x69, 0x67, 0x68, 0x74, 0x53,  // cklightS
+                    /* 1220 */  0x74, 0x65, 0x70, 0x73, 0x3E, 0x0A, 0x20, 0x20,  // teps>.  
+                    /* 1228 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x41,  //       <A
+                    /* 1230 */  0x64, 0x61, 0x70, 0x74, 0x69, 0x76, 0x65, 0x42,  // daptiveB
+                    /* 1238 */  0x72, 0x69, 0x67, 0x68, 0x74, 0x6E, 0x65, 0x73,  // rightnes
+                    /* 1240 */  0x73, 0x46, 0x65, 0x61, 0x74, 0x75, 0x72, 0x65,  // sFeature
+                    /* 1248 */  0x3E, 0x31, 0x3C, 0x2F, 0x41, 0x64, 0x61, 0x70,  // >1</Adap
+                    /* 1250 */  0x74, 0x69, 0x76, 0x65, 0x42, 0x72, 0x69, 0x67,  // tiveBrig
+                    /* 1258 */  0x68, 0x74, 0x6E, 0x65, 0x73, 0x73, 0x46, 0x65,  // htnessFe
+                    /* 1260 */  0x61, 0x74, 0x75, 0x72, 0x65, 0x3E, 0x0A, 0x20,  // ature>. 
+                    /* 1268 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 1270 */  0x43, 0x41, 0x42, 0x4C, 0x45, 0x6E, 0x61, 0x62,  // CABLEnab
+                    /* 1278 */  0x6C, 0x65, 0x3E, 0x54, 0x72, 0x75, 0x65, 0x3C,  // le>True<
+                    /* 1280 */  0x2F, 0x43, 0x41, 0x42, 0x4C, 0x45, 0x6E, 0x61,  // /CABLEna
+                    /* 1288 */  0x62, 0x6C, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ble>.   
+                    /* 1290 */  0x20, 0x3C, 0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70,  //  </Group
+                    /* 1298 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x47,  // >.    <G
+                    /* 12A0 */  0x72, 0x6F, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3D,  // roup id=
+                    /* 12A8 */  0x27, 0x43, 0x6F, 0x6E, 0x6E, 0x65, 0x63, 0x74,  // 'Connect
+                    /* 12B0 */  0x69, 0x6F, 0x6E, 0x20, 0x43, 0x6F, 0x6E, 0x66,  // ion Conf
+                    /* 12B8 */  0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6F,  // iguratio
+                    /* 12C0 */  0x6E, 0x27, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // n'>.    
+                    /* 12C8 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x69, 0x73,  //     <Dis
+                    /* 12D0 */  0x70, 0x6C, 0x61, 0x79, 0x31, 0x52, 0x65, 0x73,  // play1Res
+                    /* 12D8 */  0x65, 0x74, 0x31, 0x49, 0x6E, 0x66, 0x6F, 0x3E,  // et1Info>
+                    /* 12E0 */  0x44, 0x53, 0x49, 0x5F, 0x50, 0x41, 0x4E, 0x45,  // DSI_PANE
+                    /* 12E8 */  0x4C, 0x5F, 0x45, 0x4E, 0x2C, 0x20, 0x30, 0x2C,  // L_EN, 0,
+                    /* 12F0 */  0x20, 0x30, 0x2C, 0x20, 0x54, 0x52, 0x55, 0x45,  //  0, TRUE
+                    /* 12F8 */  0x3C, 0x2F, 0x44, 0x69, 0x73, 0x70, 0x6C, 0x61,  // </Displa
+                    /* 1300 */  0x79, 0x31, 0x52, 0x65, 0x73, 0x65, 0x74, 0x31,  // y1Reset1
+                    /* 1308 */  0x49, 0x6E, 0x66, 0x6F, 0x3E, 0x0A, 0x20, 0x20,  // Info>.  
+                    /* 1310 */  0x20, 0x20, 0x3C, 0x2F, 0x47, 0x72, 0x6F, 0x75,  //   </Grou
+                    /* 1318 */  0x70, 0x3E, 0x0A, 0x3C, 0x2F, 0x47, 0x72, 0x6F,  // p>.</Gro
+                    /* 1320 */  0x75, 0x70, 0x3E, 0x00                           // up>.
+                })
+                Name (PCFA, Buffer (0x123E)
+                {
+                    /* 0000 */  0x3C, 0x3F, 0x78, 0x6D, 0x6C, 0x20, 0x76, 0x65,  // <?xml ve
+                    /* 0008 */  0x72, 0x73, 0x69, 0x6F, 0x6E, 0x3D, 0x27, 0x31,  // rsion='1
+                    /* 0010 */  0x2E, 0x30, 0x27, 0x20, 0x65, 0x6E, 0x63, 0x6F,  // .0' enco
+                    /* 0018 */  0x64, 0x69, 0x6E, 0x67, 0x3D, 0x27, 0x75, 0x74,  // ding='ut
+                    /* 0020 */  0x66, 0x2D, 0x38, 0x27, 0x3F, 0x3E, 0x0A, 0x3C,  // f-8'?>.<
+                    /* 0028 */  0x47, 0x72, 0x6F, 0x75, 0x70, 0x20, 0x69, 0x64,  // Group id
+                    /* 0030 */  0x3D, 0x27, 0x4D, 0x61, 0x69, 0x6E, 0x20, 0x50,  // ='Main P
+                    /* 0038 */  0x61, 0x6E, 0x65, 0x6C, 0x27, 0x3E, 0x0A, 0x20,  // anel'>. 
+                    /* 0040 */  0x20, 0x20, 0x20, 0x3C, 0x50, 0x61, 0x6E, 0x65,  //    <Pane
+                    /* 0048 */  0x6C, 0x4E, 0x61, 0x6D, 0x65, 0x3E, 0x42, 0x31,  // lName>B1
+                    /* 0050 */  0x33, 0x33, 0x48, 0x41, 0x4E, 0x30, 0x35, 0x2E,  // 33HAN05.
+                    /* 0058 */  0x33, 0x3C, 0x2F, 0x50, 0x61, 0x6E, 0x65, 0x6C,  // 3</Panel
+                    /* 0060 */  0x4E, 0x61, 0x6D, 0x65, 0x3E, 0x0A, 0x20, 0x20,  // Name>.  
+                    /* 0068 */  0x20, 0x20, 0x3C, 0x50, 0x61, 0x6E, 0x65, 0x6C,  //   <Panel
+                    /* 0070 */  0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,  // Descript
+                    /* 0078 */  0x69, 0x6F, 0x6E, 0x3E, 0x53, 0x4E, 0x36, 0x35,  // ion>SN65
+                    /* 0080 */  0x44, 0x53, 0x49, 0x78, 0x36, 0x20, 0x44, 0x75,  // DSIx6 Du
+                    /* 0088 */  0x61, 0x6C, 0x20, 0x44, 0x53, 0x49, 0x20, 0x74,  // al DSI t
+                    /* 0090 */  0x6F, 0x20, 0x65, 0x44, 0x50, 0x20, 0x28, 0x31,  // o eDP (1
+                    /* 0098 */  0x39, 0x32, 0x30, 0x78, 0x31, 0x30, 0x38, 0x30,  // 920x1080
+                    /* 00A0 */  0x20, 0x41, 0x55, 0x4F, 0x20, 0x32, 0x34, 0x62,  //  AUO 24b
+                    /* 00A8 */  0x70, 0x70, 0x29, 0x3C, 0x2F, 0x50, 0x61, 0x6E,  // pp)</Pan
+                    /* 00B0 */  0x65, 0x6C, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,  // elDescri
+                    /* 00B8 */  0x70, 0x74, 0x69, 0x6F, 0x6E, 0x3E, 0x0A, 0x20,  // ption>. 
+                    /* 00C0 */  0x20, 0x20, 0x20, 0x3C, 0x47, 0x72, 0x6F, 0x75,  //    <Grou
+                    /* 00C8 */  0x70, 0x20, 0x69, 0x64, 0x3D, 0x27, 0x45, 0x44,  // p id='ED
+                    /* 00D0 */  0x49, 0x44, 0x20, 0x43, 0x6F, 0x6E, 0x66, 0x69,  // ID Confi
+                    /* 00D8 */  0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6F, 0x6E,  // guration
+                    /* 00E0 */  0x27, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // '>.     
+                    /* 00E8 */  0x20, 0x20, 0x20, 0x3C, 0x4D, 0x61, 0x6E, 0x75,  //    <Manu
+                    /* 00F0 */  0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x49,  // factureI
+                    /* 00F8 */  0x44, 0x3E, 0x30, 0x78, 0x41, 0x46, 0x30, 0x36,  // D>0xAF06
+                    /* 0100 */  0x3C, 0x2F, 0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61,  // </Manufa
+                    /* 0108 */  0x63, 0x74, 0x75, 0x72, 0x65, 0x49, 0x44, 0x3E,  // ctureID>
+                    /* 0110 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0118 */  0x20, 0x3C, 0x50, 0x72, 0x6F, 0x64, 0x75, 0x63,  //  <Produc
+                    /* 0120 */  0x74, 0x43, 0x6F, 0x64, 0x65, 0x3E, 0x30, 0x78,  // tCode>0x
+                    /* 0128 */  0x35, 0x33, 0x32, 0x44, 0x3C, 0x2F, 0x50, 0x72,  // 532D</Pr
+                    /* 0130 */  0x6F, 0x64, 0x75, 0x63, 0x74, 0x43, 0x6F, 0x64,  // oductCod
+                    /* 0138 */  0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // e>.     
+                    /* 0140 */  0x20, 0x20, 0x20, 0x3C, 0x53, 0x65, 0x72, 0x69,  //    <Seri
+                    /* 0148 */  0x61, 0x6C, 0x4E, 0x75, 0x6D, 0x62, 0x65, 0x72,  // alNumber
+                    /* 0150 */  0x3E, 0x30, 0x78, 0x30, 0x30, 0x30, 0x30, 0x30,  // >0x00000
+                    /* 0158 */  0x30, 0x3C, 0x2F, 0x53, 0x65, 0x72, 0x69, 0x61,  // 0</Seria
+                    /* 0160 */  0x6C, 0x4E, 0x75, 0x6D, 0x62, 0x65, 0x72, 0x3E,  // lNumber>
+                    /* 0168 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0170 */  0x20, 0x3C, 0x57, 0x65, 0x65, 0x6B, 0x6F, 0x66,  //  <Weekof
+                    /* 0178 */  0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61, 0x63, 0x74,  // Manufact
+                    /* 0180 */  0x75, 0x72, 0x65, 0x3E, 0x30, 0x78, 0x31, 0x41,  // ure>0x1A
+                    /* 0188 */  0x3C, 0x2F, 0x57, 0x65, 0x65, 0x6B, 0x6F, 0x66,  // </Weekof
+                    /* 0190 */  0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61, 0x63, 0x74,  // Manufact
+                    /* 0198 */  0x75, 0x72, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ure>.   
+                    /* 01A0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x59, 0x65,  //      <Ye
+                    /* 01A8 */  0x61, 0x72, 0x6F, 0x66, 0x4D, 0x61, 0x6E, 0x75,  // arofManu
+                    /* 01B0 */  0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x3E,  // facture>
+                    /* 01B8 */  0x30, 0x78, 0x31, 0x42, 0x3C, 0x2F, 0x59, 0x65,  // 0x1B</Ye
+                    /* 01C0 */  0x61, 0x72, 0x6F, 0x66, 0x4D, 0x61, 0x6E, 0x75,  // arofManu
+                    /* 01C8 */  0x66, 0x61, 0x63, 0x74, 0x75, 0x72, 0x65, 0x3E,  // facture>
+                    /* 01D0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 01D8 */  0x20, 0x3C, 0x45, 0x44, 0x49, 0x44, 0x56, 0x65,  //  <EDIDVe
+                    /* 01E0 */  0x72, 0x73, 0x69, 0x6F, 0x6E, 0x3E, 0x31, 0x3C,  // rsion>1<
+                    /* 01E8 */  0x2F, 0x45, 0x44, 0x49, 0x44, 0x56, 0x65, 0x72,  // /EDIDVer
+                    /* 01F0 */  0x73, 0x69, 0x6F, 0x6E, 0x3E, 0x0A, 0x20, 0x20,  // sion>.  
+                    /* 01F8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x45,  //       <E
+                    /* 0200 */  0x44, 0x49, 0x44, 0x52, 0x65, 0x76, 0x69, 0x73,  // DIDRevis
+                    /* 0208 */  0x69, 0x6F, 0x6E, 0x3E, 0x34, 0x3C, 0x2F, 0x45,  // ion>4</E
+                    /* 0210 */  0x44, 0x49, 0x44, 0x52, 0x65, 0x76, 0x69, 0x73,  // DIDRevis
+                    /* 0218 */  0x69, 0x6F, 0x6E, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ion>.   
+                    /* 0220 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x69,  //      <Vi
+                    /* 0228 */  0x64, 0x65, 0x6F, 0x49, 0x6E, 0x70, 0x75, 0x74,  // deoInput
+                    /* 0230 */  0x44, 0x65, 0x66, 0x69, 0x6E, 0x69, 0x74, 0x69,  // Definiti
+                    /* 0238 */  0x6F, 0x6E, 0x3E, 0x30, 0x78, 0x41, 0x35, 0x3C,  // on>0xA5<
+                    /* 0240 */  0x2F, 0x56, 0x69, 0x64, 0x65, 0x6F, 0x49, 0x6E,  // /VideoIn
+                    /* 0248 */  0x70, 0x75, 0x74, 0x44, 0x65, 0x66, 0x69, 0x6E,  // putDefin
+                    /* 0250 */  0x69, 0x74, 0x69, 0x6F, 0x6E, 0x3E, 0x0A, 0x20,  // ition>. 
+                    /* 0258 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0260 */  0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74,  // Horizont
+                    /* 0268 */  0x61, 0x6C, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6E,  // alScreen
+                    /* 0270 */  0x53, 0x69, 0x7A, 0x65, 0x3E, 0x30, 0x78, 0x31,  // Size>0x1
+                    /* 0278 */  0x44, 0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A,  // D</Horiz
+                    /* 0280 */  0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x53, 0x63, 0x72,  // ontalScr
+                    /* 0288 */  0x65, 0x65, 0x6E, 0x53, 0x69, 0x7A, 0x65, 0x3E,  // eenSize>
+                    /* 0290 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0298 */  0x20, 0x3C, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  //  <Vertic
+                    /* 02A0 */  0x61, 0x6C, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6E,  // alScreen
+                    /* 02A8 */  0x53, 0x69, 0x7A, 0x65, 0x3E, 0x30, 0x78, 0x31,  // Size>0x1
+                    /* 02B0 */  0x30, 0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74, 0x69,  // 0</Verti
+                    /* 02B8 */  0x63, 0x61, 0x6C, 0x53, 0x63, 0x72, 0x65, 0x65,  // calScree
+                    /* 02C0 */  0x6E, 0x53, 0x69, 0x7A, 0x65, 0x3E, 0x0A, 0x20,  // nSize>. 
+                    /* 02C8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 02D0 */  0x44, 0x69, 0x73, 0x70, 0x6C, 0x61, 0x79, 0x54,  // DisplayT
+                    /* 02D8 */  0x72, 0x61, 0x6E, 0x73, 0x66, 0x65, 0x72, 0x43,  // ransferC
+                    /* 02E0 */  0x68, 0x61, 0x72, 0x61, 0x63, 0x74, 0x65, 0x72,  // haracter
+                    /* 02E8 */  0x69, 0x73, 0x74, 0x69, 0x63, 0x73, 0x3E, 0x30,  // istics>0
+                    /* 02F0 */  0x78, 0x37, 0x38, 0x3C, 0x2F, 0x44, 0x69, 0x73,  // x78</Dis
+                    /* 02F8 */  0x70, 0x6C, 0x61, 0x79, 0x54, 0x72, 0x61, 0x6E,  // playTran
+                    /* 0300 */  0x73, 0x66, 0x65, 0x72, 0x43, 0x68, 0x61, 0x72,  // sferChar
+                    /* 0308 */  0x61, 0x63, 0x74, 0x65, 0x72, 0x69, 0x73, 0x74,  // acterist
+                    /* 0310 */  0x69, 0x63, 0x73, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ics>.   
+                    /* 0318 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x46, 0x65,  //      <Fe
+                    /* 0320 */  0x61, 0x74, 0x75, 0x72, 0x65, 0x53, 0x75, 0x70,  // atureSup
+                    /* 0328 */  0x70, 0x6F, 0x72, 0x74, 0x3E, 0x30, 0x78, 0x30,  // port>0x0
+                    /* 0330 */  0x32, 0x3C, 0x2F, 0x46, 0x65, 0x61, 0x74, 0x75,  // 2</Featu
+                    /* 0338 */  0x72, 0x65, 0x53, 0x75, 0x70, 0x70, 0x6F, 0x72,  // reSuppor
+                    /* 0340 */  0x74, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // t>.     
+                    /* 0348 */  0x20, 0x20, 0x20, 0x3C, 0x52, 0x65, 0x64, 0x2E,  //    <Red.
+                    /* 0350 */  0x47, 0x72, 0x65, 0x65, 0x6E, 0x42, 0x69, 0x74,  // GreenBit
+                    /* 0358 */  0x73, 0x3E, 0x30, 0x78, 0x41, 0x34, 0x3C, 0x2F,  // s>0xA4</
+                    /* 0360 */  0x52, 0x65, 0x64, 0x2E, 0x47, 0x72, 0x65, 0x65,  // Red.Gree
+                    /* 0368 */  0x6E, 0x42, 0x69, 0x74, 0x73, 0x3E, 0x0A, 0x20,  // nBits>. 
+                    /* 0370 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0378 */  0x42, 0x6C, 0x75, 0x65, 0x2E, 0x57, 0x68, 0x69,  // Blue.Whi
+                    /* 0380 */  0x74, 0x65, 0x42, 0x69, 0x74, 0x73, 0x3E, 0x30,  // teBits>0
+                    /* 0388 */  0x78, 0x31, 0x35, 0x3C, 0x2F, 0x42, 0x6C, 0x75,  // x15</Blu
+                    /* 0390 */  0x65, 0x2E, 0x57, 0x68, 0x69, 0x74, 0x65, 0x42,  // e.WhiteB
+                    /* 0398 */  0x69, 0x74, 0x73, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // its>.   
+                    /* 03A0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x52, 0x65,  //      <Re
+                    /* 03A8 */  0x64, 0x58, 0x3E, 0x30, 0x78, 0x39, 0x45, 0x3C,  // dX>0x9E<
+                    /* 03B0 */  0x2F, 0x52, 0x65, 0x64, 0x58, 0x3E, 0x0A, 0x20,  // /RedX>. 
+                    /* 03B8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 03C0 */  0x52, 0x65, 0x64, 0x59, 0x3E, 0x30, 0x78, 0x35,  // RedY>0x5
+                    /* 03C8 */  0x35, 0x3C, 0x2F, 0x52, 0x65, 0x64, 0x59, 0x3E,  // 5</RedY>
+                    /* 03D0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 03D8 */  0x20, 0x3C, 0x47, 0x72, 0x65, 0x65, 0x6E, 0x58,  //  <GreenX
+                    /* 03E0 */  0x3E, 0x30, 0x78, 0x34, 0x45, 0x3C, 0x2F, 0x47,  // >0x4E</G
+                    /* 03E8 */  0x72, 0x65, 0x65, 0x6E, 0x58, 0x3E, 0x0A, 0x20,  // reenX>. 
+                    /* 03F0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 03F8 */  0x47, 0x72, 0x65, 0x65, 0x6E, 0x59, 0x3E, 0x30,  // GreenY>0
+                    /* 0400 */  0x78, 0x39, 0x42, 0x3C, 0x2F, 0x47, 0x72, 0x65,  // x9B</Gre
+                    /* 0408 */  0x65, 0x6E, 0x59, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // enY>.   
+                    /* 0410 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x42, 0x6C,  //      <Bl
+                    /* 0418 */  0x75, 0x65, 0x58, 0x3E, 0x30, 0x78, 0x32, 0x36,  // ueX>0x26
+                    /* 0420 */  0x3C, 0x2F, 0x42, 0x6C, 0x75, 0x65, 0x58, 0x3E,  // </BlueX>
+                    /* 0428 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0430 */  0x20, 0x3C, 0x42, 0x6C, 0x75, 0x65, 0x59, 0x3E,  //  <BlueY>
+                    /* 0438 */  0x30, 0x78, 0x30, 0x46, 0x3C, 0x2F, 0x42, 0x6C,  // 0x0F</Bl
+                    /* 0440 */  0x75, 0x65, 0x59, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ueY>.   
+                    /* 0448 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x57, 0x68,  //      <Wh
+                    /* 0450 */  0x69, 0x74, 0x65, 0x58, 0x3E, 0x30, 0x78, 0x35,  // iteX>0x5
+                    /* 0458 */  0x30, 0x3C, 0x2F, 0x57, 0x68, 0x69, 0x74, 0x65,  // 0</White
+                    /* 0460 */  0x58, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // X>.     
+                    /* 0468 */  0x20, 0x20, 0x20, 0x3C, 0x57, 0x68, 0x69, 0x74,  //    <Whit
+                    /* 0470 */  0x65, 0x59, 0x3E, 0x30, 0x78, 0x35, 0x34, 0x3C,  // eY>0x54<
+                    /* 0478 */  0x2F, 0x57, 0x68, 0x69, 0x74, 0x65, 0x59, 0x3E,  // /WhiteY>
+                    /* 0480 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0488 */  0x20, 0x3C, 0x45, 0x73, 0x74, 0x61, 0x62, 0x6C,  //  <Establ
+                    /* 0490 */  0x69, 0x73, 0x68, 0x65, 0x64, 0x54, 0x69, 0x6D,  // ishedTim
+                    /* 0498 */  0x69, 0x6E, 0x67, 0x73, 0x49, 0x3E, 0x30, 0x78,  // ingsI>0x
+                    /* 04A0 */  0x30, 0x3C, 0x2F, 0x45, 0x73, 0x74, 0x61, 0x62,  // 0</Estab
+                    /* 04A8 */  0x6C, 0x69, 0x73, 0x68, 0x65, 0x64, 0x54, 0x69,  // lishedTi
+                    /* 04B0 */  0x6D, 0x69, 0x6E, 0x67, 0x73, 0x49, 0x3E, 0x0A,  // mingsI>.
+                    /* 04B8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 04C0 */  0x3C, 0x45, 0x73, 0x74, 0x61, 0x62, 0x6C, 0x69,  // <Establi
+                    /* 04C8 */  0x73, 0x68, 0x65, 0x64, 0x54, 0x69, 0x6D, 0x69,  // shedTimi
+                    /* 04D0 */  0x6E, 0x67, 0x73, 0x49, 0x49, 0x3E, 0x30, 0x78,  // ngsII>0x
+                    /* 04D8 */  0x30, 0x3C, 0x2F, 0x45, 0x73, 0x74, 0x61, 0x62,  // 0</Estab
+                    /* 04E0 */  0x6C, 0x69, 0x73, 0x68, 0x65, 0x64, 0x54, 0x69,  // lishedTi
+                    /* 04E8 */  0x6D, 0x69, 0x6E, 0x67, 0x73, 0x49, 0x49, 0x3E,  // mingsII>
+                    /* 04F0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 04F8 */  0x20, 0x3C, 0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61,  //  <Manufa
+                    /* 0500 */  0x63, 0x74, 0x75, 0x72, 0x65, 0x73, 0x54, 0x69,  // cturesTi
+                    /* 0508 */  0x6D, 0x69, 0x6E, 0x67, 0x3E, 0x30, 0x78, 0x30,  // ming>0x0
+                    /* 0510 */  0x3C, 0x2F, 0x4D, 0x61, 0x6E, 0x75, 0x66, 0x61,  // </Manufa
+                    /* 0518 */  0x63, 0x74, 0x75, 0x72, 0x65, 0x73, 0x54, 0x69,  // cturesTi
+                    /* 0520 */  0x6D, 0x69, 0x6E, 0x67, 0x3E, 0x0A, 0x20, 0x20,  // ming>.  
+                    /* 0528 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x53,  //       <S
+                    /* 0530 */  0x74, 0x61, 0x6E, 0x64, 0x61, 0x72, 0x64, 0x54,  // tandardT
+                    /* 0538 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73, 0x31, 0x2F,  // imings1/
+                    /* 0540 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0548 */  0x20, 0x20, 0x3C, 0x53, 0x74, 0x61, 0x6E, 0x64,  //   <Stand
+                    /* 0550 */  0x61, 0x72, 0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // ardTimin
+                    /* 0558 */  0x67, 0x73, 0x32, 0x2F, 0x3E, 0x0A, 0x20, 0x20,  // gs2/>.  
+                    /* 0560 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x53,  //       <S
+                    /* 0568 */  0x74, 0x61, 0x6E, 0x64, 0x61, 0x72, 0x64, 0x54,  // tandardT
+                    /* 0570 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73, 0x33, 0x2F,  // imings3/
+                    /* 0578 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0580 */  0x20, 0x20, 0x3C, 0x53, 0x74, 0x61, 0x6E, 0x64,  //   <Stand
+                    /* 0588 */  0x61, 0x72, 0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // ardTimin
+                    /* 0590 */  0x67, 0x73, 0x34, 0x2F, 0x3E, 0x0A, 0x20, 0x20,  // gs4/>.  
+                    /* 0598 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x53,  //       <S
+                    /* 05A0 */  0x74, 0x61, 0x6E, 0x64, 0x61, 0x72, 0x64, 0x54,  // tandardT
+                    /* 05A8 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73, 0x35, 0x2F,  // imings5/
+                    /* 05B0 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 05B8 */  0x20, 0x20, 0x3C, 0x53, 0x74, 0x61, 0x6E, 0x64,  //   <Stand
+                    /* 05C0 */  0x61, 0x72, 0x64, 0x54, 0x69, 0x6D, 0x69, 0x6E,  // ardTimin
+                    /* 05C8 */  0x67, 0x73, 0x36, 0x2F, 0x3E, 0x0A, 0x20, 0x20,  // gs6/>.  
+                    /* 05D0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x53,  //       <S
+                    /* 05D8 */  0x74, 0x61, 0x6E, 0x64, 0x61, 0x72, 0x64, 0x54,  // tandardT
+                    /* 05E0 */  0x69, 0x6D, 0x69, 0x6E, 0x67, 0x73, 0x37, 0x2F,  // imings7/
+                    /* 05E8 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 05F0 */  0x20, 0x20, 0x3C, 0x53, 0x69, 0x67, 0x6E, 0x61,  //   <Signa
+                    /* 05F8 */  0x6C, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x49,  // lTimingI
+                    /* 0600 */  0x6E, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65,  // nterface
+                    /* 0608 */  0x2F, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // />.    <
+                    /* 0610 */  0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x3E, 0x0A,  // /Group>.
+                    /* 0618 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x47, 0x72, 0x6F,  //     <Gro
+                    /* 0620 */  0x75, 0x70, 0x20, 0x69, 0x64, 0x3D, 0x27, 0x44,  // up id='D
+                    /* 0628 */  0x65, 0x74, 0x61, 0x69, 0x6C, 0x65, 0x64, 0x20,  // etailed 
+                    /* 0630 */  0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67, 0x27, 0x3E,  // Timing'>
+                    /* 0638 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0640 */  0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  //  <Horizo
+                    /* 0648 */  0x6E, 0x74, 0x61, 0x6C, 0x53, 0x63, 0x72, 0x65,  // ntalScre
+                    /* 0650 */  0x65, 0x6E, 0x53, 0x69, 0x7A, 0x65, 0x4D, 0x4D,  // enSizeMM
+                    /* 0658 */  0x3E, 0x30, 0x78, 0x32, 0x35, 0x3C, 0x2F, 0x48,  // >0x25</H
+                    /* 0660 */  0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61,  // orizonta
+                    /* 0668 */  0x6C, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6E, 0x53,  // lScreenS
+                    /* 0670 */  0x69, 0x7A, 0x65, 0x4D, 0x4D, 0x3E, 0x0A, 0x20,  // izeMM>. 
+                    /* 0678 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0680 */  0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C,  // Vertical
+                    /* 0688 */  0x53, 0x63, 0x72, 0x65, 0x65, 0x6E, 0x53, 0x69,  // ScreenSi
+                    /* 0690 */  0x7A, 0x65, 0x4D, 0x4D, 0x3E, 0x30, 0x78, 0x41,  // zeMM>0xA
+                    /* 0698 */  0x32, 0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74, 0x69,  // 2</Verti
+                    /* 06A0 */  0x63, 0x61, 0x6C, 0x53, 0x63, 0x72, 0x65, 0x65,  // calScree
+                    /* 06A8 */  0x6E, 0x53, 0x69, 0x7A, 0x65, 0x4D, 0x4D, 0x3E,  // nSizeMM>
+                    /* 06B0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 06B8 */  0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  //  <Horizo
+                    /* 06C0 */  0x6E, 0x74, 0x61, 0x6C, 0x56, 0x65, 0x72, 0x74,  // ntalVert
+                    /* 06C8 */  0x69, 0x63, 0x61, 0x6C, 0x53, 0x63, 0x72, 0x65,  // icalScre
+                    /* 06D0 */  0x65, 0x6E, 0x53, 0x69, 0x7A, 0x65, 0x4D, 0x4D,  // enSizeMM
+                    /* 06D8 */  0x3E, 0x30, 0x78, 0x31, 0x30, 0x3C, 0x2F, 0x48,  // >0x10</H
+                    /* 06E0 */  0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61,  // orizonta
+                    /* 06E8 */  0x6C, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,  // lVertica
+                    /* 06F0 */  0x6C, 0x53, 0x63, 0x72, 0x65, 0x65, 0x6E, 0x53,  // lScreenS
+                    /* 06F8 */  0x69, 0x7A, 0x65, 0x4D, 0x4D, 0x3E, 0x0A, 0x20,  // izeMM>. 
+                    /* 0700 */  0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47, 0x72, 0x6F,  //    </Gro
+                    /* 0708 */  0x75, 0x70, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // up>.    
+                    /* 0710 */  0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x20, 0x69,  // <Group i
+                    /* 0718 */  0x64, 0x3D, 0x27, 0x41, 0x63, 0x74, 0x69, 0x76,  // d='Activ
+                    /* 0720 */  0x65, 0x20, 0x54, 0x69, 0x6D, 0x69, 0x6E, 0x67,  // e Timing
+                    /* 0728 */  0x27, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // '>.     
+                    /* 0730 */  0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69,  //    <Hori
+                    /* 0738 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x41, 0x63,  // zontalAc
+                    /* 0740 */  0x74, 0x69, 0x76, 0x65, 0x3E, 0x31, 0x39, 0x32,  // tive>192
+                    /* 0748 */  0x30, 0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69, 0x7A,  // 0</Horiz
+                    /* 0750 */  0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x41, 0x63, 0x74,  // ontalAct
+                    /* 0758 */  0x69, 0x76, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ive>.   
+                    /* 0760 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F,  //      <Ho
+                    /* 0768 */  0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C,  // rizontal
+                    /* 0770 */  0x46, 0x72, 0x6F, 0x6E, 0x74, 0x50, 0x6F, 0x72,  // FrontPor
+                    /* 0778 */  0x63, 0x68, 0x3E, 0x35, 0x38, 0x3C, 0x2F, 0x48,  // ch>58</H
+                    /* 0780 */  0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61,  // orizonta
+                    /* 0788 */  0x6C, 0x46, 0x72, 0x6F, 0x6E, 0x74, 0x50, 0x6F,  // lFrontPo
+                    /* 0790 */  0x72, 0x63, 0x68, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // rch>.   
+                    /* 0798 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F,  //      <Ho
+                    /* 07A0 */  0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C,  // rizontal
+                    /* 07A8 */  0x42, 0x61, 0x63, 0x6B, 0x50, 0x6F, 0x72, 0x63,  // BackPorc
+                    /* 07B0 */  0x68, 0x3E, 0x36, 0x30, 0x3C, 0x2F, 0x48, 0x6F,  // h>60</Ho
+                    /* 07B8 */  0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C,  // rizontal
+                    /* 07C0 */  0x42, 0x61, 0x63, 0x6B, 0x50, 0x6F, 0x72, 0x63,  // BackPorc
+                    /* 07C8 */  0x68, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // h>.     
+                    /* 07D0 */  0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69,  //    <Hori
+                    /* 07D8 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x53, 0x79,  // zontalSy
+                    /* 07E0 */  0x6E, 0x63, 0x50, 0x75, 0x6C, 0x73, 0x65, 0x3E,  // ncPulse>
+                    /* 07E8 */  0x34, 0x32, 0x3C, 0x2F, 0x48, 0x6F, 0x72, 0x69,  // 42</Hori
+                    /* 07F0 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x53, 0x79,  // zontalSy
+                    /* 07F8 */  0x6E, 0x63, 0x50, 0x75, 0x6C, 0x73, 0x65, 0x3E,  // ncPulse>
+                    /* 0800 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0808 */  0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F,  //  <Horizo
+                    /* 0810 */  0x6E, 0x74, 0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63,  // ntalSync
+                    /* 0818 */  0x53, 0x6B, 0x65, 0x77, 0x3E, 0x30, 0x3C, 0x2F,  // Skew>0</
+                    /* 0820 */  0x48, 0x6F, 0x72, 0x69, 0x7A, 0x6F, 0x6E, 0x74,  // Horizont
+                    /* 0828 */  0x61, 0x6C, 0x53, 0x79, 0x6E, 0x63, 0x53, 0x6B,  // alSyncSk
+                    /* 0830 */  0x65, 0x77, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // ew>.    
+                    /* 0838 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F, 0x72,  //     <Hor
+                    /* 0840 */  0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x4C,  // izontalL
+                    /* 0848 */  0x65, 0x66, 0x74, 0x42, 0x6F, 0x72, 0x64, 0x65,  // eftBorde
+                    /* 0850 */  0x72, 0x3E, 0x30, 0x3C, 0x2F, 0x48, 0x6F, 0x72,  // r>0</Hor
+                    /* 0858 */  0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x4C,  // izontalL
+                    /* 0860 */  0x65, 0x66, 0x74, 0x42, 0x6F, 0x72, 0x64, 0x65,  // eftBorde
+                    /* 0868 */  0x72, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // r>.     
+                    /* 0870 */  0x20, 0x20, 0x20, 0x3C, 0x48, 0x6F, 0x72, 0x69,  //    <Hori
+                    /* 0878 */  0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x52, 0x69,  // zontalRi
+                    /* 0880 */  0x67, 0x68, 0x74, 0x42, 0x6F, 0x72, 0x64, 0x65,  // ghtBorde
+                    /* 0888 */  0x72, 0x3E, 0x30, 0x3C, 0x2F, 0x48, 0x6F, 0x72,  // r>0</Hor
+                    /* 0890 */  0x69, 0x7A, 0x6F, 0x6E, 0x74, 0x61, 0x6C, 0x52,  // izontalR
+                    /* 0898 */  0x69, 0x67, 0x68, 0x74, 0x42, 0x6F, 0x72, 0x64,  // ightBord
+                    /* 08A0 */  0x65, 0x72, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // er>.    
+                    /* 08A8 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65, 0x72,  //     <Ver
+                    /* 08B0 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x41, 0x63, 0x74,  // ticalAct
+                    /* 08B8 */  0x69, 0x76, 0x65, 0x3E, 0x31, 0x30, 0x38, 0x30,  // ive>1080
+                    /* 08C0 */  0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63,  // </Vertic
+                    /* 08C8 */  0x61, 0x6C, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65,  // alActive
+                    /* 08D0 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 08D8 */  0x20, 0x20, 0x3C, 0x56, 0x65, 0x72, 0x74, 0x69,  //   <Verti
+                    /* 08E0 */  0x63, 0x61, 0x6C, 0x46, 0x72, 0x6F, 0x6E, 0x74,  // calFront
+                    /* 08E8 */  0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E, 0x33, 0x3C,  // Porch>3<
+                    /* 08F0 */  0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,  // /Vertica
+                    /* 08F8 */  0x6C, 0x46, 0x72, 0x6F, 0x6E, 0x74, 0x50, 0x6F,  // lFrontPo
+                    /* 0900 */  0x72, 0x63, 0x68, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // rch>.   
+                    /* 0908 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x56, 0x65,  //      <Ve
+                    /* 0910 */  0x72, 0x74, 0x69, 0x63, 0x61, 0x6C, 0x42, 0x61,  // rticalBa
+                    /* 0918 */  0x63, 0x6B, 0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E,  // ckPorch>
+                    /* 0920 */  0x35, 0x34, 0x3C, 0x2F, 0x56, 0x65, 0x72, 0x74,  // 54</Vert
+                    /* 0928 */  0x69, 0x63, 0x61, 0x6C, 0x42, 0x61, 0x63, 0x6B,  // icalBack
+                    /* 0930 */  0x50, 0x6F, 0x72, 0x63, 0x68, 0x3E, 0x0A, 0x20,  // Porch>. 
+                    /* 0938 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0940 */  0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C,  // Vertical
+                    /* 0948 */  0x53, 0x79, 0x6E, 0x63, 0x50, 0x75, 0x6C, 0x73,  // SyncPuls
+                    /* 0950 */  0x65, 0x3E, 0x35, 0x3C, 0x2F, 0x56, 0x65, 0x72,  // e>5</Ver
+                    /* 0958 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x53, 0x79, 0x6E,  // ticalSyn
+                    /* 0960 */  0x63, 0x50, 0x75, 0x6C, 0x73, 0x65, 0x3E, 0x0A,  // cPulse>.
+                    /* 0968 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0970 */  0x3C, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,  // <Vertica
+                    /* 0978 */  0x6C, 0x53, 0x79, 0x6E, 0x63, 0x53, 0x6B, 0x65,  // lSyncSke
+                    /* 0980 */  0x77, 0x3E, 0x30, 0x3C, 0x2F, 0x56, 0x65, 0x72,  // w>0</Ver
+                    /* 0988 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x53, 0x79, 0x6E,  // ticalSyn
+                    /* 0990 */  0x63, 0x53, 0x6B, 0x65, 0x77, 0x3E, 0x0A, 0x20,  // cSkew>. 
+                    /* 0998 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 09A0 */  0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61, 0x6C,  // Vertical
+                    /* 09A8 */  0x54, 0x6F, 0x70, 0x42, 0x6F, 0x72, 0x64, 0x65,  // TopBorde
+                    /* 09B0 */  0x72, 0x3E, 0x30, 0x3C, 0x2F, 0x56, 0x65, 0x72,  // r>0</Ver
+                    /* 09B8 */  0x74, 0x69, 0x63, 0x61, 0x6C, 0x54, 0x6F, 0x70,  // ticalTop
+                    /* 09C0 */  0x42, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E, 0x0A,  // Border>.
+                    /* 09C8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 09D0 */  0x3C, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,  // <Vertica
+                    /* 09D8 */  0x6C, 0x42, 0x6F, 0x74, 0x74, 0x6F, 0x6D, 0x42,  // lBottomB
+                    /* 09E0 */  0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E, 0x30, 0x3C,  // order>0<
+                    /* 09E8 */  0x2F, 0x56, 0x65, 0x72, 0x74, 0x69, 0x63, 0x61,  // /Vertica
+                    /* 09F0 */  0x6C, 0x42, 0x6F, 0x74, 0x74, 0x6F, 0x6D, 0x42,  // lBottomB
+                    /* 09F8 */  0x6F, 0x72, 0x64, 0x65, 0x72, 0x3E, 0x0A, 0x20,  // order>. 
+                    /* 0A00 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0A08 */  0x49, 0x6E, 0x76, 0x65, 0x72, 0x74, 0x44, 0x61,  // InvertDa
+                    /* 0A10 */  0x74, 0x61, 0x50, 0x6F, 0x6C, 0x61, 0x72, 0x69,  // taPolari
+                    /* 0A18 */  0x74, 0x79, 0x3E, 0x46, 0x61, 0x6C, 0x73, 0x65,  // ty>False
+                    /* 0A20 */  0x3C, 0x2F, 0x49, 0x6E, 0x76, 0x65, 0x72, 0x74,  // </Invert
+                    /* 0A28 */  0x44, 0x61, 0x74, 0x61, 0x50, 0x6F, 0x6C, 0x61,  // DataPola
+                    /* 0A30 */  0x72, 0x69, 0x74, 0x79, 0x3E, 0x0A, 0x20, 0x20,  // rity>.  
+                    /* 0A38 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x49,  //       <I
+                    /* 0A40 */  0x6E, 0x76, 0x65, 0x72, 0x74, 0x56, 0x73, 0x79,  // nvertVsy
+                    /* 0A48 */  0x6E, 0x63, 0x50, 0x6F, 0x6C, 0x61, 0x69, 0x72,  // ncPolair
+                    /* 0A50 */  0x74, 0x79, 0x3E, 0x46, 0x61, 0x6C, 0x73, 0x65,  // ty>False
+                    /* 0A58 */  0x3C, 0x2F, 0x49, 0x6E, 0x76, 0x65, 0x72, 0x74,  // </Invert
+                    /* 0A60 */  0x56, 0x73, 0x79, 0x6E, 0x63, 0x50, 0x6F, 0x6C,  // VsyncPol
+                    /* 0A68 */  0x61, 0x69, 0x72, 0x74, 0x79, 0x3E, 0x0A, 0x20,  // airty>. 
+                    /* 0A70 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0A78 */  0x49, 0x6E, 0x76, 0x65, 0x72, 0x74, 0x48, 0x73,  // InvertHs
+                    /* 0A80 */  0x79, 0x6E, 0x63, 0x50, 0x6F, 0x6C, 0x61, 0x72,  // yncPolar
+                    /* 0A88 */  0x69, 0x74, 0x79, 0x3E, 0x46, 0x61, 0x6C, 0x73,  // ity>Fals
+                    /* 0A90 */  0x65, 0x3C, 0x2F, 0x49, 0x6E, 0x76, 0x65, 0x72,  // e</Inver
+                    /* 0A98 */  0x74, 0x48, 0x73, 0x79, 0x6E, 0x63, 0x50, 0x6F,  // tHsyncPo
+                    /* 0AA0 */  0x6C, 0x61, 0x72, 0x69, 0x74, 0x79, 0x3E, 0x0A,  // larity>.
+                    /* 0AA8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0AB0 */  0x3C, 0x42, 0x6F, 0x72, 0x64, 0x65, 0x72, 0x43,  // <BorderC
+                    /* 0AB8 */  0x6F, 0x6C, 0x6F, 0x72, 0x3E, 0x30, 0x78, 0x30,  // olor>0x0
+                    /* 0AC0 */  0x3C, 0x2F, 0x42, 0x6F, 0x72, 0x64, 0x65, 0x72,  // </Border
+                    /* 0AC8 */  0x43, 0x6F, 0x6C, 0x6F, 0x72, 0x3E, 0x0A, 0x20,  // Color>. 
+                    /* 0AD0 */  0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47, 0x72, 0x6F,  //    </Gro
+                    /* 0AD8 */  0x75, 0x70, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // up>.    
+                    /* 0AE0 */  0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x20, 0x69,  // <Group i
+                    /* 0AE8 */  0x64, 0x3D, 0x27, 0x44, 0x69, 0x73, 0x70, 0x6C,  // d='Displ
+                    /* 0AF0 */  0x61, 0x79, 0x20, 0x49, 0x6E, 0x74, 0x65, 0x72,  // ay Inter
+                    /* 0AF8 */  0x66, 0x61, 0x63, 0x65, 0x27, 0x3E, 0x0A, 0x20,  // face'>. 
+                    /* 0B00 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0B08 */  0x49, 0x6E, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63,  // Interfac
+                    /* 0B10 */  0x65, 0x54, 0x79, 0x70, 0x65, 0x3E, 0x38, 0x3C,  // eType>8<
+                    /* 0B18 */  0x2F, 0x49, 0x6E, 0x74, 0x65, 0x72, 0x66, 0x61,  // /Interfa
+                    /* 0B20 */  0x63, 0x65, 0x54, 0x79, 0x70, 0x65, 0x3E, 0x0A,  // ceType>.
+                    /* 0B28 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0B30 */  0x3C, 0x49, 0x6E, 0x74, 0x65, 0x72, 0x66, 0x61,  // <Interfa
+                    /* 0B38 */  0x63, 0x65, 0x43, 0x6F, 0x6C, 0x6F, 0x72, 0x46,  // ceColorF
+                    /* 0B40 */  0x6F, 0x72, 0x6D, 0x61, 0x74, 0x3E, 0x33, 0x3C,  // ormat>3<
+                    /* 0B48 */  0x2F, 0x49, 0x6E, 0x74, 0x65, 0x72, 0x66, 0x61,  // /Interfa
+                    /* 0B50 */  0x63, 0x65, 0x43, 0x6F, 0x6C, 0x6F, 0x72, 0x46,  // ceColorF
+                    /* 0B58 */  0x6F, 0x72, 0x6D, 0x61, 0x74, 0x3E, 0x0A, 0x20,  // ormat>. 
+                    /* 0B60 */  0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47, 0x72, 0x6F,  //    </Gro
+                    /* 0B68 */  0x75, 0x70, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // up>.    
+                    /* 0B70 */  0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x20, 0x69,  // <Group i
+                    /* 0B78 */  0x64, 0x3D, 0x27, 0x44, 0x53, 0x49, 0x20, 0x49,  // d='DSI I
+                    /* 0B80 */  0x6E, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65,  // nterface
+                    /* 0B88 */  0x27, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // '>.     
+                    /* 0B90 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x43,  //    <DSIC
+                    /* 0B98 */  0x68, 0x61, 0x6E, 0x6E, 0x65, 0x6C, 0x49, 0x64,  // hannelId
+                    /* 0BA0 */  0x3E, 0x31, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x43,  // >1</DSIC
+                    /* 0BA8 */  0x68, 0x61, 0x6E, 0x6E, 0x65, 0x6C, 0x49, 0x64,  // hannelId
+                    /* 0BB0 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0BB8 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x56, 0x69,  //   <DSIVi
+                    /* 0BC0 */  0x72, 0x74, 0x75, 0x61, 0x6C, 0x49, 0x64, 0x3E,  // rtualId>
+                    /* 0BC8 */  0x30, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x56, 0x69,  // 0</DSIVi
+                    /* 0BD0 */  0x72, 0x74, 0x75, 0x61, 0x6C, 0x49, 0x64, 0x3E,  // rtualId>
+                    /* 0BD8 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0BE0 */  0x20, 0x3C, 0x44, 0x53, 0x49, 0x43, 0x6F, 0x6C,  //  <DSICol
+                    /* 0BE8 */  0x6F, 0x72, 0x46, 0x6F, 0x72, 0x6D, 0x61, 0x74,  // orFormat
+                    /* 0BF0 */  0x3E, 0x33, 0x36, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // >36</DSI
+                    /* 0BF8 */  0x43, 0x6F, 0x6C, 0x6F, 0x72, 0x46, 0x6F, 0x72,  // ColorFor
+                    /* 0C00 */  0x6D, 0x61, 0x74, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // mat>.   
+                    /* 0C08 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53,  //      <DS
+                    /* 0C10 */  0x49, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63,  // ITraffic
+                    /* 0C18 */  0x4D, 0x6F, 0x64, 0x65, 0x3E, 0x31, 0x3C, 0x2F,  // Mode>1</
+                    /* 0C20 */  0x44, 0x53, 0x49, 0x54, 0x72, 0x61, 0x66, 0x66,  // DSITraff
+                    /* 0C28 */  0x69, 0x63, 0x4D, 0x6F, 0x64, 0x65, 0x3E, 0x0A,  // icMode>.
+                    /* 0C30 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0C38 */  0x3C, 0x44, 0x53, 0x49, 0x4C, 0x61, 0x6E, 0x65,  // <DSILane
+                    /* 0C40 */  0x73, 0x3E, 0x34, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // s>4</DSI
+                    /* 0C48 */  0x4C, 0x61, 0x6E, 0x65, 0x73, 0x3E, 0x0A, 0x20,  // Lanes>. 
+                    /* 0C50 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C,  //        <
+                    /* 0C58 */  0x44, 0x53, 0x49, 0x4C, 0x50, 0x31, 0x31, 0x41,  // DSILP11A
+                    /* 0C60 */  0x74, 0x49, 0x6E, 0x69, 0x74, 0x3E, 0x54, 0x72,  // tInit>Tr
+                    /* 0C68 */  0x75, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x4C,  // ue</DSIL
+                    /* 0C70 */  0x50, 0x31, 0x31, 0x41, 0x74, 0x49, 0x6E, 0x69,  // P11AtIni
+                    /* 0C78 */  0x74, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // t>.     
+                    /* 0C80 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x48,  //    <DSIH
+                    /* 0C88 */  0x73, 0x61, 0x48, 0x73, 0x65, 0x41, 0x66, 0x74,  // saHseAft
+                    /* 0C90 */  0x65, 0x72, 0x56, 0x73, 0x56, 0x65, 0x3E, 0x46,  // erVsVe>F
+                    /* 0C98 */  0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F, 0x44, 0x53,  // alse</DS
+                    /* 0CA0 */  0x49, 0x48, 0x73, 0x61, 0x48, 0x73, 0x65, 0x41,  // IHsaHseA
+                    /* 0CA8 */  0x66, 0x74, 0x65, 0x72, 0x56, 0x73, 0x56, 0x65,  // fterVsVe
+                    /* 0CB0 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 0CB8 */  0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x4C, 0x6F,  //   <DSILo
+                    /* 0CC0 */  0x77, 0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F,  // wPowerMo
+                    /* 0CC8 */  0x64, 0x65, 0x49, 0x6E, 0x48, 0x46, 0x50, 0x3E,  // deInHFP>
+                    /* 0CD0 */  0x46, 0x61, 0x6C, 0x73, 0x65, 0x3C, 0x2F, 0x44,  // False</D
+                    /* 0CD8 */  0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F, 0x77,  // SILowPow
+                    /* 0CE0 */  0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49, 0x6E,  // erModeIn
+                    /* 0CE8 */  0x48, 0x46, 0x50, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // HFP>.   
+                    /* 0CF0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53,  //      <DS
+                    /* 0CF8 */  0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F, 0x77, 0x65,  // ILowPowe
+                    /* 0D00 */  0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49, 0x6E, 0x48,  // rModeInH
+                    /* 0D08 */  0x42, 0x50, 0x3E, 0x46, 0x61, 0x6C, 0x73, 0x65,  // BP>False
+                    /* 0D10 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x4C, 0x6F, 0x77,  // </DSILow
+                    /* 0D18 */  0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F, 0x64,  // PowerMod
+                    /* 0D20 */  0x65, 0x49, 0x6E, 0x48, 0x42, 0x50, 0x3E, 0x0A,  // eInHBP>.
+                    /* 0D28 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0D30 */  0x3C, 0x44, 0x53, 0x49, 0x4C, 0x6F, 0x77, 0x50,  // <DSILowP
+                    /* 0D38 */  0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F, 0x64, 0x65,  // owerMode
+                    /* 0D40 */  0x49, 0x6E, 0x48, 0x53, 0x41, 0x3E, 0x46, 0x61,  // InHSA>Fa
+                    /* 0D48 */  0x6C, 0x73, 0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49,  // lse</DSI
+                    /* 0D50 */  0x4C, 0x6F, 0x77, 0x50, 0x6F, 0x77, 0x65, 0x72,  // LowPower
+                    /* 0D58 */  0x4D, 0x6F, 0x64, 0x65, 0x49, 0x6E, 0x48, 0x53,  // ModeInHS
+                    /* 0D60 */  0x41, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // A>.     
+                    /* 0D68 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x4C,  //    <DSIL
+                    /* 0D70 */  0x6F, 0x77, 0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D,  // owPowerM
+                    /* 0D78 */  0x6F, 0x64, 0x65, 0x49, 0x6E, 0x42, 0x4C, 0x4C,  // odeInBLL
+                    /* 0D80 */  0x50, 0x45, 0x4F, 0x46, 0x3E, 0x54, 0x72, 0x75,  // PEOF>Tru
+                    /* 0D88 */  0x65, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x4C, 0x6F,  // e</DSILo
+                    /* 0D90 */  0x77, 0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F,  // wPowerMo
+                    /* 0D98 */  0x64, 0x65, 0x49, 0x6E, 0x42, 0x4C, 0x4C, 0x50,  // deInBLLP
+                    /* 0DA0 */  0x45, 0x4F, 0x46, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // EOF>.   
+                    /* 0DA8 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53,  //      <DS
+                    /* 0DB0 */  0x49, 0x4C, 0x6F, 0x77, 0x50, 0x6F, 0x77, 0x65,  // ILowPowe
+                    /* 0DB8 */  0x72, 0x4D, 0x6F, 0x64, 0x65, 0x49, 0x6E, 0x42,  // rModeInB
+                    /* 0DC0 */  0x4C, 0x4C, 0x50, 0x3E, 0x54, 0x72, 0x75, 0x65,  // LLP>True
+                    /* 0DC8 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x4C, 0x6F, 0x77,  // </DSILow
+                    /* 0DD0 */  0x50, 0x6F, 0x77, 0x65, 0x72, 0x4D, 0x6F, 0x64,  // PowerMod
+                    /* 0DD8 */  0x65, 0x49, 0x6E, 0x42, 0x4C, 0x4C, 0x50, 0x3E,  // eInBLLP>
+                    /* 0DE0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 0DE8 */  0x20, 0x3C, 0x44, 0x53, 0x49, 0x52, 0x65, 0x66,  //  <DSIRef
+                    /* 0DF0 */  0x72, 0x65, 0x73, 0x68, 0x52, 0x61, 0x74, 0x65,  // reshRate
+                    /* 0DF8 */  0x3E, 0x30, 0x78, 0x33, 0x43, 0x30, 0x30, 0x30,  // >0x3C000
+                    /* 0E00 */  0x30, 0x3C, 0x2F, 0x44, 0x53, 0x49, 0x52, 0x65,  // 0</DSIRe
+                    /* 0E08 */  0x66, 0x72, 0x65, 0x73, 0x68, 0x52, 0x61, 0x74,  // freshRat
+                    /* 0E10 */  0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // e>.     
+                    /* 0E18 */  0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49, 0x49,  //    <DSII
+                    /* 0E20 */  0x6E, 0x69, 0x74, 0x4D, 0x61, 0x73, 0x74, 0x65,  // nitMaste
+                    /* 0E28 */  0x72, 0x54, 0x69, 0x6D, 0x65, 0x3E, 0x33, 0x30,  // rTime>30
+                    /* 0E30 */  0x3C, 0x2F, 0x44, 0x53, 0x49, 0x49, 0x6E, 0x69,  // </DSIIni
+                    /* 0E38 */  0x74, 0x4D, 0x61, 0x73, 0x74, 0x65, 0x72, 0x54,  // tMasterT
+                    /* 0E40 */  0x69, 0x6D, 0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20,  // ime>.   
+                    /* 0E48 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53,  //      <DS
+                    /* 0E50 */  0x49, 0x43, 0x6F, 0x6E, 0x74, 0x72, 0x6F, 0x6C,  // IControl
+                    /* 0E58 */  0x6C, 0x65, 0x72, 0x4D, 0x61, 0x70, 0x70, 0x69,  // lerMappi
+                    /* 0E60 */  0x6E, 0x67, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // ng>.    
+                    /* 0E68 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 0E70 */  0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 00.     
+                    /* 0E78 */  0x20, 0x20, 0x20, 0x3C, 0x2F, 0x44, 0x53, 0x49,  //    </DSI
+                    /* 0E80 */  0x43, 0x6F, 0x6E, 0x74, 0x72, 0x6F, 0x6C, 0x6C,  // Controll
+                    /* 0E88 */  0x65, 0x72, 0x4D, 0x61, 0x70, 0x70, 0x69, 0x6E,  // erMappin
+                    /* 0E90 */  0x67, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // g>.    <
+                    /* 0E98 */  0x2F, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x3E, 0x0A,  // /Group>.
+                    /* 0EA0 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x44, 0x53, 0x49,  //     <DSI
+                    /* 0EA8 */  0x49, 0x6E, 0x69, 0x74, 0x53, 0x65, 0x71, 0x75,  // InitSequ
+                    /* 0EB0 */  0x65, 0x6E, 0x63, 0x65, 0x3E, 0x0A, 0x09, 0x09,  // ence>...
+                    /* 0EB8 */  0x32, 0x33, 0x20, 0x30, 0x41, 0x20, 0x30, 0x32,  // 23 0A 02
+                    /* 0EC0 */  0x0A, 0x09, 0x09, 0x32, 0x33, 0x20, 0x31, 0x30,  // ...23 10
+                    /* 0EC8 */  0x20, 0x32, 0x36, 0x0A, 0x09, 0x09, 0x32, 0x33,  //  26...23
+                    /* 0ED0 */  0x20, 0x31, 0x32, 0x20, 0x35, 0x35, 0x0A, 0x09,  //  12 55..
+                    /* 0ED8 */  0x09, 0x32, 0x33, 0x20, 0x35, 0x41, 0x20, 0x30,  // .23 5A 0
+                    /* 0EE0 */  0x35, 0x0A, 0x09, 0x09, 0x32, 0x33, 0x20, 0x35,  // 5...23 5
+                    /* 0EE8 */  0x43, 0x20, 0x30, 0x31, 0x0A, 0x09, 0x09, 0x32,  // C 01...2
+                    /* 0EF0 */  0x33, 0x20, 0x39, 0x33, 0x20, 0x32, 0x30, 0x0A,  // 3 93 20.
+                    /* 0EF8 */  0x09, 0x09, 0x32, 0x33, 0x20, 0x39, 0x34, 0x20,  // ..23 94 
+                    /* 0F00 */  0x38, 0x30, 0x0A, 0x09, 0x09, 0x32, 0x33, 0x20,  // 80...23 
+                    /* 0F08 */  0x30, 0x44, 0x20, 0x30, 0x31, 0x0A, 0x09, 0x09,  // 0D 01...
+                    /* 0F10 */  0x46, 0x46, 0x20, 0x30, 0x41, 0x0A, 0x09, 0x09,  // FF 0A...
+                    /* 0F18 */  0x32, 0x33, 0x20, 0x36, 0x34, 0x20, 0x30, 0x31,  // 23 64 01
+                    /* 0F20 */  0x0A, 0x09, 0x09, 0x32, 0x33, 0x20, 0x37, 0x34,  // ...23 74
+                    /* 0F28 */  0x20, 0x30, 0x30, 0x0A, 0x09, 0x09, 0x32, 0x33,  //  00...23
+                    /* 0F30 */  0x20, 0x37, 0x35, 0x20, 0x30, 0x31, 0x0A, 0x09,  //  75 01..
+                    /* 0F38 */  0x09, 0x32, 0x33, 0x20, 0x37, 0x36, 0x20, 0x30,  // .23 76 0
+                    /* 0F40 */  0x41, 0x0A, 0x09, 0x09, 0x32, 0x33, 0x20, 0x37,  // A...23 7
+                    /* 0F48 */  0x37, 0x20, 0x30, 0x31, 0x0A, 0x09, 0x09, 0x32,  // 7 01...2
+                    /* 0F50 */  0x33, 0x20, 0x37, 0x38, 0x20, 0x38, 0x31, 0x0A,  // 3 78 81.
+                    /* 0F58 */  0x09, 0x09, 0x46, 0x46, 0x20, 0x30, 0x41, 0x0A,  // ..FF 0A.
+                    /* 0F60 */  0x09, 0x09, 0x32, 0x33, 0x20, 0x39, 0x35, 0x20,  // ..23 95 
+                    /* 0F68 */  0x30, 0x30, 0x0A, 0x09, 0x09, 0x32, 0x33, 0x20,  // 00...23 
+                    /* 0F70 */  0x39, 0x36, 0x20, 0x30, 0x41, 0x0A, 0x09, 0x09,  // 96 0A...
+                    /* 0F78 */  0x46, 0x46, 0x20, 0x31, 0x34, 0x0A, 0x09, 0x09,  // FF 14...
+                    /* 0F80 */  0x32, 0x33, 0x20, 0x32, 0x30, 0x20, 0x38, 0x30,  // 23 20 80
+                    /* 0F88 */  0x0A, 0x09, 0x09, 0x32, 0x33, 0x20, 0x32, 0x31,  // ...23 21
+                    /* 0F90 */  0x20, 0x30, 0x37, 0x0A, 0x09, 0x09, 0x32, 0x33,  //  07...23
+                    /* 0F98 */  0x20, 0x32, 0x34, 0x20, 0x33, 0x38, 0x0A, 0x09,  //  24 38..
+                    /* 0FA0 */  0x09, 0x32, 0x33, 0x20, 0x32, 0x35, 0x20, 0x30,  // .23 25 0
+                    /* 0FA8 */  0x34, 0x0A, 0x09, 0x09, 0x32, 0x33, 0x20, 0x32,  // 4...23 2
+                    /* 0FB0 */  0x43, 0x20, 0x32, 0x41, 0x0A, 0x09, 0x09, 0x32,  // C 2A...2
+                    /* 0FB8 */  0x33, 0x20, 0x32, 0x44, 0x20, 0x30, 0x30, 0x0A,  // 3 2D 00.
+                    /* 0FC0 */  0x09, 0x09, 0x32, 0x33, 0x20, 0x33, 0x30, 0x20,  // ..23 30 
+                    /* 0FC8 */  0x30, 0x35, 0x0A, 0x09, 0x09, 0x32, 0x33, 0x20,  // 05...23 
+                    /* 0FD0 */  0x33, 0x31, 0x20, 0x30, 0x30, 0x0A, 0x09, 0x09,  // 31 00...
+                    /* 0FD8 */  0x32, 0x33, 0x20, 0x33, 0x34, 0x20, 0x33, 0x43,  // 23 34 3C
+                    /* 0FE0 */  0x0A, 0x09, 0x09, 0x32, 0x33, 0x20, 0x33, 0x36,  // ...23 36
+                    /* 0FE8 */  0x20, 0x33, 0x36, 0x0A, 0x09, 0x09, 0x32, 0x33,  //  36...23
+                    /* 0FF0 */  0x20, 0x33, 0x38, 0x20, 0x33, 0x41, 0x0A, 0x09,  //  38 3A..
+                    /* 0FF8 */  0x09, 0x32, 0x33, 0x20, 0x33, 0x41, 0x20, 0x30,  // .23 3A 0
+                    /* 1000 */  0x33, 0x0A, 0x09, 0x09, 0x32, 0x33, 0x20, 0x35,  // 3...23 5
+                    /* 1008 */  0x42, 0x20, 0x30, 0x30, 0x0A, 0x09, 0x09, 0x32,  // B 00...2
+                    /* 1010 */  0x33, 0x20, 0x33, 0x43, 0x20, 0x30, 0x30, 0x0A,  // 3 3C 00.
+                    /* 1018 */  0x09, 0x09, 0x46, 0x46, 0x20, 0x30, 0x41, 0x0A,  // ..FF 0A.
+                    /* 1020 */  0x09, 0x09, 0x32, 0x33, 0x20, 0x35, 0x41, 0x20,  // ..23 5A 
+                    /* 1028 */  0x30, 0x44, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C,  // 0D.    <
+                    /* 1030 */  0x2F, 0x44, 0x53, 0x49, 0x49, 0x6E, 0x69, 0x74,  // /DSIInit
+                    /* 1038 */  0x53, 0x65, 0x71, 0x75, 0x65, 0x6E, 0x63, 0x65,  // Sequence
+                    /* 1040 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  // >.    <D
+                    /* 1048 */  0x53, 0x49, 0x54, 0x65, 0x72, 0x6D, 0x53, 0x65,  // SITermSe
+                    /* 1050 */  0x71, 0x75, 0x65, 0x6E, 0x63, 0x65, 0x3E, 0x0A,  // quence>.
+                    /* 1058 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 1060 */  0x32, 0x33, 0x20, 0x35, 0x41, 0x20, 0x30, 0x35,  // 23 5A 05
+                    /* 1068 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 1070 */  0x20, 0x32, 0x33, 0x20, 0x39, 0x36, 0x20, 0x30,  //  23 96 0
+                    /* 1078 */  0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // 0.      
+                    /* 1080 */  0x20, 0x20, 0x32, 0x33, 0x20, 0x39, 0x33, 0x20,  //   23 93 
+                    /* 1088 */  0x30, 0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // 00.     
+                    /* 1090 */  0x20, 0x20, 0x20, 0x46, 0x46, 0x20, 0x30, 0x41,  //    FF 0A
+                    /* 1098 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 10A0 */  0x20, 0x32, 0x33, 0x20, 0x30, 0x44, 0x20, 0x30,  //  23 0D 0
+                    /* 10A8 */  0x30, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x2F,  // 0.    </
+                    /* 10B0 */  0x44, 0x53, 0x49, 0x54, 0x65, 0x72, 0x6D, 0x53,  // DSITermS
+                    /* 10B8 */  0x65, 0x71, 0x75, 0x65, 0x6E, 0x63, 0x65, 0x3E,  // equence>
+                    /* 10C0 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x47, 0x72,  // .    <Gr
+                    /* 10C8 */  0x6F, 0x75, 0x70, 0x20, 0x69, 0x64, 0x3D, 0x27,  // oup id='
+                    /* 10D0 */  0x42, 0x61, 0x63, 0x6B, 0x6C, 0x69, 0x67, 0x68,  // Backligh
+                    /* 10D8 */  0x74, 0x20, 0x43, 0x6F, 0x6E, 0x66, 0x69, 0x67,  // t Config
+                    /* 10E0 */  0x75, 0x72, 0x61, 0x74, 0x69, 0x6F, 0x6E, 0x27,  // uration'
+                    /* 10E8 */  0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // >.      
+                    /* 10F0 */  0x20, 0x20, 0x3C, 0x42, 0x61, 0x63, 0x6B, 0x6C,  //   <Backl
+                    /* 10F8 */  0x69, 0x67, 0x68, 0x74, 0x54, 0x79, 0x70, 0x65,  // ightType
+                    /* 1100 */  0x3E, 0x34, 0x3C, 0x2F, 0x42, 0x61, 0x63, 0x6B,  // >4</Back
+                    /* 1108 */  0x6C, 0x69, 0x67, 0x68, 0x74, 0x54, 0x79, 0x70,  // lightTyp
+                    /* 1110 */  0x65, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20, 0x20,  // e>.     
+                    /* 1118 */  0x20, 0x20, 0x20, 0x3C, 0x42, 0x61, 0x63, 0x6B,  //    <Back
+                    /* 1120 */  0x6C, 0x69, 0x67, 0x68, 0x74, 0x53, 0x74, 0x65,  // lightSte
+                    /* 1128 */  0x70, 0x73, 0x3E, 0x31, 0x30, 0x30, 0x3C, 0x2F,  // ps>100</
+                    /* 1130 */  0x42, 0x61, 0x63, 0x6B, 0x6C, 0x69, 0x67, 0x68,  // Backligh
+                    /* 1138 */  0x74, 0x53, 0x74, 0x65, 0x70, 0x73, 0x3E, 0x0A,  // tSteps>.
+                    /* 1140 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  //         
+                    /* 1148 */  0x3C, 0x41, 0x64, 0x61, 0x70, 0x74, 0x69, 0x76,  // <Adaptiv
+                    /* 1150 */  0x65, 0x42, 0x72, 0x69, 0x67, 0x68, 0x74, 0x6E,  // eBrightn
+                    /* 1158 */  0x65, 0x73, 0x73, 0x46, 0x65, 0x61, 0x74, 0x75,  // essFeatu
+                    /* 1160 */  0x72, 0x65, 0x3E, 0x31, 0x3C, 0x2F, 0x41, 0x64,  // re>1</Ad
+                    /* 1168 */  0x61, 0x70, 0x74, 0x69, 0x76, 0x65, 0x42, 0x72,  // aptiveBr
+                    /* 1170 */  0x69, 0x67, 0x68, 0x74, 0x6E, 0x65, 0x73, 0x73,  // ightness
+                    /* 1178 */  0x46, 0x65, 0x61, 0x74, 0x75, 0x72, 0x65, 0x3E,  // Feature>
+                    /* 1180 */  0x0A, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  // .       
+                    /* 1188 */  0x20, 0x3C, 0x43, 0x41, 0x42, 0x4C, 0x45, 0x6E,  //  <CABLEn
+                    /* 1190 */  0x61, 0x62, 0x6C, 0x65, 0x3E, 0x54, 0x72, 0x75,  // able>Tru
+                    /* 1198 */  0x65, 0x3C, 0x2F, 0x43, 0x41, 0x42, 0x4C, 0x45,  // e</CABLE
+                    /* 11A0 */  0x6E, 0x61, 0x62, 0x6C, 0x65, 0x3E, 0x0A, 0x20,  // nable>. 
+                    /* 11A8 */  0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47, 0x72, 0x6F,  //    </Gro
+                    /* 11B0 */  0x75, 0x70, 0x3E, 0x0A, 0x20, 0x20, 0x20, 0x20,  // up>.    
+                    /* 11B8 */  0x3C, 0x47, 0x72, 0x6F, 0x75, 0x70, 0x20, 0x69,  // <Group i
+                    /* 11C0 */  0x64, 0x3D, 0x27, 0x43, 0x6F, 0x6E, 0x6E, 0x65,  // d='Conne
+                    /* 11C8 */  0x63, 0x74, 0x69, 0x6F, 0x6E, 0x20, 0x43, 0x6F,  // ction Co
+                    /* 11D0 */  0x6E, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74,  // nfigurat
+                    /* 11D8 */  0x69, 0x6F, 0x6E, 0x27, 0x3E, 0x0A, 0x20, 0x20,  // ion'>.  
+                    /* 11E0 */  0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x3C, 0x44,  //       <D
+                    /* 11E8 */  0x69, 0x73, 0x70, 0x6C, 0x61, 0x79, 0x31, 0x52,  // isplay1R
+                    /* 11F0 */  0x65, 0x73, 0x65, 0x74, 0x31, 0x49, 0x6E, 0x66,  // eset1Inf
+                    /* 11F8 */  0x6F, 0x3E, 0x44, 0x53, 0x49, 0x5F, 0x50, 0x41,  // o>DSI_PA
+                    /* 1200 */  0x4E, 0x45, 0x4C, 0x5F, 0x45, 0x4E, 0x2C, 0x20,  // NEL_EN, 
+                    /* 1208 */  0x30, 0x2C, 0x20, 0x30, 0x2C, 0x20, 0x54, 0x52,  // 0, 0, TR
+                    /* 1210 */  0x55, 0x45, 0x3C, 0x2F, 0x44, 0x69, 0x73, 0x70,  // UE</Disp
+                    /* 1218 */  0x6C, 0x61, 0x79, 0x31, 0x52, 0x65, 0x73, 0x65,  // lay1Rese
+                    /* 1220 */  0x74, 0x31, 0x49, 0x6E, 0x66, 0x6F, 0x3E, 0x0A,  // t1Info>.
+                    /* 1228 */  0x20, 0x20, 0x20, 0x20, 0x3C, 0x2F, 0x47, 0x72,  //     </Gr
+                    /* 1230 */  0x6F, 0x75, 0x70, 0x3E, 0x0A, 0x3C, 0x2F, 0x47,  // oup>.</G
+                    /* 1238 */  0x72, 0x6F, 0x75, 0x70, 0x3E, 0x00               // roup>.
+                })
+                While (One)
+                {
+                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    _T_0 = ToInteger (Arg2)
+                    If ((_T_0 == 0x8010))
+                    {
+                        Local2 = PCFG /* \_SB_.GPU0._ROM.PCFG */
+                    }
+                    ElseIf ((_T_0 == 0x8011))
+                    {
+                        Local2 = PCF1 /* External reference */
+                    }
+                    ElseIf ((_T_0 == 0x8012))
+                    {
+                        Local2 = PCF2 /* External reference */
+                    }
+                    ElseIf ((_T_0 == 0x8013))
+                    {
+                        Local2 = PCF3 /* External reference */
+                    }
+                    ElseIf ((_T_0 == 0xC2))
+                    {
+                        Local2 = PCF4 /* \_SB_.GPU0._ROM.PCF4 */
+                    }
+                    ElseIf ((_T_0 == 0xC3))
+                    {
+                        Local2 = PCF5 /* \_SB_.GPU0._ROM.PCF5 */
+                    }
+                    ElseIf ((_T_0 == 0x8055))
+                    {
+                        Local2 = PCF6 /* External reference */
+                    }
+                    ElseIf ((_T_0 == 0x8056))
+                    {
+                        Local2 = PCF7 /* External reference */
+                    }
+                    ElseIf ((_T_0 == 0xC4))
+                    {
+                        Local2 = PCFA /* \_SB_.GPU0._ROM.PCFA */
+                    }
+                    Else
+                    {
+                        Local2 = PCFG /* \_SB_.GPU0._ROM.PCFG */
+                    }
+
+                    Break
+                }
+
                 If ((Arg0 >= SizeOf (Local2)))
                 {
                     Return (Buffer (One)
@@ -76280,42 +84993,27 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 Return (RBUF) /* \_SB_.GPU0.DITH.RBUF */
             }
 
-            Method (BLCP, 1, Serialized)
+            Method (BLCP, 1, NotSerialized)
             {
-                Name (RBUF, Buffer (0x0100){})
-                Local0 = Zero
-                CreateField (RBUF, (Local0 * 0x08), 0x20, PKHR)
-                Local0 += 0x04
-                CreateField (RBUF, (Local0 * 0x08), 0x08, PKCM)
-                Local0 += One
-                CreateField (RBUF, (Local0 * 0x08), 0x08, PKDS)
-                Local0 += One
-                CreateField (RBUF, (Local0 * 0x08), 0x08, PKUB)
-                Local0 += One
-                CreateField (RBUF, (Local0 * 0x08), 0x08, PKLB)
-                Local0 += One
-                Name (BON, Buffer (0x03)
+                Name (RBUF, Buffer (0x08){})
+                CreateDWordField (RBUF, Zero, PKHR)
+                PKHR = Zero
+                CreateDWordField (RBUF, 0x04, EOP)
+                EOP = Zero
+                If ((Arg0 <= 0x64))
                 {
-                     0x39, 0x53, 0x24                                 // 9S$
-                })
-                CreateField (RBUF, (Local0 * 0x08), 0x20, PKH2)
-                Local0 += 0x04
-                CreateField (RBUF, (Local0 * 0x08), 0x20, PKP2)
-                PKH2 = SizeOf (BON)
-                PKP2 = BON /* \_SB_.GPU0.BLCP.BON_ */
-                Local0 += SizeOf (BON)
-                CreateDWordField (RBUF, (Local0 * 0x08), EOF)
-                Local1 = (Arg0 * 0x03FF)
-                Local1 /= 0xFF
-                Local2 = (Arg0 * 0x03FF)
-                Local2 /= 0xFF00
-                Local2 &= 0x03
-                PKHR = 0x04
-                PKCM = 0x39
-                PKDS = 0x51
-                PKUB = Local2
-                PKLB = Local1
-                EOF = Zero
+                    Acquire (\_SB.MUT0, 0xFFFF)
+                    If ((\_SB.ECOK == One))
+                    {
+                        \_SB.I2C7.BSTA = Zero
+                        \_SB.I2C7.BLEN = One
+                        \_SB.I2C7.DAT1 = ToInteger (Arg0)
+                        \_SB.I2C7.APIB = \_SB.I2C7.BUF1
+                    }
+
+                    Release (\_SB.MUT0)
+                }
+
                 Return (RBUF) /* \_SB_.GPU0.BLCP.RBUF */
             }
 
@@ -76542,47 +85240,29 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 Return (RBUF) /* \_SB_.GPU0.BLC2.RBUF */
             }
 
-            Method (ROE1, 3, NotSerialized)
-            {
-                Name (PCFG, Buffer (One)
-                {
-                     0x00                                             // .
-                })
-                Local2 = PCFG /* \_SB_.GPU0.ROE1.PCFG */
-                If ((Arg0 >= SizeOf (Local2)))
-                {
-                    Return (Buffer (One)
-                    {
-                         0x00                                             // .
-                    })
-                }
-                Else
-                {
-                    Local0 = Arg0
-                }
-
-                If ((Arg1 > 0x1000))
-                {
-                    Local1 = 0x1000
-                }
-                Else
-                {
-                    Local1 = Arg1
-                }
-
-                If (((Local0 + Local1) > SizeOf (Local2)))
-                {
-                    Local1 = (SizeOf (Local2) - Local0)
-                }
-
-                CreateField (Local2, (0x08 * Local0), (0x08 * Local1), RBUF)
-                Return (RBUF) /* \_SB_.GPU0.ROE1.RBUF */
-            }
-
             Name (_DOD, Package (0x01)  // _DOD: Display Output Devices
             {
                 0x00024321
             })
+            Device (AVS0)
+            {
+                Name (_ADR, 0x00024321)  // _ADR: Address
+                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                {
+                    Name (RBUF, Buffer (0x02)
+                    {
+                         0x79, 0x00                                       // y.
+                    })
+                    Return (RBUF) /* \_SB_.GPU0.AVS0._CRS.RBUF */
+                }
+
+                Name (_DEP, Package (0x02)  // _DEP: Dependencies
+                {
+                    \_SB.MMU1, 
+                    \_SB.VFE0
+                })
+            }
+
             Method (CHDV, 0, NotSerialized)
             {
                 Name (CHIF, Package (0x02)
@@ -76883,21 +85563,21 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (SCM0)
         {
             Name (_HID, "QCOM0013")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, Zero)  // _UID: Unique ID
         }
 
         Device (TREE)
         {
             Name (_HID, "QCOM00BF")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, Zero)  // _UID: Unique ID
         }
 
         Device (SPMI)
         {
             Name (_HID, "QCOM0015")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, One)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
@@ -76928,7 +85608,11 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         Device (GIO0)
         {
             Name (_HID, "QCOM0016")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
+            Name (_DEP, Package (One)  // _DEP: Dependencies
+            {
+                \_SB.I2C7
+            })
             Name (_UID, Zero)  // _UID: Unique ID
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -76950,6 +85634,36 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     {
                         0x000000F0,
                     }
+                    GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
+                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x000F
+                        }
+                    GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
+                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x0010
+                        }
+                    GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
+                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x0013
+                        }
+                    GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
+                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x001E
+                        }
+                    GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
+                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x003F
+                        }
                 })
                 Return (RBUF) /* \_SB_.GIO0._CRS.RBUF */
             }
@@ -76970,6 +85684,55 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 {
                     GABL = Arg1
                 }
+            }
+
+            OperationRegion (CP22, SystemMemory, 0x03D22000, 0x10)
+            Field (CP22, DWordAcc, NoLock, Preserve)
+            {
+                PI3C,   32, 
+                PIN3,   32, 
+                PI3N,   32, 
+                PI3S,   32
+            }
+
+            Name (_AEI, ResourceTemplate ()  // _AEI: ACPI Event Interrupts
+            {
+                GpioInt (Edge, ActiveBoth, ExclusiveAndWake, PullDown, 0x01F4,
+                    "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                    )
+                    {   // Pin list
+                        0x0022
+                    }
+                GpioInt (Level, ActiveLow, ExclusiveAndWake, PullUp, 0x0000,
+                    "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                    )
+                    {   // Pin list
+                        0x0028
+                    }
+                GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
+                    "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                    )
+                    {   // Pin list
+                        0x007F,
+                        0x0081
+                    }
+            })
+            Method (_E22, 0, NotSerialized)  // _Exx: Edge-Triggered GPE, xx=0x00-0xFF
+            {
+                Local0 = HPDS ()
+                If ((Local0 == One))
+                {
+                    Notify (\_SB.GPU0, 0x92) // Device-Specific
+                }
+
+                \_SB.I2C7.HHPD (Local0)
+            }
+
+            Method (HPDS, 0, NotSerialized)
+            {
+                Local0 = PIN3 /* \_SB_.GIO0.PIN3 */
+                Local0 &= One
+                Return (Local0)
             }
         }
 
@@ -77283,7 +86046,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             PLCD = 0x73
             PRSL = 0xAA
             PPSC = 0x03
-            If ((SIDV >= 0x00020000))
+            If ((\_SB.SIDV >= 0x00020000))
             {
                 QSBE = 0x07
                 QRSE = 0x1C
@@ -77418,16 +86181,16 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             ECS0 = Zero
             CSW0 = Zero
             PPEB = 0x1B000000
-            REBM (0x1B001000, E0LT)
+            REBM (0x1B001000, \_SB.E0LT)
             EEBM (0x1B101000, 0x1B1FFFFF)
         }
 
         Name (G0D3, Zero)
         PowerResource (P0ON, 0x05, 0x0000)
         {
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                GIO0
+                \_SB.GIO0
             })
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
@@ -77438,36 +86201,36 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 If (G0D3)
                 {
-                    If ((^^GIO0.GABL == One))
+                    If ((\_SB.GIO0.GABL == One))
                     {
-                        ^^PCI0.MOD1 = One
+                        \_SB.PCI0.MOD1 = One
                         Sleep (0x05)
-                        ^^PCI0.MOD2 = Zero
+                        \_SB.PCI0.MOD2 = Zero
                     }
 
                     G0D3 = Zero
-                    If (CPUP ())
+                    If (\_SB.CPUP ())
                     {
                         While (One){}
                     }
 
                     Sleep (0x05)
-                    If ((^^GIO0.GABL == One))
+                    If ((\_SB.GIO0.GABL == One))
                     {
-                        ^^PCI0.MOD2 = One
+                        \_SB.PCI0.MOD2 = One
                     }
 
-                    If (LTS0 ())
+                    If (\_SB.LTS0 ())
                     {
-                        E0LT = 0x1B1FFFFF
+                        \_SB.E0LT = 0x1B1FFFFF
                     }
                     Else
                     {
-                        E0LT = 0x1B0FFFFF
+                        \_SB.E0LT = 0x1B0FFFFF
                     }
 
-                    IAT0 ()
-                    MSC0 ()
+                    \_SB.IAT0 ()
+                    \_SB.MSC0 ()
                 }
             }
 
@@ -77484,7 +86247,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     Local0 |= 0x10
                     ESC0 = Local0
                     Local0 = PPM0 /* \_SB_.PPM0 */
-                    While (Local0 &= (0x20 != 0x20))
+                    While ((Local0 &= 0x20 != 0x20))
                     {
                         Sleep (0x0A)
                         PTO0 += One
@@ -77496,9 +86259,9 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         Local0 = PPM0 /* \_SB_.PPM0 */
                     }
 
-                    If ((^^GIO0.GABL == One))
+                    If ((\_SB.GIO0.GABL == One))
                     {
-                        ^^PCI0.MOD2 = Zero
+                        \_SB.PCI0.MOD2 = Zero
                     }
 
                     PPDC = Zero
@@ -77509,9 +86272,9 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
 
         PowerResource (P0OF, 0x05, 0x0000)
         {
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                GIO0
+                \_SB.GIO0
             })
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
@@ -77534,49 +86297,49 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 GP0P = One
                 Sleep (One)
                 GP0P = Zero
-                If ((^^GIO0.GABL == One))
+                If ((\_SB.GIO0.GABL == One))
                 {
-                    ^^PCI0.MOD1 = Zero
+                    \_SB.PCI0.MOD1 = Zero
                     Sleep (One)
-                    ^^PCI0.MOD1 = One
+                    \_SB.PCI0.MOD1 = One
                     Sleep (One)
-                    ^^PCI0.MOD2 = Zero
+                    \_SB.PCI0.MOD2 = Zero
                 }
 
-                If (CPUP ())
+                If (\_SB.CPUP ())
                 {
                     While (One){}
                 }
 
-                If ((^^GIO0.GABL == One))
+                If ((\_SB.GIO0.GABL == One))
                 {
-                    ^^PCI0.MOD2 = One
+                    \_SB.PCI0.MOD2 = One
                 }
 
                 Sleep (0x0A)
-                If (LTS0 ())
+                If (\_SB.LTS0 ())
                 {
-                    E0LT = 0x1B1FFFFF
+                    \_SB.E0LT = 0x1B1FFFFF
                 }
                 Else
                 {
-                    E0LT = 0x1B0FFFFF
+                    \_SB.E0LT = 0x1B0FFFFF
                 }
 
-                IAT0 ()
-                MSC0 ()
+                \_SB.IAT0 ()
+                \_SB.MSC0 ()
             }
         }
 
         Device (PCI0)
         {
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                PEP0
+                \_SB.PEP0
             })
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
             Name (_HID, EisaId ("PNP0A08") /* PCI Express Bus */)  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_CID, EisaId ("PNP0A03") /* PCI Bus */)  // _CID: Compatible ID
             Name (_UID, Zero)  // _UID: Unique ID
             Name (_SEG, Zero)  // _SEG: PCI Segment
@@ -77668,7 +86431,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     CTRL = CDW3 /* \_SB_.PCI0._OSC.CDW3 */
                     If (((SUPP & 0x16) != 0x16))
                     {
-                        CTRL &= 0x1E
+                        (CTRL & 0x1E)
                     }
 
                     CTRL &= 0x15
@@ -77698,7 +86461,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 {
                     While (One)
                     {
-                        Name (_T_0, Zero)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                        Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
                         _T_0 = ToInteger (Arg2)
                         If ((_T_0 == Zero))
                         {
@@ -77711,7 +86474,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         {
                             Return (Package (0x02)
                             {
-                                Package (0x01)
+                                Package (One)
                                 {
                                     One
                                 }, 
@@ -77726,7 +86489,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         }
                         ElseIf ((_T_0 == 0x02))
                         {
-                            Return (Package (0x01)
+                            Return (Package (One)
                             {
                                 Package (0x04)
                                 {
@@ -77739,7 +86502,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         }
                         ElseIf ((_T_0 == 0x03))
                         {
-                            Return (Package (0x01)
+                            Return (Package (One)
                             {
                                 Zero
                             })
@@ -77748,7 +86511,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         {
                             Return (Package (0x02)
                             {
-                                Package (0x01)
+                                Package (One)
                                 {
                                     Zero
                                 }, 
@@ -77764,7 +86527,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         }
                         ElseIf ((_T_0 == 0x05))
                         {
-                            Return (Package (0x01)
+                            Return (Package (One)
                             {
                                 One
                             })
@@ -77773,22 +86536,22 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         {
                             Return (Package (0x04)
                             {
-                                Package (0x01)
+                                Package (One)
                                 {
                                     Zero
                                 }, 
 
-                                Package (0x01)
+                                Package (One)
                                 {
                                     Zero
                                 }, 
 
-                                Package (0x01)
+                                Package (One)
                                 {
                                     Zero
                                 }, 
 
-                                Package (0x01)
+                                Package (One)
                                 {
                                     Zero
                                 }
@@ -77796,14 +86559,14 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         }
                         ElseIf ((_T_0 == 0x07))
                         {
-                            Return (Package (0x01)
+                            Return (Package (One)
                             {
                                 One
                             })
                         }
                         ElseIf ((_T_0 == 0x08))
                         {
-                            Return (Package (0x01)
+                            Return (Package (One)
                             {
                                 One
                             })
@@ -77847,46 +86610,46 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         0x0023
                     }
             })
-            Scope (^GIO0)
+            Scope (\_SB.GIO0)
             {
                 OperationRegion (WLEN, GeneralPurposeIo, Zero, One)
                 OperationRegion (WLPR, GeneralPurposeIo, Zero, One)
             }
 
-            Field (^GIO0.WLEN, ByteAcc, NoLock, Preserve)
+            Field (\_SB.GIO0.WLEN, ByteAcc, NoLock, Preserve)
             {
-                Connection (GWLE), 
+                Connection (\_SB.PCI0.GWLE), 
                 MOD1,   1
             }
 
-            Field (^GIO0.WLPR, ByteAcc, NoLock, Preserve)
+            Field (\_SB.GIO0.WLPR, ByteAcc, NoLock, Preserve)
             {
-                Connection (GWLP), 
+                Connection (\_SB.PCI0.GWLP), 
                 MOD2,   1
             }
 
             Name (_PR0, Package (0x01)  // _PR0: Power Resources for D0
             {
-                P0ON
+                \_SB.P0ON
             })
             Name (_PR3, Package (0x01)  // _PR3: Power Resources for D3hot
             {
-                P0ON
+                \_SB.P0ON
             })
             Device (RP1)
             {
                 Name (_ADR, Zero)  // _ADR: Address
                 Name (_PR0, Package (0x01)  // _PR0: Power Resources for D0
                 {
-                    P0OF
+                    \_SB.P0OF
                 })
                 Name (_PR3, Package (0x01)  // _PR3: Power Resources for D3hot
                 {
-                    P0OF
+                    \_SB.P0OF
                 })
                 Name (_PRR, Package (0x01)  // _PRR: Power Resource for Reset
                 {
-                    P0OF
+                    \_SB.P0OF
                 })
                 Name (_S0W, 0x04)  // _S0W: S0 Device Wake State
                 Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
@@ -77921,7 +86684,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     {
                         While (One)
                         {
-                            Name (_T_0, Zero)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                            Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
                             _T_0 = ToInteger (Arg2)
                             If ((_T_0 == Zero))
                             {
@@ -77932,7 +86695,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                             }
                             ElseIf ((_T_0 == 0x08))
                             {
-                                Return (Package (0x01)
+                                Return (Package (One)
                                 {
                                     One
                                 })
@@ -77961,22 +86724,22 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
 
         Device (IPC0)
         {
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                GLNK
+                \_SB.GLNK
             })
             Name (_HID, "QCOM001B")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
         }
 
         Device (GLNK)
         {
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                RPEN
+                \_SB.RPEN
             })
             Name (_HID, "QCOM00FF")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, Zero)  // _UID: Unique ID
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -78023,36 +86786,36 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         {
             Name (_DEP, Package (0x04)  // _DEP: Dependencies
             {
-                MMU2, 
-                ADSP, 
-                SCSS, 
-                GLNK
+                \_SB.MMU2, 
+                \_SB.ADSP, 
+                \_SB.SCSS, 
+                \_SB.GLNK
             })
             Name (_HID, "QCOM0097")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
         }
 
         Device (ARPD)
         {
             Name (_DEP, Package (0x03)  // _DEP: Dependencies
             {
-                ADSP, 
-                GLNK, 
-                ARPC
+                \_SB.ADSP, 
+                \_SB.GLNK, 
+                \_SB.ARPC
             })
             Name (_HID, "QCOM00F8")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
         }
 
         Device (RFS0)
         {
             Name (_DEP, Package (0x02)  // _DEP: Dependencies
             {
-                IPC0, 
-                UFS0
+                \_SB.IPC0, 
+                \_SB.UFS0
             })
             Name (_HID, "QCOM0033")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
@@ -78076,12 +86839,12 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 CreateDWordField (RBUF, \_SB.RFS0._CRS._Y01._LEN, RFML)  // _LEN: Length
                 CreateDWordField (RBUF, \_SB.RFS0._CRS._Y02._BAS, RFAA)  // _BAS: Base Address
                 CreateDWordField (RBUF, \_SB.RFS0._CRS._Y02._LEN, RFAL)  // _LEN: Length
-                RMTA = RMTB /* \_SB_.RMTB */
-                RMTL = RMTX /* \_SB_.RMTX */
-                RFMA = RFMB /* \_SB_.RFMB */
-                RFML = RFMS /* \_SB_.RFMS */
-                RFAA = RFAB /* \_SB_.RFAB */
-                RFAL = RFAS /* \_SB_.RFAS */
+                RMTA = \_SB.RMTB
+                RMTL = \_SB.RMTX
+                RFMA = \_SB.RFMB
+                RFML = \_SB.RFMS
+                RFAA = \_SB.RFAB
+                RFAL = \_SB.RFAS
                 Return (RBUF) /* \_SB_.RFS0._CRS.RBUF */
             }
 
@@ -78095,12 +86858,12 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         {
             Name (_DEP, Package (0x06)  // _DEP: Dependencies
             {
-                PEP0, 
-                RPEN, 
-                PILC, 
-                MMU3, 
-                GSI, 
-                GLNK
+                \_SB.PEP0, 
+                \_SB.RPEN, 
+                \_SB.PILC, 
+                \_SB.MMU3, 
+                \_SB.GSI, 
+                \_SB.GLNK
             })
             Name (_HID, "QCOM00B5")  // _HID: Hardware ID
             Name (_SUB, "WOSSTD01")  // _SUB: Subsystem ID
@@ -78125,10 +86888,10 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         {
             Name (_DEP, Package (0x01)  // _DEP: Dependencies
             {
-                PEP0
+                \_SB.PEP0
             })
             Name (_HID, "QCOM00EC")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, Zero)  // _UID: Unique ID
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -78149,33 +86912,29 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
 
         Device (QDIG)
         {
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                GLNK
+                \_SB.GLNK
             })
             Name (_HID, "QCOM0024")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
-            Method (_STA, 0, NotSerialized)  // _STA: Status
-            {
-                Return (0x0F)
-            }
+            Alias (\_SB.PSUB, _SUB)
         }
 
         Device (QCDB)
         {
             Name (_HID, "QCOM0098")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
         }
 
         Device (SSM)
         {
             Name (_DEP, Package (0x02)  // _DEP: Dependencies
             {
-                GLNK, 
-                TREE
+                \_SB.GLNK, 
+                \_SB.TREE
             })
             Name (_HID, "QCOM0025")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
         }
 
         Device (SYSM)
@@ -78186,10 +86945,200 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 Name (_HID, "ACPI0010" /* Processor Container Device */)  // _HID: Hardware ID
                 Name (_UID, 0x0100)  // _UID: Unique ID
+                Name (_LPI, Package (0x06)  // _LPI: Low Power Idle States
+                {
+                    Zero, 
+                    0x02000000, 
+                    0x03, 
+                    Package (0x0A)
+                    {
+                        0x0BB8, 
+                        0x044C, 
+                        One, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        0x0400, 
+                        ResourceTemplate ()
+                        {
+                            Register (SystemMemory, 
+                                0x00,               // Bit Width
+                                0x00,               // Bit Offset
+                                0x0000000000000000, // Address
+                                ,)
+                        }, 
+
+                        ResourceTemplate ()
+                        {
+                            Register (SystemMemory, 
+                                0x00,               // Bit Width
+                                0x00,               // Bit Offset
+                                0x0000000000000000, // Address
+                                ,)
+                        }, 
+
+                        "CCI.E3"
+                    }, 
+
+                    Package (0x0A)
+                    {
+                        0x0DAC, 
+                        0x047E, 
+                        One, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        0x0500, 
+                        ResourceTemplate ()
+                        {
+                            Register (SystemMemory, 
+                                0x00,               // Bit Width
+                                0x00,               // Bit Offset
+                                0x0000000000000000, // Address
+                                ,)
+                        }, 
+
+                        ResourceTemplate ()
+                        {
+                            Register (SystemMemory, 
+                                0x00,               // Bit Width
+                                0x00,               // Bit Offset
+                                0x0000000000000000, // Address
+                                ,)
+                        }, 
+
+                        "CCI.E3+RPM"
+                    }, 
+
+                    Package (0x0A)
+                    {
+                        0x80E8, 
+                        0x01F4, 
+                        One, 
+                        0x20, 
+                        Zero, 
+                        Zero, 
+                        0x0300, 
+                        ResourceTemplate ()
+                        {
+                            Register (SystemMemory, 
+                                0x00,               // Bit Width
+                                0x00,               // Bit Offset
+                                0x0000000000000000, // Address
+                                ,)
+                        }, 
+
+                        ResourceTemplate ()
+                        {
+                            Register (SystemMemory, 
+                                0x00,               // Bit Width
+                                0x00,               // Bit Offset
+                                0x0000000000000000, // Address
+                                ,)
+                        }, 
+
+                        "platform.xo"
+                    }
+                })
                 Device (CL0)
                 {
                     Name (_HID, "ACPI0010" /* Processor Container Device */)  // _HID: Hardware ID
                     Name (_UID, 0x10)  // _UID: Unique ID
+                    Name (_LPI, Package (0x06)  // _LPI: Low Power Idle States
+                    {
+                        Zero, 
+                        0x01000000, 
+                        0x03, 
+                        Package (0x0A)
+                        {
+                            0x012C, 
+                            0x82, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x20, 
+                            ResourceTemplate ()
+                            {
+                                Register (SystemMemory, 
+                                    0x00,               // Bit Width
+                                    0x00,               // Bit Offset
+                                    0x0000000000000000, // Address
+                                    ,)
+                            }, 
+
+                            ResourceTemplate ()
+                            {
+                                Register (SystemMemory, 
+                                    0x00,               // Bit Width
+                                    0x00,               // Bit Offset
+                                    0x0000000000000000, // Address
+                                    ,)
+                            }, 
+
+                            "L2_Silver.D2d"
+                        }, 
+
+                        Package (0x0A)
+                        {
+                            0x015E, 
+                            0x96, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x30, 
+                            ResourceTemplate ()
+                            {
+                                Register (SystemMemory, 
+                                    0x00,               // Bit Width
+                                    0x00,               // Bit Offset
+                                    0x0000000000000000, // Address
+                                    ,)
+                            }, 
+
+                            ResourceTemplate ()
+                            {
+                                Register (SystemMemory, 
+                                    0x00,               // Bit Width
+                                    0x00,               // Bit Offset
+                                    0x0000000000000000, // Address
+                                    ,)
+                            }, 
+
+                            "L2_Silver.D2e"
+                        }, 
+
+                        Package (0x0A)
+                        {
+                            0x1900, 
+                            0x0384, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            0x03, 
+                            0x40, 
+                            ResourceTemplate ()
+                            {
+                                Register (SystemMemory, 
+                                    0x00,               // Bit Width
+                                    0x00,               // Bit Offset
+                                    0x0000000000000000, // Address
+                                    ,)
+                            }, 
+
+                            ResourceTemplate ()
+                            {
+                                Register (SystemMemory, 
+                                    0x00,               // Bit Width
+                                    0x00,               // Bit Offset
+                                    0x0000000000000000, // Address
+                                    ,)
+                            }, 
+
+                            "L2_Silver.D4"
+                        }
+                    })
                     Device (CPU0)
                     {
                         Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
@@ -78198,6 +87147,168 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         {
                             Return (0x0F)
                         }
+
+                        Name (_LPI, Package (0x07)  // _LPI: Low Power Idle States
+                        {
+                            Zero, 
+                            Zero, 
+                            0x04, 
+                            Package (0x0A)
+                            {
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x00000000FFFFFFFF, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver0.C1"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x0190, 
+                                0x64, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000002, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver0.C2d"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x01C2, 
+                                0x012C, 
+                                One, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000003, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver0.C3"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x01C2, 
+                                0x012C, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000004, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver0.C3_NI"
+                            }
+                        })
                     }
 
                     Device (CPU1)
@@ -78208,6 +87319,168 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         {
                             Return (0x0F)
                         }
+
+                        Name (_LPI, Package (0x07)  // _LPI: Low Power Idle States
+                        {
+                            Zero, 
+                            Zero, 
+                            0x04, 
+                            Package (0x0A)
+                            {
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x00000000FFFFFFFF, // Address
+                                        0x04,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver1.C1"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x0190, 
+                                0x64, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000002, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver1.C2d"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x01C2, 
+                                0x012C, 
+                                One, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000003, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver1.C3"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x01C2, 
+                                0x012C, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000004, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver1.C3_NI"
+                            }
+                        })
                     }
 
                     Device (CPU2)
@@ -78218,6 +87491,168 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         {
                             Return (0x0F)
                         }
+
+                        Name (_LPI, Package (0x07)  // _LPI: Low Power Idle States
+                        {
+                            Zero, 
+                            Zero, 
+                            0x04, 
+                            Package (0x0A)
+                            {
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x00000000FFFFFFFF, // Address
+                                        0x04,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver2.C1"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x0190, 
+                                0x64, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000002, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver2.C2d"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x01C2, 
+                                0x012C, 
+                                One, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000003, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver2.C3"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x01C2, 
+                                0x012C, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000004, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver2.C3_NI"
+                            }
+                        })
                     }
 
                     Device (CPU3)
@@ -78228,6 +87663,168 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         {
                             Return (0x0F)
                         }
+
+                        Name (_LPI, Package (0x07)  // _LPI: Low Power Idle States
+                        {
+                            Zero, 
+                            Zero, 
+                            0x04, 
+                            Package (0x0A)
+                            {
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x00000000FFFFFFFF, // Address
+                                        0x04,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver3.C1"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x0190, 
+                                0x64, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000002, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver3.C2d"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x01C2, 
+                                0x012C, 
+                                One, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000003, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver3.C3"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x01C2, 
+                                0x012C, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000004, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoSilver3.C3_NI"
+                            }
+                        })
                     }
                 }
 
@@ -78235,6 +87832,101 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 {
                     Name (_HID, "ACPI0010" /* Processor Container Device */)  // _HID: Hardware ID
                     Name (_UID, 0x20)  // _UID: Unique ID
+                    Name (_LPI, Package (0x06)  // _LPI: Low Power Idle States
+                    {
+                        Zero, 
+                        0x01000000, 
+                        0x03, 
+                        Package (0x0A)
+                        {
+                            0x0384, 
+                            0xC8, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x20, 
+                            ResourceTemplate ()
+                            {
+                                Register (SystemMemory, 
+                                    0x00,               // Bit Width
+                                    0x00,               // Bit Offset
+                                    0x0000000000000000, // Address
+                                    ,)
+                            }, 
+
+                            ResourceTemplate ()
+                            {
+                                Register (SystemMemory, 
+                                    0x00,               // Bit Width
+                                    0x00,               // Bit Offset
+                                    0x0000000000000000, // Address
+                                    ,)
+                            }, 
+
+                            "L2_Gold.D2d"
+                        }, 
+
+                        Package (0x0A)
+                        {
+                            0x03E8, 
+                            0x0190, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            Zero, 
+                            0x30, 
+                            ResourceTemplate ()
+                            {
+                                Register (SystemMemory, 
+                                    0x00,               // Bit Width
+                                    0x00,               // Bit Offset
+                                    0x0000000000000000, // Address
+                                    ,)
+                            }, 
+
+                            ResourceTemplate ()
+                            {
+                                Register (SystemMemory, 
+                                    0x00,               // Bit Width
+                                    0x00,               // Bit Offset
+                                    0x0000000000000000, // Address
+                                    ,)
+                            }, 
+
+                            "L2_Gold.D2e"
+                        }, 
+
+                        Package (0x0A)
+                        {
+                            0x1770, 
+                            0x04B0, 
+                            One, 
+                            Zero, 
+                            Zero, 
+                            0x03, 
+                            0x40, 
+                            ResourceTemplate ()
+                            {
+                                Register (SystemMemory, 
+                                    0x00,               // Bit Width
+                                    0x00,               // Bit Offset
+                                    0x0000000000000000, // Address
+                                    ,)
+                            }, 
+
+                            ResourceTemplate ()
+                            {
+                                Register (SystemMemory, 
+                                    0x00,               // Bit Width
+                                    0x00,               // Bit Offset
+                                    0x0000000000000000, // Address
+                                    ,)
+                            }, 
+
+                            "L2_Gold.D4"
+                        }
+                    })
                     Device (CPU4)
                     {
                         Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
@@ -78243,6 +87935,168 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         {
                             Return (0x0F)
                         }
+
+                        Name (_LPI, Package (0x07)  // _LPI: Low Power Idle States
+                        {
+                            Zero, 
+                            Zero, 
+                            0x04, 
+                            Package (0x0A)
+                            {
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x00000000FFFFFFFF, // Address
+                                        0x04,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold0.C1"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x0258, 
+                                0x50, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000002, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold0.C2d"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x1B58, 
+                                0x5A, 
+                                One, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000003, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold0.C3"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x1B58, 
+                                0x5A, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000004, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold0.C3_NI"
+                            }
+                        })
                     }
 
                     Device (CPU5)
@@ -78253,6 +88107,168 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         {
                             Return (0x0F)
                         }
+
+                        Name (_LPI, Package (0x07)  // _LPI: Low Power Idle States
+                        {
+                            Zero, 
+                            Zero, 
+                            0x04, 
+                            Package (0x0A)
+                            {
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x00000000FFFFFFFF, // Address
+                                        0x04,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold1.C1"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x0258, 
+                                0x50, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000002, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold1.C2d"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x1B58, 
+                                0x5A, 
+                                One, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000003, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold1.C3"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x1B58, 
+                                0x5A, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000004, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold1.C3_NI"
+                            }
+                        })
                     }
 
                     Device (CPU6)
@@ -78263,6 +88279,168 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         {
                             Return (0x0F)
                         }
+
+                        Name (_LPI, Package (0x07)  // _LPI: Low Power Idle States
+                        {
+                            Zero, 
+                            Zero, 
+                            0x04, 
+                            Package (0x0A)
+                            {
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x00000000FFFFFFFF, // Address
+                                        0x04,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold2.C1"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x0258, 
+                                0x50, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000002, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold2.C2d"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x1B58, 
+                                0x5A, 
+                                One, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000003, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold2.C3"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x1B58, 
+                                0x5A, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000004, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold2.C3_NI"
+                            }
+                        })
                     }
 
                     Device (CPU7)
@@ -78273,6 +88451,168 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         {
                             Return (0x0F)
                         }
+
+                        Name (_LPI, Package (0x07)  // _LPI: Low Power Idle States
+                        {
+                            Zero, 
+                            Zero, 
+                            0x04, 
+                            Package (0x0A)
+                            {
+                                Zero, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x00000000FFFFFFFF, // Address
+                                        0x04,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold3.C1"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x0258, 
+                                0x50, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                Zero, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000002, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold3.C2d"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x1B58, 
+                                0x5A, 
+                                One, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000003, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold3.C3"
+                            }, 
+
+                            Package (0x0A)
+                            {
+                                0x1B58, 
+                                0x5A, 
+                                Zero, 
+                                One, 
+                                Zero, 
+                                0x03, 
+                                ResourceTemplate ()
+                                {
+                                    Register (FFixedHW, 
+                                        0x20,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000040000004, // Address
+                                        0x03,               // Access Size
+                                        )
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                ResourceTemplate ()
+                                {
+                                    Register (SystemMemory, 
+                                        0x00,               // Bit Width
+                                        0x00,               // Bit Offset
+                                        0x0000000000000000, // Address
+                                        ,)
+                                }, 
+
+                                "KryoGold3.C3_NI"
+                            }
+                        })
                     }
                 }
             }
@@ -78280,9 +88620,9 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
 
         Device (QRNG)
         {
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                PEP0
+                \_SB.PEP0
             })
             Name (_HID, "QCOM0104")  // _HID: Hardware ID
             Name (_UID, Zero)  // _UID: Unique ID
@@ -78301,49 +88641,4473 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
 
         Device (GPS)
         {
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                GLNK
+                \_SB.GLNK
             })
             Name (_HID, "QCOM00B9")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_CID, "ACPIQCOM00B9")  // _CID: Compatible ID
             Name (_UID, Zero)  // _UID: Unique ID
         }
 
-        Device (SARM)
+        Device (COEX)
         {
-            Name (_HID, "QCOM0106")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
-            Method (_HRV, 0, NotSerialized)  // _HRV: Hardware Revision
-            {
-                Return (_BID ())
-            }
-
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
-            {
-                SEN1
-            })
+            Name (_HID, "QCOM0094")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
         }
 
-        Device (SEN1)
+        Device (CAMP)
         {
             Name (_DEP, Package (0x02)  // _DEP: Dependencies
             {
-                IPC0, 
-                SCSS
+                \_SB.PEP0, 
+                \_SB.PMIC
             })
-            Name (_HID, "QCOM00A2")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
-            Method (HARD, 0, NotSerialized)
+            Name (_HID, "QCOM006C")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
+            Name (_UID, 0x1B)  // _UID: Unique ID
+            Method (_STA, 0, NotSerialized)  // _STA: Status
             {
-                Return ("8998")
+                Return (Zero)
             }
 
-            Method (PLAT, 0, NotSerialized)
+            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
-                Return ("MTP")
+                Name (RBUF, ResourceTemplate ()
+                {
+                    Memory32Fixed (ReadWrite,
+                        0x0CA0C000,         // Address Base
+                        0x00003FFF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CA00000,         // Address Base
+                        0x00000047,         // Address Length
+                        )
+                    Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x00000147,
+                    }
+                    GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
+                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x001E
+                        }
+                    GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
+                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x001D
+                        }
+                    GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
+                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x001B
+                        }
+                })
+                Return (RBUF) /* \_SB_.CAMP._CRS.RBUF */
             }
+
+            Method (PLED, 0, NotSerialized)
+            {
+                Return (0x0102)
+            }
+
+            Method (INFO, 0, NotSerialized)
+            {
+                Return (0x00010000)
+            }
+
+            Method (PERF, 0, NotSerialized)
+            {
+                Name (EBUF, Package (0x01)
+                {
+                    Package (0x03)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x05)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            Zero, 
+                            "CAMP_CLK", 
+                            Package (0x04)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                0x0124F800, 
+                                0x0237A080
+                            }
+                        }
+                    }
+                })
+                Return (EBUF) /* \_SB_.CAMP.PERF.EBUF */
+            }
+        }
+
+        Device (MPCS)
+        {
+            Name (_DEP, Package (0x03)  // _DEP: Dependencies
+            {
+                \_SB.PEP0, 
+                \_SB.PMIC, 
+                \_SB.CAMP
+            })
+            Name (_HID, "QCOM00ED")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
+            Name (_UID, 0x18)  // _UID: Unique ID
+            Method (_STA, 0, NotSerialized)  // _STA: Status
+            {
+                Return (Zero)
+            }
+
+            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            {
+                Name (RBUF, ResourceTemplate ()
+                {
+                    Memory32Fixed (ReadWrite,
+                        0x0CA30000,         // Address Base
+                        0x000003FF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CA30400,         // Address Base
+                        0x000003FF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CA30800,         // Address Base
+                        0x000003FF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CA30C00,         // Address Base
+                        0x000003FF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CA34000,         // Address Base
+                        0x00000FFF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CA35000,         // Address Base
+                        0x00000FFF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CA36000,         // Address Base
+                        0x00000FFF,         // Address Length
+                        )
+                    Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x00000148,
+                    }
+                    Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x00000149,
+                    }
+                    Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x0000014A,
+                    }
+                    Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x0000014B,
+                    }
+                })
+                Return (RBUF) /* \_SB_.MPCS._CRS.RBUF */
+            }
+
+            Method (MPHW, 0, NotSerialized)
+            {
+                Return (0x3823)
+            }
+
+            Method (MPCN, 0, NotSerialized)
+            {
+                Return (0x00A28000)
+            }
+        }
+
+        Device (CAMS)
+        {
+            Name (_DEP, Package (0x03)  // _DEP: Dependencies
+            {
+                \_SB.CAMP, 
+                \_SB.PEP0, 
+                \_SB.MPCS
+            })
+            Name (_HID, "QCOM0042")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
+            Name (_UID, 0x15)  // _UID: Unique ID
+            Method (_STA, 0, NotSerialized)  // _STA: Status
+            {
+                Return (Zero)
+            }
+
+            Name (PGID, Buffer (0x0A)
+            {
+                "\\_SB.CAMS"
+            })
+            Name (DBUF, Buffer (DBFL){})
+            CreateByteField (DBUF, Zero, STAT)
+            CreateByteField (DBUF, 0x02, DVAL)
+            CreateField (DBUF, 0x18, 0xA0, DEID)
+            Method (_S1D, 0, NotSerialized)  // _S1D: S1 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_S2D, 0, NotSerialized)  // _S2D: S2 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_S3D, 0, NotSerialized)  // _S3D: S3 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_PS0, 0, NotSerialized)  // _PS0: Power State 0
+            {
+                DEID = Buffer (ESNL){}
+                DVAL = Zero
+                DEID = PGID /* \_SB_.CAMS.PGID */
+                If (\_SB.ABD.AVBL)
+                {
+                    \_SB.PEP0.FLD0 = DBUF /* \_SB_.CAMS.DBUF */
+                }
+            }
+
+            Method (_PS3, 0, NotSerialized)  // _PS3: Power State 3
+            {
+                DEID = Buffer (ESNL){}
+                DVAL = 0x03
+                DEID = PGID /* \_SB_.CAMS.PGID */
+                If (\_SB.ABD.AVBL)
+                {
+                    \_SB.PEP0.FLD0 = DBUF /* \_SB_.CAMS.DBUF */
+                }
+            }
+        }
+
+        Device (CAMI)
+        {
+            Name (_DEP, Package (0x04)  // _DEP: Dependencies
+            {
+                \_SB.CAMP, 
+                \_SB.PEP0, 
+                \_SB.MPCS, 
+                \_SB.CAMF
+            })
+            Name (_HID, "QCOM0044")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
+            Name (_UID, 0x1C)  // _UID: Unique ID
+            Method (_STA, 0, NotSerialized)  // _STA: Status
+            {
+                Return (Zero)
+            }
+
+            Name (PGID, Buffer (0x0A)
+            {
+                "\\_SB.CAMI"
+            })
+            Name (DBUF, Buffer (DBFL){})
+            CreateByteField (DBUF, Zero, STAT)
+            CreateByteField (DBUF, 0x02, DVAL)
+            CreateField (DBUF, 0x18, 0xA0, DEID)
+            Method (_S1D, 0, NotSerialized)  // _S1D: S1 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_S2D, 0, NotSerialized)  // _S2D: S2 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_S3D, 0, NotSerialized)  // _S3D: S3 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_PS0, 0, NotSerialized)  // _PS0: Power State 0
+            {
+                DEID = Buffer (ESNL){}
+                DVAL = Zero
+                DEID = PGID /* \_SB_.CAMI.PGID */
+                If (\_SB.ABD.AVBL)
+                {
+                    \_SB.PEP0.FLD0 = DBUF /* \_SB_.CAMI.DBUF */
+                }
+            }
+
+            Method (_PS3, 0, NotSerialized)  // _PS3: Power State 3
+            {
+                DEID = Buffer (ESNL){}
+                DVAL = 0x03
+                DEID = PGID /* \_SB_.CAMI.PGID */
+                If (\_SB.ABD.AVBL)
+                {
+                    \_SB.PEP0.FLD0 = DBUF /* \_SB_.CAMI.DBUF */
+                }
+            }
+        }
+
+        Device (CAMF)
+        {
+            Name (_DEP, Package (0x04)  // _DEP: Dependencies
+            {
+                \_SB.CAMP, 
+                \_SB.PEP0, 
+                \_SB.MPCS, 
+                \_SB.CAMS
+            })
+            Name (_HID, "QCOM0047")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
+            Name (_UID, 0x1A)  // _UID: Unique ID
+            Method (_STA, 0, NotSerialized)  // _STA: Status
+            {
+                Return (Zero)
+            }
+
+            Name (PGID, Buffer (0x0A)
+            {
+                "\\_SB.CAMF"
+            })
+            Name (DBUF, Buffer (DBFL){})
+            CreateByteField (DBUF, Zero, STAT)
+            CreateByteField (DBUF, 0x02, DVAL)
+            CreateField (DBUF, 0x18, 0xA0, DEID)
+            Method (_S1D, 0, NotSerialized)  // _S1D: S1 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_S2D, 0, NotSerialized)  // _S2D: S2 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_S3D, 0, NotSerialized)  // _S3D: S3 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_PS0, 0, NotSerialized)  // _PS0: Power State 0
+            {
+                DEID = Buffer (ESNL){}
+                DVAL = Zero
+                DEID = PGID /* \_SB_.CAMF.PGID */
+                If (\_SB.ABD.AVBL)
+                {
+                    \_SB.PEP0.FLD0 = DBUF /* \_SB_.CAMF.DBUF */
+                }
+            }
+
+            Method (_PS3, 0, NotSerialized)  // _PS3: Power State 3
+            {
+                DEID = Buffer (ESNL){}
+                DVAL = 0x03
+                DEID = PGID /* \_SB_.CAMF.PGID */
+                If (\_SB.ABD.AVBL)
+                {
+                    \_SB.PEP0.FLD0 = DBUF /* \_SB_.CAMF.DBUF */
+                }
+            }
+        }
+
+        Device (JPGE)
+        {
+            Name (_DEP, Package (0x03)  // _DEP: Dependencies
+            {
+                \_SB.CAMP, 
+                \_SB.MMU2, 
+                \_SB.PEP0
+            })
+            Name (_HID, "QCOM0074")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
+            Name (_UID, 0x17)  // _UID: Unique ID
+            Method (_STA, 0, NotSerialized)  // _STA: Status
+            {
+                Return (Zero)
+            }
+
+            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            {
+                Name (RBUF, ResourceTemplate ()
+                {
+                    Memory32Fixed (ReadWrite,
+                        0x0CA1C000,         // Address Base
+                        0x00003FFF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CA60000,         // Address Base
+                        0x00002FFF,         // Address Length
+                        )
+                    Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x0000015C,
+                    }
+                    Memory32Fixed (ReadWrite,
+                        0x0CAA0000,         // Address Base
+                        0x00003FFF,         // Address Length
+                        )
+                    Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x00000150,
+                    }
+                })
+                Return (RBUF) /* \_SB_.JPGE._CRS.RBUF */
+            }
+
+            Method (PERF, 0, NotSerialized)
+            {
+                Name (EBUF, Package (0x02)
+                {
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x05)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            Zero, 
+                            "JPEG0_CLK", 
+                            Package (0x06)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                0x1C9C3800, 
+                                0x1312D000, 
+                                0x08F0D180, 
+                                0x047868C0
+                            }
+                        }, 
+
+                        Package (0x05)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            One, 
+                            "JPEG0_BW", 
+                            Package (0x18)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                0xEE6B2800, 
+                                0xD09DC300, 
+                                0xC4B20100, 
+                                0xB8C63F00, 
+                                0xACDA7D00, 
+                                0xA0EEBB00, 
+                                0x9502F900, 
+                                0x89173700, 
+                                0x7D2B7500, 
+                                0x713FB300, 
+                                0x6553F100, 
+                                0x59682F00, 
+                                0x4D7C6D00, 
+                                0x4190AB00, 
+                                0x35A4E900, 
+                                0x29B92700, 
+                                0x1DCD6500, 
+                                0x17D78400, 
+                                0x11E1A300, 
+                                0x0BEBC200, 
+                                0x05F5E100, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        One, 
+                        Package (0x05)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            Zero, 
+                            "DMA_CLK", 
+                            Package (0x05)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                0x1C9C3800, 
+                                0x1312D000, 
+                                0x047868C0
+                            }
+                        }, 
+
+                        Package (0x05)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            One, 
+                            "DMA_BW", 
+                            Package (0x06)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                0x376EAC80, 
+                                0x2625A000, 
+                                0x07A12000, 
+                                Zero
+                            }
+                        }
+                    }
+                })
+                Return (EBUF) /* \_SB_.JPGE.PERF.EBUF */
+            }
+        }
+
+        Device (VFE0)
+        {
+            Name (_DEP, Package (0x03)  // _DEP: Dependencies
+            {
+                \_SB.MMU1, 
+                \_SB.PEP0, 
+                \_SB.CAMP
+            })
+            Name (_HID, "QCOM0040")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
+            Name (_UID, 0x16)  // _UID: Unique ID
+            Method (_STA, 0, NotSerialized)  // _STA: Status
+            {
+                Return (Zero)
+            }
+
+            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            {
+                Name (RBUF, ResourceTemplate ()
+                {
+                    Memory32Fixed (ReadWrite,
+                        0x0CA31000,         // Address Base
+                        0x00000BFF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CA40000,         // Address Base
+                        0x00001FFF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CA18000,         // Address Base
+                        0x00003FFF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CA04000,         // Address Base
+                        0x00003FFF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CA10000,         // Address Base
+                        0x00003FFF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x170F7000,         // Address Base
+                        0x00000090,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CA14000,         // Address Base
+                        0x00003FFF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CAA4000,         // Address Base
+                        0x000007FF,         // Address Length
+                        )
+                    Memory32Fixed (ReadWrite,
+                        0x0CAA5000,         // Address Base
+                        0x000003FF,         // Address Length
+                        )
+                    Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x0000015A,
+                    }
+                    Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x00000155,
+                    }
+                    Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x00000146,
+                    }
+                    Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x0000015B,
+                    }
+                    Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                    {
+                        0x00000145,
+                    }
+                })
+                Return (RBUF) /* \_SB_.VFE0._CRS.RBUF */
+            }
+
+            Method (PERF, 0, NotSerialized)
+            {
+                Name (EBUF, Package (0x03)
+                {
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        Zero, 
+                        Package (0x05)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            Zero, 
+                            "VFE0_CLK", 
+                            Package (0x14)
+                            {
+                                "PSTATE", 
+                                One, 
+                                0x23C34600, 
+                                One, 
+                                0x22551000, 
+                                One, 
+                                0x1C9C3800, 
+                                0x02, 
+                                0x18148D00, 
+                                0x02, 
+                                0x16E36000, 
+                                One, 
+                                0x1312D000, 
+                                One, 
+                                0x11E1A300, 
+                                One, 
+                                0x0BEBC200, 
+                                One, 
+                                Zero, 
+                                One
+                            }
+                        }, 
+
+                        Package (0x05)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            One, 
+                            "VFE0_BW", 
+                            Package (0x18)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                0xEE6B2800, 
+                                0xD09DC300, 
+                                0xC4B20100, 
+                                0xB8C63F00, 
+                                0xACDA7D00, 
+                                0xA0EEBB00, 
+                                0x9502F900, 
+                                0x89173700, 
+                                0x7D2B7500, 
+                                0x713FB300, 
+                                0x6553F100, 
+                                0x59682F00, 
+                                0x4D7C6D00, 
+                                0x4190AB00, 
+                                0x35A4E900, 
+                                0x29B92700, 
+                                0x1DCD6500, 
+                                0x17D78400, 
+                                0x11E1A300, 
+                                0x0BEBC200, 
+                                0x05F5E100, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x04)
+                    {
+                        "COMPONENT", 
+                        One, 
+                        Package (0x05)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            Zero, 
+                            "VFE1_CLK", 
+                            Package (0x14)
+                            {
+                                "PSTATE", 
+                                One, 
+                                0x23C34600, 
+                                One, 
+                                0x22551000, 
+                                One, 
+                                0x1C9C3800, 
+                                0x02, 
+                                0x18148D00, 
+                                0x02, 
+                                0x16E36000, 
+                                One, 
+                                0x1312D000, 
+                                One, 
+                                0x11E1A300, 
+                                One, 
+                                0x0BEBC200, 
+                                One, 
+                                Zero, 
+                                One
+                            }
+                        }, 
+
+                        Package (0x05)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            One, 
+                            "VFE1_BW", 
+                            Package (0x18)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                0xEE6B2800, 
+                                0xD09DC300, 
+                                0xC4B20100, 
+                                0xB8C63F00, 
+                                0xACDA7D00, 
+                                0xA0EEBB00, 
+                                0x9502F900, 
+                                0x89173700, 
+                                0x7D2B7500, 
+                                0x713FB300, 
+                                0x6553F100, 
+                                0x59682F00, 
+                                0x4D7C6D00, 
+                                0x4190AB00, 
+                                0x35A4E900, 
+                                0x29B92700, 
+                                0x1DCD6500, 
+                                0x17D78400, 
+                                0x11E1A300, 
+                                0x0BEBC200, 
+                                0x05F5E100, 
+                                Zero
+                            }
+                        }
+                    }, 
+
+                    Package (0x05)
+                    {
+                        "COMPONENT", 
+                        0x02, 
+                        Package (0x05)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            Zero, 
+                            "CPP_CLK", 
+                            Package (0x12)
+                            {
+                                "PSTATE", 
+                                One, 
+                                0x23C34600, 
+                                One, 
+                                0x22551000, 
+                                One, 
+                                0x1C9C3800, 
+                                One, 
+                                0x18148D00, 
+                                0x02, 
+                                0x16E36000, 
+                                0x02, 
+                                0x0BEBC200, 
+                                One, 
+                                0x05F5E100, 
+                                One, 
+                                Zero, 
+                                One
+                            }
+                        }, 
+
+                        Package (0x05)
+                        {
+                            "PSTATE_SET", 
+                            Zero, 
+                            One, 
+                            "CPP_BW", 
+                            Package (0x18)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                0xEE6B2800, 
+                                0xD09DC300, 
+                                0xC4B20100, 
+                                0xB8C63F00, 
+                                0xACDA7D00, 
+                                0xA0EEBB00, 
+                                0x9502F900, 
+                                0x89173700, 
+                                0x7D2B7500, 
+                                0x713FB300, 
+                                0x6553F100, 
+                                0x59682F00, 
+                                0x4D7C6D00, 
+                                0x4190AB00, 
+                                0x35A4E900, 
+                                0x29B92700, 
+                                0x1DCD6500, 
+                                0x17D78400, 
+                                0x11E1A300, 
+                                0x0BEBC200, 
+                                0x05F5E100, 
+                                Zero
+                            }
+                        }, 
+
+                        Package (0x05)
+                        {
+                            "PSTATE_SET", 
+                            One, 
+                            Zero, 
+                            "AHB_CLK", 
+                            Package (0x04)
+                            {
+                                "PSTATE", 
+                                Zero, 
+                                0x04C4B400, 
+                                0x02625A00
+                            }
+                        }
+                    }
+                })
+                Return (EBUF) /* \_SB_.VFE0.PERF.EBUF */
+            }
+        }
+
+        Scope (\_SB.I2C6)
+        {
+            Device (TCPD)
+            {
+                Name (_HID, "ELAN1200")  // _HID: Hardware ID
+                Name (_CID, "PNP0C50" /* HID Protocol Device (I2C bus) */)  // _CID: Compatible ID
+                Name (_UID, 0x02)  // _UID: Unique ID
+                Name (_DEP, Package (One)  // _DEP: Dependencies
+                {
+                    \_SB.I2C7, 
+                    \_SB.GIO0
+                })
+                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                {
+                    Name (RBUF, ResourceTemplate ()
+                    {
+                        I2cSerialBusV2 (0x0015, ControllerInitiated, 0x00061A80,
+                            AddressingMode7Bit, "\\_SB.I2C6",
+                            0x00, ResourceConsumer, , Exclusive,
+                            )
+                        GpioInt (Level, ActiveLow, Exclusive, PullUp, 0x0000,
+                            "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                            )
+                            {   // Pin list
+                                0x007B
+                            }
+                    })
+                    Return (RBUF) /* \_SB_.I2C6.TCPD._CRS.RBUF */
+                }
+
+                Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
+                {
+                    If ((Arg0 == ToUUID ("3cdff6f7-4267-4555-ad05-b30a3d8938de") /* HID I2C Device */))
+                    {
+                        If ((Arg2 == Zero))
+                        {
+                            If ((Arg1 == One))
+                            {
+                                Debug = "Method _DSM Function Query"
+                                Return (Buffer (One)
+                                {
+                                     0x03                                             // .
+                                })
+                            }
+                        }
+
+                        If ((Arg2 == One))
+                        {
+                            Debug = "Method _DSM Function HID"
+                            Return (One)
+                        }
+                    }
+                    Else
+                    {
+                        Return (Buffer (One)
+                        {
+                             0x00                                             // .
+                        })
+                    }
+                }
+
+                Method (_STA, 0, NotSerialized)  // _STA: Status
+                {
+                    Return (0x0F)
+                }
+            }
+        }
+
+        Scope (\_SB.I2C6)
+        {
+            Device (ECKB)
+            {
+                Name (_HID, "QTEC0001")  // _HID: Hardware ID
+                Alias (\_SB.PSUB, _SUB)
+                Name (_CID, "PNP0C50" /* HID Protocol Device (I2C bus) */)  // _CID: Compatible ID
+                Name (_UID, 0x03)  // _UID: Unique ID
+                Name (_DEP, Package (One)  // _DEP: Dependencies
+                {
+                    \_SB.I2C7, 
+                    \_SB.GIO0
+                })
+                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                {
+                    Name (RBUF, ResourceTemplate ()
+                    {
+                        I2cSerialBusV2 (0x003A, ControllerInitiated, 0x00061A80,
+                            AddressingMode7Bit, "\\_SB.I2C6",
+                            0x00, ResourceConsumer, , Exclusive,
+                            )
+                        GpioInt (Level, ActiveLow, ExclusiveAndWake, PullUp, 0x0000,
+                            "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                            )
+                            {   // Pin list
+                                0x0025
+                            }
+                    })
+                    Return (RBUF) /* \_SB_.I2C6.ECKB._CRS.RBUF */
+                }
+
+                Method (_STA, 0, NotSerialized)  // _STA: Status
+                {
+                    Return (0x0F)
+                }
+
+                Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
+                {
+                    While (One)
+                    {
+                        Name (_T_0, Buffer (0x01)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                        {
+                             0x00                                             // .
+                        })
+                        CopyObject (ToBuffer (Arg0), _T_0) /* \_SB_.I2C6.ECKB._DSM._T_0 */
+                        If ((_T_0 == ToUUID ("3cdff6f7-4267-4555-ad05-b30a3d8938de") /* HID I2C Device */))
+                        {
+                            While (One)
+                            {
+                                Name (_T_1, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                                _T_1 = ToInteger (Arg2)
+                                If ((_T_1 == Zero))
+                                {
+                                    While (One)
+                                    {
+                                        Name (_T_2, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                                        _T_2 = ToInteger (Arg1)
+                                        If ((_T_2 == One))
+                                        {
+                                            Return (Buffer (One)
+                                            {
+                                                 0x03                                             // .
+                                            })
+                                        }
+                                        Else
+                                        {
+                                            Return (Buffer (One)
+                                            {
+                                                 0x00                                             // .
+                                            })
+                                        }
+
+                                        Break
+                                    }
+                                }
+                                ElseIf ((_T_1 == One))
+                                {
+                                    Return (One)
+                                }
+                                Else
+                                {
+                                }
+
+                                Break
+                            }
+                        }
+                        Else
+                        {
+                            Return (Buffer (One)
+                            {
+                                 0x00                                             // .
+                            })
+                        }
+
+                        Break
+                    }
+                }
+            }
+        }
+
+        Scope (\_SB)
+        {
+            Name (ECOK, Zero)
+            Mutex (MUT0, 0x00)
+            Device (LID0)
+            {
+                Name (_HID, EisaId ("PNP0C0D") /* Lid Device */)  // _HID: Hardware ID
+                Alias (\_SB.PSUB, _SUB)
+                Name (_DEP, Package (One)  // _DEP: Dependencies
+                {
+                    \_SB.I2C7
+                })
+                Method (_LID, 0, NotSerialized)  // _LID: Lid Status
+                {
+                    Local0 = \_SB.I2C7.LIDS ()
+                    Return (Local0)
+                }
+            }
+        }
+
+        Scope (\_SB.I2C7)
+        {
+            Name (ECI2, ResourceTemplate ()
+            {
+                I2cSerialBusV2 (0x0076, ControllerInitiated, 0x00061A80,
+                    AddressingMode7Bit, "\\_SB_.I2C7",
+                    0x00, ResourceConsumer, , Exclusive,
+                    )
+            })
+            OperationRegion (ECFD, GenericSerialBus, Zero, 0x0100)
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x03), 
+                AccessAs (BufferAcc, AttribBytes (0x01)), 
+                CM03,   8, 
+                Offset (0x05), 
+                AccessAs (BufferAcc, AttribBytes (0x01)), 
+                CM05,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x05)), 
+                CM06,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x0D)), 
+                CM07,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x0C)), 
+                CM08,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x0B)), 
+                CM09,   8, 
+                Offset (0x0E), 
+                AccessAs (BufferAcc, AttribBytes (0x01)), 
+                CM0E,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x01)), 
+                CMSM,   8, 
+                Offset (0x15), 
+                AccessAs (BufferAcc, AttribBytes (0x02)), 
+                CM15,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x02)), 
+                CM16,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x01)), 
+                CM17,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x01)), 
+                CM18,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x01)), 
+                CM19,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x01)), 
+                CM1A,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x01)), 
+                CM1B,   8, 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x01)), 
+                APIR,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x02)), 
+                APIW,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x01)), 
+                CAPR,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x03)), 
+                CAPW,   8, 
+                Offset (0x40), 
+                AccessAs (BufferAcc, AttribBytes (0x02)), 
+                APIB,   8, 
+                Offset (0xC0), 
+                AccessAs (BufferAcc, AttribBytes (0x02)), 
+                RBYT,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x03)), 
+                WBYT,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x02)), 
+                RWOD,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x02)), 
+                RBLK,   8, 
+                Offset (0xCF), 
+                AccessAs (BufferAcc, AttribBytes (0x20)), 
+                BBLK,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x10)), 
+                RL16,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x20)), 
+                RL32,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x40)), 
+                RL64,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x60)), 
+                RL96,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x80)), 
+                R128,   8, 
+                AccessAs (BufferAcc, AttribBytes (0xFF)), 
+                R255,   8, 
+                AccessAs (BufferAcc, AttribBytes (0x10)), 
+                BL16,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x01)), 
+                RB01,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x02)), 
+                RB02,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x03)), 
+                RB03,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x04)), 
+                RB04,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x05)), 
+                RB05,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x06)), 
+                RB06,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x07)), 
+                RB07,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x08)), 
+                RB08,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x09)), 
+                RB09,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x0A)), 
+                RB10,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x0B)), 
+                RB11,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x0C)), 
+                RB12,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x0D)), 
+                RB13,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x0E)), 
+                RB14,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x0F)), 
+                RB15,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x10)), 
+                RB16,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x11)), 
+                RB17,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x12)), 
+                RB18,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x13)), 
+                RB19,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x14)), 
+                RB20,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x15)), 
+                RB21,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x16)), 
+                RB22,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x17)), 
+                RB23,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x18)), 
+                RB24,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x19)), 
+                RB25,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x1A)), 
+                RB26,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x1B)), 
+                RB27,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x1C)), 
+                RB28,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x1D)), 
+                RB29,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x1E)), 
+                RB30,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x1F)), 
+                RB31,   8
+            }
+
+            Field (ECFD, BufferAcc, NoLock, Preserve)
+            {
+                Connection (ECI2), 
+                Offset (0x20), 
+                AccessAs (BufferAcc, AttribBytes (0x20)), 
+                RB32,   8
+            }
+
+            Name (BUFF, Buffer (0x03)
+            {
+                 0x00, 0x01, 0x00                                 // ...
+            })
+            CreateByteField (BUFF, Zero, BYAT)
+            CreateByteField (BUFF, 0x02, DATA)
+            Name (BUF1, Buffer (0x06)
+            {
+                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00               // ......
+            })
+            CreateByteField (BUF1, Zero, BSTA)
+            CreateByteField (BUF1, One, BLEN)
+            CreateByteField (BUF1, 0x02, DAT1)
+            CreateByteField (BUF1, 0x03, DAT2)
+            CreateByteField (BUF1, 0x04, DAT3)
+            CreateByteField (BUF1, 0x05, DAT4)
+            Name (BUF2, Buffer (0x04)
+            {
+                 0x00, 0x00, 0x00, 0x00                           // ....
+            })
+            CreateByteField (BUF2, Zero, BSTS)
+            CreateByteField (BUF2, One, SLEN)
+            CreateWordField (BUF2, 0x02, WRD1)
+            Name (BUF3, Buffer (0x22){})
+            CreateByteField (BUF3, Zero, STAT)
+            CreateByteField (BUF3, One, SIZE)
+            CreateByteField (BUF1, 0x02, BDAT)
+            CreateField (BUF3, 0x10, 0x0100, BLCK)
+            Name (BUF4, Buffer (0x10)
+            {
+                /* 0000 */  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // ........
+                /* 0008 */  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00   // ........
+            })
+            Name (INBU, Buffer (0x08)
+            {
+                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00   // ........
+            })
+            CreateByteField (INBU, Zero, INST)
+            CreateByteField (INBU, One, INLN)
+            CreateByteField (INBU, 0x02, INT0)
+            CreateByteField (INBU, 0x03, INT1)
+            CreateByteField (INBU, 0x04, INT2)
+            CreateByteField (INBU, 0x05, INT3)
+            CreateByteField (INBU, 0x06, INT4)
+            CreateByteField (INBU, 0x07, INT5)
+            Name (STBF, Buffer (0x0102){})
+            CreateByteField (STBF, Zero, SSTS)
+            CreateByteField (STBF, One, STZE)
+            CreateField (STBF, 0x10, 0x0800, TXT0)
+            Name (BLBF, Buffer (0x12){})
+            CreateByteField (BLBF, Zero, BLTS)
+            CreateByteField (BLBF, One, BLZE)
+            CreateField (BLBF, 0x10, 0x80, BLPT)
+            Method (_REG, 2, NotSerialized)  // _REG: Region Availability
+            {
+                Acquire (\_SB.MUT0, 0xFFFF)
+                If ((Arg1 == One))
+                {
+                    \_SB.ECOK = One
+                }
+                Else
+                {
+                    \_SB.ECOK = Zero
+                }
+
+                Release (\_SB.MUT0)
+            }
+
+            Method (LIDS, 0, NotSerialized)
+            {
+                Acquire (\_SB.MUT0, 0xFFFF)
+                Local0 = One
+                If ((\_SB.ECOK == One))
+                {
+                    Sleep (0x0D)
+                    BSTA = Zero
+                    BLEN = One
+                    DAT1 = 0xF6
+                    \_SB.I2C7.APIR = BUF1 /* \_SB_.I2C7.BUF1 */
+                    BUFF = \_SB.I2C7.RB01
+                    If ((BYAT == Zero))
+                    {
+                        Local0 = (DATA & One)
+                    }
+
+                    BYAT = Zero
+                    DATA = 0x11
+                    \_SB.I2C7.CM03 = BUFF /* \_SB_.I2C7.BUFF */
+                }
+
+                Release (\_SB.MUT0)
+                Return (Local0)
+            }
+
+            Method (GSAC, 1, NotSerialized)
+            {
+                Acquire (\_SB.MUT0, 0xFFFF)
+                Local0 = Arg0
+                BSTA = Zero
+                BLEN = One
+                If ((Local0 == 0x03))
+                {
+                    DAT1 = Zero
+                }
+                Else
+                {
+                    DAT1 = One
+                }
+
+                \_SB.I2C7.CM0E = BUF1 /* \_SB_.I2C7.BUF1 */
+                Release (\_SB.MUT0)
+            }
+
+            Method (DCKS, 0, NotSerialized)
+            {
+                Acquire (\_SB.MUT0, 0xFFFF)
+                Local0 = Zero
+                If ((\_SB.ECOK == One))
+                {
+                    Sleep (0x0D)
+                    BSTA = Zero
+                    BLEN = One
+                    DAT1 = 0xAE
+                    \_SB.I2C7.APIR = BUF1 /* \_SB_.I2C7.BUF1 */
+                    BUFF = \_SB.I2C7.RB01
+                    If ((BYAT == Zero))
+                    {
+                        Local0 = (DATA & One)
+                    }
+                }
+
+                Release (\_SB.MUT0)
+                Return (Local0)
+            }
+
+            Method (SWDT, 0, NotSerialized)
+            {
+                Acquire (\_SB.MUT0, 0xFFFF)
+                Local0 = Zero
+                If ((\_SB.ECOK == One))
+                {
+                    Sleep (0x0D)
+                    BSTA = Zero
+                    BLEN = One
+                    DAT1 = 0xA8
+                    \_SB.I2C7.APIR = BUF1 /* \_SB_.I2C7.BUF1 */
+                    BUFF = \_SB.I2C7.RB01
+                    If ((BYAT == Zero))
+                    {
+                        Local0 = (DATA | 0x02)
+                    }
+
+                    Sleep (0x0D)
+                    BSTA = Zero
+                    BLEN = One
+                    DAT1 = 0xA8
+                    DAT2 = Local0
+                    \_SB.I2C7.APIW = BUF1 /* \_SB_.I2C7.BUF1 */
+                }
+
+                Release (\_SB.MUT0)
+            }
+
+            Method (TERR, 1, Serialized)
+            {
+                Acquire (\_SB.MUT0, 0xFFFF)
+                If ((\_SB.ECOK == One))
+                {
+                    \_SB.I2C7.BSTA = Zero
+                    \_SB.I2C7.BLEN = 0x02
+                    \_SB.I2C7.DAT1 = 0xCA
+                    \_SB.I2C7.DAT2 = Arg0
+                    \_SB.I2C7.APIW = \_SB.I2C7.BUF1
+                }
+
+                Release (\_SB.MUT0)
+                Return (Zero)
+            }
+
+            Method (GEVT, 0, NotSerialized)
+            {
+                Acquire (\_SB.MUT0, 0xFFFF)
+                Local0 = 0xFF
+                If ((\_SB.ECOK == One))
+                {
+                    Sleep (0x0D)
+                    BUFF = \_SB.I2C7.CM05
+                    If ((BYAT != One))
+                    {
+                        Local0 = DATA /* \_SB_.I2C7.DATA */
+                    }
+                }
+
+                Release (\_SB.MUT0)
+                Return (Local0)
+            }
+
+            Method (VBPT, 0, NotSerialized)
+            {
+                Local0 = DerefOf (BLBF [0x02])
+                Local1 = 0x03
+                While ((Local1 < 0x12))
+                {
+                    Local0 = ~Local0
+                    Local0 &= 0xFF
+                    If ((Local0 != DerefOf (BLBF [Local1])))
+                    {
+                        Return (One)
+                    }
+
+                    Local1++
+                }
+
+                Return (Zero)
+            }
+
+            Method (INTC, 0, NotSerialized)
+            {
+                Local0 = GEVT ()
+                While (One)
+                {
+                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    _T_0 = Local0
+                    If ((_T_0 == 0x50))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        BSTA = Zero
+                        BLEN = 0x02
+                        DAT1 = Zero
+                        DAT2 = 0x0B
+                        \_SB.I2C7.RWOD = BUF1 /* \_SB_.I2C7.BUF1 */
+                        BUF2 = \_SB.I2C7.RWOD
+                        Local3 = WRD1 /* \_SB_.I2C7.WRD1 */
+                        BSTA = Zero
+                        BLEN = 0x02
+                        DAT1 = 0x02
+                        DAT2 = 0x0B
+                        \_SB.I2C7.RWOD = BUF1 /* \_SB_.I2C7.BUF1 */
+                        BUF2 = \_SB.I2C7.RWOD
+                        Local2 = WRD1 /* \_SB_.I2C7.WRD1 */
+                        If ((Local2 > Zero))
+                        {
+                            If ((Local2 < 0x10))
+                            {
+                                STBF = \_SB.I2C7.RL16
+                            }
+                            ElseIf ((Local2 < 0x20))
+                            {
+                                STBF = \_SB.I2C7.RL32
+                            }
+                            ElseIf ((Local2 < 0x40))
+                            {
+                                STBF = \_SB.I2C7.RL64
+                            }
+                            ElseIf ((Local2 < 0x60))
+                            {
+                                STBF = \_SB.I2C7.RL96
+                            }
+                            ElseIf ((Local2 < 0x80))
+                            {
+                                STBF = \_SB.I2C7.R128
+                            }
+                            Else
+                            {
+                                STBF = \_SB.I2C7.R255
+                            }
+
+                            Release (\_SB.MUT0)
+                            STBF [Zero] = (Local3 & 0xFF)
+                            STBF [One] = (Local3 >> 0x08)
+                            WLOG (STBF, (Local2 + 0x02))
+                            Notify (\_SB.AMW1, 0xD0) // Hardware-Specific
+                        }
+                        Else
+                        {
+                            Release (\_SB.MUT0)
+                        }
+                    }
+                    ElseIf ((_T_0 == 0x09))
+                    {
+                        Local1 = LIDS ()
+                        If ((Local1 == One))
+                        {
+                            Sleep (One)
+                            Notify (\_SB.LID0, 0x80) // Status Change
+                        }
+                        Else
+                        {
+                            Notify (\_SB.LID0, 0x80) // Status Change
+                        }
+                    }
+                    ElseIf ((_T_0 == 0x0A))
+                    {
+                        Notify (\_SB.ADP1, 0x80) // Status Change
+                        Notify (\_SB.BATC, 0x81) // Information Change
+                        Notify (\_SB.BATC, 0x80) // Status Change
+                    }
+                    ElseIf ((_T_0 == 0x0B))
+                    {
+                        Notify (\_SB.BATC, 0x80) // Status Change
+                    }
+                    ElseIf ((_T_0 == 0x0C))
+                    {
+                        Notify (\_SB.BATC, 0x80) // Status Change
+                        Notify (\_SB.BATC, 0x81) // Information Change
+                    }
+                    ElseIf ((_T_0 == 0x0D))
+                    {
+                        Notify (\_SB.I2C6.ECKB, One) // Device Check
+                    }
+                    ElseIf ((_T_0 == 0x0E))
+                    {
+                        If ((\_SB.ECOK == One))
+                        {
+                            Sleep (0x02BC)
+                            Notify (\_SB.I2C6, Zero) // Bus Check
+                        }
+                    }
+                    ElseIf ((_T_0 == 0x10))
+                    {
+                        Notify (\_SB.BATC, One) // Device Check
+                        Notify (\_SB.I2C6, Zero) // Bus Check
+                    }
+                    ElseIf ((_T_0 == 0x34))
+                    {
+                        SWDT ()
+                    }
+                    ElseIf ((_T_0 == 0x04))
+                    {
+                        \_SB.AMW0.IANE (0x6B)
+                    }
+                    ElseIf ((_T_0 == 0x05))
+                    {
+                        \_SB.AMW0.IANE (0x35)
+                    }
+                    ElseIf ((_T_0 == 0x51))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        BLBF = \_SB.I2C7.BL16
+                        If ((BLTS == Zero))
+                        {
+                            If ((VBPT () != Zero))
+                            {
+                                TERR (0x02)
+                                Debug = "I2C BUS error: pattern mismatch"
+                                Debug = BLPT /* \_SB_.I2C7.BLPT */
+                            }
+                        }
+                        Else
+                        {
+                            TERR (One)
+                            Debug = "I2C BUS error: status="
+                            Debug = BLTS /* \_SB_.I2C7.BLTS */
+                        }
+
+                        Release (\_SB.MUT0)
+                    }
+                    ElseIf ((_T_0 == 0x52))
+                    {
+                        HHPD (\_SB.GIO0.HPDS ())
+                    }
+                    Else
+                    {
+                    }
+
+                    Break
+                }
+
+                Return (One)
+            }
+
+            Name (LOG0, Buffer (0x0102){})
+            Name (LOG1, Buffer (0x0102){})
+            Name (LOG2, Buffer (0x0102){})
+            Name (LOG3, Buffer (0x0102){})
+            Name (BFRD, Zero)
+            Name (BFWR, Zero)
+            Name (BFFG, Zero)
+            Mutex (MUT2, 0x00)
+            Method (WLOG, 2, Serialized)
+            {
+                If ((Arg1 == 0x0102))
+                {
+                    Local0 = 0x0101
+                }
+                Else
+                {
+                    Local0 = Arg1
+                }
+
+                Name (MASK, One)
+                MASK <<= BFWR /* \_SB_.I2C7.BFWR */
+                Acquire (MUT2, 0xFFFF)
+                Local1 = (MASK & BFFG) /* \_SB_.I2C7.BFFG */
+                If ((Local1 != Zero))
+                {
+                    Release (MUT2)
+                    Return (Zero)
+                }
+
+                While (One)
+                {
+                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    _T_0 = BFWR /* \_SB_.I2C7.BFWR */
+                    If ((_T_0 == Zero))
+                    {
+                        LOG0 = Arg0
+                        LOG0 [Local0] = Zero
+                    }
+                    ElseIf ((_T_0 == One))
+                    {
+                        LOG1 = Arg0
+                        LOG1 [Local0] = Zero
+                    }
+                    ElseIf ((_T_0 == 0x02))
+                    {
+                        LOG2 = Arg0
+                        LOG2 [Local0] = Zero
+                    }
+                    ElseIf ((_T_0 == 0x03))
+                    {
+                        LOG3 = Arg0
+                        LOG3 [Local0] = Zero
+                    }
+                    Else
+                    {
+                        Release (MUT2)
+                        BFWR = Zero
+                        Return (Zero)
+                    }
+
+                    Break
+                }
+
+                BFFG |= MASK /* \_SB_.I2C7.WLOG.MASK */
+                Release (MUT2)
+                BFWR++
+                BFWR &= 0x03
+                Return (Zero)
+            }
+
+            Method (RLOG, 0, Serialized)
+            {
+                Name (MASK, One)
+                MASK <<= BFRD /* \_SB_.I2C7.BFRD */
+                Acquire (MUT2, 0xFFFF)
+                MASK &= BFFG /* \_SB_.I2C7.BFFG */
+                If ((MASK == Zero))
+                {
+                    Release (MUT2)
+                    Return (Zero)
+                }
+
+                Name (TEMP, Buffer (0x0102){})
+                While (One)
+                {
+                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    _T_0 = BFRD /* \_SB_.I2C7.BFRD */
+                    If ((_T_0 == Zero))
+                    {
+                        TEMP = LOG0 /* \_SB_.I2C7.LOG0 */
+                    }
+                    ElseIf ((_T_0 == One))
+                    {
+                        TEMP = LOG1 /* \_SB_.I2C7.LOG1 */
+                    }
+                    ElseIf ((_T_0 == 0x02))
+                    {
+                        TEMP = LOG2 /* \_SB_.I2C7.LOG2 */
+                    }
+                    ElseIf ((_T_0 == 0x03))
+                    {
+                        TEMP = LOG3 /* \_SB_.I2C7.LOG3 */
+                    }
+                    Else
+                    {
+                        Release (MUT2)
+                        BFRD = Zero
+                        Return (Zero)
+                    }
+
+                    Break
+                }
+
+                BFFG &= MASK = ~MASK /* \_SB_.I2C7.RLOG.MASK */
+                Release (MUT2)
+                BFRD++
+                BFRD &= 0x03
+                Return (TEMP) /* \_SB_.I2C7.RLOG.TEMP */
+            }
+
+            Method (LRST, 1, Serialized)
+            {
+                Acquire (\_SB.MUT0, 0xFFFF)
+                If ((\_SB.ECOK == One))
+                {
+                    \_SB.I2C7.BSTA = Zero
+                    \_SB.I2C7.BLEN = 0x02
+                    \_SB.I2C7.DAT1 = 0xC9
+                    \_SB.I2C7.DAT2 = Arg0
+                    \_SB.I2C7.APIW = \_SB.I2C7.BUF1
+                }
+
+                Release (\_SB.MUT0)
+                If (((Local0 = (Arg0 & 0x02)) == 0x02))
+                {
+                    Acquire (MUT2, 0xFFFF)
+                    BFRD = Zero
+                    BFWR = Zero
+                    BFFG = Zero
+                    Release (MUT2)
+                }
+
+                Return (Zero)
+            }
+
+            Method (HHPD, 1, Serialized)
+            {
+                Acquire (\_SB.MUT0, 0xFFFF)
+                If ((\_SB.ECOK == One))
+                {
+                    \_SB.I2C7.BSTA = Zero
+                    \_SB.I2C7.BLEN = 0x02
+                    \_SB.I2C7.DAT1 = 0xCC
+                    \_SB.I2C7.DAT2 = Arg0
+                    \_SB.I2C7.APIW = \_SB.I2C7.BUF1
+                }
+
+                Release (\_SB.MUT0)
+                Return (Zero)
+            }
+        }
+
+        Scope (\_SB.GIO0)
+        {
+            Method (_L28, 0, NotSerialized)  // _Lxx: Level-Triggered GPE, xx=0x00-0xFF
+            {
+                \_SB.I2C7.INTC ()
+            }
+        }
+
+        Device (ALE0)
+        {
+            Name (_HID, "ATK4002")  // _HID: Hardware ID
+            Name (_UID, "4002")  // _UID: Unique ID
+            Method (HSWC, 1, Serialized)
+            {
+                Local0 = (Arg0 & 0xFFFFFFFF)
+                While (One)
+                {
+                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    _T_0 = Local0
+                    If ((_T_0 == Zero))
+                    {
+                        Return (Zero)
+                    }
+                    ElseIf ((_T_0 == One))
+                    {
+                        Return (Zero)
+                    }
+                    ElseIf ((_T_0 == 0x02))
+                    {
+                        Return (ALED (0x02))
+                    }
+                    ElseIf ((_T_0 == 0x03))
+                    {
+                        Return (0xFF)
+                    }
+                    ElseIf ((_T_0 == 0x04))
+                    {
+                        Return (ALED (Zero))
+                    }
+                    ElseIf ((_T_0 == 0x05))
+                    {
+                        Return (ALED (One))
+                    }
+                    ElseIf ((_T_0 == 0x80))
+                    {
+                        Return (One)
+                    }
+                    Else
+                    {
+                        Name (FOO, "WMI/ATK: invalid argument")
+                        Debug = FOO /* \_SB_.ALE0.HSWC.FOO_ */
+                        Return (0xFFFFFFFE)
+                    }
+
+                    Break
+                }
+            }
+
+            OperationRegion (CP42, SystemMemory, 0x03D2A000, 0x08)
+            Field (CP42, DWordAcc, NoLock, Preserve)
+            {
+                PI5C,   32, 
+                PIN5,   32
+            }
+
+            Method (ALED, 1, Serialized)
+            {
+                PI5C = 0x0200
+                While (One)
+                {
+                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    _T_0 = Arg0
+                    If ((_T_0 == One))
+                    {
+                        PIN5 = 0x02
+                        If ((PIN5 == 0x03))
+                        {
+                            Return (One)
+                        }
+                        Else
+                        {
+                            Return (Zero)
+                        }
+                    }
+                    ElseIf ((_T_0 == Zero))
+                    {
+                        PIN5 = Zero
+                        If ((PIN5 == Zero))
+                        {
+                            Return (One)
+                        }
+                        Else
+                        {
+                            Return (Zero)
+                        }
+                    }
+                    ElseIf ((_T_0 == 0x02))
+                    {
+                        Name (LEDS, Zero)
+                        LEDS = (PIN5 & One)
+                        If ((LEDS == One))
+                        {
+                            Return (0x05)
+                        }
+                        Else
+                        {
+                            Return (0x04)
+                        }
+                    }
+                    Else
+                    {
+                        Return (Zero)
+                    }
+
+                    Break
+                }
+
+                Return (PIN5) /* \_SB_.ALE0.PIN5 */
+            }
+        }
+
+        Device (AMW0)
+        {
+            Name (_HID, "PNP0C14" /* Windows Management Instrumentation Device */)  // _HID: Hardware ID
+            Name (_UID, "ATK")  // _UID: Unique ID
+            Name (_WDG, Buffer (0x3C)
+            {
+                /* 0000 */  0xD0, 0x5E, 0x84, 0x97, 0x6D, 0x4E, 0xDE, 0x11,  // .^..mN..
+                /* 0008 */  0x8A, 0x39, 0x08, 0x00, 0x20, 0x0C, 0x9A, 0x66,  // .9.. ..f
+                /* 0010 */  0x41, 0x41, 0x01, 0x02, 0x35, 0xBB, 0x3C, 0x0B,  // AA..5.<.
+                /* 0018 */  0xC2, 0xE3, 0xED, 0x45, 0x91, 0xC2, 0x4C, 0x5A,  // ...E..LZ
+                /* 0020 */  0x6D, 0x19, 0x5D, 0x1C, 0xFF, 0x00, 0x01, 0x08,  // m.].....
+                /* 0028 */  0x21, 0x12, 0x90, 0x05, 0x66, 0xD5, 0xD1, 0x11,  // !...f...
+                /* 0030 */  0xB2, 0xF0, 0x00, 0xA0, 0xC9, 0x06, 0x29, 0x10,  // ......).
+                /* 0038 */  0x41, 0x41, 0x01, 0x00                           // AA..
+            })
+            Method (ECRY, 2, NotSerialized)
+            {
+                Acquire (\_SB.MUT0, 0xFFFF)
+                If ((\_SB.ECOK == One))
+                {
+                    \_SB.I2C7.BSTA = Zero
+                    \_SB.I2C7.BLEN = 0x02
+                    \_SB.I2C7.DAT1 = (Arg0 & 0xFF)
+                    \_SB.I2C7.DAT2 = (Arg1 & 0xFF)
+                    \_SB.I2C7.RBYT = \_SB.I2C7.BUF1
+                    \_SB.I2C7.BUFF = \_SB.I2C7.RBYT
+                    If ((\_SB.I2C7.BYAT == Zero))
+                    {
+                        Local0 = \_SB.I2C7.DATA
+                    }
+                }
+
+                Release (\_SB.MUT0)
+                Return (Local0)
+            }
+
+            Method (ECWY, 3, NotSerialized)
+            {
+                Acquire (\_SB.MUT0, 0xFFFF)
+                If ((\_SB.ECOK == One))
+                {
+                    \_SB.I2C7.BSTA = Zero
+                    \_SB.I2C7.BLEN = 0x03
+                    \_SB.I2C7.DAT1 = (Arg0 & 0xFF)
+                    \_SB.I2C7.DAT2 = (Arg1 & 0xFF)
+                    \_SB.I2C7.DAT3 = (Arg2 & 0xFF)
+                    \_SB.I2C7.WBYT = \_SB.I2C7.BUF1
+                }
+
+                Release (\_SB.MUT0)
+                Return (Zero)
+            }
+
+            Method (MEG2, 4, Serialized)
+            {
+                Local1 = Zero
+                Local1 = Arg3
+                Local1 <<= 0x08
+                Local1 |= Arg2
+                Local1 <<= 0x08
+                Local1 |= Arg1
+                Local1 <<= 0x08
+                Local1 |= Arg0
+                Return (Local1)
+            }
+
+            Method (CHCK, 1, NotSerialized)
+            {
+                Local0 = (ECRY (0xF3, 0x05) & 0x03)
+                If ((Arg0 == Local0))
+                {
+                    Return (One)
+                }
+
+                Return (Zero)
+            }
+
+            Method (WMAA, 3, Serialized)
+            {
+                Local0 = (Arg1 & 0xFFFFFFFF)
+                While (One)
+                {
+                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    _T_0 = Local0
+                    If ((_T_0 == 0x4E554653))
+                    {
+                        Return (One)
+                    }
+                    ElseIf ((_T_0 == 0x53545344))
+                    {
+                        Local2 = MEG2 (DerefOf (Arg2 [Zero]), DerefOf (Arg2 [One]
+                            ), DerefOf (Arg2 [0x02]), DerefOf (Arg2 [0x03]))
+                        While (One)
+                        {
+                            Name (_T_1, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                            _T_1 = Local2
+                            If ((_T_1 == 0x00120057))
+                            {
+                                Return (0x00010000)
+                            }
+                            ElseIf ((_T_1 == 0x00120061))
+                            {
+                                If ((\_SB.BATC.ICU1 == One))
+                                {
+                                    Return (Zero)
+                                }
+
+                                If ((\_SB.BATC.ICU1 == 0x02))
+                                {
+                                    Return (One)
+                                }
+                            }
+                            ElseIf ((_T_1 == 0x00050026))
+                            {
+                                Return (0x00010000)
+                            }
+
+                            Break
+                        }
+                    }
+                    ElseIf ((_T_0 == 0x53564544))
+                    {
+                        Local2 = MEG2 (DerefOf (Arg2 [Zero]), DerefOf (Arg2 [One]
+                            ), DerefOf (Arg2 [0x02]), DerefOf (Arg2 [0x03]))
+                        While (One)
+                        {
+                            Name (_T_2, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                            _T_2 = Local2
+                            If ((_T_2 == 0x00120057))
+                            {
+                                While (One)
+                                {
+                                    Name (_T_3, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                                    _T_3 = DerefOf (Arg2 [0x04])
+                                    If ((_T_3 == 0x3C))
+                                    {
+                                        ECWY (0xF3, 0x05, One)
+                                        ECWY (0x51, 0x04, One)
+                                        Return (CHCK (One))
+                                    }
+                                    ElseIf ((_T_3 == 0x50))
+                                    {
+                                        ECWY (0xF3, 0x05, 0x02)
+                                        ECWY (0x51, 0x04, One)
+                                        Return (CHCK (0x02))
+                                    }
+                                    Else
+                                    {
+                                        ECWY (0xF3, 0x05, Zero)
+                                        ECWY (0x51, 0x04, One)
+                                        Return (CHCK (Zero))
+                                    }
+
+                                    Break
+                                }
+
+                                Return (Zero)
+                            }
+                            ElseIf ((_T_2 == 0x00100013))
+                            {
+                                If ((DerefOf (Arg2 [0x04]) == 0x02))
+                                {
+                                    \_SB.AMW1.ECAT (0x03, Buffer (0x03)
+                                        {
+                                             0xF1, 0x05, 0x05                                 // ...
+                                        })
+                                    Sleep (0x1E)
+                                    \_SB.AMW1.ECAT (0x03, Buffer (0x03)
+                                        {
+                                             0xF1, 0x05, 0x06                                 // ...
+                                        })
+                                    Return (One)
+                                }
+
+                                Return (Zero)
+                            }
+                            ElseIf ((_T_2 == 0x00050026))
+                            {
+                                Debug = DerefOf (Arg2 [0x04])
+                                If ((DerefOf (Arg2 [0x04]) == Zero))
+                                {
+                                    \_SB.AMW1.ECAT (0x03, Buffer (0x03)
+                                        {
+                                             0xF1, 0x05, 0x97                                 // ...
+                                        })
+                                }
+                                Else
+                                {
+                                    \_SB.AMW1.ECAT (0x03, Buffer (0x03)
+                                        {
+                                             0xF1, 0x05, 0x96                                 // ...
+                                        })
+                                }
+
+                                Return (Zero)
+                            }
+                            Else
+                            {
+                                Return (0xFF)
+                            }
+
+                            Break
+                        }
+                    }
+                    Else
+                    {
+                        Name (FOO, "WMI/ATK: invalid argument")
+                        Debug = FOO /* \_SB_.AMW0.WMAA.FOO_ */
+                        Return (0xFFFFFFFE)
+                    }
+
+                    Break
+                }
+            }
+
+            Name (ATKQ, Zero)
+            Method (_WED, 1, NotSerialized)  // _Wxx: Wake Event, xx=0x00-0xFF
+            {
+                If ((Arg0 == 0xFF))
+                {
+                    Return (ATKQ) /* \_SB_.AMW0.ATKQ */
+                }
+
+                Return (Ones)
+            }
+
+            Method (IANE, 1, Serialized)
+            {
+                ATKQ = Arg0
+                Notify (AMW0, 0xFF) // Hardware-Specific
+            }
+
+            Name (WQAA, Buffer (0x0971)
+            {
+                /* 0000 */  0x46, 0x4F, 0x4D, 0x42, 0x01, 0x00, 0x00, 0x00,  // FOMB....
+                /* 0008 */  0x61, 0x09, 0x00, 0x00, 0x0E, 0x2B, 0x00, 0x00,  // a....+..
+                /* 0010 */  0x44, 0x53, 0x00, 0x01, 0x1A, 0x7D, 0xDA, 0x54,  // DS...}.T
+                /* 0018 */  0xA8, 0xDA, 0x94, 0x00, 0x01, 0x06, 0x18, 0x42,  // .......B
+                /* 0020 */  0x10, 0x05, 0x10, 0xCA, 0x6A, 0x89, 0x42, 0x04,  // ....j.B.
+                /* 0028 */  0x92, 0x4E, 0x24, 0x51, 0x0E, 0x60, 0x30, 0x1A,  // .N$Q.`0.
+                /* 0030 */  0x40, 0x24, 0x07, 0x42, 0x2E, 0x98, 0x98, 0x00,  // @$.B....
+                /* 0038 */  0x11, 0x10, 0xF2, 0x2A, 0xC0, 0xA6, 0x00, 0x93,  // ...*....
+                /* 0040 */  0x20, 0xEA, 0xDF, 0x1F, 0xA2, 0x24, 0x38, 0x94,  //  ....$8.
+                /* 0048 */  0x10, 0x08, 0x49, 0x14, 0x60, 0x5E, 0x80, 0x6E,  // ..I.`^.n
+                /* 0050 */  0x01, 0x86, 0x05, 0xD8, 0x16, 0x60, 0x5A, 0x80,  // .....`Z.
+                /* 0058 */  0x63, 0x48, 0x2A, 0x0D, 0x9C, 0x12, 0x58, 0x0A,  // cH*...X.
+                /* 0060 */  0x84, 0x84, 0x0A, 0x50, 0x2E, 0xC0, 0xB7, 0x00,  // ...P....
+                /* 0068 */  0xED, 0x88, 0x92, 0x2C, 0xC0, 0x32, 0x8C, 0x08,  // ...,.2..
+                /* 0070 */  0x3C, 0x8A, 0xC8, 0x46, 0xE3, 0xD0, 0xD8, 0x61,  // <..F...a
+                /* 0078 */  0x58, 0x26, 0x98, 0x06, 0x71, 0x18, 0x65, 0x23,  // X&..q.e#
+                /* 0080 */  0x8B, 0xC0, 0x13, 0xEA, 0x54, 0x80, 0x5C, 0x01,  // ....T.\.
+                /* 0088 */  0xC2, 0x04, 0x88, 0x47, 0x15, 0x46, 0x73, 0x50,  // ...G.FsP
+                /* 0090 */  0x44, 0x2C, 0x34, 0x4A, 0xCC, 0x98, 0x08, 0x6C,  // D,4J...l
+                /* 0098 */  0xE7, 0xD8, 0x1A, 0xC5, 0x69, 0x14, 0x3E, 0xC7,  // ....i.>.
+                /* 00A0 */  0x18, 0x1A, 0xC1, 0x71, 0x25, 0xE8, 0x70, 0x06,  // ...q%.p.
+                /* 00A8 */  0x9A, 0x42, 0xB4, 0x08, 0x05, 0x61, 0x09, 0x2A,  // .B...a.*
+                /* 00B0 */  0x46, 0x83, 0x02, 0xA4, 0x0A, 0x70, 0x09, 0x22,  // F....p."
+                /* 00B8 */  0xC4, 0x80, 0x91, 0x8E, 0xCA, 0x9A, 0x11, 0x85,  // ........
+                /* 00C0 */  0x7E, 0x2C, 0x0C, 0xF7, 0x30, 0x30, 0x32, 0x20,  // ~,..002 
+                /* 00C8 */  0xE4, 0x59, 0x80, 0xF5, 0xF1, 0x11, 0x02, 0xBB,  // .Y......
+                /* 00D0 */  0x1F, 0x8F, 0xBC, 0x09, 0x10, 0x37, 0x23, 0x59,  // .....7#Y
+                /* 00D8 */  0x13, 0x60, 0x71, 0x32, 0x1A, 0x53, 0x5B, 0x30,  // .`q2.S[0
+                /* 00E0 */  0x42, 0xA9, 0x0D, 0x46, 0x28, 0x8D, 0x21, 0x08,  // B..F(.!.
+                /* 00E8 */  0x24, 0x4E, 0x94, 0x88, 0x47, 0xD2, 0x19, 0xAC,  // $N..G...
+                /* 00F0 */  0x50, 0x22, 0x86, 0x09, 0x11, 0xA1, 0x32, 0x0C,  // P"....2.
+                /* 00F8 */  0x32, 0xA6, 0x50, 0xD1, 0xE2, 0x46, 0x68, 0x7F,  // 2.P..Fh.
+                /* 0100 */  0x10, 0x24, 0xDA, 0x69, 0x40, 0x12, 0x40, 0x14,  // .$.i@.@.
+                /* 0108 */  0x69, 0x34, 0xA8, 0x13, 0x40, 0x82, 0x27, 0x02,  // i4..@.'.
+                /* 0110 */  0x9F, 0x06, 0xCE, 0xEB, 0xE8, 0x0E, 0xEC, 0xB4,  // ........
+                /* 0118 */  0x82, 0x1C, 0x97, 0x75, 0x1E, 0x05, 0xC8, 0xC8,  // ...u....
+                /* 0120 */  0x18, 0x56, 0x82, 0xBF, 0x03, 0x9F, 0x0D, 0xF0,  // .V......
+                /* 0128 */  0xAE, 0x01, 0x75, 0x29, 0x78, 0x24, 0x60, 0x03,  // ..u)x$`.
+                /* 0130 */  0x0D, 0xC7, 0xFE, 0xFF, 0x43, 0xE4, 0x33, 0x0D,  // ....C.3.
+                /* 0138 */  0x77, 0x02, 0x87, 0xC8, 0x00, 0x3D, 0xA7, 0xA7,  // w....=..
+                /* 0140 */  0x01, 0xEC, 0xB8, 0x4E, 0xE6, 0x51, 0xE0, 0xB4,  // ...N.Q..
+                /* 0148 */  0x9B, 0x3D, 0x16, 0x68, 0x84, 0x09, 0x8E, 0xC7,  // .=.h....
+                /* 0150 */  0x67, 0x00, 0xCF, 0xE7, 0x84, 0x13, 0x58, 0xFE,  // g.....X.
+                /* 0158 */  0x20, 0x50, 0x23, 0x33, 0xB4, 0xC7, 0x78, 0x5A,  //  P#3..xZ
+                /* 0160 */  0xAF, 0x02, 0x3E, 0x21, 0x1C, 0x16, 0x3B, 0x15,  // ..>!..;.
+                /* 0168 */  0xF8, 0x20, 0xE1, 0xF1, 0x80, 0x5F, 0xF1, 0xD1,  // . ..._..
+                /* 0170 */  0x40, 0x08, 0xEF, 0x0B, 0x9E, 0xAF, 0xCF, 0x09,  // @.......
+                /* 0178 */  0x06, 0xC6, 0x0E, 0xC8, 0x7E, 0x05, 0x20, 0x04,  // ....~. .
+                /* 0180 */  0x7F, 0x75, 0x38, 0xA2, 0xE7, 0x86, 0x08, 0xC7,  // .u8.....
+                /* 0188 */  0xE4, 0xC9, 0xBD, 0x1A, 0x84, 0x08, 0x72, 0x52,  // ......rR
+                /* 0190 */  0x87, 0xFC, 0x22, 0xC1, 0x10, 0xDF, 0x2F, 0x3C,  // ..".../<
+                /* 0198 */  0xFD, 0x0A, 0x01, 0x25, 0xF2, 0xF0, 0x80, 0x1E,  // ...%....
+                /* 01A0 */  0x01, 0xC7, 0x8B, 0x1C, 0xF2, 0x6C, 0x8E, 0xE0,  // .....l..
+                /* 01A8 */  0x78, 0xA2, 0x9C, 0xC4, 0x01, 0xF9, 0x58, 0x61,  // x.....Xa
+                /* 01B0 */  0x84, 0x43, 0x78, 0x9A, 0x78, 0xBA, 0xF0, 0xBD,  // .Cx.x...
+                /* 01B8 */  0xC1, 0xD3, 0x38, 0xA7, 0xB7, 0x01, 0x13, 0x4C,  // ..8....L
+                /* 01C0 */  0xA3, 0x68, 0x9C, 0x2C, 0xC4, 0x52, 0x65, 0x63,  // .h.,.Rec
+                /* 01C8 */  0xA9, 0x1E, 0x29, 0x95, 0x7A, 0x46, 0xD0, 0x08,  // ..).zF..
+                /* 01D0 */  0x6A, 0x14, 0x60, 0x75, 0x12, 0x22, 0xB0, 0x48,  // j.`u.".H
+                /* 01D8 */  0x20, 0x9D, 0x46, 0xB8, 0x3C, 0x0A, 0x89, 0x83,  //  .F.<...
+                /* 01E0 */  0xD0, 0x68, 0x0C, 0x67, 0x39, 0x70, 0x14, 0xC4,  // .h.g9p..
+                /* 01E8 */  0x83, 0x77, 0xD4, 0x43, 0x02, 0x3D, 0x07, 0xF0,  // .w.C.=..
+                /* 01F0 */  0x29, 0x25, 0xA8, 0x74, 0x3A, 0x3A, 0x62, 0x9C,  // )%.t::b.
+                /* 01F8 */  0xD1, 0x31, 0x1D, 0xCE, 0x99, 0x1D, 0xA7, 0x71,  // .1.....q
+                /* 0200 */  0x02, 0x71, 0xB4, 0xC3, 0x0A, 0x75, 0x58, 0xA1,  // .q...uX.
+                /* 0208 */  0x9E, 0x1B, 0x7C, 0xD6, 0xE0, 0x90, 0xA1, 0x4E,  // ..|....N
+                /* 0210 */  0x2D, 0xA6, 0xC7, 0xF6, 0x50, 0x62, 0x98, 0x68,  // -...Pb.h
+                /* 0218 */  0xFE, 0xFF, 0xA3, 0x31, 0x82, 0x58, 0x4F, 0x0F,  // ...1.XO.
+                /* 0220 */  0xB0, 0x00, 0xCF, 0xE0, 0x34, 0x3D, 0x2D, 0xC3,  // ....4=-.
+                /* 0228 */  0x79, 0x48, 0x1C, 0xCE, 0xB7, 0x82, 0xD7, 0x01,  // yH......
+                /* 0230 */  0x13, 0xB0, 0xC3, 0x03, 0x18, 0x0E, 0x21, 0xEC,  // ......!.
+                /* 0238 */  0xB8, 0xF1, 0xAC, 0x91, 0xC0, 0x02, 0x4F, 0x07,  // ......O.
+                /* 0240 */  0xA0, 0x00, 0xF2, 0x6D, 0xC0, 0x63, 0x7D, 0x22,  // ...m.c}"
+                /* 0248 */  0x60, 0x73, 0x08, 0x11, 0x26, 0x9A, 0xE1, 0x31,  // `s..&..1
+                /* 0250 */  0x82, 0x4E, 0x1E, 0x54, 0xD6, 0xB8, 0x50, 0x07,  // .N.T..P.
+                /* 0258 */  0x04, 0x5F, 0x14, 0x18, 0xF6, 0x31, 0x1F, 0x4D,  // ._...1.M
+                /* 0260 */  0xD1, 0x33, 0xD4, 0xA4, 0x0F, 0xEA, 0x45, 0xC2,  // .3....E.
+                /* 0268 */  0x4E, 0x35, 0x5A, 0xD5, 0x09, 0xEB, 0x91, 0x72,  // N5Z....r
+                /* 0270 */  0x58, 0xA3, 0x85, 0x3D, 0x6B, 0xC3, 0xBE, 0x80,  // X..=k...
+                /* 0278 */  0xF8, 0xB6, 0xC2, 0x60, 0x7D, 0xF4, 0x00, 0x47,  // ...`}..G
+                /* 0280 */  0xA0, 0xA3, 0x0C, 0x68, 0x0E, 0x07, 0xB8, 0x51,  // ...h...Q
+                /* 0288 */  0x3C, 0x1C, 0xC0, 0x80, 0x7A, 0x38, 0x80, 0x01,  // <...z8..
+                /* 0290 */  0xD5, 0x17, 0x84, 0x4E, 0x07, 0xF0, 0x2E, 0x36,  // ...N...6
+                /* 0298 */  0xEC, 0x76, 0xE3, 0x81, 0x46, 0x09, 0x64, 0x4C,  // .v..F.dL
+                /* 02A0 */  0x23, 0x7A, 0x0A, 0x87, 0xE1, 0x31, 0x26, 0xB0,  // #z...1&.
+                /* 02A8 */  0x82, 0x55, 0xEB, 0x48, 0x81, 0xCB, 0x3F, 0x78,  // .U.H..?x
+                /* 02B0 */  0x0D, 0xF6, 0x89, 0x22, 0xC4, 0x3B, 0x40, 0x02,  // ...".;@.
+                /* 02B8 */  0xFF, 0xFF, 0x93, 0x9F, 0x25, 0xE8, 0x51, 0xC2,  // ....%.Q.
+                /* 02C0 */  0x99, 0x49, 0x94, 0xFA, 0x4C, 0x40, 0xE1, 0x9C,  // .I..L@..
+                /* 02C8 */  0xF3, 0x60, 0x41, 0x41, 0x0C, 0xE8, 0x10, 0x47,  // .`AA...G
+                /* 02D0 */  0x0A, 0xF4, 0x20, 0x7C, 0x27, 0x78, 0xA2, 0xF1,  // .. |'x..
+                /* 02D8 */  0x08, 0x4D, 0x70, 0x48, 0x01, 0xD9, 0x90, 0x3D,  // .MpH...=
+                /* 02E0 */  0x7A, 0x7E, 0x7A, 0xF2, 0x60, 0x8C, 0x6C, 0x35,  // z~z.`.l5
+                /* 02E8 */  0x03, 0x40, 0x81, 0xB1, 0x03, 0x04, 0xD7, 0x75,  // .@.....u
+                /* 02F0 */  0x7F, 0x00, 0x99, 0xBE, 0xF3, 0x03, 0xC8, 0xD1,  // ........
+                /* 02F8 */  0x79, 0xF8, 0xA9, 0xA2, 0xE2, 0x4E, 0x95, 0x82,  // y....N..
+                /* 0300 */  0x78, 0xAA, 0x8E, 0x32, 0x55, 0xF4, 0x4C, 0x3C,  // x..2U.L<
+                /* 0308 */  0x55, 0x7E, 0x83, 0x31, 0x81, 0x2F, 0x1F, 0xE0,  // U~.1./..
+                /* 0310 */  0x1E, 0x8B, 0x2F, 0x1F, 0xC0, 0x3B, 0x38, 0x84,  // ../..;8.
+                /* 0318 */  0x2E, 0x1F, 0x98, 0xFF, 0xFF, 0xE5, 0x03, 0x0C,  // ........
+                /* 0320 */  0x26, 0x75, 0x9A, 0x94, 0x7A, 0xF9, 0x00, 0x2E,  // &u..z...
+                /* 0328 */  0xC3, 0xF7, 0xE5, 0x03, 0x1C, 0x13, 0x7C, 0xDC,  // ......|.
+                /* 0330 */  0x80, 0x73, 0xDB, 0x60, 0x10, 0x81, 0x7C, 0x61,  // .s.`..|a
+                /* 0338 */  0x33, 0x46, 0xF5, 0x03, 0x20, 0x60, 0x4F, 0x1B,  // 3F.. `O.
+                /* 0340 */  0xC6, 0x38, 0x17, 0xDF, 0x43, 0x3C, 0x2C, 0x1F,  // .8..C<,.
+                /* 0348 */  0x0D, 0x58, 0x90, 0x2B, 0x11, 0x5A, 0xD6, 0x7B,  // .X.+.Z.{
+                /* 0350 */  0x40, 0x97, 0xA5, 0xA3, 0x3E, 0xEE, 0xC3, 0x66,  // @...>..f
+                /* 0358 */  0x17, 0x18, 0x5F, 0x89, 0xB8, 0x14, 0x0A, 0x09,  // .._.....
+                /* 0360 */  0xB9, 0x12, 0xA1, 0xA2, 0x83, 0x51, 0x10, 0x1F,  // .....Q..
+                /* 0368 */  0x1B, 0x1C, 0xEB, 0xD8, 0x80, 0x16, 0x05, 0xA2,  // ........
+                /* 0370 */  0x41, 0xF9, 0x4A, 0x86, 0xBB, 0x10, 0x3C, 0x8A,  // A.J...<.
+                /* 0378 */  0xB1, 0x5B, 0x91, 0x2F, 0x0F, 0xB8, 0x8B, 0x10,  // .[./....
+                /* 0380 */  0x60, 0xE5, 0xFF, 0x7F, 0x78, 0x00, 0x83, 0xD0,  // `...x...
+                /* 0388 */  0x8B, 0x10, 0xE8, 0x14, 0x3A, 0x95, 0xEA, 0xF4,  // ....:...
+                /* 0390 */  0xF0, 0x00, 0x5C, 0x82, 0x1E, 0x1E, 0x40, 0x7F,  // ..\...@.
+                /* 0398 */  0xB0, 0x3B, 0x31, 0x1F, 0x7E, 0xF8, 0xD5, 0x00,  // .;1.~...
+                /* 03A0 */  0x87, 0xF4, 0x6A, 0xC0, 0x0E, 0x45, 0xBE, 0x1A,  // ..j..E..
+                /* 03A8 */  0x60, 0x70, 0x7A, 0x1F, 0xA4, 0x66, 0xE6, 0xF3,  // `pz..f..
+                /* 03B0 */  0x10, 0xBC, 0x13, 0x05, 0x7C, 0x94, 0xA3, 0x38,  // ....|..8
+                /* 03B8 */  0x09, 0xCF, 0xD5, 0x97, 0x0A, 0x18, 0x97, 0x50,  // .......P
+                /* 03C0 */  0x1F, 0x2A, 0x70, 0xC2, 0x9E, 0x11, 0x3A, 0x03,  // .*p...:.
+                /* 03C8 */  0x9C, 0x65, 0x9F, 0x02, 0x3C, 0x42, 0x11, 0x49,  // .e..<B.I
+                /* 03D0 */  0x40, 0xBA, 0x14, 0x71, 0x31, 0x14, 0x92, 0x71,  // @..q1..q
+                /* 03D8 */  0xA8, 0x40, 0x9D, 0x4F, 0x0C, 0x67, 0x10, 0x03,  // .@.O.g..
+                /* 03E0 */  0x3A, 0xD5, 0xA1, 0x02, 0x7D, 0x04, 0xF2, 0xFC,  // :...}...
+                /* 03E8 */  0x4E, 0xCD, 0x83, 0x3B, 0xC2, 0x27, 0x80, 0x83,  // N..;.'..
+                /* 03F0 */  0x3A, 0xDF, 0x17, 0x85, 0x43, 0xF3, 0x7C, 0x3C,  // :...C.|<
+                /* 03F8 */  0xA5, 0x30, 0xC1, 0x4E, 0xD0, 0xE7, 0x43, 0x5F,  // .0.N..C_
+                /* 0400 */  0x00, 0x4D, 0xF0, 0xFF, 0x7F, 0x3A, 0x02, 0x6C,  // .M...:.l
+                /* 0408 */  0x89, 0x18, 0x33, 0x2A, 0xF6, 0x98, 0x29, 0x88,  // ..3*..).
+                /* 0410 */  0xC7, 0xEC, 0x9B, 0xA7, 0xC7, 0x8C, 0xFB, 0x08,  // ........
+                /* 0418 */  0x78, 0xBA, 0xB8, 0x73, 0x81, 0x4F, 0x25, 0xC0,  // x..s.O%.
+                /* 0420 */  0xE5, 0x84, 0x04, 0xDC, 0x23, 0x9F, 0x90, 0x40,  // ....#..@
+                /* 0428 */  0xE7, 0x55, 0xA2, 0x4F, 0x8F, 0xA7, 0x12, 0x58,  // .U.O...X
+                /* 0430 */  0xFF, 0xFF, 0x53, 0x09, 0x58, 0x51, 0x7C, 0x2A,  // ..S.XQ|*
+                /* 0438 */  0x01, 0xC7, 0xCD, 0xD6, 0x77, 0x3A, 0x3E, 0x8A,  // ....w:>.
+                /* 0440 */  0xB7, 0xA1, 0x40, 0x6F, 0x1A, 0xA7, 0x18, 0xE5,  // ..@o....
+                /* 0448 */  0x05, 0xF5, 0x6D, 0xC4, 0x57, 0x0B, 0xFC, 0x19,  // ..m.W...
+                /* 0450 */  0xCF, 0x87, 0x03, 0x7E, 0x3C, 0x82, 0x21, 0xF1,  // ...~<.!.
+                /* 0458 */  0x31, 0xA0, 0x63, 0xF1, 0x11, 0x3C, 0xDF, 0x99,  // 1.c..<..
+                /* 0460 */  0xC0, 0x97, 0x4F, 0x1F, 0x8F, 0xF8, 0x29, 0xC9,  // ..O...).
+                /* 0468 */  0xA2, 0xCE, 0x0D, 0xA8, 0xD3, 0x87, 0xC1, 0x0C,  // ........
+                /* 0470 */  0xE2, 0x73, 0x83, 0x23, 0x9E, 0x1B, 0xD0, 0x47,  // .s.#...G
+                /* 0478 */  0x02, 0x9F, 0x0B, 0x3C, 0x96, 0xD7, 0x53, 0x1F,  // ...<..S.
+                /* 0480 */  0xF0, 0xD8, 0xE9, 0xD3, 0x87, 0x16, 0x76, 0x90,  // ......v.
+                /* 0488 */  0x35, 0xD4, 0x11, 0x45, 0xF2, 0x00, 0x5F, 0x55,  // 5..E.._U
+                /* 0490 */  0x8D, 0x7A, 0x86, 0x4F, 0x2C, 0xD8, 0x43, 0x12,  // .z.O,.C.
+                /* 0498 */  0x60, 0x6E, 0xF8, 0x3E, 0x3F, 0x60, 0xFE, 0xFF,  // `n.>?`..
+                /* 04A0 */  0xE7, 0x07, 0x30, 0xB8, 0x54, 0xF8, 0x60, 0x7B,  // ..0.T.`{
+                /* 04A8 */  0x7E, 0x00, 0x2E, 0xE1, 0xCE, 0x0F, 0xA0, 0xB9,  // ~.......
+                /* 04B0 */  0xF3, 0x9C, 0x92, 0xCF, 0x9E, 0xB0, 0x0E, 0x47,  // .......G
+                /* 04B8 */  0x58, 0xB4, 0xF7, 0x82, 0x67, 0x24, 0x7E, 0x3E,  // X...g$~>
+                /* 04C0 */  0xC0, 0x60, 0xFA, 0xA2, 0x80, 0x3B, 0x1F, 0xF1,  // .`...;..
+                /* 04C8 */  0x7B, 0x12, 0x66, 0x5A, 0x3E, 0x32, 0xF9, 0x62,  // {.fZ>2.b
+                /* 04D0 */  0xED, 0x2B, 0x36, 0x83, 0x7A, 0x58, 0xC0, 0x5C,  // .+6.zX.\
+                /* 04D8 */  0x2C, 0x7C, 0xF7, 0xF1, 0x49, 0xD9, 0x04, 0x8E,  // ,|..I...
+                /* 04E0 */  0x75, 0x3C, 0x42, 0x47, 0x7B, 0x46, 0xE8, 0x1A,  // u<BG{F..
+                /* 04E8 */  0xF0, 0x3E, 0x70, 0x80, 0x8F, 0x47, 0x2C, 0xD4,  // .>p..G,.
+                /* 04F0 */  0xF1, 0x08, 0x15, 0x87, 0x42, 0x91, 0x0E, 0x15,  // ....B...
+                /* 04F8 */  0xA8, 0x10, 0x87, 0x0A, 0x0A, 0xE2, 0xD3, 0x80,  // ........
+                /* 0500 */  0x47, 0xEC, 0x43, 0x05, 0x4E, 0xDE, 0x60, 0x11,  // G.C.N.`.
+                /* 0508 */  0x17, 0x1B, 0x8F, 0xF5, 0xB0, 0x7C, 0x9A, 0xE0,  // .....|..
+                /* 0510 */  0xA7, 0x23, 0xDF, 0xA4, 0xD8, 0x38, 0x4F, 0xEE,  // .#...8O.
+                /* 0518 */  0x14, 0x31, 0x60, 0xA7, 0x15, 0xC7, 0x10, 0x6F,  // .1`....o
+                /* 0520 */  0x48, 0xE0, 0xFE, 0xFF, 0xDF, 0x90, 0xC0, 0x96,  // H.......
+                /* 0528 */  0x62, 0x78, 0x68, 0x1D, 0x87, 0x0D, 0x32, 0xB4,  // bxh...2.
+                /* 0530 */  0x08, 0x41, 0xCF, 0xCF, 0x53, 0x02, 0xEF, 0xB8,  // .A..S...
+                /* 0538 */  0x7D, 0x88, 0x02, 0xCE, 0xC7, 0x44, 0x9F, 0x0C,  // }....D..
+                /* 0540 */  0x78, 0xD8, 0x21, 0x51, 0x10, 0x9F, 0x10, 0x1C,  // x.!Q....
+                /* 0548 */  0xE4, 0xAE, 0x0B, 0xE5, 0x32, 0x80, 0x39, 0xB0,  // ....2.9.
+                /* 0550 */  0x80, 0x7D, 0x20, 0x3E, 0x3F, 0x01, 0x16, 0xFE,  // .} >?...
+                /* 0558 */  0xFF, 0x97, 0x6F, 0x50, 0x38, 0x94, 0x78, 0x7E,  // ..oP8.x~
+                /* 0560 */  0x02, 0xD2, 0x07, 0x16, 0xCC, 0xA1, 0x03, 0x7B,  // .......{
+                /* 0568 */  0x2B, 0xF1, 0xA1, 0x03, 0x0E, 0xD8, 0x7B, 0x01,  // +.....{.
+                /* 0570 */  0x46, 0xEB, 0xD9, 0x04, 0xAD, 0xEC, 0x6C, 0x42,  // F.....lB
+                /* 0578 */  0x8E, 0x01, 0x9E, 0x7B, 0x02, 0x6B, 0x3A, 0x9B,  // ...{.k:.
+                /* 0580 */  0xA0, 0xD4, 0x50, 0x48, 0xCF, 0xD9, 0x04, 0xA5,  // ..PH....
+                /* 0588 */  0xE0, 0xD2, 0xCD, 0xCF, 0x4F, 0x34, 0xDE, 0xF9,  // ....O4..
+                /* 0590 */  0x09, 0xCA, 0xD9, 0x04, 0xDE, 0xBD, 0x04, 0x77,  // .......w
+                /* 0598 */  0x98, 0x63, 0x03, 0x7F, 0x81, 0x61, 0x83, 0x7B,  // .c...a.{
+                /* 05A0 */  0x24, 0xF4, 0x29, 0x26, 0xB0, 0x6F, 0x83, 0x80,  // $.)&.o..
+                /* 05A8 */  0x8B, 0xFF, 0xFF, 0xD5, 0x1B, 0x38, 0x5D, 0x36,  // .....8]6
+                /* 05B0 */  0xF9, 0x68, 0x1F, 0x39, 0x7C, 0x13, 0x04, 0xCC,  // .h.9|...
+                /* 05B8 */  0x5D, 0x99, 0x7D, 0xF5, 0x00, 0x99, 0x50, 0x8B,  // ].}...P.
+                /* 05C0 */  0x0E, 0xAF, 0x1E, 0xC0, 0xE5, 0x42, 0xE3, 0xAB,  // .....B..
+                /* 05C8 */  0x07, 0x38, 0x86, 0xF9, 0x94, 0x8A, 0xBB, 0xD7,  // .8......
+                /* 05D0 */  0x7A, 0x34, 0x70, 0xAE, 0x20, 0x30, 0xEE, 0x16,  // z4p. 0..
+                /* 05D8 */  0xFE, 0xFF, 0x9F, 0x3F, 0xF8, 0x85, 0xEB, 0x6D,  // ...?...m
+                /* 05E0 */  0xD0, 0x57, 0x00, 0x03, 0xB1, 0x93, 0xAF, 0xA1,  // .W......
+                /* 05E8 */  0x7D, 0xBA, 0xC0, 0x0C, 0x59, 0xD7, 0x5B, 0x28,  // }...Y.[(
+                /* 05F0 */  0x87, 0x44, 0x6B, 0x9D, 0xBE, 0xAE, 0xB7, 0x70,  // .Dk....p
+                /* 05F8 */  0xE4, 0xDC, 0x42, 0x50, 0x64, 0x86, 0x33, 0x85,  // ..BPd.3.
+                /* 0600 */  0x01, 0x9D, 0xEE, 0xF8, 0x80, 0xBE, 0x5A, 0xF8,  // ......Z.
+                /* 0608 */  0xEE, 0x88, 0xBB, 0x17, 0xBC, 0x3B, 0xF2, 0x03,  // .....;..
+                /* 0610 */  0x97, 0x8F, 0x0E, 0xA1, 0xCE, 0xDB, 0x63, 0x34,  // ......c4
+                /* 0618 */  0x50, 0x2C, 0x36, 0x9B, 0x93, 0xC3, 0x9D, 0x42,  // P,6....B
+                /* 0620 */  0x00, 0xBF, 0xF0, 0x8F, 0xB7, 0xB8, 0x53, 0x08,  // ......S.
+                /* 0628 */  0x30, 0xF9, 0xFF, 0x9F, 0x42, 0x80, 0x6F, 0xE8,  // 0...B.o.
+                /* 0630 */  0xFB, 0x14, 0xE8, 0x7C, 0x3A, 0xD5, 0xAA, 0xF4,  // ...|:...
+                /* 0638 */  0x14, 0x02, 0x5C, 0x6E, 0x0E, 0xBE, 0xDE, 0x82,  // ..\n....
+                /* 0640 */  0xFB, 0x4C, 0x81, 0x05, 0x8A, 0xC5, 0xEE, 0x1F,  // .L......
+                /* 0648 */  0xD8, 0xA1, 0x92, 0xB3, 0x07, 0x3A, 0xF6, 0x33,  // .....:.3
+                /* 0650 */  0x41, 0x97, 0x8B, 0x83, 0xC6, 0x04, 0x3E, 0x7B,  // A.....>{
+                /* 0658 */  0xA0, 0xA2, 0x52, 0x28, 0xD8, 0xD9, 0x03, 0x15,  // ..R(....
+                /* 0660 */  0xE5, 0xEC, 0x41, 0x41, 0x3C, 0x72, 0xDF, 0xD4,  // ..AA<r..
+                /* 0668 */  0xE1, 0xDC, 0xF2, 0xD9, 0x61, 0xE0, 0x59, 0x05,  // ....a.Y.
+                /* 0670 */  0xC6, 0xED, 0xD6, 0x83, 0xC2, 0x9F, 0x3B, 0x60,  // ......;`
+                /* 0678 */  0xFE, 0xFF, 0xCF, 0x1D, 0xC0, 0xE6, 0x44, 0x8E,  // ......D.
+                /* 0680 */  0x17, 0x05, 0xA2, 0x33, 0xC3, 0xFB, 0xA9, 0x0F,  // ...3....
+                /* 0688 */  0x67, 0x3E, 0x78, 0x61, 0x47, 0x06, 0x2C, 0xAE,  // g>xaG.,.
+                /* 0690 */  0x8F, 0xC0, 0x5B, 0xD0, 0xE1, 0x00, 0x25, 0xE1,  // ..[...%.
+                /* 0698 */  0x70, 0x40, 0x41, 0x7C, 0x79, 0x83, 0x23, 0xEE,  // p@A|y.#.
+                /* 06A0 */  0x74, 0x01, 0x71, 0xC6, 0xF8, 0x43, 0x82, 0x31,  // t.q..C.1
+                /* 06A8 */  0x7C, 0x98, 0xE0, 0x37, 0x49, 0x60, 0xF8, 0xFF,  // |..7I`..
+                /* 06B0 */  0x3F, 0xAA, 0x00, 0x1E, 0xB4, 0x5A, 0x54, 0xEA,  // ?....ZT.
+                /* 06B8 */  0xF4, 0xA8, 0x02, 0x38, 0xD3, 0x71, 0x54, 0x41,  // ...8.qTA
+                /* 06C0 */  0x2B, 0x79, 0x0D, 0x68, 0x2C, 0x61, 0x8F, 0xFA,  // +y.h,a..
+                /* 06C8 */  0xA0, 0x99, 0x86, 0xA3, 0x0A, 0x2A, 0x3D, 0x89,  // .....*=.
+                /* 06D0 */  0x92, 0x1F, 0x97, 0x50, 0x59, 0x0F, 0x18, 0x14,  // ...PY...
+                /* 06D8 */  0xC4, 0x97, 0x59, 0x38, 0x52, 0x86, 0x47, 0xEF,  // ..Y8R.G.
+                /* 06E0 */  0xD5, 0x3E, 0x5A, 0xFB, 0x36, 0xF0, 0x9A, 0xC0,  // .>Z.6...
+                /* 06E8 */  0xEE, 0x28, 0xC0, 0xE5, 0xFF, 0x7F, 0xF5, 0x00,  // .(......
+                /* 06F0 */  0x86, 0xB7, 0x0E, 0x4F, 0x96, 0xDF, 0x1A, 0x3C,  // ...O...<
+                /* 06F8 */  0x59, 0x83, 0x78, 0xB2, 0x0E, 0x34, 0x59, 0xF4,  // Y.x..4Y.
+                /* 0700 */  0x15, 0xC3, 0x77, 0x4F, 0x4F, 0x16, 0x73, 0x55,  // ..wOO.sU
+                /* 0708 */  0xC7, 0xDD, 0xB6, 0x00, 0xD3, 0x12, 0x9D, 0x4A,  // .......J
+                /* 0710 */  0xBD, 0x73, 0x00, 0xCD, 0xFF, 0xFF, 0x9D, 0x03,  // .s......
+                /* 0718 */  0xD8, 0xC4, 0xB9, 0x73, 0xA0, 0x03, 0xDD, 0x39,  // ...s...9
+                /* 0720 */  0xC8, 0xA0, 0x5F, 0xB7, 0x0E, 0x9A, 0x45, 0xB9,  // .._...E.
+                /* 0728 */  0x73, 0xA0, 0x42, 0x50, 0x28, 0xC6, 0xB9, 0x01,  // s.BP(...
+                /* 0730 */  0x25, 0xFC, 0x06, 0x44, 0x41, 0x3C, 0x72, 0xDF,  // %..DA<r.
+                /* 0738 */  0x39, 0x00, 0x1F, 0x69, 0x06, 0x85, 0xD6, 0x73,  // 9..i...s
+                /* 0740 */  0x1D, 0x85, 0x70, 0xB7, 0xC0, 0x5F, 0xB2, 0x00,  // ..p.._..
+                /* 0748 */  0x47, 0xFF, 0xFF, 0x9B, 0x32, 0x60, 0xE1, 0x6A,  // G...2`.j
+                /* 0750 */  0x05, 0xB8, 0x92, 0x68, 0x51, 0xEB, 0xB9, 0x04,  // ...hQ...
+                /* 0758 */  0x90, 0x16, 0x60, 0x9D, 0x74, 0xB0, 0x96, 0x0C,  // ..`.t...
+                /* 0760 */  0x83, 0xF8, 0xFF, 0x8F, 0x97, 0x49, 0x1A, 0x19,  // .....I..
+                /* 0768 */  0xEA, 0x0C, 0xE0, 0x79, 0xBD, 0x2D, 0xC7, 0x3E,  // ...y.-.>
+                /* 0770 */  0xB3, 0x13, 0xF6, 0x40, 0x0E, 0x8D, 0x49, 0x1B,  // ...@..I.
+                /* 0778 */  0x1A, 0xEA, 0x4C, 0xE2, 0x71, 0xBD, 0x6D, 0xF8,  // ..L.q.m.
+                /* 0780 */  0x4E, 0xE2, 0xCB, 0x91, 0x61, 0x12, 0x78, 0xF4,  // N...a.x.
+                /* 0788 */  0xEC, 0x32, 0x10, 0x8D, 0x9D, 0x19, 0x60, 0x00,  // .2....`.
+                /* 0790 */  0x3E, 0x04, 0x1C, 0xDE, 0x41, 0xB0, 0xB9, 0x1F,  // >...A...
+                /* 0798 */  0x04, 0x66, 0xD8, 0xF6, 0x28, 0xC0, 0xEA, 0xA1,  // .f..(...
+                /* 07A0 */  0x01, 0xE1, 0xFE, 0xCE, 0xA0, 0x89, 0xBE, 0x2A,  // .......*
+                /* 07A8 */  0x3C, 0x23, 0xC4, 0x08, 0x62, 0x6B, 0x02, 0x6C,  // <#..bk.l
+                /* 07B0 */  0x5D, 0x0F, 0x04, 0xE4, 0xF3, 0x42, 0x94, 0x53,  // ]....B.S
+                /* 07B8 */  0x0A, 0x14, 0x27, 0x6A, 0x94, 0xE6, 0x04, 0x18,  // ..'j....
+                /* 07C0 */  0x83, 0x42, 0x80, 0xC4, 0x7A, 0x53, 0xA8, 0x0D,  // .B..zS..
+                /* 07C8 */  0x4C, 0x50, 0xC1, 0xC2, 0x04, 0x31, 0x54, 0xFB,  // LP...1T.
+                /* 07D0 */  0x83, 0x20, 0xF2, 0x1F, 0x12, 0xBA, 0x88, 0xF8,  // . ......
+                /* 07D8 */  0x60, 0xE9, 0xD1, 0xF0, 0xC3, 0x14, 0x3F, 0x06,  // `.....?.
+                /* 07E0 */  0xF8, 0x78, 0xC2, 0x40, 0x1E, 0x63, 0x7C, 0x2E,  // .x.@.c|.
+                /* 07E8 */  0x39, 0x5C, 0x5F, 0xB6, 0xD9, 0xF1, 0xC2, 0xA7,  // 9\_.....
+                /* 07F0 */  0x0C, 0x38, 0xAE, 0x01, 0x35, 0xF1, 0x07, 0x05,  // .8..5...
+                /* 07F8 */  0xB0, 0x1C, 0x33, 0xC0, 0x70, 0x80, 0xF1, 0x39,  // ..3.p..9
+                /* 0800 */  0xC3, 0xA7, 0xD4, 0x63, 0x23, 0x83, 0x40, 0x9D,  // ...c#.@.
+                /* 0808 */  0x45, 0xF8, 0x30, 0x4F, 0xEB, 0x95, 0xC1, 0xB7,  // E.0O....
+                /* 0810 */  0x04, 0x13, 0x58, 0xEC, 0xE9, 0x83, 0x8E, 0x07,  // ..X.....
+                /* 0818 */  0xFC, 0x8A, 0x05, 0xFC, 0xFF, 0x8F, 0x06, 0xAF,  // ........
+                /* 0820 */  0x37, 0xC6, 0xF6, 0xCD, 0xC1, 0x11, 0x20, 0xE4,  // 7..... .
+                /* 0828 */  0x64, 0x3C, 0x68, 0xD0, 0xB3, 0xF1, 0x39, 0xC2,  // d<h...9.
+                /* 0830 */  0xF7, 0x02, 0x26, 0x78, 0x3C, 0xF4, 0x9C, 0xEA,  // ..&x<...
+                /* 0838 */  0xC3, 0x07, 0x3F, 0x34, 0xF8, 0xBC, 0xC0, 0x10,  // ..?4....
+                /* 0840 */  0x1F, 0x78, 0x0C, 0xF1, 0xEC, 0xC1, 0x4E, 0x63,  // .x....Nc
+                /* 0848 */  0xE0, 0xB8, 0x5F, 0x3C, 0xA6, 0x60, 0x47, 0xE2,  // .._<.`G.
+                /* 0850 */  0x63, 0x0A, 0x7C, 0x90, 0xD7, 0x19, 0x43, 0x04,  // c.|...C.
+                /* 0858 */  0x09, 0xFE, 0x4C, 0x70, 0x3A, 0x6C, 0x68, 0x18,  // ..Lp:lh.
+                /* 0860 */  0x82, 0x22, 0x4F, 0x21, 0xE8, 0x11, 0xF0, 0x73,  // ."O!...s
+                /* 0868 */  0xC2, 0x23, 0x0B, 0x1B, 0xC1, 0x5B, 0x8B, 0x27,  // .#...[.'
+                /* 0870 */  0x71, 0x40, 0x3E, 0x5B, 0x18, 0x21, 0x76, 0xB9,  // q@>[.!v.
+                /* 0878 */  0x47, 0x0C, 0x72, 0x11, 0x39, 0xBE, 0xA7, 0x1C,  // G.r.9...
+                /* 0880 */  0xCC, 0x98, 0x70, 0x27, 0x06, 0x0F, 0x81, 0x0F,  // ..p'....
+                /* 0888 */  0xE0, 0xD9, 0xE2, 0xFC, 0x7C, 0x86, 0x39, 0x2B,  // ....|.9+
+                /* 0890 */  0xDC, 0x41, 0x83, 0x4F, 0x09, 0x37, 0x00, 0x8C,  // .A.O.7..
+                /* 0898 */  0x42, 0x9B, 0x3E, 0x35, 0x1A, 0xB5, 0x6A, 0x50,  // B.>5..jP
+                /* 08A0 */  0xA6, 0x46, 0x99, 0x06, 0xB5, 0xFA, 0x54, 0x6A,  // .F....Tj
+                /* 08A8 */  0xCC, 0xD8, 0x5C, 0x7D, 0xF3, 0xF7, 0x09, 0xC0,  // ..\}....
+                /* 08B0 */  0xC7, 0x2E, 0x83, 0x58, 0xD6, 0x9B, 0x44, 0x46,  // ...X..DF
+                /* 08B8 */  0x06, 0x68, 0x10, 0x01, 0x59, 0xF6, 0xEB, 0x42,  // .h..Y..B
+                /* 08C0 */  0x40, 0xCE, 0x00, 0x22, 0x20, 0xEB, 0xF5, 0x00,  // @.." ...
+                /* 08C8 */  0xC4, 0xD4, 0x83, 0x08, 0xC8, 0x39, 0x4C, 0x00,  // .....9L.
+                /* 08D0 */  0xB1, 0x54, 0x20, 0x02, 0xB2, 0xA0, 0x17, 0x83,  // .T .....
+                /* 08D8 */  0x80, 0xAC, 0x0E, 0x44, 0x40, 0x56, 0x64, 0x03,  // ...D@Vd.
+                /* 08E0 */  0x88, 0xE9, 0x03, 0xD1, 0x00, 0x88, 0x8F, 0x01,  // ........
+                /* 08E8 */  0x50, 0x10, 0x01, 0x39, 0xB3, 0x91, 0xFF, 0x3F,  // P..9...?
+                /* 08F0 */  0x10, 0xFB, 0x5D, 0x06, 0x62, 0xC2, 0x41, 0x04,  // ..].b.A.
+                /* 08F8 */  0xE4, 0x14, 0x40, 0x54, 0xEF, 0x9B, 0x41, 0xC0,  // ..@T..A.
+                /* 0900 */  0x04, 0x44, 0x40, 0xCE, 0x62, 0x05, 0x88, 0x05,  // .D@.b...
+                /* 0908 */  0x03, 0x11, 0x90, 0x43, 0x68, 0x01, 0x62, 0x91,  // ...Ch.b.
+                /* 0910 */  0x40, 0x04, 0xE4, 0xD4, 0x6F, 0x01, 0x01, 0x59,  // @...o..Y
+                /* 0918 */  0x82, 0x19, 0x20, 0x16, 0x17, 0x44, 0x40, 0x0E,  // .. ..D@.
+                /* 0920 */  0x0F, 0x44, 0x35, 0xBC, 0x00, 0x04, 0x64, 0x41,  // .D5...dA
+                /* 0928 */  0x20, 0xBA, 0x66, 0x13, 0x20, 0x1A, 0x11, 0x88,  //  .f. ...
+                /* 0930 */  0x46, 0xB4, 0x03, 0xC4, 0x02, 0x83, 0x08, 0xC8,  // F.......
+                /* 0938 */  0x51, 0xFD, 0x00, 0xB1, 0xDC, 0x20, 0x02, 0x72,  // Q.... .r
+                /* 0940 */  0xD2, 0xC7, 0x86, 0x80, 0x08, 0x88, 0x80, 0x9C,  // ........
+                /* 0948 */  0x58, 0x11, 0x10, 0x8B, 0x0F, 0x22, 0x20, 0xCB,  // X...." .
+                /* 0950 */  0x77, 0x04, 0xC4, 0xB2, 0x80, 0x08, 0xC8, 0xBA,  // w.......
+                /* 0958 */  0x9F, 0x39, 0x1A, 0x24, 0x01, 0xD1, 0x80, 0x88,  // .9.$....
+                /* 0960 */  0xA6, 0x53, 0x05, 0x53, 0xEC, 0x09, 0x88, 0xE5,  // .S.S....
+                /* 0968 */  0x05, 0xA1, 0x8A, 0xDF, 0x18, 0x02, 0xF1, 0xFF,  // ........
+                /* 0970 */  0x1F                                             // .
+            })
+        }
+
+        Device (AMW2)
+        {
+            Name (_HID, "ASUS7000")  // _HID: Hardware ID
+            Name (_UID, "7000")  // _UID: Unique ID
+        }
+
+        Scope (\_SB.I2CA)
+        {
+            Name (BUCS, Zero)
+            Name (BUCK, Zero)
+            Device (ACC)
+            {
+                Name (_ADR, Zero)  // _ADR: Address
+                Name (_HID, "BOSC0200")  // _HID: Hardware ID
+                Name (_CID, "BOSC0200")  // _CID: Compatible ID
+                Name (_DDN, "Accelerometer")  // _DDN: DOS Device Name
+                Name (_UID, One)  // _UID: Unique ID
+                Name (_DEP, Package (0x01)  // _DEP: Dependencies
+                {
+                    \_SB.I2C7
+                })
+                Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+                {
+                    Name (RBUF, ResourceTemplate ()
+                    {
+                        I2cSerialBusV2 (0x0019, ControllerInitiated, 0x00061A80,
+                            AddressingMode7Bit, "\\_SB.I2CA",
+                            0x00, ResourceConsumer, , Exclusive,
+                            )
+                        I2cSerialBusV2 (0x0018, ControllerInitiated, 0x00061A80,
+                            AddressingMode7Bit, "\\_SB.I2CA",
+                            0x00, ResourceConsumer, , Exclusive,
+                            )
+                        GpioIo (Exclusive, PullNone, 0x0000, 0x0000, IoRestrictionNone,
+                            "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                            )
+                            {   // Pin list
+                                0x0073
+                            }
+                    })
+                    Return (RBUF) /* \_SB_.I2CA.ACC_._CRS.RBUF */
+                }
+
+                Method (ROMS, 0, NotSerialized)
+                {
+                    Name (SBUF, Package (0x03)
+                    {
+                        "1 0 0", 
+                        "0 -1 0", 
+                        "0 0 1"
+                    })
+                    Return (SBUF) /* \_SB_.I2CA.ACC_.ROMS.SBUF */
+                }
+
+                Method (ROMK, 0, NotSerialized)
+                {
+                    Name (SBUF, Package (0x03)
+                    {
+                        "1 0 0", 
+                        "0 -1 0", 
+                        "0 0 1"
+                    })
+                    Return (SBUF) /* \_SB_.I2CA.ACC_.ROMK.SBUF */
+                }
+
+                Method (CALS, 1, NotSerialized)
+                {
+                    Local0 = Arg0
+                    If (((Local0 == Zero) || (Local0 == Ones)))
+                    {
+                        Local0 = BUCS /* \_SB_.I2CA.BUCS */
+                        Return (Local0)
+                    }
+                    Else
+                    {
+                        BUCS = Local0
+                    }
+                }
+
+                Method (CALK, 1, NotSerialized)
+                {
+                    Local0 = Arg0
+                    If (((Local0 == Zero) || (Local0 == Ones)))
+                    {
+                        Local0 = BUCK /* \_SB_.I2CA.BUCK */
+                        Return (Local0)
+                    }
+                    Else
+                    {
+                        BUCK = Local0
+                    }
+                }
+
+                Method (ANGL, 1, NotSerialized)
+                {
+                    Return (0xC8)
+                }
+
+                OperationRegion (CP21, SystemMemory, 0x03D7C004, One)
+                Field (CP21, DWordAcc, NoLock, Preserve)
+                {
+                    PIN5,   1
+                }
+
+                Method (HALL, 1, NotSerialized)
+                {
+                    Name (DATA, One)
+                    DATA = PIN5 /* \_SB_.I2CA.ACC_.PIN5 */
+                    If ((DATA == One))
+                    {
+                        Return (Zero)
+                    }
+                    Else
+                    {
+                        Return (One)
+                    }
+                }
+
+                OperationRegion (CP20, SystemMemory, 0x03573000, 0x10)
+                Field (CP20, DWordAcc, NoLock, Preserve)
+                {
+                    PI4C,   32, 
+                    PIN4,   32, 
+                    PI4N,   32, 
+                    PI4S,   32
+                }
+
+                Method (SKBC, 1, NotSerialized)
+                {
+                    If ((Arg0 == 0x03))
+                    {
+                        PI4C = 0x0200
+                        PIN4 = Zero
+                        \_SB.I2C7.GSAC (0x03)
+                    }
+                    Else
+                    {
+                        PI4C = 0x0200
+                        PIN4 = 0x02
+                        \_SB.I2C7.GSAC (Zero)
+                    }
+                }
+            }
+        }
+
+        Scope (\_SB)
+        {
+            Device (LSID)
+            {
+                Method (_HID, 0, NotSerialized)  // _HID: Hardware ID
+                {
+                    Return ("MSFT9001")
+                }
+
+                Name (_CID, "PNP0C60" /* Display Sensor Device */)  // _CID: Compatible ID
+                Name (_CRS, Buffer (0x02)  // _CRS: Current Resource Settings
+                {
+                     0x79, 0x00                                       // y.
+                })
+            }
+        }
+
+        Scope (\_SB)
+        {
+            Name (CEXI, Zero)
+            Device (BATC)
+            {
+                Name (_HID, EisaId ("PNP0C0A") /* Control Method Battery */)  // _HID: Hardware ID
+                Alias (\_SB.PSUB, _SUB)
+                Name (_UID, One)  // _UID: Unique ID
+                Name (BCCE, One)
+                Name (OTGS, Zero)
+                Name (HSMD, Zero)
+                Name (CHPR, One)
+                Name (FGDV, 0x0A)
+                Name (BCCC, 0x46)
+                Name (BCIL, 0x65)
+                Name (BCVF, 0x93)
+                Name (BCFV, 0xED)
+                Name (BCCH, 0x38)
+                Name (BCST, 0x05)
+                Name (BCPE, 0x74)
+                Name (RECT, Zero)
+                Name (BCCL, 0xFFFFFFFF)
+                Name (BCLP, 0x0CF4)
+                Name (DSCP, 0x0D34)
+                Name (DSVO, 0x3C28)
+                Name (BTPC, Zero)
+                Name (AVCU, Zero)
+                Name (DCPS, Zero)
+                Name (CTMP, 0x1E)
+                Name (MPPP, 0xFF)
+                Name (ICU0, Zero)
+                Name (ICU1, Zero)
+                Name (BCAP, Zero)
+                Name (BEXI, One)
+                Name (_DEP, Package (0x02)  // _DEP: Dependencies
+                {
+                    \_SB.I2C7, 
+                    \_SB.GIO0
+                })
+                Name (BIXP, Package (0x14)
+                {
+                    Zero, 
+                    One, 
+                    0xFFFFFFFF, 
+                    0xFFFFFFFF, 
+                    One, 
+                    0xFFFFFFFF, 
+                    0x0A, 
+                    0x04, 
+                    Zero, 
+                    0x00017318, 
+                    0x61A8, 
+                    0x3A98, 
+                    0x88B8, 
+                    0x61A8, 
+                    One, 
+                    One, 
+                    "AS1FXXB3IC", 
+                    "131", 
+                    "Polymer Coslight Simpo", 
+                    "ASUS, TP37033"
+                })
+                Name (BSTP, Package (0x04)
+                {
+                    Zero, 
+                    0xFFFFFFFF, 
+                    0xFFFFFFFF, 
+                    0xFFFFFFFF
+                })
+                Method (_BIX, 0, NotSerialized)  // _BIX: Battery Information Extended
+                {
+                    Acquire (\_SB.MUT0, 0xFFFF)
+                    If ((\_SB.ECOK == One))
+                    {
+                        Sleep (0x0D)
+                        \_SB.I2C7.BUF4 = \_SB.I2C7.CM08
+                        Local0 = Zero
+                        Local1 = Zero
+                        Local2 = Zero
+                        If ((DerefOf (\_SB.I2C7.BUF4 [0x02]) != 0x0C))
+                        {
+                            SLOG ("[QtBattery] BIX 1st err", DerefOf (\_SB.I2C7.BUF4 [0x02]))
+                            Local2 = RBIX ()
+                        }
+                        Else
+                        {
+                            Local1 = CSIX ()
+                            If ((Local1 != One))
+                            {
+                                Debug = "[QtBattery] CSIX CheckSum 1st err"
+                                Local2 = RBIX ()
+                            }
+                        }
+
+                        If ((Local2 == Zero))
+                        {
+                            If ((DerefOf (\_SB.I2C7.BUF4 [Zero]) == Zero))
+                            {
+                                Local1 = Zero
+                                Local1 = MEGD (DerefOf (\_SB.I2C7.BUF4 [0x08]), DerefOf (\_SB.I2C7.BUF4 [0x07]
+                                    ))
+                                BIXP [0x03] = Local1
+                                Local1 = Zero
+                                Local1 = MEGD (DerefOf (\_SB.I2C7.BUF4 [0x04]), DerefOf (\_SB.I2C7.BUF4 [0x03]
+                                    ))
+                                DSCP = Local1
+                                Local1 = Zero
+                                Local1 = MEGD (DerefOf (\_SB.I2C7.BUF4 [0x06]), DerefOf (\_SB.I2C7.BUF4 [0x05]
+                                    ))
+                                DSVO = Local1
+                            }
+                        }
+                        Else
+                        {
+                            Debug = "[QtBattery] _BIX Keep Value"
+                        }
+                    }
+
+                    BIXP [0x02] = DSCP /* \_SB_.BATC.DSCP */
+                    BIXP [0x05] = DSVO /* \_SB_.BATC.DSVO */
+                    SLOG ("[QtBattery] Design Voltage =", DerefOf (BIXP [0x05]))
+                    Local1 = ((DSCP * 0x08) / 0x64)
+                    BIXP [0x06] = Local1
+                    Local1 = ((DSCP * 0x03) / 0x64)
+                    BIXP [0x07] = Local1
+                    Release (\_SB.MUT0)
+                    Return (BIXP) /* \_SB_.BATC.BIXP */
+                }
+
+                Method (_BST, 0, NotSerialized)  // _BST: Battery Status
+                {
+                    Acquire (\_SB.MUT0, 0xFFFF)
+                    If ((\_SB.ECOK == One))
+                    {
+                        Sleep (0x0D)
+                        \_SB.I2C7.BUF4 = \_SB.I2C7.CM07
+                        Local0 = Zero
+                        Local1 = Zero
+                        Local2 = Zero
+                        If ((DerefOf (\_SB.I2C7.BUF4 [0x02]) != 0x0D))
+                        {
+                            Debug = "[QtBattery] _BST 1st err"
+                            Local2 = RBST ()
+                        }
+                        Else
+                        {
+                            Local1 = CSST ()
+                            If ((Local1 != One))
+                            {
+                                Debug = "[QtBattery] CSST CheckSum 1st err"
+                                Local2 = RBST ()
+                            }
+                        }
+
+                        If ((Local2 == Zero))
+                        {
+                            If ((DerefOf (\_SB.I2C7.BUF4 [Zero]) == Zero))
+                            {
+                                Local1 = MEGD (DerefOf (\_SB.I2C7.BUF4 [0x06]), DerefOf (\_SB.I2C7.BUF4 [0x05]
+                                    ))
+                                BSTP [0x02] = Local1
+                                Local0 = Zero
+                                Local1 = Zero
+                                Local2 = Zero
+                                Local0 = (DerefOf (\_SB.I2C7.BUF4 [0x03]) & 0x03)
+                                BSTP [Zero] = Local0
+                                SLOG ("[QtBattery] psrc = ", DerefOf (BSTP [Zero]))
+                                ICU1 = Local0
+                                BCAP = DerefOf (\_SB.I2C7.BUF4 [0x04])
+                                Local1 = Zero
+                                Local1 = MEGD (DerefOf (\_SB.I2C7.BUF4 [0x0A]), DerefOf (\_SB.I2C7.BUF4 [0x09]
+                                    ))
+                                If ((Local1 & 0x8000))
+                                {
+                                    If ((Local1 == 0xFFFF))
+                                    {
+                                        BSTP [One] = 0xFFFFFFFF
+                                    }
+                                    Else
+                                    {
+                                        Local2 = ~Local1
+                                        Local2++
+                                        Local3 = (Local2 & 0xFFFF)
+                                        BSTP [One] = Local3
+                                        ICU0 = Local3
+                                    }
+                                }
+                                Else
+                                {
+                                    BSTP [One] = Local1
+                                    ICU0 = Local1
+                                }
+
+                                Local1 = Zero
+                                Local1 = MEGD (DerefOf (\_SB.I2C7.BUF4 [0x08]), DerefOf (\_SB.I2C7.BUF4 [0x07]
+                                    ))
+                                BSTP [0x03] = Local1
+                            }
+                        }
+                        Else
+                        {
+                            Debug = "[QtBattery] _BST Keep Value"
+                        }
+
+                        SLOG ("[QtBattery] RemainingCapacity =", DerefOf (BSTP [0x02]))
+                    }
+
+                    Release (\_SB.MUT0)
+                    Return (BSTP) /* \_SB_.BATC.BSTP */
+                }
+
+                Method (_BTP, 1, NotSerialized)  // _BTP: Battery Trip Point
+                {
+                }
+
+                Method (_BTM, 1, NotSerialized)  // _BTM: Battery Time
+                {
+                    Return (0xFFFFFFFF)
+                }
+
+                Method (_BCT, 1, NotSerialized)  // _BCT: Battery Charge Time
+                {
+                    Return (0xFFFFFFFF)
+                }
+
+                Method (_STA, 0, NotSerialized)  // _STA: Status
+                {
+                    Acquire (\_SB.MUT0, 0xFFFF)
+                    If ((\_SB.ECOK == One))
+                    {
+                        Sleep (0x0D)
+                        \_SB.I2C7.BUF4 = \_SB.I2C7.CM07
+                        Local0 = Zero
+                        Local1 = Zero
+                        Local2 = Zero
+                        If ((DerefOf (\_SB.I2C7.BUF4 [0x02]) != 0x0D))
+                        {
+                            Debug = "[QtBattery] _STA 0x07 1st err"
+                            Local2 = RBST ()
+                        }
+                        Else
+                        {
+                            Local1 = CSST ()
+                            If ((Local1 != One))
+                            {
+                                Debug = "[QtBattery] _STA 0x07 CheckSum 1st err"
+                                Local2 = RBST ()
+                            }
+                        }
+
+                        If ((Local2 == Zero))
+                        {
+                            If ((DerefOf (\_SB.I2C7.BUF4 [Zero]) == Zero))
+                            {
+                                Local0 = (DerefOf (\_SB.I2C7.BUF4 [0x03]) & 0x40)
+                                BEXI = Local0
+                                SLOG ("[QtBattery] _STA Power Source = ", BEXI)
+                            }
+                        }
+                        Else
+                        {
+                            SLOG ("[QtBattery] _STA Keep Value", BEXI)
+                        }
+                    }
+
+                    Release (\_SB.MUT0)
+                    If ((BEXI != Zero))
+                    {
+                        SLOG ("[QtBattery] _STA set 0x1F: ", BEXI)
+                        Return (0x1F)
+                    }
+                    Else
+                    {
+                        SLOG ("[QtBattery] _STA set 0xF: ", BEXI)
+                        Return (0x0F)
+                    }
+                }
+
+                Method (_PCL, 0, NotSerialized)  // _PCL: Power Consumer List
+                {
+                    Return (\_SB)
+                }
+
+                Method (PSRC, 0, NotSerialized)
+                {
+                    Acquire (\_SB.MUT0, 0xFFFF)
+                    If ((\_SB.ECOK == One))
+                    {
+                        Sleep (0x0D)
+                        \_SB.I2C7.BUF4 = \_SB.I2C7.CM07
+                        Local0 = Zero
+                        Local1 = Zero
+                        Local2 = Zero
+                        If ((DerefOf (\_SB.I2C7.BUF4 [0x02]) != 0x0D))
+                        {
+                            Debug = "[QtBattery] PSRC 0x07 1st err"
+                            Local2 = RBST ()
+                        }
+                        Else
+                        {
+                            Local1 = CSST ()
+                            If ((Local1 != One))
+                            {
+                                Debug = "[QtBattery] PSRC 0x07 CheckSum 1st err"
+                                Local2 = RBST ()
+                            }
+                        }
+
+                        If ((Local2 == Zero))
+                        {
+                            If ((DerefOf (\_SB.I2C7.BUF4 [Zero]) == Zero))
+                            {
+                                Local0 = (DerefOf (\_SB.I2C7.BUF4 [0x03]) & 0x80)
+                                CEXI = Local0
+                                SLOG ("[QtBattery] PSRC Power Source = ", CEXI)
+                            }
+                        }
+                        Else
+                        {
+                            SLOG ("[QtBattery] PSRC Keep Value", CEXI)
+                        }
+                    }
+
+                    Release (\_SB.MUT0)
+                    If ((CEXI != Zero))
+                    {
+                        Return (One)
+                    }
+                    Else
+                    {
+                        Return (Zero)
+                    }
+
+                    Return (One)
+                }
+            }
+
+            Device (ADP1)
+            {
+                Name (_HID, "ACPI0003" /* Power Source Device */)  // _HID: Hardware ID
+                Alias (\_SB.PSUB, _SUB)
+                Name (LPWR, Zero)
+                Method (_PSR, 0, NotSerialized)  // _PSR: Power Source
+                {
+                    If (CondRefOf (\_SB.BATC, Local1))
+                    {
+                        Local0 = \_SB.BATC.PSRC ()
+                        If ((Local0 == Zero))
+                        {
+                            SLOG ("[QtBattery] _PSR = 0; ", CEXI)
+                            If ((Local0 != LPWR))
+                            {
+                                \_SB.AMW0.IANE (0x57)
+                            }
+                        }
+                        Else
+                        {
+                            SLOG ("[QtBattery] _PSR = 1; ", CEXI)
+                            If ((Local0 != LPWR))
+                            {
+                                \_SB.AMW0.IANE (0x58)
+                            }
+                        }
+
+                        LPWR = Local0
+                        Return (Local0)
+                    }
+
+                    Return (One)
+                }
+
+                Method (_PCL, 0, NotSerialized)  // _PCL: Power Consumer List
+                {
+                    Return (\_SB)
+                }
+            }
+
+            Method (MEGD, 2, Serialized)
+            {
+                Local1 = Zero
+                Local1 = Arg0
+                Local1 <<= 0x08
+                Local1 |= Arg1
+                Return (Local1)
+            }
+
+            Method (RBIX, 0, Serialized)
+            {
+                Sleep (0x03E8)
+                Acquire (\_SB.MUT0, 0xFFFF)
+                \_SB.I2C7.BUF4 = \_SB.I2C7.CM08
+                Local0 = Zero
+                Local1 = Zero
+                While ((Local0 < 0x0E))
+                {
+                    \_SB.I2C7.BUF4 [Local1] = DerefOf (\_SB.I2C7.BUF4 [Local0])
+                    Local0++
+                    Local1++
+                }
+
+                Local0 = Zero
+                Local1 = Zero
+                If ((DerefOf (\_SB.I2C7.BUF4 [0x02]) != 0x0C))
+                {
+                    SLOG ("[QtBattery] RBIX Buffer still err", DerefOf (\_SB.I2C7.BUF4 [0x02]))
+                    Release (\_SB.MUT0)
+                    Return (One)
+                }
+                Else
+                {
+                    Local1 = CSIX ()
+                    If ((Local1 != One))
+                    {
+                        Debug = "[QtBattery] RBIX CheckSum still err"
+                        Release (\_SB.MUT0)
+                        Return (One)
+                    }
+                    Else
+                    {
+                        Release (\_SB.MUT0)
+                        Return (Zero)
+                    }
+                }
+            }
+
+            Method (CSIX, 0, Serialized)
+            {
+                Local0 = 0x02
+                Local1 = Zero
+                Local2 = Zero
+                Local3 = Zero
+                While ((Local0 < 0x0D))
+                {
+                    Local1 += DerefOf (\_SB.I2C7.BUF4 [Local0])
+                    Local0++
+                }
+
+                Local2 = ~Local1
+                Local2++
+                Local3 = (Local2 & 0xFF)
+                If ((Local3 == DerefOf (\_SB.I2C7.BUF4 [0x0D])))
+                {
+                    Return (One)
+                }
+                Else
+                {
+                    SLOG ("[QtBattery] BIX CHKSum=", Local3)
+                    SLOG ("[QtBattery] EC CHKSum=", DerefOf (\_SB.I2C7.BUF4 [0x0D]))
+                    Return (Zero)
+                }
+            }
+
+            Method (RBST, 0, Serialized)
+            {
+                Sleep (0x03E8)
+                Acquire (\_SB.MUT0, 0xFFFF)
+                \_SB.I2C7.BUF4 = \_SB.I2C7.CM07
+                Local0 = Zero
+                Local1 = Zero
+                While ((Local0 < 0x0F))
+                {
+                    \_SB.I2C7.BUF4 [Local1] = DerefOf (\_SB.I2C7.BUF4 [Local0])
+                    Local0++
+                    Local1++
+                }
+
+                Local0 = Zero
+                Local1 = Zero
+                If ((DerefOf (\_SB.I2C7.BUF4 [0x02]) != 0x0D))
+                {
+                    Debug = "[QtBattery] RBST Buffer still err"
+                    Release (\_SB.MUT0)
+                    Return (One)
+                }
+                Else
+                {
+                    Local1 = CSST ()
+                    If ((Local1 != One))
+                    {
+                        Debug = "[QtBattery] RBST CheckSum still err"
+                        Release (\_SB.MUT0)
+                        Return (One)
+                    }
+                    Else
+                    {
+                        Release (\_SB.MUT0)
+                        Return (Zero)
+                    }
+                }
+            }
+
+            Method (CSST, 0, Serialized)
+            {
+                Local0 = 0x02
+                Local1 = Zero
+                Local2 = Zero
+                Local3 = Zero
+                While ((Local0 < 0x0E))
+                {
+                    Local1 += DerefOf (\_SB.I2C7.BUF4 [Local0])
+                    Local0++
+                }
+
+                Local2 = ~Local1
+                Local2++
+                Local3 = (Local2 & 0xFF)
+                If ((Local3 == DerefOf (\_SB.I2C7.BUF4 [0x0E])))
+                {
+                    Return (One)
+                }
+                Else
+                {
+                    SLOG ("[QtBattery] BST CHKSum=", Local3)
+                    SLOG ("[QtBattery] EC CHKSum=", DerefOf (\_SB.I2C7.BUF4 [0x0E]))
+                    Return (Zero)
+                }
+            }
+
+            Method (SLOG, 2, Serialized)
+            {
+                Local0 = Zero
+                ToDecimalString (Arg1, Local0)
+                Concatenate ("[", Local0, Local0)
+                Concatenate (Local0, "]", Local0)
+                Concatenate (ToHexString (Arg1), Local0, Local0)
+                Concatenate (Arg0, Local0, Local0)
+                Debug = Local0
+            }
+        }
+
+        Device (AMW1)
+        {
+            Name (_HID, "pnp0c14")  // _HID: Hardware ID
+            Name (_UID, "ATD")  // _UID: Unique ID
+            Name (_WDG, Buffer (0x3C)
+            {
+                /* 0000 */  0x37, 0x33, 0x32, 0x81, 0xCF, 0x7B, 0x29, 0x4C,  // 732..{)L
+                /* 0008 */  0xA3, 0xE6, 0x43, 0x84, 0x74, 0x1A, 0x9C, 0x92,  // ..C.t...
+                /* 0010 */  0x41, 0x54, 0x01, 0x02, 0x72, 0x55, 0x13, 0x0F,  // AT..rU..
+                /* 0018 */  0x1D, 0x27, 0x44, 0x4E, 0x91, 0x4C, 0x3E, 0x6A,  // .'DN.L>j
+                /* 0020 */  0x66, 0xBC, 0x41, 0xBC, 0xD0, 0x00, 0x01, 0x08,  // f.A.....
+                /* 0028 */  0x21, 0x12, 0x90, 0x05, 0x66, 0xD5, 0xD1, 0x11,  // !...f...
+                /* 0030 */  0xB2, 0xF0, 0x00, 0xA0, 0xC9, 0x06, 0x29, 0x10,  // ......).
+                /* 0038 */  0x4D, 0x4F, 0x01, 0x00                           // MO..
+            })
+            Method (ECAT, 2, NotSerialized)
+            {
+                While (One)
+                {
+                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    _T_0 = Arg0
+                    If ((_T_0 == One))
+                    {
+                        Local0 = "unknown"
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = 0x02
+                            \_SB.I2C7.DAT1 = 0xFA
+                            \_SB.I2C7.DAT2 = 0x05
+                            \_SB.I2C7.RBLK = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUF3 = \_SB.I2C7.BBLK
+                            If ((\_SB.I2C7.STAT == Zero))
+                            {
+                                Local0 = ToString (\_SB.I2C7.BLCK, 0x06)
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (Local0)
+                    }
+                    ElseIf ((_T_0 == 0x02))
+                    {
+                        Local0 = 0xFFFFFFFF
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = 0x02
+                            \_SB.I2C7.DAT1 = (DerefOf (Arg1 [Zero]) & 0xFF)
+                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [One]) & 0xFF)
+                            \_SB.I2C7.RBYT = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUFF = \_SB.I2C7.RBYT
+                            If ((\_SB.I2C7.BYAT == Zero))
+                            {
+                                Local0 = \_SB.I2C7.DATA
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (Local0)
+                    }
+                    ElseIf ((_T_0 == 0x03))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = 0x03
+                            \_SB.I2C7.DAT1 = (DerefOf (Arg1 [Zero]) & 0xFF)
+                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [One]) & 0xFF)
+                            \_SB.I2C7.DAT3 = (DerefOf (Arg1 [0x02]) & 0xFF)
+                            \_SB.I2C7.WBYT = \_SB.I2C7.BUF1
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (Zero)
+                    }
+                    ElseIf ((_T_0 == 0x04))
+                    {
+                        Local0 = 0xFFFFFFFF
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = 0x02
+                            \_SB.I2C7.DAT1 = (DerefOf (Arg1 [Zero]) & 0xFF)
+                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [One]) & 0xFF)
+                            \_SB.I2C7.RWOD = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUF1 = \_SB.I2C7.RWOD
+                            If ((\_SB.I2C7.BSTA == Zero))
+                            {
+                                Local0 = (\_SB.I2C7.DAT1 + (\_SB.I2C7.DAT2 << 0x08))
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (Local0)
+                    }
+                    ElseIf ((_T_0 == 0x05))
+                    {
+                        \_SB.I2C7.BLCK = Buffer (0x20){}
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = 0x02
+                            \_SB.I2C7.DAT1 = (DerefOf (Arg1 [Zero]) & 0xFF)
+                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [One]) & 0xFF)
+                            \_SB.I2C7.RBLK = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUF3 = \_SB.I2C7.BBLK
+                            If ((\_SB.I2C7.STAT == Zero))
+                            {
+                                Return (\_SB.I2C7.BLCK)
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (BLCK) /* External reference */
+                    }
+                    ElseIf ((_T_0 == 0x06))
+                    {
+                        Return (\_SB.I2C7.RLOG ())
+                    }
+                    ElseIf ((_T_0 == 0x07))
+                    {
+                        Local0 = (DerefOf (Arg1 [Zero]) & 0xFF)
+                        Return (\_SB.I2C7.LRST (Local0))
+                    }
+                    ElseIf ((_T_0 == 0x0A))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            Sleep (0x0D)
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = One
+                            \_SB.I2C7.DAT1 = Zero
+                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
+                            If ((\_SB.I2C7.BYAT == Zero))
+                            {
+                                Return (\_SB.I2C7.DATA)
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (0x09)
+                    }
+                    ElseIf ((_T_0 == 0x0B))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = 0x03
+                            \_SB.I2C7.DAT1 = Zero
+                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [Zero]) & 0xFF)
+                            \_SB.I2C7.CAPW = \_SB.I2C7.BUF1
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (Zero)
+                    }
+                    ElseIf ((_T_0 == 0x0C))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            Sleep (0x0D)
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = One
+                            \_SB.I2C7.DAT1 = 0x1F
+                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
+                            If ((\_SB.I2C7.BYAT == Zero))
+                            {
+                                Return (\_SB.I2C7.DATA)
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (0x09)
+                    }
+                    ElseIf ((_T_0 == 0x0D))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = 0x03
+                            \_SB.I2C7.DAT1 = 0x1F
+                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [Zero]) & 0xFF)
+                            \_SB.I2C7.CAPW = \_SB.I2C7.BUF1
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (Zero)
+                    }
+                    ElseIf ((_T_0 == 0x0E))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            Sleep (0x0D)
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = One
+                            \_SB.I2C7.DAT1 = 0x31
+                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
+                            If ((\_SB.I2C7.BYAT == Zero))
+                            {
+                                Return (\_SB.I2C7.DATA)
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (0x09)
+                    }
+                    ElseIf ((_T_0 == 0x0F))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = 0x03
+                            \_SB.I2C7.DAT1 = 0x31
+                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [Zero]) & 0xFF)
+                            \_SB.I2C7.CAPW = \_SB.I2C7.BUF1
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (Zero)
+                    }
+                    ElseIf ((_T_0 == 0x10))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            Sleep (0x0D)
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = One
+                            \_SB.I2C7.DAT1 = 0x35
+                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
+                            If ((\_SB.I2C7.BYAT == Zero))
+                            {
+                                Return (\_SB.I2C7.DATA)
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (0x09)
+                    }
+                    ElseIf ((_T_0 == 0x11))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = 0x03
+                            \_SB.I2C7.DAT1 = 0x35
+                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [Zero]) & 0xFF)
+                            \_SB.I2C7.CAPW = \_SB.I2C7.BUF1
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (Zero)
+                    }
+                    ElseIf ((_T_0 == 0x12))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            Sleep (0x0D)
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = One
+                            \_SB.I2C7.DAT1 = 0x11
+                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
+                            If ((\_SB.I2C7.BYAT == Zero))
+                            {
+                                Return (\_SB.I2C7.DATA)
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (0x09)
+                    }
+                    ElseIf ((_T_0 == 0x13))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            Sleep (0x0D)
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = One
+                            \_SB.I2C7.DAT1 = 0x15
+                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
+                            If ((\_SB.I2C7.BYAT == Zero))
+                            {
+                                Return (\_SB.I2C7.DATA)
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (0x09)
+                    }
+                    ElseIf ((_T_0 == 0x17))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            Sleep (0x0D)
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = One
+                            \_SB.I2C7.DAT1 = 0xD0
+                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
+                            If ((\_SB.I2C7.BYAT == Zero))
+                            {
+                                Return (\_SB.I2C7.DATA)
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (Zero)
+                    }
+                    ElseIf ((_T_0 == 0x18))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            Sleep (0x0D)
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = One
+                            \_SB.I2C7.DAT1 = 0xD1
+                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
+                            If ((\_SB.I2C7.BYAT == Zero))
+                            {
+                                Return (\_SB.I2C7.DATA)
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (Zero)
+                    }
+                    ElseIf ((_T_0 == 0x19))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            Sleep (0x0D)
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = One
+                            \_SB.I2C7.DAT1 = 0xD2
+                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
+                            If ((\_SB.I2C7.BYAT == Zero))
+                            {
+                                Return (\_SB.I2C7.DATA)
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (0x09)
+                    }
+                    ElseIf ((_T_0 == 0x1A))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            Sleep (0x0D)
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = One
+                            \_SB.I2C7.DAT1 = 0xD3
+                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
+                            If ((\_SB.I2C7.BYAT == Zero))
+                            {
+                                Return (\_SB.I2C7.DATA)
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (0x09)
+                    }
+                    ElseIf ((_T_0 == 0x1B))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            Sleep (0x0D)
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = One
+                            \_SB.I2C7.DAT1 = 0xD4
+                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
+                            If ((\_SB.I2C7.BYAT == Zero))
+                            {
+                                Return (\_SB.I2C7.DATA)
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (0x09)
+                    }
+                    ElseIf ((_T_0 == 0x1C))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            Sleep (0x0D)
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = One
+                            \_SB.I2C7.DAT1 = 0xD5
+                            \_SB.I2C7.CAPR = \_SB.I2C7.BUF1
+                            \_SB.I2C7.BUFF = \_SB.I2C7.RB01
+                            If ((\_SB.I2C7.BYAT == Zero))
+                            {
+                                Return (\_SB.I2C7.DATA)
+                            }
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (0x09)
+                    }
+                    ElseIf ((_T_0 == 0x1D))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        If ((\_SB.ECOK == One))
+                        {
+                            \_SB.I2C7.BSTA = Zero
+                            \_SB.I2C7.BLEN = 0x03
+                            \_SB.I2C7.DAT1 = 0xFF
+                            \_SB.I2C7.DAT2 = (DerefOf (Arg1 [Zero]) & 0xFF)
+                            \_SB.I2C7.CAPW = \_SB.I2C7.BUF1
+                        }
+
+                        Release (\_SB.MUT0)
+                        Return (Zero)
+                    }
+                    Else
+                    {
+                        Name (FOO, "WMI/ATD/EC: invalid argument")
+                        Debug = FOO /* \_SB_.AMW1.ECAT.FOO_ */
+                        Debug = Arg0
+                        Fatal (0xA0, 0x00000002, Zero)
+                    }
+
+                    Break
+                }
+            }
+
+            Method (AUAT, 2, NotSerialized)
+            {
+                If ((Arg0 == 0x64))
+                {
+                    Acquire (\_SB.MUT0, 0xFFFF)
+                    \_SB.I2C7.BSTA = Zero
+                    \_SB.I2C7.BLEN = One
+                    \_SB.I2C7.DAT1 = 0xF8
+                    \_SB.I2C7.APIR = \_SB.I2C7.BUF1
+                    \_SB.I2C7.BUFF = \_SB.I2C7.RB01
+                    If ((\_SB.I2C7.BYAT == Zero))
+                    {
+                        Local0 = (\_SB.I2C7.DATA & 0xFC)
+                        \_SB.I2C7.DAT2 = (Local0 | One)
+                        \_SB.I2C7.BSTA = Zero
+                        \_SB.I2C7.BLEN = 0x02
+                        \_SB.I2C7.DAT1 = 0xF8
+                        \_SB.I2C7.APIW = \_SB.I2C7.BUF1
+                    }
+
+                    Release (\_SB.MUT0)
+                    Return (\_SB.I2C7.DAT2)
+                }
+
+                Name (FOO, "WMI/ATD/Audio: invalid argument")
+                Debug = FOO /* \_SB_.AMW1.AUAT.FOO_ */
+                Fatal (0xA0, 0x00000003, Zero)
+            }
+
+            OperationRegion (CP19, SystemMemory, 0x03D5F000, 0x10)
+            Field (CP19, DWordAcc, NoLock, Preserve)
+            {
+                PI3C,   32, 
+                PIN3,   32, 
+                PI3N,   32, 
+                PI3S,   32
+            }
+
+            Method (SDCD, 0, Serialized)
+            {
+                Name (TEMP, Zero)
+                TEMP = PIN3 /* \_SB_.AMW1.PIN3 */
+                TEMP &= One
+                Return (TEMP) /* \_SB_.AMW1.SDCD.TEMP */
+            }
+
+            Method (STAT, 2, NotSerialized)
+            {
+                If ((Arg0 == 0xC8))
+                {
+                    Return (SDCD ())
+                }
+
+                Name (FOO, "WMI/ATD/Storage: invalid argument")
+                Debug = FOO /* \_SB_.AMW1.STAT.FOO_ */
+                Fatal (0xA0, 0x00000004, Zero)
+            }
+
+            Name (BATV, Buffer (0x0A)
+            {
+                /* 0000 */  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // ........
+                /* 0008 */  0x00, 0x00                                       // ..
+            })
+            Method (CGAT, 2, NotSerialized)
+            {
+                While (One)
+                {
+                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    _T_0 = Arg0
+                    If ((_T_0 == 0x012C))
+                    {
+                        Return (0x04)
+                    }
+                    ElseIf ((_T_0 == 0x012D))
+                    {
+                        \_SB.I2C7.BSTA = Zero
+                        \_SB.I2C7.BLEN = One
+                        \_SB.I2C7.DAT1 = (DerefOf (Arg1 [Zero]) & 0xFF)
+                        \_SB.I2C7.CMSM = \_SB.I2C7.BUF1
+                    }
+                    ElseIf ((_T_0 == 0x012E))
+                    {
+                        \_SB.BATC._BST ()
+                        If ((\_SB.BATC.ICU1 == One))
+                        {
+                            Local1 = Zero
+                            Local1 = (Zero - \_SB.BATC.ICU0)
+                            Return (Local1)
+                        }
+
+                        If ((\_SB.BATC.ICU1 == 0x02))
+                        {
+                            Return (\_SB.BATC.ICU0)
+                        }
+
+                        Return (Zero)
+                    }
+                    ElseIf ((_T_0 == 0x012F))
+                    {
+                        Acquire (\_SB.MUT0, 0xFFFF)
+                        \_SB.I2C7.BUF4 = \_SB.I2C7.CM09
+                        Mid (\_SB.I2C7.BUF4, 0x03, 0x0A, BATV) /* \_SB_.AMW1.BATV */
+                        Release (\_SB.MUT0)
+                        Return (BATV) /* \_SB_.AMW1.BATV */
+                    }
+                    ElseIf ((_T_0 == 0x0130))
+                    {
+                        Return (\_SB.BATC.BCAP)
+                    }
+                    Else
+                    {
+                        Name (FOO, "WMI/ATD/Charger: invalid argument")
+                        Debug = FOO /* \_SB_.AMW1.CGAT.FOO_ */
+                        Fatal (0xA0, 0x00000005, Zero)
+                    }
+
+                    Break
+                }
+            }
+
+            OperationRegion (CP20, SystemMemory, 0x03573000, 0x10)
+            Field (CP20, DWordAcc, NoLock, Preserve)
+            {
+                PI4C,   32, 
+                PIN4,   32, 
+                PI4N,   32, 
+                PI4S,   32
+            }
+
+            Method (TPCD, 0, Serialized)
+            {
+                Name (TPVA, Zero)
+                PI4C = 0x0200
+                TPVA = PIN4 /* \_SB_.AMW1.PIN4 */
+                TPVA &= One
+                Return (TPVA) /* \_SB_.AMW1.TPCD.TPVA */
+            }
+
+            Method (KBCD, 0, Serialized)
+            {
+                If ((\_SB.ECOK == One))
+                {
+                    Acquire (\_SB.MUT0, 0xFFFF)
+                    \_SB.I2C7.BSTA = Zero
+                    \_SB.I2C7.BLEN = One
+                    \_SB.I2C7.DAT1 = 0x04
+                    \_SB.I2C7.CM0E = \_SB.I2C7.BUF1
+                    \_SB.I2C7.BUFF = \_SB.I2C7.RB01
+                    If ((\_SB.I2C7.BYAT == Zero))
+                    {
+                        Local0 = (\_SB.I2C7.DATA >> 0x07)
+                        Release (\_SB.MUT0)
+                        Return (Local0)
+                    }
+                }
+
+                Return (0x02)
+            }
+
+            Method (SNAT, 2, NotSerialized)
+            {
+                While (One)
+                {
+                    Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    _T_0 = Arg0
+                    If ((_T_0 == 0x0190))
+                    {
+                        Return (TPCD ())
+                    }
+                    ElseIf ((_T_0 == 0x0191))
+                    {
+                        Return (KBCD ())
+                    }
+                    ElseIf ((_T_0 == 0x0192))
+                    {
+                        Return (ToInteger (\_SB.I2CA.BUCS))
+                    }
+                    ElseIf ((_T_0 == 0x0193))
+                    {
+                        Return (ToInteger (\_SB.I2CA.BUCK))
+                    }
+
+                    Break
+                }
+
+                Name (FOO, "WMI/ATD/Sensor: invalid argument")
+                Debug = FOO /* \_SB_.AMW1.SNAT.FOO_ */
+                Fatal (0xA0, 0x00000004, Zero)
+            }
+
+            Method (WMAT, 3, Serialized)
+            {
+                Local0 = (Arg1 & 0xFFFFFFFF)
+                If ((Local0 < 0x64))
+                {
+                    Return (ECAT (Local0, Arg2))
+                }
+
+                If ((Local0 < 0xC8))
+                {
+                    Return (AUAT (Arg1, Arg2))
+                }
+
+                If ((Local0 < 0x012C))
+                {
+                    Return (STAT (Arg1, Arg2))
+                }
+
+                If ((Local0 < 0x0190))
+                {
+                    Return (CGAT (Arg1, Arg2))
+                }
+
+                If ((Local0 < 0x01F4))
+                {
+                    Return (SNAT (Arg1, Arg2))
+                }
+
+                Name (FOO, "WMI/ATD: method ID is out of range\n")
+                Debug = FOO /* \_SB_.AMW1.WMAT.FOO_ */
+                Fatal (0xA0, 0x00000001, Zero)
+            }
+
+            Method (_WED, 1, NotSerialized)  // _Wxx: Wake Event, xx=0x00-0xFF
+            {
+                If ((Arg0 == 0xD0))
+                {
+                    Return (One)
+                }
+
+                Return (Zero)
+            }
+
+            Name (WQMO, Buffer (0x104A)
+            {
+                /* 0000 */  0x46, 0x4F, 0x4D, 0x42, 0x01, 0x00, 0x00, 0x00,  // FOMB....
+                /* 0008 */  0x3A, 0x10, 0x00, 0x00, 0x46, 0x6A, 0x00, 0x00,  // :...Fj..
+                /* 0010 */  0x44, 0x53, 0x00, 0x01, 0x1A, 0x7D, 0xDA, 0x54,  // DS...}.T
+                /* 0018 */  0xA8, 0xD0, 0xB3, 0x00, 0x01, 0x06, 0x18, 0x42,  // .......B
+                /* 0020 */  0x10, 0x0B, 0x10, 0x92, 0xE9, 0x80, 0x42, 0x04,  // ......B.
+                /* 0028 */  0x92, 0x4F, 0x24, 0x61, 0x30, 0x28, 0x09, 0x20,  // .O$a0(. 
+                /* 0030 */  0x92, 0x03, 0x21, 0x17, 0x4C, 0x4C, 0x80, 0x08,  // ..!.LL..
+                /* 0038 */  0x08, 0x79, 0x15, 0x60, 0x53, 0x80, 0x49, 0x10,  // .y.`S.I.
+                /* 0040 */  0xF5, 0xEF, 0x0F, 0x51, 0x1A, 0x14, 0x25, 0xB0,  // ...Q..%.
+                /* 0048 */  0x90, 0x21, 0x58, 0x80, 0x6F, 0x01, 0x8E, 0x05,  // .!X.o...
+                /* 0050 */  0x18, 0x16, 0x20, 0x5B, 0x80, 0x65, 0x28, 0x82,  // .. [.e(.
+                /* 0058 */  0xDA, 0xA9, 0x00, 0xB9, 0x93, 0x28, 0x40, 0x3C,  // .....(@<
+                /* 0060 */  0xAA, 0x30, 0x9A, 0x83, 0x22, 0xE1, 0xA0, 0x51,  // .0.."..Q
+                /* 0068 */  0x62, 0x20, 0x24, 0x11, 0x56, 0xCE, 0xB1, 0xA5,  // b $.V...
+                /* 0070 */  0x5C, 0x80, 0x69, 0x01, 0xC2, 0x05, 0x48, 0xC7,  // \.i...H.
+                /* 0078 */  0xD0, 0x08, 0xEA, 0x06, 0x93, 0x54, 0x01, 0xA2,  // .....T..
+                /* 0080 */  0x61, 0x84, 0x56, 0x10, 0x9C, 0x06, 0x71, 0x14,  // a.V...q.
+                /* 0088 */  0x51, 0xC2, 0x30, 0x3C, 0x63, 0x06, 0x0A, 0x17,  // Q.0<c...
+                /* 0090 */  0x24, 0x92, 0x61, 0x82, 0x9E, 0x40, 0x90, 0x92,  // $.a..@..
+                /* 0098 */  0x31, 0xA4, 0x19, 0x8B, 0x40, 0x9C, 0x01, 0xC7,  // 1...@...
+                /* 00A0 */  0x8A, 0x11, 0x2A, 0x24, 0x66, 0x20, 0xC1, 0x4F,  // ..*$f .O
+                /* 00A8 */  0xA0, 0x6B, 0x0C, 0x2D, 0x38, 0x90, 0xAD, 0x4F,  // .k.-8..O
+                /* 00B0 */  0x40, 0x20, 0xD1, 0xA3, 0x04, 0x37, 0xAE, 0x51,  // @ ...7.Q
+                /* 00B8 */  0xD9, 0x98, 0xCE, 0x06, 0x37, 0x30, 0x13, 0xC4,  // ....70..
+                /* 00C0 */  0x39, 0x3C, 0x8C, 0x0C, 0x08, 0x4D, 0x20, 0x7E,  // 9<...M ~
+                /* 00C8 */  0xEC, 0xF0, 0x09, 0xEC, 0x5E, 0x80, 0x62, 0x01,  // ....^.b.
+                /* 00D0 */  0xD6, 0x40, 0x35, 0xD3, 0xDE, 0x20, 0xA4, 0x0C,  // .@5.. ..
+                /* 00D8 */  0x4B, 0xB6, 0x04, 0x18, 0x03, 0x22, 0x33, 0x88,  // K...."3.
+                /* 00E0 */  0x12, 0x23, 0xDE, 0xF1, 0x86, 0xF2, 0x20, 0x3A,  // .#.... :
+                /* 00E8 */  0x03, 0x15, 0x64, 0x94, 0x48, 0x87, 0x15, 0x22,  // ..d.H.."
+                /* 00F0 */  0x8E, 0x31, 0x8A, 0x43, 0x15, 0x5A, 0xEC, 0x13,  // .1.C.Z..
+                /* 00F8 */  0x0F, 0xD9, 0xFE, 0x20, 0x48, 0xB4, 0xF3, 0x80,  // ... H...
+                /* 0100 */  0x7E, 0x04, 0x96, 0x04, 0x22, 0x23, 0x5B, 0x4A,  // ~..."#[J
+                /* 0108 */  0x40, 0x0E, 0x03, 0x09, 0x0E, 0xC7, 0x0A, 0x05,  // @.......
+                /* 0110 */  0x98, 0x9F, 0x99, 0x46, 0xC5, 0x24, 0x00, 0x4A,  // ...F.$.J
+                /* 0118 */  0x03, 0x88, 0x44, 0x41, 0xE8, 0x77, 0x40, 0x05,  // ..DA.w@.
+                /* 0120 */  0x48, 0x39, 0x19, 0x10, 0xDB, 0xE3, 0xD2, 0x35,  // H9.....5
+                /* 0128 */  0xE0, 0x2C, 0x4E, 0xDD, 0x77, 0x83, 0x33, 0xF3,  // .,N.w.3.
+                /* 0130 */  0x59, 0xC1, 0x5B, 0xF0, 0xFF, 0xFF, 0x8C, 0xC0,  // Y.[.....
+                /* 0138 */  0xC7, 0xE0, 0xA1, 0x9E, 0x8E, 0x47, 0xC8, 0x0E,  // .....G..
+                /* 0140 */  0x09, 0x06, 0xC4, 0x7B, 0xBF, 0x15, 0x90, 0xB9,  // ...{....
+                /* 0148 */  0x18, 0x90, 0x1D, 0x14, 0x9E, 0x0F, 0xC0, 0x32,  // .......2
+                /* 0150 */  0xDE, 0x63, 0x3C, 0x86, 0xD3, 0x3C, 0x35, 0x7E,  // .c<..<5~
+                /* 0158 */  0x24, 0xE0, 0x53, 0x39, 0x29, 0x46, 0xE0, 0x63,  // $.S9)F.c
+                /* 0160 */  0x84, 0x47, 0xC7, 0x47, 0xE1, 0xB3, 0x43, 0x83,  // .G.G..C.
+                /* 0168 */  0x02, 0xC4, 0x82, 0x48, 0x05, 0x84, 0x64, 0x1D,  // ...H..d.
+                /* 0170 */  0x23, 0xD0, 0x0E, 0x47, 0x28, 0xC0, 0x97, 0x86,  // #..G(...
+                /* 0178 */  0x66, 0x05, 0x08, 0x15, 0x60, 0x11, 0x48, 0xD7,  // f...`.H.
+                /* 0180 */  0x01, 0xDF, 0x18, 0x3C, 0xFD, 0x04, 0x05, 0xC2,  // ...<....
+                /* 0188 */  0xA2, 0x87, 0x6E, 0xBF, 0x02, 0x10, 0x42, 0x9F,  // ..n...B.
+                /* 0190 */  0xDB, 0x49, 0x3C, 0x50, 0x44, 0x38, 0x0E, 0x8F,  // .I<PD8..
+                /* 0198 */  0x26, 0x70, 0xEC, 0x23, 0x3A, 0x80, 0x17, 0x06,  // &p.#:...
+                /* 01A0 */  0x1C, 0x81, 0x45, 0x8E, 0x12, 0x3D, 0x00, 0xAE,  // ..E..=..
+                /* 01A8 */  0x13, 0x5F, 0xE0, 0xE7, 0x72, 0x00, 0xA1, 0xA3,  // ._..r...
+                /* 01B0 */  0x9C, 0xC3, 0xE1, 0x78, 0xA8, 0x87, 0xF8, 0xE4,  // ...x....
+                /* 01B8 */  0xE0, 0x53, 0xC6, 0xBB, 0x04, 0x9B, 0xC1, 0x51,  // .S.....Q
+                /* 01C0 */  0x3C, 0x36, 0x04, 0x3A, 0x42, 0x4E, 0x60, 0x81,  // <6.:BN`.
+                /* 01C8 */  0x07, 0x10, 0x94, 0xA4, 0x33, 0x08, 0xA0, 0xE4,  // ....3...
+                /* 01D0 */  0xFF, 0x7F, 0x06, 0x01, 0x7C, 0x87, 0x3A, 0x83,  // ....|.:.
+                /* 01D8 */  0x00, 0xEA, 0x47, 0xE4, 0x33, 0x08, 0xFE, 0xFF,  // ..G.3...
+                /* 01E0 */  0x7F, 0x06, 0x81, 0x7B, 0xA2, 0xC0, 0x9F, 0x41,  // ...{...A
+                /* 01E8 */  0xE0, 0x40, 0xC7, 0x39, 0xFC, 0x17, 0x84, 0xF7,  // .@.9....
+                /* 01F0 */  0x0A, 0xDF, 0x17, 0x1E, 0x40, 0x80, 0x91, 0xAC,  // ....@...
+                /* 01F8 */  0x25, 0x52, 0x71, 0x2F, 0x01, 0x09, 0x81, 0x41,  // %Rq/...A
+                /* 0200 */  0x1D, 0x40, 0x80, 0xD3, 0x74, 0x7C, 0x00, 0x01,  // .@..t|..
+                /* 0208 */  0xF3, 0x65, 0xC1, 0x98, 0x31, 0x7C, 0xCC, 0xF0,  // .e..1|..
+                /* 0210 */  0x09, 0xC0, 0x50, 0xF1, 0xDE, 0x01, 0x7C, 0x34,  // ..P...|4
+                /* 0218 */  0xC0, 0x0D, 0xDE, 0x60, 0xC6, 0xF9, 0x1A, 0xD3,  // ...`....
+                /* 0220 */  0x79, 0x03, 0x04, 0x27, 0x8C, 0x08, 0x1E, 0xC0,  // y..'....
+                /* 0228 */  0x23, 0x86, 0x2F, 0x19, 0x31, 0xDE, 0x33, 0x5E,  // #./.1.3^
+                /* 0230 */  0x34, 0x6A, 0x9B, 0x9C, 0x70, 0x9E, 0x37, 0xD8,  // 4j..p.7.
+                /* 0238 */  0x24, 0x42, 0x79, 0x42, 0xEF, 0x1D, 0x86, 0x89,  // $ByB....
+                /* 0240 */  0x72, 0x88, 0xCF, 0x1A, 0x81, 0xA3, 0x1E, 0xD6,  // r.......
+                /* 0248 */  0xB3, 0x87, 0x01, 0x1F, 0x03, 0x0C, 0x73, 0xA0,  // ......s.
+                /* 0250 */  0xCF, 0x1B, 0x2C, 0xEC, 0x79, 0x83, 0x8A, 0x3D,  // ..,.y..=
+                /* 0258 */  0x6F, 0xA0, 0xFE, 0xFF, 0xE7, 0x0D, 0x38, 0x07,  // o.....8.
+                /* 0260 */  0x01, 0x9F, 0x37, 0x80, 0x6B, 0x80, 0xE3, 0x00,  // ..7.k...
+                /* 0268 */  0x68, 0x90, 0x7D, 0x38, 0x78, 0x0C, 0xF0, 0x5D,  // h.}8x..]
+                /* 0270 */  0xC6, 0x78, 0x51, 0x7C, 0xA3, 0xC1, 0xDE, 0x03,  // .xQ|....
+                /* 0278 */  0x70, 0x58, 0x3E, 0xCC, 0x78, 0x74, 0xC6, 0x3F,  // pX>.xt.?
+                /* 0280 */  0x3A, 0x1F, 0x6A, 0xD8, 0xF9, 0xC3, 0x18, 0x0F,  // :.j.....
+                /* 0288 */  0x4C, 0x06, 0x7D, 0x1F, 0xF0, 0xE1, 0x03, 0xA6,  // L.}.....
+                /* 0290 */  0x82, 0x75, 0xEA, 0xF0, 0x01, 0xAE, 0xA3, 0xC0,  // .u......
+                /* 0298 */  0xC3, 0x07, 0x38, 0x86, 0xF9, 0x4C, 0xE1, 0xFB,  // ..8..L..
+                /* 02A0 */  0x82, 0xCF, 0x1E, 0xC0, 0x47, 0xD7, 0xAA, 0x1E,  // ....G...
+                /* 02A8 */  0x31, 0xD8, 0xF0, 0x24, 0x66, 0x91, 0x14, 0xC6,  // 1..$f...
+                /* 02B0 */  0x67, 0x04, 0x9F, 0x3D, 0xE0, 0xFD, 0xFF, 0x0F,  // g..=....
+                /* 02B8 */  0x04, 0x96, 0x04, 0x87, 0x1A, 0x9E, 0x0F, 0x04,  // ........
+                /* 02C0 */  0x27, 0x7E, 0xF2, 0x9E, 0xBE, 0xE7, 0xF6, 0x10,  // '~......
+                /* 02C8 */  0x02, 0xE3, 0xCC, 0xE0, 0x69, 0x9D, 0x94, 0xB5,  // ....i...
+                /* 02D0 */  0x9F, 0x2D, 0xC8, 0x4D, 0xC0, 0x04, 0x3E, 0x38,  // .-.M..>8
+                /* 02D8 */  0x30, 0x34, 0x7E, 0x22, 0x01, 0xEB, 0x71, 0xC0,  // 04~"..q.
+                /* 02E0 */  0x67, 0x06, 0x70, 0xCC, 0xFA, 0x75, 0x04, 0x83,  // g.p..u..
+                /* 02E8 */  0x15, 0x2A, 0xC6, 0xA9, 0xBF, 0x15, 0xC4, 0x7D,  // .*.....}
+                /* 02F0 */  0x98, 0x62, 0xD7, 0x05, 0x36, 0x73, 0xA3, 0x1F,  // .b..6s..
+                /* 02F8 */  0x0B, 0x3B, 0x8A, 0xC0, 0xBE, 0x1F, 0x3C, 0x06,  // .;....<.
+                /* 0300 */  0xBD, 0x7D, 0xBC, 0x7C, 0x84, 0x88, 0xE0, 0x1B,  // .}.|....
+                /* 0308 */  0x94, 0x21, 0x1E, 0x1D, 0xC2, 0x3F, 0x85, 0xF8,  // .!...?..
+                /* 0310 */  0x2A, 0x65, 0xB4, 0xF3, 0x7A, 0x92, 0x62, 0x73,  // *e..z.bs
+                /* 0318 */  0x78, 0x20, 0x09, 0xE5, 0x3B, 0x89, 0x4F, 0x55,  // x ..;.OU
+                /* 0320 */  0x0C, 0x3D, 0x58, 0xBC, 0x90, 0xCF, 0x23, 0x3E,  // .=X...#>
+                /* 0328 */  0x8A, 0xB0, 0x48, 0x07, 0x1B, 0x1A, 0x69, 0x34,  // ..H...i4
+                /* 0330 */  0xA8, 0x73, 0x82, 0x4F, 0x04, 0x3E, 0x0D, 0x3C,  // .s.O.>.<
+                /* 0338 */  0x87, 0xF9, 0x00, 0x62, 0x90, 0xE3, 0xF2, 0x59,  // ...b...Y
+                /* 0340 */  0xE1, 0x51, 0xC0, 0x23, 0x63, 0x77, 0x04, 0xFF,  // .Q.#cw..
+                /* 0348 */  0x0E, 0x7C, 0x36, 0xC0, 0x1F, 0x83, 0x02, 0xBE,  // .|6.....
+                /* 0350 */  0x14, 0x3C, 0x83, 0xC0, 0x3A, 0x8B, 0xE0, 0x4F,  // .<..:..O
+                /* 0358 */  0x14, 0xF8, 0xC3, 0x05, 0x7E, 0x3C, 0x3E, 0x03,  // ....~<>.
+                /* 0360 */  0x78, 0x3E, 0x0F, 0x34, 0xEC, 0xFF, 0x2F, 0x7F,  // x>.4../.
+                /* 0368 */  0x10, 0xA8, 0x91, 0x19, 0xDA, 0x57, 0x80, 0xD3,  // .....W..
+                /* 0370 */  0x7A, 0x15, 0xF0, 0x09, 0xE1, 0xB0, 0xD8, 0x99,  // z.......
+                /* 0378 */  0x83, 0x1C, 0x55, 0x40, 0x31, 0x1E, 0xF8, 0x97,  // ..U@1...
+                /* 0380 */  0x80, 0x27, 0x0C, 0xDF, 0x17, 0x3C, 0x5F, 0x1F,  // .'...<_.
+                /* 0388 */  0xA4, 0xC0, 0x72, 0x4B, 0x60, 0x50, 0x61, 0x82,  // ..rK`Pa.
+                /* 0390 */  0x04, 0xF2, 0xE9, 0x03, 0x78, 0x28, 0xD0, 0x0A,  // ....x(..
+                /* 0398 */  0xD1, 0xD1, 0x80, 0xBD, 0x4C, 0xD9, 0x38, 0xF3,  // ....L.8.
+                /* 03A0 */  0x50, 0x0E, 0x8B, 0x3A, 0x1F, 0xE8, 0xF4, 0xE3,  // P..:....
+                /* 03A8 */  0x49, 0x3C, 0xE2, 0x19, 0x36, 0xC8, 0x19, 0x7B,  // I<..6..{
+                /* 03B0 */  0x0A, 0x87, 0xFF, 0x3A, 0xC1, 0x07, 0x24, 0x48,  // ...:..$H
+                /* 03B8 */  0x1D, 0x7E, 0x79, 0x7C, 0x08, 0x85, 0x1F, 0x12,  // .~y|....
+                /* 03C0 */  0x85, 0x73, 0x5C, 0x30, 0x0A, 0xE2, 0xD1, 0x3B,  // .s\0...;
+                /* 03C8 */  0xCA, 0x89, 0x01, 0x3D, 0x54, 0x4F, 0x02, 0x7F,  // ...=TO..
+                /* 03D0 */  0xCC, 0x78, 0x5C, 0x80, 0x85, 0x77, 0x70, 0xE7,  // .x\..wp.
+                /* 03D8 */  0xE6, 0x69, 0xF8, 0x64, 0x83, 0xBF, 0x06, 0x9C,  // .i.d....
+                /* 03E0 */  0x75, 0x02, 0x7E, 0x5A, 0x00, 0xDF, 0xC9, 0x13,  // u.~Z....
+                /* 03E8 */  0xF7, 0xFF, 0x3F, 0x0E, 0xC0, 0x03, 0xF2, 0x15,  // ..?.....
+                /* 03F0 */  0xC0, 0x4A, 0x8F, 0x01, 0x74, 0x0E, 0x21, 0xC2,  // .J..t.!.
+                /* 03F8 */  0x44, 0xF3, 0x39, 0x13, 0xB5, 0x54, 0x1D, 0x9E,  // D.9..T..
+                /* 0400 */  0x7D, 0xF2, 0xF1, 0xB8, 0xF8, 0xA9, 0xC0, 0x47,  // }......G
+                /* 0408 */  0x16, 0x86, 0xFD, 0x00, 0xE0, 0x63, 0xD1, 0x19,  // .....c..
+                /* 0410 */  0xBE, 0x0F, 0x3C, 0x3B, 0x61, 0x60, 0x3D, 0x52,  // ..<;a`=R
+                /* 0418 */  0x0E, 0x6B, 0xB4, 0xB0, 0x07, 0xFC, 0xD4, 0xE0,  // .k......
+                /* 0420 */  0x1B, 0x87, 0xAF, 0x27, 0x0C, 0xD6, 0x67, 0x0D,  // ...'..g.
+                /* 0428 */  0x70, 0x1C, 0xA3, 0xE0, 0x07, 0x3A, 0xC3, 0x80,  // p....:..
+                /* 0430 */  0x66, 0x98, 0xA7, 0xE6, 0xB3, 0x40, 0xB0, 0x57,  // f....@.W
+                /* 0438 */  0x4B, 0x9F, 0xA1, 0xF8, 0xCD, 0x00, 0x7B, 0x95,  // K.....{.
+                /* 0440 */  0xE2, 0x43, 0xF3, 0x11, 0xE3, 0xC8, 0x7C, 0x8A,  // .C....|.
+                /* 0448 */  0xF0, 0x21, 0xCA, 0xC7, 0x4F, 0x7E, 0x97, 0xF0,  // .!..O~..
+                /* 0450 */  0x25, 0xCA, 0x27, 0x4D, 0x76, 0xDB, 0x64, 0x27,  // %.'Mv.d'
+                /* 0458 */  0x97, 0x67, 0x43, 0xEC, 0xED, 0xCA, 0x08, 0x31,  // .gC....1
+                /* 0460 */  0xDE, 0x51, 0x4C, 0x30, 0xD3, 0xEA, 0x75, 0x9E,  // .QL0..u.
+                /* 0468 */  0xE0, 0x07, 0x05, 0xE7, 0x78, 0x3C, 0xE8, 0x3C,  // ....x<.<
+                /* 0470 */  0xC1, 0xA6, 0xCA, 0x51, 0xE2, 0x73, 0x02, 0x2B,  // ...Q.s.+
+                /* 0478 */  0x07, 0xD4, 0x09, 0xC0, 0xC7, 0x08, 0x6B, 0xA6,  // ......k.
+                /* 0480 */  0x90, 0x6E, 0x1A, 0x1D, 0x27, 0xB8, 0xD2, 0x53,  // .n..'..S
+                /* 0488 */  0x05, 0x05, 0xF1, 0x99, 0xC0, 0x19, 0x20, 0x64,  // ...... d
+                /* 0490 */  0xE4, 0x38, 0x81, 0x1A, 0xB8, 0x2F, 0x3F, 0x1E,  // .8.../?.
+                /* 0498 */  0x9E, 0xEF, 0x46, 0x1E, 0x63, 0x50, 0xF6, 0xFF,  // ..F.cP..
+                /* 04A0 */  0x1F, 0xB6, 0x4F, 0x00, 0xFC, 0xE8, 0xE4, 0xE1,  // ..O.....
+                /* 04A8 */  0x19, 0xD9, 0x6A, 0x4E, 0x09, 0x28, 0x30, 0x1F,  // ..jN.(0.
+                /* 04B0 */  0x26, 0x30, 0x97, 0x2E, 0x70, 0xCD, 0x08, 0xCE,  // &0..p...
+                /* 04B8 */  0x3D, 0xE0, 0x8C, 0xC0, 0x7F, 0x84, 0xE0, 0x33,  // =......3
+                /* 04C0 */  0x02, 0x8F, 0xBE, 0xC3, 0x06, 0xC8, 0xD1, 0x79,  // .......y
+                /* 04C8 */  0xF4, 0x9B, 0x0A, 0x2A, 0xEC, 0x8C, 0x28, 0x88,  // ...*..(.
+                /* 04D0 */  0xEF, 0x04, 0x0E, 0x32, 0x34, 0xD4, 0x50, 0xF9,  // ...24.P.
+                /* 04D8 */  0x01, 0xE2, 0x55, 0xCB, 0x43, 0x7A, 0x3E, 0xF0,  // ..U.Cz>.
+                /* 04E0 */  0x45, 0x05, 0xDC, 0x03, 0xF1, 0x45, 0x05, 0x0C,  // E....E..
+                /* 04E8 */  0x73, 0x65, 0x27, 0x2C, 0x5F, 0x54, 0xC0, 0xF6,  // se',_T..
+                /* 04F0 */  0xFF, 0xBF, 0xA8, 0xC0, 0xBE, 0xF1, 0xFA, 0xA2,  // ........
+                /* 04F8 */  0x02, 0xAE, 0xB1, 0xF9, 0xA2, 0x02, 0x5C, 0x51,  // ......\Q
+                /* 0500 */  0x7D, 0x51, 0x01, 0xE3, 0xCD, 0x91, 0x8D, 0xC5,  // }Q......
+                /* 0508 */  0x87, 0x9E, 0x47, 0x54, 0xDF, 0xDD, 0xD8, 0xD5,  // ..GT....
+                /* 0510 */  0x04, 0x73, 0x5E, 0xF1, 0xF9, 0x00, 0x23, 0xF3,  // .s^...#.
+                /* 0518 */  0x66, 0x82, 0x96, 0x76, 0x33, 0x41, 0xCC, 0x09,  // f..v3A..
+                /* 0520 */  0x73, 0x34, 0xC1, 0x89, 0xB9, 0x99, 0x50, 0x08,  // s4....P.
+                /* 0528 */  0xCB, 0x80, 0x91, 0x08, 0x08, 0x1D, 0x1F, 0x78,  // .......x
+                /* 0530 */  0xEC, 0x9B, 0x09, 0x05, 0xF1, 0xC5, 0xCD, 0x31,  // .......1
+                /* 0538 */  0x6E, 0x26, 0xD0, 0x6F, 0x77, 0x3E, 0x3E, 0xC0,  // n&.ow>>.
+                /* 0540 */  0x39, 0x78, 0xB0, 0x6B, 0x13, 0x18, 0x6E, 0x1E,  // 9x.k..n.
+                /* 0548 */  0x60, 0xF8, 0xFF, 0xDF, 0x3C, 0x30, 0x63, 0x82,  // `...<0c.
+                /* 0550 */  0x73, 0x36, 0xC1, 0x8D, 0x09, 0xDC, 0x97, 0x13,  // s6......
+                /* 0558 */  0xF0, 0x8D, 0x09, 0xCE, 0xA9, 0x00, 0x37, 0x26,  // ......7&
+                /* 0560 */  0x70, 0x9F, 0x2C, 0xF8, 0x98, 0xC0, 0x73, 0x06,  // p.,...s.
+                /* 0568 */  0x01, 0xDE, 0x90, 0x3E, 0x83, 0x00, 0xC3, 0xFF,  // ...>....
+                /* 0570 */  0xFF, 0x19, 0x04, 0x8C, 0x83, 0x0B, 0xCE, 0xAF,  // ........
+                /* 0578 */  0x20, 0xE0, 0xBB, 0x6C, 0x81, 0x65, 0x58, 0x87,  //  ..l.eX.
+                /* 0580 */  0x12, 0xE7, 0xF0, 0xD8, 0x65, 0x0B, 0x60, 0xD8,  // ....e.`.
+                /* 0588 */  0xFF, 0xFF, 0xB2, 0x05, 0xF0, 0xE7, 0x86, 0xE4,  // ........
+                /* 0590 */  0xCB, 0x16, 0x60, 0x6E, 0x1E, 0xFF, 0xFF, 0x67,  // ..`n...g
+                /* 0598 */  0x11, 0x76, 0x34, 0xC1, 0xA6, 0xBB, 0x99, 0xA0,  // .v4.....
+                /* 05A0 */  0xF3, 0x1C, 0x2B, 0x21, 0xE1, 0xBE, 0xA3, 0xFB,  // ..+!....
+                /* 05A8 */  0x5C, 0x9D, 0x60, 0x82, 0x9B, 0x09, 0x4A, 0xFB,  // \.`...J.
+                /* 05B0 */  0xCD, 0x04, 0x20, 0xDC, 0xE5, 0xC2, 0x77, 0x01,  // .. ...w.
+                /* 05B8 */  0x1E, 0x7A, 0x46, 0x14, 0xC4, 0x77, 0x02, 0x5F,  // .zF..w._
+                /* 05C0 */  0x78, 0x6D, 0xE3, 0x66, 0x02, 0x35, 0x80, 0x80,  // xm.f.5..
+                /* 05C8 */  0xFF, 0xFF, 0xCD, 0x04, 0xEC, 0xB7, 0x11, 0xFC,  // ........
+                /* 05D0 */  0x5C, 0xF1, 0x43, 0x78, 0x74, 0xA8, 0xFA, 0xFC,  // \.Cxt...
+                /* 05D8 */  0x40, 0xE6, 0x50, 0xDD, 0x8D, 0x82, 0x28, 0x3C,  // @.P...(<
+                /* 05E0 */  0x3E, 0xA0, 0x6E, 0x27, 0xC0, 0xE4, 0x52, 0xEE,  // >.n'..R.
+                /* 05E8 */  0xDB, 0x09, 0xB8, 0x60, 0xF9, 0xED, 0x04, 0x78,  // ...`...x
+                /* 05F0 */  0x8E, 0xE7, 0xD1, 0x12, 0xD8, 0x9C, 0x00, 0xF8,  // ........
+                /* 05F8 */  0x41, 0x0C, 0x2F, 0xF3, 0x8E, 0x8F, 0x1A, 0x8A,  // A./.....
+                /* 0600 */  0x65, 0xDD, 0xF1, 0x21, 0xA0, 0xFB, 0xC6, 0xCE,  // e..!....
+                /* 0608 */  0xA4, 0x5C, 0x4B, 0xC8, 0xFF, 0x1F, 0x82, 0x1D,  // .\K.....
+                /* 0610 */  0x00, 0x7C, 0x84, 0x00, 0xD7, 0xD9, 0xC0, 0x33,  // .|.....3
+                /* 0618 */  0x3A, 0x9B, 0x47, 0x8F, 0x08, 0x47, 0x65, 0x02,  // :.G..Ge.
+                /* 0620 */  0xCB, 0xBF, 0xE1, 0x83, 0x5E, 0xDE, 0x19, 0x02,  // ....^...
+                /* 0628 */  0x74, 0x20, 0x4F, 0x0E, 0xC7, 0xC8, 0x8F, 0x10,  // t O.....
+                /* 0630 */  0xC0, 0x43, 0xC6, 0x11, 0x02, 0x74, 0xE7, 0x15,  // .C...t..
+                /* 0638 */  0x1F, 0x21, 0x80, 0xEB, 0x71, 0xD3, 0x47, 0x08,  // .!..q.G.
+                /* 0640 */  0xF0, 0x0C, 0xC3, 0xB7, 0x7B, 0x03, 0x3D, 0x12,  // ....{.=.
+                /* 0648 */  0xFA, 0xA8, 0x64, 0x8C, 0x93, 0x0A, 0x62, 0x20,  // ..d...b 
+                /* 0650 */  0x4F, 0xE1, 0x91, 0xC6, 0x28, 0xFF, 0xFF, 0xB7,  // O...(...
+                /* 0658 */  0x7A, 0x5F, 0xF3, 0xD9, 0x5D, 0x82, 0x1D, 0x1C,  // z_..]...
+                /* 0660 */  0x30, 0x81, 0xCF, 0x10, 0xA8, 0xE3, 0x81, 0x25,  // 0......%
+                /* 0668 */  0x9F, 0x21, 0x10, 0x90, 0x0C, 0xE4, 0x5C, 0x7C,  // .!....\|
+                /* 0670 */  0x27, 0xF0, 0xAC, 0x4C, 0x50, 0xE4, 0x21, 0x02,  // '..LP.!.
+                /* 0678 */  0x25, 0x8F, 0x42, 0xE2, 0x0E, 0x11, 0x28, 0x39,  // %.B...(9
+                /* 0680 */  0x70, 0x14, 0xC4, 0x87, 0x08, 0x47, 0x3D, 0x10,  // p....G=.
+                /* 0688 */  0xA1, 0x4F, 0x07, 0x9E, 0xC2, 0xB1, 0x79, 0x0E,  // .O....y.
+                /* 0690 */  0x07, 0x16, 0xE4, 0x24, 0x1C, 0xEC, 0x1E, 0x46,  // ...$...F
+                /* 0698 */  0x4F, 0xAA, 0x70, 0xEF, 0x0F, 0x1E, 0x34, 0x38,  // O.p...48
+                /* 06A0 */  0xC6, 0x81, 0x3D, 0x58, 0x62, 0xC6, 0xC9, 0x0F,  // ..=Xb...
+                /* 06A8 */  0xC0, 0xC0, 0xE1, 0x44, 0x01, 0x3C, 0x44, 0x9F,  // ...D.<D.
+                /* 06B0 */  0x28, 0x40, 0xE7, 0xE1, 0x44, 0x01, 0xF2, 0xFF,  // (@..D...
+                /* 06B8 */  0xFF, 0x89, 0x02, 0x8C, 0x21, 0x4F, 0x03, 0xA0,  // ....!O..
+                /* 06C0 */  0x19, 0x8E, 0x87, 0xF1, 0x6C, 0xE3, 0x03, 0x05,  // ....l...
+                /* 06C8 */  0x66, 0x26, 0x8F, 0x38, 0xC6, 0xC2, 0x9C, 0x26,  // f&.8...&
+                /* 06D0 */  0x70, 0x60, 0x75, 0xC1, 0xE8, 0xE0, 0x74, 0x7C,  // p`u...t|
+                /* 06D8 */  0x67, 0x1D, 0xE5, 0x81, 0xB1, 0x3D, 0x01, 0xC6,  // g....=..
+                /* 06E0 */  0x80, 0x34, 0x03, 0xAC, 0xD5, 0xF1, 0x13, 0xC0,  // .4......
+                /* 06E8 */  0x83, 0x8D, 0x8A, 0xC1, 0x8C, 0x6A, 0x24, 0xC3,  // .....j$.
+                /* 06F0 */  0x62, 0x4F, 0x02, 0x6C, 0x1E, 0xFC, 0xB4, 0xE0,  // bO.l....
+                /* 06F8 */  0xC3, 0x0D, 0x56, 0xD4, 0xD9, 0x07, 0x2D, 0xE8,  // ..V...-.
+                /* 0700 */  0x38, 0xA0, 0x19, 0x1E, 0xC0, 0x11, 0xBE, 0xFB,  // 8.......
+                /* 0708 */  0x18, 0xE4, 0x35, 0xC1, 0x97, 0x3D, 0x5F, 0x06,  // ..5..=_.
+                /* 0710 */  0xC9, 0x39, 0x03, 0x15, 0x1F, 0x42, 0xE1, 0xAF,  // .9...B..
+                /* 0718 */  0x9D, 0xA8, 0xB8, 0x60, 0x14, 0xC4, 0xE7, 0x0C,  // ...`....
+                /* 0720 */  0x47, 0xB9, 0x76, 0xA2, 0xCF, 0x0C, 0x3E, 0x1F,  // G.v...>.
+                /* 0728 */  0x79, 0x12, 0xAF, 0x49, 0x46, 0x49, 0xE0, 0x7B,  // y..IFI.{
+                /* 0730 */  0x27, 0xB8, 0x09, 0x7C, 0xEF, 0x04, 0x26, 0xFF,  // '..|..&.
+                /* 0738 */  0xFF, 0x73, 0x05, 0xD8, 0x2E, 0xAD, 0x3E, 0x57,  // .s....>W
+                /* 0740 */  0x80, 0x4B, 0xC5, 0xB9, 0x02, 0xE8, 0x8E, 0xEE,  // .K......
+                /* 0748 */  0xB9, 0x02, 0x2C, 0xC3, 0x7D, 0x54, 0xF0, 0x1C,  // ..,.}T..
+                /* 0750 */  0xCE, 0xF3, 0x84, 0x8C, 0xF8, 0x5E, 0xC1, 0x3C,  // .....^.<
+                /* 0758 */  0xDE, 0x16, 0xE8, 0xF9, 0xC1, 0xC3, 0xC1, 0x88,  // ........
+                /* 0760 */  0x3E, 0x3A, 0xA0, 0x05, 0x1F, 0x1D, 0x20, 0x4D,  // >:.... M
+                /* 0768 */  0xC9, 0x27, 0x1E, 0xC0, 0xD9, 0xFF, 0xFF, 0xC4,  // .'......
+                /* 0770 */  0x03, 0x58, 0x39, 0x4A, 0x80, 0x6F, 0xDC, 0x3E,  // .X9J.o.>
+                /* 0778 */  0x4A, 0x00, 0x56, 0x46, 0x7A, 0xAC, 0x8F, 0x12,  // J.VFz...
+                /* 0780 */  0x30, 0x07, 0x79, 0x18, 0x18, 0x89, 0x47, 0x09,  // 0.y...G.
+                /* 0788 */  0x94, 0xA8, 0x93, 0x8A, 0x8F, 0x12, 0x28, 0xF4,  // ......(.
+                /* 0790 */  0x03, 0x60, 0xB0, 0x86, 0x78, 0x5A, 0x0C, 0xE2,  // .`..xZ..
+                /* 0798 */  0xFB, 0xC1, 0x7B, 0x0D, 0x3F, 0xD8, 0x80, 0xFB,  // ..{.?...
+                /* 07A0 */  0xFF, 0x7F, 0xB0, 0x01, 0x6C, 0x2E, 0xD5, 0xC7,  // ....l...
+                /* 07A8 */  0x07, 0x70, 0x9D, 0x13, 0x7C, 0x7C, 0x00, 0xAE,  // .p..||..
+                /* 07B0 */  0x82, 0x0F, 0x36, 0x20, 0xC7, 0xE1, 0x37, 0x06,  // ..6 ..7.
+                /* 07B8 */  0xEC, 0xDD, 0x06, 0x17, 0xE2, 0x04, 0x81, 0x16,  // ........
+                /* 07C0 */  0x7E, 0x82, 0x00, 0xC1, 0xFF, 0xFF, 0x7A, 0xC3,  // ~.....z.
+                /* 07C8 */  0xCF, 0x37, 0x00, 0x93, 0x8E, 0xC0, 0x3E, 0x51,  // .7....>Q
+                /* 07D0 */  0x80, 0xEB, 0x18, 0xEC, 0x13, 0x05, 0x70, 0x3D,  // ......p=
+                /* 07D8 */  0xE4, 0x91, 0xB1, 0x20, 0xFE, 0xFF, 0xE7, 0x1B,  // ... ....
+                /* 07E0 */  0xF0, 0x9D, 0x28, 0xE0, 0x5D, 0x71, 0x70, 0x67,  // ..(.]qpg
+                /* 07E8 */  0x00, 0x1D, 0x29, 0x50, 0x1C, 0x16, 0x75, 0xA4,  // ..)P..u.
+                /* 07F0 */  0x40, 0x81, 0xC4, 0x7F, 0x5B, 0x09, 0x72, 0xC6,  // @...[.r.
+                /* 07F8 */  0x1E, 0xD3, 0x13, 0x0E, 0xC0, 0x88, 0x03, 0x04,  // ........
+                /* 0800 */  0xF8, 0x74, 0x1C, 0x20, 0x40, 0xFE, 0xFF, 0x3F,  // .t. @..?
+                /* 0808 */  0x40, 0x00, 0xB7, 0x13, 0x0E, 0x1C, 0xAC, 0x40,  // @......@
+                /* 0810 */  0x07, 0x1F, 0xE4, 0x74, 0x8F, 0xF0, 0x74, 0x0C,  // ...t..t.
+                /* 0818 */  0x76, 0x8C, 0x9E, 0xDA, 0xB3, 0xB5, 0x8F, 0x38,  // v......8
+                /* 0820 */  0x98, 0x08, 0x07, 0x08, 0xF4, 0xA9, 0xD7, 0x07,  // ........
+                /* 0828 */  0x08, 0x78, 0x07, 0x1C, 0x80, 0x3D, 0xFF, 0xFF,  // .x...=..
+                /* 0830 */  0x03, 0x05, 0x8C, 0x23, 0x89, 0x0F, 0x14, 0xE0,  // ...#....
+                /* 0838 */  0xF2, 0x71, 0xA0, 0x00, 0xBA, 0xE3, 0x79, 0xA0,  // .q....y.
+                /* 0840 */  0x00, 0x5E, 0x27, 0x1C, 0xB0, 0x69, 0x3B, 0xE1,  // .^'..i;.
+                /* 0848 */  0x00, 0x12, 0xFF, 0xFF, 0x27, 0x1C, 0xC0, 0xC2,  // ....'...
+                /* 0850 */  0x58, 0x7C, 0xC2, 0x01, 0x6C, 0xDD, 0x17, 0x9E,  // X|..l...
+                /* 0858 */  0x70, 0xC0, 0x7F, 0x80, 0xC0, 0x9D, 0x70, 0x80,  // p.....p.
+                /* 0860 */  0xF9, 0xFF, 0xFF, 0x84, 0x03, 0xB0, 0xE0, 0x08,  // ........
+                /* 0868 */  0xE0, 0x13, 0x0E, 0x60, 0xEB, 0x40, 0x01, 0xEF,  // ...`.@..
+                /* 0870 */  0x84, 0x83, 0x15, 0x77, 0xA2, 0x40, 0x9D, 0x0C,  // ...w.@..
+                /* 0878 */  0x2C, 0xE9, 0x08, 0x06, 0xE1, 0xFF, 0x0F, 0x12,  // ,.......
+                /* 0880 */  0x3B, 0x6C, 0xF8, 0xC7, 0x19, 0x1F, 0xA1, 0x01,  // ;l......
+                /* 0888 */  0xE6, 0x28, 0x39, 0x42, 0x03, 0xB2, 0x4E, 0x5C,  // .(9B..N\
+                /* 0890 */  0x1C, 0xDB, 0xFF, 0xFF, 0xEB, 0x02, 0x83, 0xA9,  // ........
+                /* 0898 */  0x15, 0x43, 0x30, 0x6F, 0x05, 0x8F, 0x0F, 0x60,  // .C0o...`
+                /* 08A0 */  0x39, 0xDF, 0xF8, 0xF8, 0x00, 0x70, 0xC8, 0xC9,  // 9....p..
+                /* 08A8 */  0xF1, 0x01, 0x10, 0xF0, 0xFF, 0x3F, 0xCE, 0x80,  // .....?..
+                /* 08B0 */  0xF3, 0xF8, 0x00, 0x53, 0xDE, 0xF1, 0x01, 0x35,  // ...S...5
+                /* 08B8 */  0x10, 0x0B, 0x3A, 0xD0, 0x23, 0x4F, 0x0A, 0xD8,  // ..:.#O..
+                /* 08C0 */  0xD3, 0x03, 0xC0, 0x83, 0xB3, 0x15, 0xF8, 0xBC,  // ........
+                /* 08C8 */  0x9C, 0x1E, 0x80, 0xCC, 0xFF, 0xFF, 0x6C, 0x05,  // ......l.
+                /* 08D0 */  0x5C, 0x0E, 0xEF, 0x70, 0x70, 0x83, 0xFA, 0xE8,  // \..pp...
+                /* 08D8 */  0x1E, 0xEA, 0xFD, 0x9D, 0x9D, 0x0E, 0x30, 0x87,  // ......0.
+                /* 08E0 */  0x08, 0x8F, 0x23, 0xD8, 0x29, 0x74, 0x7D, 0xF2,  // ..#.)t}.
+                /* 08E8 */  0x63, 0xE7, 0x07, 0x88, 0xC6, 0xEE, 0x0F, 0x10,  // c.......
+                /* 08F0 */  0xCE, 0x0F, 0x00, 0x0F, 0x62, 0x43, 0xE8, 0xFC,  // ....bC..
+                /* 08F8 */  0x00, 0x2E, 0x38, 0x9F, 0x1F, 0xB0, 0xFF, 0xFF,  // ..8.....
+                /* 0900 */  0xF3, 0x03, 0xB0, 0x9B, 0xE3, 0xF3, 0x03, 0xB8,  // ........
+                /* 0908 */  0x8E, 0x0A, 0x2F, 0x0E, 0x70, 0x0F, 0x0E, 0x30,  // ../.p..0
+                /* 0910 */  0x6F, 0x78, 0x3E, 0x38, 0x00, 0xBC, 0xF9, 0xFF,  // ox>8....
+                /* 0918 */  0x1F, 0x1C, 0xB0, 0x66, 0x0E, 0x0E, 0x80, 0x9C,  // ...f....
+                /* 0920 */  0xD3, 0x9D, 0x0F, 0x0E, 0x30, 0xA5, 0x1C, 0x1C,  // ....0...
+                /* 0928 */  0x50, 0x52, 0x8E, 0xBE, 0xF4, 0x3C, 0xC5, 0x27,  // PR...<.'
+                /* 0930 */  0xE3, 0x19, 0xFA, 0x38, 0x05, 0x70, 0x21, 0xF2,  // ...8.p!.
+                /* 0938 */  0xB9, 0x81, 0xFC, 0xFF, 0xCF, 0x0D, 0x60, 0x52,  // ......`R
+                /* 0940 */  0x73, 0x6E, 0x00, 0xBA, 0xC7, 0x6A, 0xF0, 0x1C,  // sn...j..
+                /* 0948 */  0xA7, 0x38, 0x60, 0x90, 0x43, 0x0D, 0x11, 0xE5,  // .8`.C...
+                /* 0950 */  0x5D, 0x01, 0x23, 0xEC, 0x88, 0x09, 0xC5, 0x33,  // ].#....3
+                /* 0958 */  0x9A, 0x66, 0x74, 0x4E, 0xBE, 0x0E, 0x3C, 0xBE,  // .ftN..<.
+                /* 0960 */  0x00, 0x0C, 0xF8, 0xFF, 0x9F, 0x1B, 0x60, 0x0D,  // ......`.
+                /* 0968 */  0xD7, 0xE7, 0x06, 0x70, 0xB9, 0x39, 0x37, 0x00,  // ...p.97.
+                /* 0970 */  0x5D, 0xB1, 0xE7, 0x06, 0xD0, 0x4C, 0xF3, 0x74,  // ]....L.t
+                /* 0978 */  0x8F, 0xA1, 0xC7, 0xC1, 0x0A, 0xF1, 0x48, 0xA3,  // ......H.
+                /* 0980 */  0x04, 0x7A, 0x09, 0x78, 0x82, 0x81, 0x7B, 0x78,  // .z.x..{x
+                /* 0988 */  0x80, 0x8B, 0xF9, 0xF0, 0x00, 0x38, 0xFD, 0xFF,  // .....8..
+                /* 0990 */  0x1F, 0x1E, 0x80, 0xF5, 0x08, 0x7D, 0x78, 0x00,  // .....}x.
+                /* 0998 */  0x1C, 0x89, 0x3C, 0x3C, 0x40, 0x97, 0x75, 0xAA,  // ..<<@.u.
+                /* 09A0 */  0x43, 0x9F, 0xA6, 0x70, 0x83, 0x08, 0x7C, 0x8A,  // C..p..|.
+                /* 09A8 */  0x15, 0x5F, 0x37, 0x09, 0x81, 0x25, 0x9C, 0x1D,  // ._7..%..
+                /* 09B0 */  0x50, 0x83, 0x77, 0xF4, 0xB3, 0x03, 0x2A, 0x2C,  // P.w...*,
+                /* 09B8 */  0x18, 0x05, 0xF1, 0xD9, 0xC1, 0x41, 0x20, 0x64,  // .....A d
+                /* 09C0 */  0xE4, 0xEC, 0x80, 0x1E, 0xC6, 0x91, 0x79, 0x46,  // ......yF
+                /* 09C8 */  0xE7, 0x10, 0xE4, 0xCC, 0x13, 0x84, 0xF0, 0xD9,  // ........
+                /* 09D0 */  0x01, 0xCE, 0x45, 0xC1, 0xC3, 0xE6, 0x67, 0x07,  // ..E...g.
+                /* 09D8 */  0xB8, 0x07, 0x02, 0x43, 0xFD, 0xFF, 0x9F, 0x1D,  // ...C....
+                /* 09E0 */  0x60, 0xCE, 0xEF, 0xD9, 0x81, 0x89, 0x3B, 0x3A,  // `.....;:
+                /* 09E8 */  0x00, 0x95, 0x93, 0x87, 0x8F, 0x0E, 0xE0, 0xB2,  // ........
+                /* 09F0 */  0x73, 0x74, 0x00, 0xBA, 0x72, 0xCF, 0xBA, 0x20,  // st..r.. 
+                /* 09F8 */  0xD7, 0x79, 0x59, 0x40, 0xC1, 0x79, 0x1E, 0xC7,  // .yY@.y..
+                /* 0A00 */  0x61, 0xFC, 0x17, 0x60, 0x13, 0x94, 0x7C, 0x76,  // a..`..|v
+                /* 0A08 */  0x40, 0x49, 0x1A, 0xA6, 0x1F, 0x0B, 0x1A, 0x57,  // @I.....W
+                /* 0A10 */  0xE4, 0xF3, 0x3A, 0x0B, 0x8F, 0xFF, 0xF1, 0xC1,  // ..:.....
+                /* 0A18 */  0xB3, 0x0C, 0x73, 0x00, 0xF1, 0xDF, 0x25, 0x3C,  // ..s...%<
+                /* 0A20 */  0x16, 0x7E, 0x92, 0x01, 0xFF, 0xFD, 0x02, 0x77,  // .~.....w
+                /* 0A28 */  0x92, 0x81, 0xF1, 0xFF, 0x3F, 0xC9, 0x00, 0xA6,  // ....?...
+                /* 0A30 */  0xCE, 0x44, 0x3E, 0x3F, 0x80, 0x0B, 0xC2, 0xE7,  // .D>?....
+                /* 0A38 */  0x07, 0xE0, 0x1A, 0xE1, 0xFC, 0x00, 0x1A, 0x97,  // ........
+                /* 0A40 */  0x28, 0xBA, 0xBF, 0xF8, 0x68, 0xE7, 0x2B, 0x8C,  // (...h.+.
+                /* 0A48 */  0x41, 0x5E, 0x17, 0x60, 0x81, 0xC5, 0xA8, 0x19,  // A^.`....
+                /* 0A50 */  0x43, 0x23, 0x38, 0xB6, 0x58, 0xD1, 0x82, 0x85,  // C#8.X...
+                /* 0A58 */  0x39, 0x6F, 0x0F, 0xFD, 0x2C, 0xA3, 0x9C, 0x97,  // 9o..,...
+                /* 0A60 */  0x4F, 0x09, 0x06, 0x89, 0xEA, 0x29, 0xB0, 0x73,  // O....).s
+                /* 0A68 */  0x82, 0x4E, 0x9C, 0x50, 0x06, 0x70, 0x84, 0x8F,  // .N.P.p..
+                /* 0A70 */  0x57, 0x30, 0xFF, 0xFF, 0xA7, 0x08, 0xC0, 0xBE,  // W0......
+                /* 0A78 */  0xC0, 0x53, 0x04, 0xE8, 0x42, 0x9E, 0x22, 0x80,  // .S..B.".
+                /* 0A80 */  0x6E, 0xA0, 0x53, 0x04, 0x68, 0x86, 0xF9, 0xCE,  // n.S.h...
+                /* 0A88 */  0x00, 0xE3, 0xFA, 0xE0, 0xE3, 0x15, 0xEE, 0x0E,  // ........
+                /* 0A90 */  0xC1, 0x06, 0x7C, 0x04, 0x31, 0x4E, 0x28, 0xB0,  // ..|.1N(.
+                /* 0A98 */  0x6F, 0x58, 0xFE, 0xFF, 0xDF, 0x22, 0x3C, 0x85,  // oX..."<.
+                /* 0AA0 */  0xF7, 0x00, 0xEB, 0x42, 0xD1, 0x85, 0xBC, 0x3A,  // ...B...:
+                /* 0AA8 */  0x0C, 0x41, 0x07, 0x8E, 0xF0, 0x86, 0x63, 0xBC,  // .A....c.
+                /* 0AB0 */  0x67, 0x09, 0xDF, 0x0B, 0x62, 0x19, 0xDA, 0xB6,  // g...b...
+                /* 0AB8 */  0xE0, 0x90, 0x04, 0x85, 0x1E, 0x26, 0x50, 0xA2,  // .....&P.
+                /* 0AC0 */  0x20, 0x24, 0xEE, 0xC0, 0x45, 0xE6, 0xF3, 0x70,  //  $..E..p
+                /* 0AC8 */  0xE1, 0xE3, 0x5F, 0x4C, 0x9F, 0x08, 0x82, 0x18,  // .._L....
+                /* 0AD0 */  0xF6, 0x89, 0xD8, 0xB3, 0x32, 0xD2, 0x3B, 0x86,  // ....2.;.
+                /* 0AD8 */  0xCF, 0x57, 0x16, 0x72, 0xA2, 0x40, 0x9D, 0xBB,  // .W.r.@..
+                /* 0AE0 */  0x4C, 0xE2, 0x13, 0x05, 0x3F, 0xD7, 0x9A, 0xC9,  // L...?...
+                /* 0AE8 */  0x20, 0x3E, 0x51, 0x38, 0xCE, 0x89, 0x02, 0x3D,  //  >Q8...=
+                /* 0AF0 */  0x66, 0xDF, 0x54, 0xF9, 0x28, 0x3C, 0x53, 0x76,  // f.T.(<Sv
+                /* 0AF8 */  0x0F, 0xF0, 0x99, 0x02, 0x30, 0x37, 0x62, 0x9F,  // ....07b.
+                /* 0B00 */  0x29, 0xC0, 0x75, 0x80, 0xF2, 0x99, 0x02, 0x18,  // ).u.....
+                /* 0B08 */  0xFC, 0xFF, 0xCF, 0x14, 0x60, 0x42, 0xF5, 0x99,  // ....`B..
+                /* 0B10 */  0x02, 0x9C, 0x37, 0x03, 0x38, 0x77, 0x0A, 0x7E,  // ..7.8w.~
+                /* 0B18 */  0x76, 0xC0, 0x12, 0x94, 0x7F, 0x20, 0x45, 0x4B,  // v.... EK
+                /* 0B20 */  0x3E, 0xE0, 0x10, 0xC8, 0x13, 0xF1, 0xCD, 0x82,  // >.......
+                /* 0B28 */  0xA1, 0xBE, 0x02, 0x1C, 0xC4, 0x19, 0x7B, 0x58,  // ......{X
+                /* 0B30 */  0x16, 0x79, 0x82, 0x40, 0xC9, 0xA3, 0xD0, 0x81,  // .y.@....
+                /* 0B38 */  0xC2, 0x27, 0x08, 0x7E, 0xDE, 0x31, 0x98, 0x41,  // .'.~.1.A
+                /* 0B40 */  0x7C, 0x82, 0x70, 0xD4, 0x53, 0x20, 0x28, 0x82,  // |.p.S (.
+                /* 0B48 */  0x1D, 0x09, 0x7C, 0x0A, 0x84, 0x7E, 0xAC, 0x06,  // ..|..~..
+                /* 0B50 */  0xCF, 0x38, 0xB0, 0xAB, 0x7C, 0x4F, 0x6A, 0xFE,  // .8..|Oj.
+                /* 0B58 */  0x0E, 0x40, 0x8F, 0x85, 0x80, 0x8B, 0xFF, 0xFF,  // .@......
+                /* 0B60 */  0x79, 0x02, 0xAC, 0xB6, 0xCE, 0x13, 0x80, 0x96,  // y.......
+                /* 0B68 */  0x59, 0x3E, 0x3B, 0x60, 0x87, 0x71, 0x7C, 0xCF,  // Y>;`.q|.
+                /* 0B70 */  0x0E, 0xEC, 0x9E, 0xC3, 0xC7, 0x7B, 0x5A, 0xEC,  // .....{Z.
+                /* 0B78 */  0x62, 0xE8, 0x63, 0x8E, 0x4F, 0x87, 0x7D, 0x0D,  // b.c.O.}.
+                /* 0B80 */  0x5B, 0x47, 0x14, 0x72, 0xC6, 0x41, 0x0B, 0x3B,  // [G.r.A.;
+                /* 0B88 */  0xE3, 0x40, 0x05, 0x7B, 0xC4, 0xF0, 0x0C, 0x3D,  // .@.{...=
+                /* 0B90 */  0x07, 0x1F, 0xC2, 0x80, 0xC1, 0x20, 0xF0, 0x27,  // ..... .'
+                /* 0B98 */  0x1C, 0x60, 0xFA, 0xFF, 0x3F, 0xE1, 0x00, 0x9B,  // .`..?...
+                /* 0BA0 */  0x83, 0x2A, 0xF8, 0x74, 0x1D, 0x21, 0x80, 0xEE,  // .*.t.!..
+                /* 0BA8 */  0x41, 0x15, 0x3C, 0x27, 0x1C, 0xEC, 0xBD, 0x00,  // A.<'....
+                /* 0BB0 */  0x7B, 0xBE, 0x81, 0x27, 0xF1, 0x00, 0x81, 0xE2,  // {..'....
+                /* 0BB8 */  0xB0, 0xC4, 0x03, 0x04, 0xD4, 0x01, 0x9C, 0xD6,  // ........
+                /* 0BC0 */  0x53, 0x26, 0x3F, 0x3E, 0x70, 0x31, 0x14, 0x92,  // S&?>p1..
+                /* 0BC8 */  0x72, 0xC0, 0x41, 0x9D, 0x20, 0x7C, 0x76, 0xE6,  // r.A. |v.
+                /* 0BD0 */  0xC7, 0x07, 0x9F, 0x6B, 0x6C, 0xE3, 0xF8, 0x80,  // ...kl...
+                /* 0BD8 */  0x3A, 0x28, 0xFA, 0x12, 0x70, 0x1E, 0x8F, 0xD2,  // :(..p...
+                /* 0BE0 */  0x1E, 0xC4, 0x23, 0x46, 0x94, 0x83, 0x37, 0xC1,  // ..#F..7.
+                /* 0BE8 */  0x10, 0xE7, 0x07, 0x90, 0xFD, 0xFF, 0xCF, 0x0F,  // ........
+                /* 0BF0 */  0x30, 0x4E, 0xDB, 0xCF, 0x0F, 0xB0, 0x87, 0xF0,  // 0N......
+                /* 0BF8 */  0x8A, 0x53, 0xF5, 0xF9, 0x8D, 0x1E, 0x40, 0x4E,  // .S....@N
+                /* 0C00 */  0x08, 0x83, 0x17, 0xE5, 0x31, 0xD3, 0x18, 0x67,  // ....1..g
+                /* 0C08 */  0xEA, 0x53, 0x04, 0x30, 0x89, 0x7D, 0x8A, 0x00,  // .S.0.}..
+                /* 0C10 */  0x9D, 0xAF, 0x53, 0x04, 0xD0, 0x9D, 0xE3, 0x53,  // ..S....S
+                /* 0C18 */  0x04, 0x38, 0x4F, 0x00, 0xEF, 0x5C, 0xBE, 0xD2,  // .8O..\..
+                /* 0C20 */  0xB0, 0x63, 0x53, 0xA0, 0x1A, 0x07, 0xA9, 0x13,  // .cS.....
+                /* 0C28 */  0x04, 0x76, 0x84, 0x3E, 0x04, 0xC2, 0x3D, 0xCA,  // .v.>..=.
+                /* 0C30 */  0xB3, 0xD3, 0x80, 0xE7, 0xE4, 0x11, 0x1C, 0x18,  // ........
+                /* 0C38 */  0x39, 0x44, 0xA0, 0x28, 0x7C, 0x28, 0xF1, 0x21,  // 9D.(|(.!
+                /* 0C40 */  0x82, 0x07, 0x06, 0xA3, 0x20, 0x3E, 0x44, 0x38,  // .... >D8
+                /* 0C48 */  0xCC, 0x21, 0x80, 0xFC, 0xFF, 0x0F, 0x11, 0xD8,  // .!......
+                /* 0C50 */  0x51, 0xC0, 0x39, 0xD3, 0x00, 0xDE, 0x8E, 0x1F,  // Q.9.....
+                /* 0C58 */  0x3E, 0x3E, 0x80, 0xEB, 0xB0, 0xE4, 0xE3, 0x03,  // >>......
+                /* 0C60 */  0x70, 0x15, 0x7B, 0x7C, 0x00, 0x12, 0x97, 0x03,  // p.{|....
+                /* 0C68 */  0x18, 0x47, 0x2C, 0x1C, 0x87, 0x45, 0x0D, 0x53,  // .G,..E.S
+                /* 0C70 */  0x68, 0xEF, 0x06, 0xBE, 0x42, 0x18, 0xD6, 0x87,  // h...B...
+                /* 0C78 */  0x66, 0xDC, 0xFF, 0xFF, 0xD0, 0x0C, 0xB0, 0xE1,  // f.......
+                /* 0C80 */  0xC8, 0x07, 0xBE, 0x20, 0x27, 0x52, 0x40, 0xD3,  // ... 'R@.
+                /* 0C88 */  0xA1, 0x19, 0xE6, 0xFF, 0x7F, 0xC6, 0xAF, 0x0D,  // ........
+                /* 0C90 */  0xFC, 0x80, 0xE4, 0x81, 0xF8, 0x00, 0x01, 0xE7,  // ........
+                /* 0C98 */  0x96, 0x74, 0x00, 0xCF, 0x11, 0xCF, 0x13, 0x61,  // .t.....a
+                /* 0CA0 */  0x5F, 0x69, 0x7C, 0x80, 0x00, 0x98, 0x54, 0xE4,  // _i|...T.
+                /* 0CA8 */  0x00, 0x01, 0x08, 0xF8, 0xFF, 0x1F, 0x20, 0xC0,  // ...... .
+                /* 0CB0 */  0xEF, 0xF2, 0xDA, 0x40, 0x14, 0x5E, 0x1B, 0x10,  // ...@.^..
+                /* 0CB8 */  0x04, 0xA5, 0x1E, 0x20, 0x50, 0x92, 0x0E, 0x10,  // ... P...
+                /* 0CC0 */  0xF4, 0x74, 0xC5, 0x41, 0x9E, 0xDF, 0x3D, 0x8A,  // .t.A..=.
+                /* 0CC8 */  0x18, 0x81, 0xE3, 0x3E, 0x94, 0xBE, 0x61, 0xB1,  // ...>..a.
+                /* 0CD0 */  0xB1, 0x1E, 0xCE, 0xF1, 0xB3, 0x13, 0x04, 0x3F,  // .......?
+                /* 0CD8 */  0x40, 0x38, 0xFA, 0x09, 0x02, 0x15, 0x16, 0x8C,  // @8......
+                /* 0CE0 */  0x82, 0xF8, 0x04, 0xE1, 0x20, 0x27, 0x08, 0xF4,  // .... '..
+                /* 0CE8 */  0x58, 0xAD, 0x75, 0x0A, 0x64, 0x5C, 0x4F, 0xEC,  // X.u.d\O.
+                /* 0CF0 */  0x80, 0xBB, 0x13, 0xA3, 0x0F, 0x10, 0xE0, 0x4A,  // .......J
+                /* 0CF8 */  0x72, 0x80, 0x00, 0x02, 0xFF, 0xFF, 0x03, 0x04,  // r.......
+                /* 0D00 */  0xD8, 0xC4, 0x1F, 0x20, 0x40, 0xEE, 0xF1, 0xBE,  // ... @...
+                /* 0D08 */  0x80, 0x9C, 0xF3, 0x03, 0x43, 0xA8, 0x13, 0x7F,  // ....C...
+                /* 0D10 */  0x60, 0x60, 0xE7, 0x98, 0x07, 0x77, 0x36, 0x01,  // ``...w6.
+                /* 0D18 */  0x06, 0xF6, 0x8E, 0x80, 0x3B, 0x45, 0x80, 0xEB,  // ....;E..
+                /* 0D20 */  0x50, 0xF0, 0x14, 0x01, 0xB0, 0xE5, 0xFF, 0x7F,  // P.......
+                /* 0D28 */  0x8A, 0x80, 0xD1, 0xE4, 0x14, 0x01, 0xC8, 0x1B,  // ........
+                /* 0D30 */  0xFF, 0x53, 0x04, 0x78, 0x44, 0x4A, 0x18, 0x0D,  // .S.xDJ..
+                /* 0D38 */  0x13, 0x3B, 0x58, 0xC3, 0xA0, 0x34, 0x9C, 0x14,  // .;X..4..
+                /* 0D40 */  0xA0, 0x8C, 0xFD, 0xD0, 0x8F, 0xF8, 0xE0, 0xD8,  // ........
+                /* 0D48 */  0x81, 0xC2, 0x70, 0xFC, 0x58, 0xE0, 0xC1, 0x3D,  // ..p.X..=
+                /* 0D50 */  0xF0, 0x9C, 0xC7, 0xFB, 0xB0, 0x87, 0x72, 0x76,  // ......rv
+                /* 0D58 */  0x21, 0x99, 0xB4, 0x51, 0xA2, 0x8E, 0xA1, 0x3E,  // !..Q...>
+                /* 0D60 */  0x19, 0x9C, 0xD2, 0x11, 0xD5, 0x8E, 0xA8, 0x33,  // .......3
+                /* 0D68 */  0xBD, 0xEF, 0xCE, 0x3E, 0x10, 0x70, 0x34, 0x0E,  // ...>.p4.
+                /* 0D70 */  0x8D, 0x1D, 0x86, 0x6F, 0x0A, 0xC1, 0x5E, 0x31,  // ...o..^1
+                /* 0D78 */  0xD8, 0xE0, 0xD8, 0x84, 0x1E, 0x13, 0x1E, 0xB0,  // ........
+                /* 0D80 */  0xDF, 0x20, 0x0E, 0x3E, 0x6A, 0x8C, 0xE6, 0xA0,  // . .>j...
+                /* 0D88 */  0x88, 0xBC, 0xF1, 0x83, 0xE6, 0xD6, 0x70, 0xD4,  // ......p.
+                /* 0D90 */  0x07, 0x1C, 0xEE, 0x50, 0x5E, 0xE4, 0x39, 0xC1,  // ...P^.9.
+                /* 0D98 */  0x61, 0x84, 0xF7, 0xFF, 0xFF, 0x58, 0x80, 0xB9,  // a....X..
+                /* 0DA0 */  0x02, 0xB4, 0x7A, 0xB8, 0x40, 0xB8, 0x9F, 0x88,  // ..z.@...
+                /* 0DA8 */  0xEE, 0x49, 0x0F, 0x26, 0xCF, 0x14, 0xAD, 0x21,  // .I.&...!
+                /* 0DB0 */  0xC8, 0xDB, 0x2D, 0x40, 0xB6, 0x20, 0x04, 0x12,  // ..-@. ..
+                /* 0DB8 */  0xE9, 0x00, 0xA3, 0x1C, 0xD0, 0x19, 0x84, 0x88,  // ........
+                /* 0DC0 */  0x10, 0xE5, 0x8C, 0x22, 0x05, 0x39, 0x98, 0x28,  // ...".9.(
+                /* 0DC8 */  0x51, 0x43, 0xD5, 0x36, 0x37, 0x41, 0x44, 0x78,  // QC.67ADx
+                /* 0DD0 */  0x1C, 0x88, 0x14, 0x2B, 0x5A, 0x10, 0xDB, 0x1F,  // ...+Z...
+                /* 0DD8 */  0x04, 0x89, 0xFA, 0x10, 0xD1, 0x31, 0xC0, 0x91,  // .....1..
+                /* 0DE0 */  0x46, 0x83, 0x3A, 0x64, 0xF8, 0x28, 0xE0, 0xD1,  // F.:d.(..
+                /* 0DE8 */  0xBC, 0x1F, 0xF8, 0x1A, 0x65, 0x90, 0xC0, 0x67,  // ....e..g
+                /* 0DF0 */  0xF0, 0x8A, 0x8D, 0x39, 0x5E, 0xFA, 0x34, 0x02,  // ...9^.4.
+                /* 0DF8 */  0xEB, 0x50, 0xC7, 0x0E, 0x14, 0x60, 0x39, 0x8E,  // .P...`9.
+                /* 0E00 */  0x80, 0x61, 0x26, 0x07, 0xEF, 0xF9, 0xBC, 0xC2,  // .a&.....
+                /* 0E08 */  0x24, 0xB0, 0xFC, 0x41, 0xA0, 0x0E, 0x76, 0xFC,  // $..A..v.
+                /* 0E10 */  0x1E, 0xF2, 0xAE, 0x6D, 0xC8, 0x07, 0x00, 0x1F,  // ...m....
+                /* 0E18 */  0x1D, 0xC8, 0xE9, 0x85, 0x8E, 0x07, 0xFC, 0xC7,  // ........
+                /* 0E20 */  0x2F, 0x23, 0xBC, 0x28, 0x78, 0xBE, 0x3E, 0x17,  // /#.(x.>.
+                /* 0E28 */  0x33, 0x27, 0xE3, 0x41, 0x83, 0xBE, 0x1D, 0xF0,  // 3'.A....
+                /* 0E30 */  0x7B, 0x01, 0x8B, 0x37, 0x6A, 0x2A, 0xEA, 0x90,  // {..7j*..
+                /* 0E38 */  0x82, 0x3A, 0x49, 0xF8, 0x10, 0xC1, 0x10, 0x5F,  // .:I...._
+                /* 0E40 */  0x36, 0x0C, 0xF1, 0x8C, 0xC2, 0x0E, 0x3A, 0x3E,  // 6.....:>
+                /* 0E48 */  0xED, 0xC3, 0xFE, 0xFF, 0x9F, 0x1C, 0x30, 0xC7,  // ......0.
+                /* 0E50 */  0x81, 0x20, 0x71, 0x7C, 0x5C, 0x78, 0xC4, 0xF0,  // . q|\x..
+                /* 0E58 */  0xF1, 0x03, 0x87, 0xF3, 0xDE, 0xE2, 0xBB, 0x88,  // ........
+                /* 0E60 */  0xE1, 0xDE, 0x2D, 0x3C, 0x94, 0x28, 0x2F, 0x11,  // ..-<.(/.
+                /* 0E68 */  0x1E, 0x28, 0x18, 0xCE, 0x22, 0x4F, 0x39, 0x60,  // .(.."O9`
+                /* 0E70 */  0x04, 0x39, 0x80, 0x23, 0x0B, 0x75, 0x22, 0xC6,  // .9.#.u".
+                /* 0E78 */  0xF0, 0xED, 0x24, 0xC4, 0x71, 0x85, 0x7A, 0xAE,  // ..$.q.z.
+                /* 0E80 */  0xC7, 0x8F, 0xD1, 0x03, 0xE0, 0x80, 0x0F, 0x3C,  // .......<
+                /* 0E88 */  0x6C, 0x00, 0xEF, 0x3C, 0x06, 0x3F, 0x1E, 0x4F,  // l..<.?.O
+                /* 0E90 */  0xCD, 0x93, 0xF4, 0x80, 0x8F, 0xCF, 0xD3, 0x3B,  // .......;
+                /* 0E98 */  0xC9, 0x73, 0x7A, 0x15, 0x78, 0xDE, 0x60, 0x47,  // .sz.x.`G
+                /* 0EA0 */  0x00, 0x0F, 0x81, 0x9F, 0x23, 0x3C, 0x04, 0x3E,  // ....#<.>
+                /* 0EA8 */  0x80, 0x27, 0x8E, 0xD3, 0xF3, 0x59, 0xE6, 0xA4,  // .'...Y..
+                /* 0EB0 */  0x70, 0x07, 0x16, 0x7E, 0x25, 0xC0, 0x1C, 0x84,  // p..~%...
+                /* 0EB8 */  0x70, 0x0A, 0x6D, 0xFA, 0xD4, 0x68, 0xD4, 0xAA,  // p.m..h..
+                /* 0EC0 */  0x41, 0x99, 0x1A, 0x65, 0x1A, 0xD4, 0xEA, 0x53,  // A..e...S
+                /* 0EC8 */  0xA9, 0x31, 0x63, 0x7A, 0x8F, 0x1A, 0x7E, 0x37,  // .1cz..~7
+                /* 0ED0 */  0xE8, 0x5C, 0xE0, 0xE0, 0xCF, 0x21, 0x81, 0x58,  // .\...!.X
+                /* 0ED8 */  0x90, 0x09, 0x10, 0x16, 0xF4, 0xED, 0x20, 0x10,  // ...... .
+                /* 0EE0 */  0xCB, 0x7C, 0x3B, 0x08, 0xC4, 0xA1, 0x6C, 0x40,  // .|;...l@
+                /* 0EE8 */  0x34, 0x02, 0xA2, 0x88, 0x20, 0x02, 0xB2, 0x98,  // 4... ...
+                /* 0EF0 */  0x55, 0x0B, 0xC8, 0xCA, 0x40, 0x04, 0xE4, 0x3C,  // U...@..<
+                /* 0EF8 */  0x40, 0x34, 0x1C, 0x10, 0x4D, 0x41, 0x23, 0x20,  // @4..MA# 
+                /* 0F00 */  0x67, 0xA2, 0x10, 0x90, 0x13, 0xBE, 0x1D, 0x04,  // g.......
+                /* 0F08 */  0xE4, 0xBC, 0x20, 0x02, 0xB2, 0xCE, 0x27, 0x83,  // .. ...'.
+                /* 0F10 */  0x80, 0xAC, 0x1A, 0x44, 0x40, 0x4E, 0x0B, 0x44,  // ...D@N.D
+                /* 0F18 */  0xB3, 0x03, 0x51, 0x15, 0x5E, 0x80, 0x98, 0x24,  // ..Q.^..$
+                /* 0F20 */  0x10, 0x01, 0x39, 0x88, 0x97, 0xFF, 0x3F, 0x10,  // ..9...?.
+                /* 0F28 */  0x4B, 0x05, 0x44, 0xE5, 0xBF, 0x02, 0x04, 0xE4,  // K.D.....
+                /* 0F30 */  0x30, 0x20, 0x02, 0x72, 0x30, 0x35, 0x40, 0x2C,  // 0 .r05@,
+                /* 0F38 */  0x25, 0x88, 0x80, 0xAC, 0xCD, 0x0D, 0x10, 0x13,  // %.......
+                /* 0F40 */  0x0A, 0x22, 0x20, 0x2B, 0x5A, 0xBF, 0x80, 0xAC,  // ." +Z...
+                /* 0F48 */  0x0F, 0x44, 0x40, 0xD6, 0xAD, 0x07, 0x88, 0xA5,  // .D@.....
+                /* 0F50 */  0x00, 0x11, 0x90, 0x15, 0x18, 0x02, 0x62, 0x7A,  // ......bz
+                /* 0F58 */  0x40, 0x04, 0xE4, 0x34, 0x8E, 0x80, 0x58, 0x36,  // @..4..X6
+                /* 0F60 */  0x10, 0x01, 0x59, 0x83, 0x26, 0x20, 0xA6, 0x08,  // ..Y.& ..
+                /* 0F68 */  0x44, 0x40, 0x56, 0xF7, 0xCA, 0x10, 0x90, 0xB5,  // D@V.....
+                /* 0F70 */  0x82, 0x68, 0xA0, 0x44, 0xD5, 0x40, 0x29, 0x88,  // .h.D.@).
+                /* 0F78 */  0x80, 0x9C, 0xFF, 0x59, 0x25, 0x20, 0xAB, 0x79,  // ...Y% .y
+                /* 0F80 */  0xCC, 0x04, 0x22, 0x09, 0x7C, 0x01, 0xB1, 0x3C,  // ..".|..<
+                /* 0F88 */  0x20, 0x02, 0x26, 0xAF, 0x99, 0xC0, 0x0C, 0x44,  //  .&....D
+                /* 0F90 */  0x40, 0xD6, 0xF8, 0x0A, 0x12, 0x90, 0x15, 0x83,  // @.......
+                /* 0F98 */  0x08, 0x98, 0xBC, 0x6B, 0x02, 0x33, 0x10, 0x01,  // ...k.3..
+                /* 0FA0 */  0x39, 0x9D, 0x38, 0x20, 0x96, 0x15, 0x44, 0x40,  // 9.8 ..D@
+                /* 0FA8 */  0xCE, 0xAD, 0x0E, 0x88, 0xA9, 0x70, 0x07, 0xC4,  // .....p..
+                /* 0FB0 */  0x54, 0xD9, 0x03, 0x62, 0x1A, 0x41, 0x04, 0x64,  // T..b.A.d
+                /* 0FB8 */  0x95, 0xFE, 0x80, 0x98, 0x66, 0x10, 0x01, 0x59,  // ....f..Y
+                /* 0FC0 */  0xF3, 0xC7, 0x21, 0x10, 0x49, 0x00, 0xA2, 0x81,  // ..!.I...
+                /* 0FC8 */  0x90, 0x57, 0x87, 0x06, 0x42, 0x40, 0x04, 0xE4,  // .W..B@..
+                /* 0FD0 */  0x64, 0x4F, 0x0A, 0x01, 0x39, 0x27, 0x88, 0x80,  // dO..9'..
+                /* 0FD8 */  0x9C, 0xF7, 0x25, 0x14, 0x88, 0xA4, 0x07, 0x11,  // ..%.....
+                /* 0FE0 */  0x90, 0xB5, 0xA8, 0x3C, 0x2C, 0x50, 0x10, 0x01,  // ...<,P..
+                /* 0FE8 */  0x59, 0xF5, 0x6B, 0x22, 0x10, 0xC9, 0x00, 0x22,  // Y.k"..."
+                /* 0FF0 */  0x20, 0x67, 0x7F, 0x66, 0x04, 0x22, 0x4A, 0x7C,  //  g.f."J|
+                /* 0FF8 */  0x02, 0x31, 0xED, 0x46, 0x81, 0x58, 0x12, 0x10,  // .1.F.X..
+                /* 1000 */  0x0D, 0x90, 0xFC, 0x2B, 0x34, 0x40, 0x02, 0x22,  // ...+4@."
+                /* 1008 */  0x60, 0xF2, 0xBF, 0x08, 0xCC, 0x5E, 0x1F, 0x07,  // `....^..
+                /* 1010 */  0xCC, 0x9E, 0x36, 0x1A, 0x30, 0x01, 0x11, 0x90,  // ..6.0...
+                /* 1018 */  0xD5, 0xAB, 0x05, 0x62, 0x59, 0x40, 0x34, 0x00,  // ...bY@4.
+                /* 1020 */  0x22, 0xF7, 0xFF, 0x3F, 0x00, 0x0A, 0x22, 0x20,  // "..?.." 
+                /* 1028 */  0xA7, 0x7F, 0x5F, 0x08, 0xC8, 0x5A, 0xBE, 0x1C,  // .._..Z..
+                /* 1030 */  0x0F, 0x11, 0xEC, 0xF5, 0xF1, 0x10, 0xC1, 0x40,  // .......@
+                /* 1038 */  0x04, 0xE4, 0xC4, 0xAF, 0x18, 0x81, 0x58, 0xEF,  // ......X.
+                /* 1040 */  0x8F, 0x47, 0x20, 0xD6, 0xF7, 0x0B, 0x09, 0x42,  // .G ....B
+                /* 1048 */  0xFE, 0xFF                                       // ..
+            })
         }
 
         OperationRegion (CP17, SystemMemory, 0x0357F000, 0x10)
@@ -78376,12 +93140,17 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
 
         Device (USB0)
         {
-            
+            Name (_DEP, Package (One)  // _DEP: Dependencies
+            {
+                \_SB.PEP0
+            })
             Name (_HID, "QCOM2430")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
             Name (_CID, "ACPI\\PNP0D15")  // _CID: Compatible ID
             Name (_UID, One)  // _UID: Unique ID
             Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
-            Name (_S0W, Zero)  // _S0W: S0 Device Wake State
+            Name (_S0W, 0x03)  // _S0W: S0 Device Wake State
+            Name (_ADR, Zero)  // _ADR: Address
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
@@ -78410,6 +93179,45 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                 Return (Local1)
             }
 
+            Name (_PLD, Package (0x01)  // _PLD: Physical Location of Device
+            {
+                ToPLD (
+                    PLD_Revision           = 0x2,
+                    PLD_IgnoreColor        = 0x1,
+                    PLD_Red                = 0x0,
+                    PLD_Green              = 0x0,
+                    PLD_Blue               = 0x0,
+                    PLD_Width              = 0x0,
+                    PLD_Height             = 0x0,
+                    PLD_UserVisible        = 0x1,
+                    PLD_Dock               = 0x0,
+                    PLD_Lid                = 0x0,
+                    PLD_Panel              = "BACK",
+                    PLD_VerticalPosition   = "CENTER",
+                    PLD_HorizontalPosition = "LEFT",
+                    PLD_Shape              = "VERTICALRECTANGLE",
+                    PLD_GroupOrientation   = 0x0,
+                    PLD_GroupToken         = 0x0,
+                    PLD_GroupPosition      = 0x1,
+                    PLD_Bay                = 0x0,
+                    PLD_Ejectable          = 0x0,
+                    PLD_EjectRequired      = 0x0,
+                    PLD_CabinetNumber      = 0x0,
+                    PLD_CardCageNumber     = 0x0,
+                    PLD_Reference          = 0x0,
+                    PLD_Rotation           = 0x0,
+                    PLD_Order              = 0x0,
+                    PLD_VerticalOffset     = 0xFFFF,
+                    PLD_HorizontalOffset   = 0xFFFF)
+
+            })
+            Name (_UPC, Package (0x04)  // _UPC: USB Port Capabilities
+            {
+                One, 
+                0x09, 
+                Zero, 
+                Zero
+            })
             Name (STVL, 0x0F)
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
@@ -78423,20 +93231,86 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Method (REMD, 0, NotSerialized)
             {
                 STVL = Zero
-                Notify (USB0, One) // Device Check
+                Notify (\_SB.USB0, One) // Device Check
             }
 
             Method (ADDD, 0, NotSerialized)
             {
                 STVL = 0x0F
-                Notify (USB0, One) // Device Check
+                Notify (\_SB.USB0, One) // Device Check
+            }
+
+            Device (RHUB)
+            {
+                Name (_ADR, Zero)  // _ADR: Address
+                Device (PRT1)
+                {
+                    Name (_ADR, One)  // _ADR: Address
+                    Name (_UPC, Package (0x04)  // _UPC: USB Port Capabilities
+                    {
+                        Zero, 
+                        0xFF, 
+                        Zero, 
+                        Zero
+                    })
+                    Device (HS02)
+                    {
+                        Name (_ADR, 0x02)  // _ADR: Address
+                        Device (DCAM)
+                        {
+                            Name (_ADR, 0x02)  // _ADR: Address
+                            Name (_PLD, Package (0x01)  // _PLD: Physical Location of Device
+                            {
+                                ToPLD (
+                                    PLD_Revision           = 0x2,
+                                    PLD_IgnoreColor        = 0x1,
+                                    PLD_Red                = 0x0,
+                                    PLD_Green              = 0x0,
+                                    PLD_Blue               = 0x0,
+                                    PLD_Width              = 0x0,
+                                    PLD_Height             = 0x0,
+                                    PLD_UserVisible        = 0x0,
+                                    PLD_Dock               = 0x0,
+                                    PLD_Lid                = 0x0,
+                                    PLD_Panel              = "FRONT",
+                                    PLD_VerticalPosition   = "UPPER",
+                                    PLD_HorizontalPosition = "LEFT",
+                                    PLD_Shape              = "UNKNOWN",
+                                    PLD_GroupOrientation   = 0x0,
+                                    PLD_GroupToken         = 0x0,
+                                    PLD_GroupPosition      = 0x0,
+                                    PLD_Bay                = 0x0,
+                                    PLD_Ejectable          = 0x0,
+                                    PLD_EjectRequired      = 0x0,
+                                    PLD_CabinetNumber      = 0x0,
+                                    PLD_CardCageNumber     = 0x0,
+                                    PLD_Reference          = 0x0,
+                                    PLD_Rotation           = 0x0,
+                                    PLD_Order              = 0x0)
+
+                            })
+                        }
+                    }
+                }
+
+                Device (PRT2)
+                {
+                    Name (_ADR, 0x02)  // _ADR: Address
+                    Name (_UPC, Package (0x04)  // _UPC: USB Port Capabilities
+                    {
+                        Zero, 
+                        0xFF, 
+                        Zero, 
+                        Zero
+                    })
+                }
             }
         }
 
         Device (AGR0)
         {
             Name (_HID, "ACPI000C" /* Processor Aggregator Device */)  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_PUR, Package (0x02)  // _PUR: Processor Utilization Request
             {
                 One, 
@@ -78444,7 +93318,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
             Method (_OST, 3, NotSerialized)  // _OST: OSPM Status Indication
             {
-                ^^PEP0.ROST = Arg2
+                \_SB.PEP0.ROST = Arg2
             }
         }
 
@@ -78454,16 +93328,16 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (_UID, Zero)  // _UID: Unique ID
             Name (_TZD, Package (0x04)  // _TZD: Thermal Zone Devices
             {
-                ^SYSM.APC0.CL0.CPU0, 
-                ^SYSM.APC0.CL0.CPU1, 
-                ^SYSM.APC0.CL0.CPU2, 
-                ^SYSM.APC0.CL0.CPU3
+                \_SB.SYSM.APC0.CL0.CPU0, 
+                \_SB.SYSM.APC0.CL0.CPU1, 
+                \_SB.SYSM.APC0.CL0.CPU2, 
+                \_SB.SYSM.APC0.CL0.CPU3
             })
             Method (_DEP, 0, NotSerialized)  // _DEP: Dependencies
             {
                 Return (Package (0x01)
                 {
-                    PEP0
+                    \_SB.PEP0
                 })
             }
         }
@@ -78474,7 +93348,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (_UID, One)  // _UID: Unique ID
             Name (_TZD, Package (0x01)  // _TZD: Thermal Zone Devices
             {
-                PEP0
+                \_SB.PEP0
             })
             Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
             {
@@ -78489,7 +93363,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 While (One)
                 {
-                    Name (_T_0, Buffer (One)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    Name (_T_0, Buffer (0x01)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
                     {
                          0x00                                             // .
                     })
@@ -78498,7 +93372,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     {
                         While (One)
                         {
-                            Name (_T_1, Zero)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                            Name (_T_1, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
                             _T_1 = ToInteger (Arg2)
                             If ((_T_1 == Zero))
                             {
@@ -78524,7 +93398,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 Return (Package (0x01)
                 {
-                    PEP0
+                    \_SB.PEP0
                 })
             }
         }
@@ -78535,16 +93409,16 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (_UID, Zero)  // _UID: Unique ID
             Name (_TZD, Package (0x04)  // _TZD: Thermal Zone Devices
             {
-                ^SYSM.APC0.CL1.CPU4, 
-                ^SYSM.APC0.CL1.CPU5, 
-                ^SYSM.APC0.CL1.CPU6, 
-                ^SYSM.APC0.CL1.CPU7
+                \_SB.SYSM.APC0.CL1.CPU4, 
+                \_SB.SYSM.APC0.CL1.CPU5, 
+                \_SB.SYSM.APC0.CL1.CPU6, 
+                \_SB.SYSM.APC0.CL1.CPU7
             })
             Method (_DEP, 0, NotSerialized)  // _DEP: Dependencies
             {
                 Return (Package (0x01)
                 {
-                    PEP0
+                    \_SB.PEP0
                 })
             }
         }
@@ -78555,7 +93429,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (_UID, One)  // _UID: Unique ID
             Name (_TZD, Package (0x01)  // _TZD: Thermal Zone Devices
             {
-                PEP0
+                \_SB.PEP0
             })
             Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
             {
@@ -78570,7 +93444,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 While (One)
                 {
-                    Name (_T_0, Buffer (One)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    Name (_T_0, Buffer (0x01)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
                     {
                          0x00                                             // .
                     })
@@ -78579,7 +93453,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     {
                         While (One)
                         {
-                            Name (_T_1, Zero)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                            Name (_T_1, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
                             _T_1 = ToInteger (Arg2)
                             If ((_T_1 == Zero))
                             {
@@ -78605,7 +93479,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 Return (Package (0x01)
                 {
-                    PEP0
+                    \_SB.PEP0
                 })
             }
         }
@@ -78616,7 +93490,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (_UID, Zero)  // _UID: Unique ID
             Name (_TZD, Package (0x01)  // _TZD: Thermal Zone Devices
             {
-                GPU0
+                \_SB.GPU0
             })
             Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
             {
@@ -78631,7 +93505,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 Return (Package (0x01)
                 {
-                    PEP0
+                    \_SB.PEP0
                 })
             }
         }
@@ -78642,7 +93516,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (_UID, Zero)  // _UID: Unique ID
             Name (_TZD, Package (0x01)  // _TZD: Thermal Zone Devices
             {
-                GPU0
+                \_SB.GPU0
             })
             Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
             {
@@ -78657,7 +93531,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 Return (Package (0x01)
                 {
-                    PEP0
+                    \_SB.PEP0
                 })
             }
         }
@@ -78668,14 +93542,14 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (_UID, Zero)  // _UID: Unique ID
             Name (_TZD, Package (0x08)  // _TZD: Thermal Zone Devices
             {
-                ^SYSM.APC0.CL0.CPU0, 
-                ^SYSM.APC0.CL0.CPU1, 
-                ^SYSM.APC0.CL0.CPU2, 
-                ^SYSM.APC0.CL0.CPU3, 
-                PEP0, 
-                ^GPU0.MON0, 
-                GPU0, 
-                PMBM
+                \_SB.SYSM.APC0.CL0.CPU0, 
+                \_SB.SYSM.APC0.CL0.CPU1, 
+                \_SB.SYSM.APC0.CL0.CPU2, 
+                \_SB.SYSM.APC0.CL0.CPU3, 
+                \_SB.PEP0, 
+                \_SB.GPU0.MON0, 
+                \_SB.GPU0, 
+                \_SB.PMBM
             })
             Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
             {
@@ -78690,7 +93564,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 Return (Package (0x01)
                 {
-                    PEP0
+                    \_SB.PEP0
                 })
             }
         }
@@ -78701,7 +93575,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (_UID, One)  // _UID: Unique ID
             Name (_TZD, Package (0x01)  // _TZD: Thermal Zone Devices
             {
-                AMSS
+                \_SB.AMSS
             })
             Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
             {
@@ -78716,7 +93590,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 Return (Package (0x01)
                 {
-                    PEP0
+                    \_SB.PEP0
                 })
             }
         }
@@ -78727,15 +93601,15 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (_UID, Zero)  // _UID: Unique ID
             Name (_TZD, Package (0x09)  // _TZD: Thermal Zone Devices
             {
-                ^SYSM.APC0.CL0.CPU0, 
-                ^SYSM.APC0.CL0.CPU1, 
-                ^SYSM.APC0.CL0.CPU2, 
-                ^SYSM.APC0.CL0.CPU3, 
-                ^SYSM.APC0.CL1.CPU4, 
-                ^SYSM.APC0.CL1.CPU5, 
-                ^SYSM.APC0.CL1.CPU6, 
-                ^SYSM.APC0.CL1.CPU7, 
-                PMBM
+                \_SB.SYSM.APC0.CL0.CPU0, 
+                \_SB.SYSM.APC0.CL0.CPU1, 
+                \_SB.SYSM.APC0.CL0.CPU2, 
+                \_SB.SYSM.APC0.CL0.CPU3, 
+                \_SB.SYSM.APC0.CL1.CPU4, 
+                \_SB.SYSM.APC0.CL1.CPU5, 
+                \_SB.SYSM.APC0.CL1.CPU6, 
+                \_SB.SYSM.APC0.CL1.CPU7, 
+                \_SB.PMBM
             })
             Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
             {
@@ -78750,8 +93624,8 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 Return (Package (0x02)
                 {
-                    PEP0, 
-                    ADC1
+                    \_SB.PEP0, 
+                    \_SB.ADC1
                 })
             }
         }
@@ -78762,9 +93636,9 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (_UID, One)  // _UID: Unique ID
             Name (_TZD, Package (0x03)  // _TZD: Thermal Zone Devices
             {
-                PEP0, 
-                GPU0, 
-                PMBM
+                \_SB.PEP0, 
+                \_SB.GPU0, 
+                \_SB.PMBM
             })
             Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
             {
@@ -78784,8 +93658,8 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 Return (Package (0x02)
                 {
-                    PEP0, 
-                    ADC1
+                    \_SB.PEP0, 
+                    \_SB.ADC1
                 })
             }
         }
@@ -78796,7 +93670,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (_UID, Zero)  // _UID: Unique ID
             Name (_TZD, Package (0x01)  // _TZD: Thermal Zone Devices
             {
-                COEX
+                \_SB.COEX
             })
             Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
             {
@@ -78811,9 +93685,17 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 Return (Package (0x01)
                 {
-                    PEP0
+                    \_SB.PEP0
                 })
             }
+        }
+
+        ThermalZone (TZ41)
+        {
+            Name (_HID, "QCOM0094")  // _HID: Hardware ID
+            Name (_UID, One)  // _UID: Unique ID
+            Name (_TSP, 0x32)  // _TSP: Thermal Sampling Period
+            Name (_TZP, Zero)  // _TZP: Thermal Zone Polling
         }
 
         ThermalZone (TZ99)
@@ -78822,20 +93704,20 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             Name (_UID, 0x64)  // _UID: Unique ID
             Name (_TZD, Package (0x0E)  // _TZD: Thermal Zone Devices
             {
-                ^SYSM.APC0.CL0.CPU0, 
-                ^SYSM.APC0.CL0.CPU1, 
-                ^SYSM.APC0.CL0.CPU2, 
-                ^SYSM.APC0.CL0.CPU3, 
-                ^SYSM.APC0.CL1.CPU4, 
-                ^SYSM.APC0.CL1.CPU5, 
-                ^SYSM.APC0.CL1.CPU6, 
-                ^SYSM.APC0.CL1.CPU7, 
-                PEP0, 
-                AMSS, 
-                ^GPU0.MON0, 
-                GPU0, 
-                COEX, 
-                PMBM
+                \_SB.SYSM.APC0.CL0.CPU0, 
+                \_SB.SYSM.APC0.CL0.CPU1, 
+                \_SB.SYSM.APC0.CL0.CPU2, 
+                \_SB.SYSM.APC0.CL0.CPU3, 
+                \_SB.SYSM.APC0.CL1.CPU4, 
+                \_SB.SYSM.APC0.CL1.CPU5, 
+                \_SB.SYSM.APC0.CL1.CPU6, 
+                \_SB.SYSM.APC0.CL1.CPU7, 
+                \_SB.PEP0, 
+                \_SB.AMSS, 
+                \_SB.GPU0.MON0, 
+                \_SB.GPU0, 
+                \_SB.COEX, 
+                \_SB.PMBM
             })
             Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
             {
@@ -78855,37 +93737,300 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             {
                 Return (Package (0x01)
                 {
-                    PEP0
+                    \_SB.PEP0
                 })
+            }
+        }
+
+        Name (HWNH, Zero)
+        Name (HWNL, Zero)
+        Device (HWN1)
+        {
+            Name (_HID, "QCOM00A9")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
+            Name (_UID, One)  // _UID: Unique ID
+            Method (_STA, 0, NotSerialized)  // _STA: Status
+            {
+                If ((\_SB.HWNH == Zero))
+                {
+                    Return (Zero)
+                }
+                Else
+                {
+                    Return (0x0F)
+                }
+            }
+
+            Name (_DEP, Package (One)  // _DEP: Dependencies
+            {
+                \_SB.PMIC
+            })
+            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            {
+                Name (RBUF, ResourceTemplate ()
+                {
+                    GpioInt (Level, ActiveHigh, Exclusive, PullNone, 0x0000,
+                        "\\_SB.PM02", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x0E00
+                        }
+                })
+                Return (RBUF) /* \_SB_.HWN1._CRS.RBUF */
+            }
+
+            Method (HAPI, 0, NotSerialized)
+            {
+                Name (CFG0, Package (0x03)
+                {
+                    One, 
+                    One, 
+                    One
+                })
+                Return (CFG0) /* \_SB_.HWN1.HAPI.CFG0 */
+            }
+
+            Method (HAPC, 0, NotSerialized)
+            {
+                Name (CFG0, Package (0x16)
+                {
+                    Zero, 
+                    0x0C80, 
+                    Zero, 
+                    One, 
+                    One, 
+                    One, 
+                    One, 
+                    Zero, 
+                    0x02, 
+                    One, 
+                    0x03, 
+                    0x14, 
+                    One, 
+                    0x1B, 
+                    Zero, 
+                    One, 
+                    0x06, 
+                    Zero, 
+                    Zero, 
+                    0x0535, 
+                    0x03, 
+                    One
+                })
+                Return (CFG0) /* \_SB_.HWN1.HAPC.CFG0 */
+            }
+        }
+
+        Device (HWN0)
+        {
+            Name (_HID, "QCOM00A8")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
+            Name (_UID, Zero)  // _UID: Unique ID
+            Method (_STA, 0, NotSerialized)  // _STA: Status
+            {
+                If ((\_SB.HWNL == Zero))
+                {
+                    Return (Zero)
+                }
+                Else
+                {
+                    Return (0x0F)
+                }
+            }
+
+            Method (HWNL, 0, NotSerialized)
+            {
+                Name (CFG0, Package (0x10)
+                {
+                    One, 
+                    0x03, 
+                    0x019B, 
+                    0x14, 
+                    0x20, 
+                    0x02, 
+                    0x40, 
+                    0x03, 
+                    0x80, 
+                    0x04, 
+                    One, 
+                    One, 
+                    One, 
+                    0x03, 
+                    One, 
+                    One
+                })
+                Return (CFG0) /* \_SB_.HWN0.HWNL.CFG0 */
+            }
+        }
+
+        Device (TSC1)
+        {
+            Name (_HID, "ELAN25E8")  // _HID: Hardware ID
+            Name (_CID, "PNP0C50" /* HID Protocol Device (I2C bus) */)  // _CID: Compatible ID
+            Name (_UID, One)  // _UID: Unique ID
+            Name (_HRV, One)  // _HRV: Hardware Revision
+            Name (_DEP, Package (0x03)  // _DEP: Dependencies
+            {
+                \_SB.GIO0, 
+                \_SB.I2C5, 
+                \_SB.PEP0
+            })
+            Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+            {
+                Name (RBUF, ResourceTemplate ()
+                {
+                    I2cSerialBusV2 (0x0010, ControllerInitiated, 0x00061A80,
+                        AddressingMode7Bit, "\\_SB.I2C5",
+                        0x00, ResourceConsumer, , Exclusive,
+                        RawDataBuffer (0x08)  // Vendor Data
+                        {
+                            0x50, 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+                        })
+                    GpioInt (Level, ActiveLow, Exclusive, PullUp, 0x0000,
+                        "\\_SB.GIO0", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x007D
+                        }
+                })
+                Return (RBUF) /* \_SB_.TSC1._CRS.RBUF */
+            }
+
+            Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
+            {
+                While (One)
+                {
+                    Name (_T_0, Buffer (0x01)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                    {
+                         0x00                                             // .
+                    })
+                    CopyObject (ToBuffer (Arg0), _T_0) /* \_SB_.TSC1._DSM._T_0 */
+                    If ((_T_0 == ToUUID ("3cdff6f7-4267-4555-ad05-b30a3d8938de") /* HID I2C Device */))
+                    {
+                        While (One)
+                        {
+                            Name (_T_1, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                            _T_1 = ToInteger (Arg2)
+                            If ((_T_1 == Zero))
+                            {
+                                While (One)
+                                {
+                                    Name (_T_2, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
+                                    _T_2 = ToInteger (Arg1)
+                                    If ((_T_2 == One))
+                                    {
+                                        Return (Buffer (One)
+                                        {
+                                             0x03                                             // .
+                                        })
+                                    }
+                                    Else
+                                    {
+                                        Return (Buffer (One)
+                                        {
+                                             0x00                                             // .
+                                        })
+                                    }
+
+                                    Break
+                                }
+                            }
+                            ElseIf ((_T_1 == One))
+                            {
+                                Debug = "Method _DSM Function HID"
+                                Return (One)
+                            }
+                            Else
+                            {
+                            }
+
+                            Break
+                        }
+                    }
+                    Else
+                    {
+                        Return (Buffer (One)
+                        {
+                             0x00                                             // .
+                        })
+                    }
+
+                    Break
+                }
+            }
+
+            Name (PGID, Buffer (0x0A)
+            {
+                "\\_SB.TSC1"
+            })
+            Name (DBUF, Buffer (DBFL){})
+            CreateByteField (DBUF, Zero, STAT)
+            CreateByteField (DBUF, 0x02, DVAL)
+            CreateField (DBUF, 0x18, 0xA0, DEID)
+            Method (_S1D, 0, NotSerialized)  // _S1D: S1 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_S2D, 0, NotSerialized)  // _S2D: S2 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_S3D, 0, NotSerialized)  // _S3D: S3 Device State
+            {
+                Return (0x03)
+            }
+
+            Method (_PS0, 0, NotSerialized)  // _PS0: Power State 0
+            {
+                DEID = Buffer (ESNL){}
+                DVAL = Zero
+                DEID = PGID /* \_SB_.TSC1.PGID */
+                If (\_SB.ABD.AVBL)
+                {
+                    \_SB.PEP0.FLD0 = DBUF /* \_SB_.TSC1.DBUF */
+                }
+            }
+
+            Method (_PS3, 0, NotSerialized)  // _PS3: Power State 3
+            {
+                DEID = Buffer (ESNL){}
+                DVAL = 0x03
+                DEID = PGID /* \_SB_.TSC1.PGID */
+                If (\_SB.ABD.AVBL)
+                {
+                    \_SB.PEP0.FLD0 = DBUF /* \_SB_.TSC1.DBUF */
+                }
             }
         }
 
         Device (BTNS)
         {
             Name (_HID, "ACPI0011" /* Generic Buttons Device */)  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, Zero)  // _UID: Unique ID
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
                 Name (RBUF, ResourceTemplate ()
                 {
+                    GpioInt (Edge, ActiveBoth, Exclusive, PullDown, 0x0000,
+                        "\\_SB.PM01", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x0040
+                        }
+                    GpioInt (Edge, ActiveBoth, ExclusiveAndWake, PullUp, 0x0000,
+                        "\\_SB.PM01", 0x00, ResourceConsumer, ,
+                        )
+                        {   // Pin list
+                            0x0628
+                        }
                     GpioInt (Edge, ActiveBoth, ExclusiveAndWake, PullDown, 0x0000,
                         "\\_SB.PM01", 0x00, ResourceConsumer, ,
                         )
                         {   // Pin list
-                            0x0000
-                        }
-                    GpioInt (Edge, ActiveBoth, Exclusive, PullUp, 0x0000,
-                        "\\_SB.PM01", 0x00, ResourceConsumer, ,
-                        )
-                        {   // Pin list
-                            0x0085
-                        }
-                    GpioInt (Edge, ActiveBoth, Exclusive, PullDown, 0x0000,
-                        "\\_SB.PM01", 0x84, ResourceConsumer, ,
-                        )
-                        {   // Pin list
-                            0x0001
+                            0x0041
                         }
                 })
                 Return (RBUF) /* \_SB_.BTNS._CRS.RBUF */
@@ -78935,25 +94080,49 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             })
         }
 
+        Device (MBRG)
+        {
+            Name (_HID, "QCOM000C")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
+        }
+
+        Device (RMAT)
+        {
+            Name (_HID, "QCOM000F")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
+        }
+
+        Device (RMNT)
+        {
+            Name (_HID, "QCOM000D")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
+        }
+
+        Device (DPLB)
+        {
+            Name (_HID, "QCOM00C7")  // _HID: Hardware ID
+            Alias (\_SB.PSUB, _SUB)
+        }
+
         Device (QDCI)
         {
-            Name (_DEP, Package (0x01)  // _DEP: Dependencies
+            Name (_DEP, Package (One)  // _DEP: Dependencies
             {
-                GLNK
+                \_SB.GLNK
             })
             Name (_HID, "QCOM0023")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
         }
 
         Device (BTH0)
         {
             Name (_HID, "QCOM00B7")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_DEP, Package (0x03)  // _DEP: Dependencies
             {
-                PEP0, 
-                PMIC, 
-                UAR3
+                \_SB.PEP0, 
+                \_SB.PMIC, 
+                \_SB.UAR3
             })
             Name (_PRW, Package (0x02)  // _PRW: Power Resources for Wake
             {
@@ -78985,11 +94154,11 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
         {
             Name (_DEP, Package (0x02)  // _DEP: Dependencies
             {
-                SPMI, 
-                PMIC
+                \_SB.SPMI, 
+                \_SB.PMIC
             })
             Name (_HID, "QCOM0020")  // _HID: Hardware ID
-            Alias (PSUB, _SUB)
+            Alias (\_SB.PSUB, _SUB)
             Name (_UID, Zero)  // _UID: Unique ID
             Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
             {
@@ -79377,11 +94546,11 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
             }
         }
 
-        Scope (ADC1)
+        Scope (\_SB.ADC1)
         {
             Method (CHAN, 0, NotSerialized)
             {
-                Return (Package (0x08)
+                Return (Package (0x0A)
                 {
                     Package (0x0D)
                     {
@@ -79430,8 +94599,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         Zero, 
                         Zero, 
                         Zero, 
-                        PTCF,
-                        0x02,
+                        PTCF0x02
                     }, 
 
                     Package (0x0D)
@@ -79487,6 +94655,23 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
 
                     Package (0x0D)
                     {
+                        "SYS_THERM2", 
+                        0x4E, 
+                        One, 
+                        Zero, 
+                        0x02, 
+                        One, 
+                        One, 
+                        One, 
+                        0x02, 
+                        0x000186A0, 
+                        SYTB, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x0D)
+                    {
                         "PA_THERM", 
                         0x4F, 
                         One, 
@@ -79506,6 +94691,23 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     {
                         "PA_THERM1", 
                         0x50, 
+                        One, 
+                        Zero, 
+                        0x02, 
+                        One, 
+                        One, 
+                        One, 
+                        0x02, 
+                        0x000186A0, 
+                        SYTB, 
+                        Zero, 
+                        Zero
+                    }, 
+
+                    Package (0x0D)
+                    {
+                        "SYS_THERM3", 
+                        0x51, 
                         One, 
                         Zero, 
                         0x02, 
@@ -80747,7 +95949,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
 
             Method (VTCH, 0, NotSerialized)
             {
-                Return (Package (0x05)
+                Return (Package (0x07)
                 {
                     Package (0x10)
                     {
@@ -80782,9 +95984,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                         Zero, 
                         Zero, 
                         Zero, 
-                        PTCF,
-                        PTCI,
-                        0x02, 
+                        PTCFPTCI (0x02), 
                         0xFFFF3CB0, 
                         0x000249F0
                     }, 
@@ -80793,6 +95993,26 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     {
                         "SYS_THERM1", 
                         0x4D, 
+                        One, 
+                        Zero, 
+                        Zero, 
+                        One, 
+                        One, 
+                        One, 
+                        0x02, 
+                        0x000186A0, 
+                        SYTB, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        0xFFFFFFD8, 
+                        0x7D
+                    }, 
+
+                    Package (0x10)
+                    {
+                        "SYS_THERM2", 
+                        0x4E, 
                         One, 
                         Zero, 
                         Zero, 
@@ -80833,6 +96053,26 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM", "MSM8998", 0x00000003)
                     {
                         "PA_THERM1", 
                         0x50, 
+                        One, 
+                        Zero, 
+                        Zero, 
+                        One, 
+                        One, 
+                        One, 
+                        0x02, 
+                        0x000186A0, 
+                        SYTB, 
+                        Zero, 
+                        Zero, 
+                        Zero, 
+                        0xFFFFFFD8, 
+                        0x7D
+                    }, 
+
+                    Package (0x10)
+                    {
+                        "SYS_THERM3", 
+                        0x51, 
                         One, 
                         Zero, 
                         Zero, 
