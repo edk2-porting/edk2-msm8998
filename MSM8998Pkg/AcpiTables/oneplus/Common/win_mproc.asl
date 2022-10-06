@@ -8,29 +8,39 @@ Device (PILC)
 {
     Name (_HID, "QCOM0039")  // _HID: Hardware ID
     Alias (\_SB.PSUB, _SUB)
-    Method (PILX, 0, NotSerialized)
+    Method(PILX)
     {
-        Return (PILP) /* \_SB_.PILC.PILP */
+        return (PILP)
     }
 
-    Name (PILP, Package (0x01)
-    {
-        "OPCA"
-    })
-    Method (ACPO, 0, NotSerialized)
-    {
-        Name (PKGG, Package (0x01)
+    Name(PILP,
+        Package()
         {
-            Package (0x03)
+            // Methods needed for PIL bootup proceedure
+            // Drive will parse this list and call each 
+            // method accordingly
+            "OPCA",         // ACPO - ACPI Override for MBA load address
+        }
+    )
+
+    Method (ACPO)
+    {
+        Name(PKGG, Package()
+        {
+            Package ()
             {
-                Zero, 
-                Zero, 
-                ToUUID ("ba58766d-abf2-4402-88d7-90ab243f6c77")
+                // Represents MBA subsystem
+                0x00000000, // Address
+                0x00000000, // Length
+                ToUUID ("BA58766D-ABF2-4402-88D7-90AB243F6C77")
             }
         })
-        DerefOf (PKGG [Zero]) [Zero] = RMTB /* \_SB_.RMTB */
-        DerefOf (PKGG [Zero]) [One] = RMTX /* \_SB_.RMTX */
-        Return (PKGG) /* \_SB_.PILC.ACPO.PKGG */
+
+        // Copy ACPI globals for Address for this subsystem into above package for use in driver
+        Store (FUCB, Index(DeRefOf(Index (PKGG, 0)), 0))
+        Store (FUCX, Index(DeRefOf(Index (PKGG, 0)), 1))
+        
+        Return (PKGG)
     }
 }
 
