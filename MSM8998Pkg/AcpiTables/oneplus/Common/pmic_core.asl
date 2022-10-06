@@ -271,7 +271,7 @@ Device (PM03)
         }
         Else
         {
-            Return (0x0B)
+            Return (0xF)
         }
     }
 
@@ -381,7 +381,7 @@ Device (PMAP)
     Alias (\_SB.PSUB, _SUB)
     Method (_STA, 0, NotSerialized)  // _STA: Status
     {
-        Return (0x0B)
+        Return (0x0F)
     }
 
     Method (GEPT, 0, NotSerialized)

@@ -21,7 +21,7 @@ Device (MPCS)
     Name (_UID, 0x18)  // _UID: Unique ID
     Method (_STA, 0, NotSerialized)  // _STA: Status
     {
-        Return (0x0F)
+        Return (Zero)
     }
 
     Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
@@ -100,7 +100,7 @@ Device (JPGE)
     Name (_UID, 0x17)  // _UID: Unique ID
     Method (_STA, 0, NotSerialized)  // _STA: Status
     {
-        Return (0x0F)
+        Return (Zero)
     }
 
     Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings

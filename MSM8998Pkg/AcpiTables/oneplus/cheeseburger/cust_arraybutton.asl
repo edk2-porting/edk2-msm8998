@@ -7,18 +7,21 @@ Device (BTNS)
     {
         Name (RBUF, ResourceTemplate ()
         {
+            //Power Button
             GpioInt (Edge, ActiveBoth, Exclusive, PullDown, 0x0000,
                 "\\_SB.PM01", 0x00, ResourceConsumer, ,
                 )
                 {   // Pin list
                     0x0040
                 }
+            // Volume Up button
             GpioInt (Edge, ActiveBoth, ExclusiveAndWake, PullUp, 0x0000,
                 "\\_SB.PM01", 0x00, ResourceConsumer, ,
                 )
                 {   // Pin list
                     0x0628
                 }
+            // Volume Down button
             GpioInt (Edge, ActiveBoth, ExclusiveAndWake, PullDown, 0x0000,
                 "\\_SB.PM01", 0x00, ResourceConsumer, ,
                 )
@@ -29,46 +32,16 @@ Device (BTNS)
         Return (RBUF) /* \_SB_.BTNS._CRS.RBUF */
     }
 
-    Name (_DSD, Package (0x02)  // _DSD: Device-Specific Data
+    Name (_DSD, Package (0x02)
     {
         ToUUID ("fa6bd625-9ce8-470d-a2c7-b3ca36c4282e"), 
-        Package (0x04)
-        {
-            Package (0x05)
-            {
-                Zero, 
-                One, 
-                Zero, 
-                One, 
-                0x0D
-            }, 
-
-            Package (0x05)
-            {
-                One, 
-                Zero, 
-                One, 
-                One, 
-                0x81
-            }, 
-
-            Package (0x05)
-            {
-                One, 
-                One, 
-                One, 
-                0x0C, 
-                0xE9
-            }, 
-
-            Package (0x05)
-            {
-                One, 
-                0x02, 
-                One, 
-                0x0C, 
-                0xEA
-            }
-        }
+        Package() {
+            Package(5) {0,1,0,0x01,0x0D}, // Portable Device Control Application Collection
+            Package(5) {1,0,1,0x01,0x81}, // Sleep
+            Package(5) {1,1,1,0x0C,0xE9}, // Volume Increment
+            Package(5) {1,2,1,0x0C,0xEA}, // Volume Decrement
+            // Package(5) {1,3,1,0x90,0x20}, // Camera Auto Focus
+            // Package(5) {1,4,1,0x90,0x21}, // Camera Shutter
+        },
     })
 }

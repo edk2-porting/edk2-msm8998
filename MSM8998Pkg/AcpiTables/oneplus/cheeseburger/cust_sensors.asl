@@ -11,6 +11,9 @@ Device (SEN1)
     })
     Name (_HID, "QCOM00A2")  // _HID: Hardware ID
     Alias (\_SB.PSUB, _SUB)
+	// Methods used for parsing the sensors configuration (.conf) file.
+    // HARD corresponds to ":hardware"
+    // PLAT corresponds to ":platform"
     Method (HARD, 0, NotSerialized)
     {
         Return ("8998")

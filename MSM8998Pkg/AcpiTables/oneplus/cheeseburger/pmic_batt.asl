@@ -129,7 +129,7 @@ Device (BCL1)
     })
     Method (_STA, 0, NotSerialized)  // _STA: Status
     {
-        Return (0x0B)
+        Return (0x0F)
     }
 
     Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings

@@ -71,7 +71,7 @@ Device (USB0)
     })
     Method (_STA, 0, NotSerialized)  // _STA: Status
     {
-        Return (0x00)
+        Return (Zero)
     }
 
     Method (CCVL, 0, NotSerialized)
