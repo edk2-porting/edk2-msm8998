@@ -69,6 +69,7 @@ Device (USB0)
             0x00000113,
         }
     })
+    //In order to use windbg debugging, USB is disabled
     Method (_STA, 0, NotSerialized)  // _STA: Status
     {
         Return (Zero)
