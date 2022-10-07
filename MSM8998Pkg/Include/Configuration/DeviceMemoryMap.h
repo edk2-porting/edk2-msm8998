@@ -64,7 +64,11 @@ MemBase,   MemSize,   MemLabel(32 Char.), BuildHob, ResourceType, ResourceAttrib
 {"Hypervisor",             0x85800000, 0x00600000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
 {"MPSS_EFS",               0x85E00000, 0x00200000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
 {"SMEM",                   0x86000000, 0x00200000, AddMem, MEM_RES, UNCACHEABLE, Reserv, UNCACHED_UNBUFFERED_XN},
-{"TZApps",                 0x86D00000, 0x00E00000, NoHob,  SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
+// Test
+// {"TZ",                     0x86200000, 0x00B00000, AddMem, SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
+{"TZApps",                 0x86D00000, 0x00E00000, NoHob , SYS_MEM, SYS_MEM_CAP, Reserv, NS_DEVICE},
+// Test
+// {"HLOS 2",                 0x87B00000, 0x03000000, AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK_XN},
 {"TGCM",                   0x87B00000, 0x00A00000, AddMem, MEM_RES, WRITE_COMBINEABLE, Reserv, UNCACHED_UNBUFFERED_XN},
 
 #ifdef LG_PIL_FIXED
