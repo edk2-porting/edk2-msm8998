@@ -6,7 +6,7 @@ A broken but working EDK2 implementation for Snapdragon 835 platform.
 [Chinese version (中文版)](https://github.com/edk2-porting/edk2-msm8998/blob/master/README.zh.md)
 
 ## WARNING
-- **Since Windows 22H2 discontinued support for ARMv8.0 systems, the Qualcomm 835 is affected, which means the 22H2 and later versions of Windows will no longer boot up**
+- **Since Windows 22H2 discontinued support for ARMv8.0 systems, the Qualcomm 835 is affected, which means that later versions after Windows 22H2 maybe it won't boot up**
 
 - **DO NOT EVER TRY TO PORT IT TO *SONY, SAMSUNG* DEVICES**
 
