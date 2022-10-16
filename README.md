@@ -1,9 +1,11 @@
 # EDK2 UEFI Firmware For Snapdragon 835 (msm8998)
 
-A broken but working EDK2 implementation for Snapdragon 835 platform.
+- A broken but working EDK2 implementation for Snapdragon 835 platform.
 
-中国人请看中文版
+- 中国人请看中文版
 [Chinese version (中文版)](https://github.com/edk2-porting/edk2-msm8998/blob/master/README.zh.md)
+
+- **Note that the MSM8998 platform has basically migrated to another repository>>[edk2-msm](https://github.com/edk2-porting/edk2-msm)**
 
 ## WARNING
 - **Since Windows 22H2 discontinued support for ARMv8.0 CPU, MSM8998 is also affected, which means after version 22H2 it is possible not to boot up.**
