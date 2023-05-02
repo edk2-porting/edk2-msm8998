@@ -225,21 +225,18 @@ APRIORI DXE {
     INF MdeModulePkg/Universal/Acpi/AcpiPlatformDxe/AcpiPlatformDxe.inf
     INF MdeModulePkg/Universal/Acpi/BootGraphicsResourceTableDxe/BootGraphicsResourceTableDxe.inf
 
-    # Use custom ACPI
-    # INF RuleOverride = ACPITABLE MSM8998Pkg/AcpiTables/AcpiTables.inf
-
     FILE FREEFORM = 7E374E25-8E01-4FEE-87F2-390C23C606CD {
-        SECTION RAW = MSM8998Pkg/AcpiTables/oneplus/dumpling/dsdt.aml
-        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/bgrt.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/Csrt.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/dbg2.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/Facp.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/Facs.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/Gtdt.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/IORT.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/Madt.acp
-        SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/Mcfg.acp
-      # SECTION RAW = MSM8998Pkg/AcpiTables/8998/build/TPM2.acp
+        SECTION RAW = Platforms/Msm8998ACPI/oneplus/dumpling/dsdt.aml
+        SECTION RAW = Platforms/Msm8998ACPI/Common/build/BGRT.aml
+        SECTION RAW = Platforms/Msm8998ACPI/Common/build/CSRT.aml
+        SECTION RAW = Platforms/Msm8998ACPI/Common/build/DBG2.aml
+        SECTION RAW = Platforms/Msm8998ACPI/Common/build/FACP.aml
+        SECTION RAW = Platforms/Msm8998ACPI/Common/build/FACS.aml
+        SECTION RAW = Platforms/Msm8998ACPI/Common/build/GTDT.aml
+        SECTION RAW = Platforms/Msm8998ACPI/Common/build/IORT.aml
+        SECTION RAW = Platforms/Msm8998ACPI/Common/build/Madt.aml
+        SECTION RAW = Platforms/Msm8998ACPI/Common/build/MCFG.aml
+      # SECTION RAW = Platforms/Msm8998ACPI/Common/build/TPM2.aml
         SECTION UI = "AcpiTables"
     }
 

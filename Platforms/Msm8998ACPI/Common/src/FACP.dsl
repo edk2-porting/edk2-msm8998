@@ -1,9 +1,9 @@
 /*
  * Intel ACPI Component Architecture
- * AML/ASL+ Disassembler version 20190509 (64-bit version)
- * Copyright (c) 2000 - 2019 Intel Corporation
+ * AML/ASL+ Disassembler version 20200925 (64-bit version)
+ * Copyright (c) 2000 - 2020 Intel Corporation
  * 
- * Disassembly of Facp.acp, Tue Oct  4 13:31:16 2022
+ * Disassembly of FACP.aml, Tue May  2 20:07:05 2023
  *
  * ACPI Data Table [FACP]
  *

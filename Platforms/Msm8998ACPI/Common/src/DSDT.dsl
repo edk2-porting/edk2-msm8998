@@ -1,11 +1,11 @@
 /*
  * Intel ACPI Component Architecture
- * AML/ASL+ Disassembler version 20190509 (64-bit version)
- * Copyright (c) 2000 - 2019 Intel Corporation
+ * AML/ASL+ Disassembler version 20200925 (64-bit version)
+ * Copyright (c) 2000 - 2020 Intel Corporation
  * 
  * Disassembling to symbolic ASL+ operators
  *
- * Disassembly of dsdt.aml, Tue Oct  4 13:31:03 2022
+ * Disassembly of DSDT.aml, Tue May  2 20:07:05 2023
  *
  * Original Table Header:
  *     Signature        "DSDT"
@@ -567,7 +567,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (GEPT, 0, NotSerialized)
             {
-                Name (BUFF, Buffer (0x04){})
+                Name (BUFF, Buffer (0x04) {})
                 CreateByteField (BUFF, Zero, STAT)
                 CreateWordField (BUFF, 0x02, DATA)
                 DATA = 0x02
@@ -611,7 +611,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (_GRT, 0, NotSerialized)  // _GRT: Get Real Time
             {
-                Name (BUFF, Buffer (0x1A){})
+                Name (BUFF, Buffer (0x1A) {})
                 CreateField (BUFF, 0x10, 0x80, TME1)
                 CreateField (BUFF, 0x90, 0x20, ACT1)
                 CreateField (BUFF, 0xB0, 0x20, ACW1)
@@ -621,7 +621,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (_TIV, 0, NotSerialized)  // _TIV: Timer Values
             {
-                Name (BUFF, Buffer (0x1A){})
+                Name (BUFF, Buffer (0x1A) {})
                 CreateField (BUFF, 0x10, 0x80, TME1)
                 CreateField (BUFF, 0x90, 0x20, ACT1)
                 CreateField (BUFF, 0xB0, 0x20, ACW1)
@@ -631,7 +631,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (_GWS, 0, NotSerialized)  // _GWS: Get Wake Status
             {
-                Name (BUFF, Buffer (0x1A){})
+                Name (BUFF, Buffer (0x1A) {})
                 CreateField (BUFF, 0x10, 0x80, TME1)
                 CreateField (BUFF, 0x90, 0x20, ACT1)
                 CreateField (BUFF, 0xB0, 0x20, ACW1)
@@ -643,7 +643,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             {
                 If ((Arg0 == Zero))
                 {
-                    Name (BUFF, Buffer (0x32){})
+                    Name (BUFF, Buffer (0x32) {})
                     CreateByteField (BUFF, Zero, STAT)
                     CreateField (BUFF, 0x10, 0x80, TME1)
                     CreateField (BUFF, 0x90, 0x20, ACT1)
@@ -665,7 +665,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (_SRT, 1, NotSerialized)  // _SRT: Set Real Time
             {
-                Name (BUFF, Buffer (0x32){})
+                Name (BUFF, Buffer (0x32) {})
                 CreateByteField (BUFF, Zero, STAT)
                 CreateField (BUFF, 0x10, 0x80, TME1)
                 CreateField (BUFF, 0x90, 0x20, ACT1)
@@ -684,7 +684,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (_CWS, 1, NotSerialized)  // _CWS: Clear Wake Alarm Status
             {
-                Name (BUFF, Buffer (0x32){})
+                Name (BUFF, Buffer (0x32) {})
                 CreateByteField (BUFF, Zero, STAT)
                 CreateField (BUFF, 0x10, 0x80, TME1)
                 CreateField (BUFF, 0x90, 0x20, ACT1)
@@ -1505,7 +1505,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (GEPT, 0, NotSerialized)
             {
-                Name (BUFF, Buffer (0x04){})
+                Name (BUFF, Buffer (0x04) {})
                 CreateByteField (BUFF, Zero, STAT)
                 CreateWordField (BUFF, 0x02, DATA)
                 DATA = One
@@ -60745,7 +60745,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 Return (MPCC) /* \_SB_.PEP0.MPCC */
             }
 
-            Name (MPCC, Package (0x00){})
+            Name (MPCC, Package (0x00) {})
         }
 
         Scope (\_SB.PEP0)
@@ -60755,7 +60755,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 Return (OPCC) /* \_SB_.PEP0.OPCC */
             }
 
-            Name (OPCC, Package (0x00){})
+            Name (OPCC, Package (0x00) {})
         }
 
         Scope (\_SB.PEP0)
@@ -75263,7 +75263,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     {
                         Zero, 
                         Zero, 
-                        ToUUID ("ba58766d-abf2-4402-88d7-90ab243f6c77")
+                        ToUUID ("ba58766d-abf2-4402-88d7-90ab243f6c77") /* Unknown UUID */
                     }
                 })
                 DerefOf (PKGG [Zero]) [Zero] = RMTB /* \_SB_.RMTB */
@@ -76212,7 +76212,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                                 0x31, 
                                 "V8L", 
                                 "SMMUID", 
-                                ToUUID ("9833c712-3292-4ffb-b0f4-2bd20e1f7f66"), 
+                                ToUUID ("9833c712-3292-4ffb-b0f4-2bd20e1f7f66") /* Unknown UUID */, 
                                 "SMMUINTERFACEID", 
                                 Buffer (0x10)
                                 {
@@ -76346,7 +76346,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                                 0x20, 
                                 "V7S", 
                                 "SMMUID", 
-                                ToUUID ("665e0f8e-add3-49d1-91bc-5540c5f57fba"), 
+                                ToUUID ("665e0f8e-add3-49d1-91bc-5540c5f57fba") /* Unknown UUID */, 
                                 "SMMUINTERFACEID", 
                                 Buffer (0x10)
                                 {
@@ -76411,9 +76411,9 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                                 0x20, 
                                 "V7S", 
                                 "SMMUID", 
-                                ToUUID ("665e0f8e-add3-49d1-91bc-5540c5f57fba"), 
+                                ToUUID ("665e0f8e-add3-49d1-91bc-5540c5f57fba") /* Unknown UUID */, 
                                 "SMMUINTERFACEID", 
-                                ToUUID ("1c3fc0e8-0b11-4ee0-be89-3e21420a865f"), 
+                                ToUUID ("1c3fc0e8-0b11-4ee0-be89-3e21420a865f") /* Unknown UUID */, 
                                 Package (0x07)
                                 {
                                     "PAGETABLEUSAGE", 
@@ -76635,7 +76635,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                                 0x20, 
                                 "V7S", 
                                 "SMMUID", 
-                                ToUUID ("665e0f8e-add3-49d1-91bc-5540c5f57fba"), 
+                                ToUUID ("665e0f8e-add3-49d1-91bc-5540c5f57fba") /* Unknown UUID */, 
                                 "SMMUINTERFACEID", 
                                 Buffer (0x10)
                                 {
@@ -76907,7 +76907,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     {
                         "COMPONENT", 
                         Zero, 
-                        ToUUID ("2c135991-4391-4633-90b1-fa96f2e2cc04"), 
+                        ToUUID ("2c135991-4391-4633-90b1-fa96f2e2cc04") /* Unknown UUID */, 
                         "PRIMDISPLAY_POWER_STATES", 
                         "HW_BLOCK_MDP", 
                         Package (0x02)
@@ -77488,7 +77488,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     {
                         "COMPONENT", 
                         One, 
-                        ToUUID ("30bdf1b5-28f7-4c0c-ac47-273dd1401e11"), 
+                        ToUUID ("30bdf1b5-28f7-4c0c-ac47-273dd1401e11") /* Unknown UUID */, 
                         "GRAPHICS_POWER_STATES", 
                         "HW_BLOCK_GRAPHICS", 
                         Package (0x02)
@@ -77590,7 +77590,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x02, 
-                        ToUUID ("07ca2add-df87-49e1-8583-08687dc81c8e"), 
+                        ToUUID ("07ca2add-df87-49e1-8583-08687dc81c8e") /* Unknown UUID */, 
                         "MDPBLT_POWER_STATES", 
                         "HW_BLOCK_MDP", 
                         Package (0x02)
@@ -78380,7 +78380,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x03, 
-                        ToUUID ("4d5ffbf5-d791-41cd-89cb-0154129ba607"), 
+                        ToUUID ("4d5ffbf5-d791-41cd-89cb-0154129ba607") /* Unknown UUID */, 
                         "ROTATOR_POWER_STATES", 
                         "HW_BLOCK_MDP", 
                         Package (0x02)
@@ -79105,7 +79105,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x04, 
-                        ToUUID ("d0e1bb1a-703d-4be8-b450-64a4fbfca6a8"), 
+                        ToUUID ("d0e1bb1a-703d-4be8-b450-64a4fbfca6a8") /* Unknown UUID */, 
                         "VIDEO_POWER_STATES", 
                         "HW_BLOCK_VIDEO", 
                         Package (0x02)
@@ -79763,7 +79763,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x05, 
-                        ToUUID ("cc4d73fa-c3c2-4c7e-a217-d468f4611bbd"), 
+                        ToUUID ("cc4d73fa-c3c2-4c7e-a217-d468f4611bbd") /* Unknown UUID */, 
                         "CRYPTO_POWER_STATES", 
                         "HW_BLOCK_NONE", 
                         Package (0x02)
@@ -79872,7 +79872,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x06, 
-                        ToUUID ("e6be5096-55ec-4891-884b-0760bfc533b6"), 
+                        ToUUID ("e6be5096-55ec-4891-884b-0760bfc533b6") /* Unknown UUID */, 
                         "VIDEO_ENCODER_POWER_STATES", 
                         "HW_BLOCK_VIDEO", 
                         Package (0x02)
@@ -80540,7 +80540,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x07, 
-                        ToUUID ("c42be628-d6bc-4755-bfd5-5af776797228"), 
+                        ToUUID ("c42be628-d6bc-4755-bfd5-5af776797228") /* Unknown UUID */, 
                         "SECDISPLAY_POWER_STATES", 
                         "HW_BLOCK_MDP", 
                         Package (0x02)
@@ -81111,7 +81111,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x08, 
-                        ToUUID ("1a134877-a115-49b8-bda1-382b78bba62d"), 
+                        ToUUID ("1a134877-a115-49b8-bda1-382b78bba62d") /* Unknown UUID */, 
                         "HDMI_POWER_STATES", 
                         "HW_BLOCK_MDP", 
                         Package (0x02)
@@ -81641,7 +81641,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x09, 
-                        ToUUID ("2feff049-f0c7-46fd-a9d8-6cf70e83ec9b"), 
+                        ToUUID ("2feff049-f0c7-46fd-a9d8-6cf70e83ec9b") /* Unknown UUID */, 
                         "HDMI_HOTPLUG_DETECT", 
                         "HW_BLOCK_NONE", 
                         Package (0x01)
@@ -81676,7 +81676,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     {
                         "COMPONENT", 
                         0x0A, 
-                        ToUUID ("8dd40bdf-6fbd-45ed-8538-711d434b6ba1"), 
+                        ToUUID ("8dd40bdf-6fbd-45ed-8538-711d434b6ba1") /* Unknown UUID */, 
                         "ALWAYS_ACTIVE_WP", 
                         "HW_BLOCK_NONE", 
                         Package (0x01)
@@ -84995,7 +84995,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (BLCP, 1, NotSerialized)
             {
-                Name (RBUF, Buffer (0x08){})
+                Name (RBUF, Buffer (0x08) {})
                 CreateDWordField (RBUF, Zero, PKHR)
                 PKHR = Zero
                 CreateDWordField (RBUF, 0x04, EOP)
@@ -85236,7 +85236,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (BLC2, 1, NotSerialized)
             {
-                Name (RBUF, Buffer (0x0100){})
+                Name (RBUF, Buffer (0x0100) {})
                 Return (RBUF) /* \_SB_.GPU0.BLC2.RBUF */
             }
 
@@ -86211,7 +86211,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     G0D3 = Zero
                     If (\_SB.CPUP ())
                     {
-                        While (One){}
+                        While (One) {}
                     }
 
                     Sleep (0x05)
@@ -86308,7 +86308,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
                 If (\_SB.CPUP ())
                 {
-                    While (One){}
+                    While (One) {}
                 }
 
                 If ((\_SB.GIO0.GABL == One))
@@ -86668,7 +86668,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
                 Name (_DSD, Package (0x02)  // _DSD: Device-Specific Data
                 {
-                    ToUUID ("6211e2c0-58a3-4af3-90e1-927a4e0c55a4"), 
+                    ToUUID ("6211e2c0-58a3-4af3-90e1-927a4e0c55a4") /* Unknown UUID */, 
                     Package (0x01)
                     {
                         Package (0x02)
@@ -88847,7 +88847,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             {
                 "\\_SB.CAMS"
             })
-            Name (DBUF, Buffer (DBFL){})
+            Name (DBUF, Buffer (DBFL) {})
             CreateByteField (DBUF, Zero, STAT)
             CreateByteField (DBUF, 0x02, DVAL)
             CreateField (DBUF, 0x18, 0xA0, DEID)
@@ -88868,7 +88868,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (_PS0, 0, NotSerialized)  // _PS0: Power State 0
             {
-                DEID = Buffer (ESNL){}
+                DEID = Buffer (ESNL) {}
                 DVAL = Zero
                 DEID = PGID /* \_SB_.CAMS.PGID */
                 If (\_SB.ABD.AVBL)
@@ -88879,7 +88879,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (_PS3, 0, NotSerialized)  // _PS3: Power State 3
             {
-                DEID = Buffer (ESNL){}
+                DEID = Buffer (ESNL) {}
                 DVAL = 0x03
                 DEID = PGID /* \_SB_.CAMS.PGID */
                 If (\_SB.ABD.AVBL)
@@ -88910,7 +88910,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             {
                 "\\_SB.CAMI"
             })
-            Name (DBUF, Buffer (DBFL){})
+            Name (DBUF, Buffer (DBFL) {})
             CreateByteField (DBUF, Zero, STAT)
             CreateByteField (DBUF, 0x02, DVAL)
             CreateField (DBUF, 0x18, 0xA0, DEID)
@@ -88931,7 +88931,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (_PS0, 0, NotSerialized)  // _PS0: Power State 0
             {
-                DEID = Buffer (ESNL){}
+                DEID = Buffer (ESNL) {}
                 DVAL = Zero
                 DEID = PGID /* \_SB_.CAMI.PGID */
                 If (\_SB.ABD.AVBL)
@@ -88942,7 +88942,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (_PS3, 0, NotSerialized)  // _PS3: Power State 3
             {
-                DEID = Buffer (ESNL){}
+                DEID = Buffer (ESNL) {}
                 DVAL = 0x03
                 DEID = PGID /* \_SB_.CAMI.PGID */
                 If (\_SB.ABD.AVBL)
@@ -88973,7 +88973,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             {
                 "\\_SB.CAMF"
             })
-            Name (DBUF, Buffer (DBFL){})
+            Name (DBUF, Buffer (DBFL) {})
             CreateByteField (DBUF, Zero, STAT)
             CreateByteField (DBUF, 0x02, DVAL)
             CreateField (DBUF, 0x18, 0xA0, DEID)
@@ -88994,7 +88994,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (_PS0, 0, NotSerialized)  // _PS0: Power State 0
             {
-                DEID = Buffer (ESNL){}
+                DEID = Buffer (ESNL) {}
                 DVAL = Zero
                 DEID = PGID /* \_SB_.CAMF.PGID */
                 If (\_SB.ABD.AVBL)
@@ -89005,7 +89005,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (_PS3, 0, NotSerialized)  // _PS3: Power State 3
             {
-                DEID = Buffer (ESNL){}
+                DEID = Buffer (ESNL) {}
                 DVAL = 0x03
                 DEID = PGID /* \_SB_.CAMF.PGID */
                 If (\_SB.ABD.AVBL)
@@ -90030,7 +90030,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             CreateByteField (BUF2, Zero, BSTS)
             CreateByteField (BUF2, One, SLEN)
             CreateWordField (BUF2, 0x02, WRD1)
-            Name (BUF3, Buffer (0x22){})
+            Name (BUF3, Buffer (0x22) {})
             CreateByteField (BUF3, Zero, STAT)
             CreateByteField (BUF3, One, SIZE)
             CreateByteField (BUF1, 0x02, BDAT)
@@ -90052,11 +90052,11 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             CreateByteField (INBU, 0x05, INT3)
             CreateByteField (INBU, 0x06, INT4)
             CreateByteField (INBU, 0x07, INT5)
-            Name (STBF, Buffer (0x0102){})
+            Name (STBF, Buffer (0x0102) {})
             CreateByteField (STBF, Zero, SSTS)
             CreateByteField (STBF, One, STZE)
             CreateField (STBF, 0x10, 0x0800, TXT0)
-            Name (BLBF, Buffer (0x12){})
+            Name (BLBF, Buffer (0x12) {})
             CreateByteField (BLBF, Zero, BLTS)
             CreateByteField (BLBF, One, BLZE)
             CreateField (BLBF, 0x10, 0x80, BLPT)
@@ -90378,10 +90378,10 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                 Return (One)
             }
 
-            Name (LOG0, Buffer (0x0102){})
-            Name (LOG1, Buffer (0x0102){})
-            Name (LOG2, Buffer (0x0102){})
-            Name (LOG3, Buffer (0x0102){})
+            Name (LOG0, Buffer (0x0102) {})
+            Name (LOG1, Buffer (0x0102) {})
+            Name (LOG2, Buffer (0x0102) {})
+            Name (LOG3, Buffer (0x0102) {})
             Name (BFRD, Zero)
             Name (BFWR, Zero)
             Name (BFFG, Zero)
@@ -90460,7 +90460,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     Return (Zero)
                 }
 
-                Name (TEMP, Buffer (0x0102){})
+                Name (TEMP, Buffer (0x0102) {})
                 While (One)
                 {
                     Name (_T_0, 0x00)  // _T_x: Emitted by ASL Compiler, x=0-9, A-Z
@@ -91995,7 +91995,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
                     }
                     ElseIf ((_T_0 == 0x05))
                     {
-                        \_SB.I2C7.BLCK = Buffer (0x20){}
+                        \_SB.I2C7.BLCK = Buffer (0x20) {}
                         Acquire (\_SB.MUT0, 0xFFFF)
                         If ((\_SB.ECOK == One))
                         {
@@ -93963,7 +93963,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
             {
                 "\\_SB.TSC1"
             })
-            Name (DBUF, Buffer (DBFL){})
+            Name (DBUF, Buffer (DBFL) {})
             CreateByteField (DBUF, Zero, STAT)
             CreateByteField (DBUF, 0x02, DVAL)
             CreateField (DBUF, 0x18, 0xA0, DEID)
@@ -93984,7 +93984,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (_PS0, 0, NotSerialized)  // _PS0: Power State 0
             {
-                DEID = Buffer (ESNL){}
+                DEID = Buffer (ESNL) {}
                 DVAL = Zero
                 DEID = PGID /* \_SB_.TSC1.PGID */
                 If (\_SB.ABD.AVBL)
@@ -93995,7 +93995,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Method (_PS3, 0, NotSerialized)  // _PS3: Power State 3
             {
-                DEID = Buffer (ESNL){}
+                DEID = Buffer (ESNL) {}
                 DVAL = 0x03
                 DEID = PGID /* \_SB_.TSC1.PGID */
                 If (\_SB.ABD.AVBL)
@@ -94038,7 +94038,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 0x00000003)
 
             Name (_DSD, Package (0x02)  // _DSD: Device-Specific Data
             {
-                ToUUID ("fa6bd625-9ce8-470d-a2c7-b3ca36c4282e"), 
+                ToUUID ("fa6bd625-9ce8-470d-a2c7-b3ca36c4282e") /* Generic Buttons Device */, 
                 Package (0x04)
                 {
                     Package (0x05)
