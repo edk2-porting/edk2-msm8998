@@ -182,8 +182,8 @@ APRIORI DXE {
     #
     INF EmbeddedPkg/Drivers/VirtualKeyboardDxe/VirtualKeyboardDxe.inf
 
-  INF MSM8998Pkg/Drivers/msm8998Dxe/msm8998Dxe.inf
-  INF MSM8998Pkg/Drivers/SimpleFbDxe/SimpleFbDxe.inf
+  INF Platforms/Msm8998FamilyPkg/Drivers/msm8998Dxe/msm8998Dxe.inf
+  INF Platforms/Msm8998FamilyPkg/Drivers/SimpleFbDxe/SimpleFbDxe.inf
 
     #
     # USB Host Support
@@ -256,7 +256,7 @@ APRIORI DXE {
     #
     # SMBIOS Support
     #
-    INF MSM8998Pkg/Drivers/SmbiosPlatformDxe/SmbiosPlatformDxe.inf
+    INF Platforms/Msm8998FamilyPkg/Drivers/SmbiosPlatformDxe/SmbiosPlatformDxe.inf
     INF MdeModulePkg/Universal/SmbiosDxe/SmbiosDxe.inf
 
     #
@@ -279,7 +279,7 @@ APRIORI DXE {
     INF MdeModulePkg/Universal/DriverHealthManagerDxe/DriverHealthManagerDxe.inf
     INF MdeModulePkg/Universal/BdsDxe/BdsDxe.inf
     INF MdeModulePkg/Application/UiApp/UiApp.inf
-    INF MSM8998Pkg/Drivers/LogoDxe/LogoDxe.inf
+    INF Platforms/Msm8998FamilyPkg/Drivers/LogoDxe/LogoDxe.inf
 
   #
   # Simple Init GUI

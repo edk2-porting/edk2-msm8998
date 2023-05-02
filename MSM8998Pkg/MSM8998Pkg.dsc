@@ -195,8 +195,8 @@
   #
   EmbeddedPkg/Drivers/VirtualKeyboardDxe/VirtualKeyboardDxe.inf
 
-  MSM8998Pkg/Drivers/msm8998Dxe/msm8998Dxe.inf
-  MSM8998Pkg/Drivers/SimpleFbDxe/SimpleFbDxe.inf
+  Platforms/Msm8998FamilyPkg/Drivers/msm8998Dxe/msm8998Dxe.inf
+  Platforms/Msm8998FamilyPkg/Drivers/SimpleFbDxe/SimpleFbDxe.inf
 
   #
   # USB Host Support
@@ -243,7 +243,7 @@
   #
   # SMBIOS Support
   #
-  MSM8998Pkg/Drivers/SmbiosPlatformDxe/SmbiosPlatformDxe.inf
+  Platforms/Msm8998FamilyPkg/Drivers/SmbiosPlatformDxe/SmbiosPlatformDxe.inf
   MdeModulePkg/Universal/SmbiosDxe/SmbiosDxe.inf
 
   #
@@ -266,7 +266,7 @@
       NULL|MdeModulePkg/Library/BootMaintenanceManagerUiLib/BootMaintenanceManagerUiLib.inf
       PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
   }
-  MSM8998Pkg/Drivers/LogoDxe/LogoDxe.inf
+  Platforms/Msm8998FamilyPkg/Drivers/LogoDxe/LogoDxe.inf
 
   ShellPkg/Application/Shell/Shell.inf {
     <LibraryClasses>
