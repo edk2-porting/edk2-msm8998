@@ -5,8 +5,6 @@
 - 中国人请看中文版
 [Chinese version (中文版)](https://github.com/edk2-porting/edk2-msm8998/blob/master/README.zh.md)
 
-- **Note that the MSM8998 platform has basically migrated to another repository>>[edk2-msm](https://github.com/edk2-porting/edk2-msm)**
-
 ## WARNING
 - **Since Windows 22H2 discontinued support for ARMv8.0 CPU, MSM8998 is also affected, which means after version 22H2 it is possible not to boot up.**
 
@@ -29,12 +27,11 @@ QQ chinese group: 697666196 (Main group, full)  996450026 (Second group)  737223
 
 ## Supported devices
 
-1. Moto Z2 Force (nash)
-2. Xiaomi Mi Mix 2   (chiron) 
-3. Xiaomi Mi6    (sagit)
-4. LG V30        (joan)
-5. OnePlus 5T   (dumpling)
-6. OnePlus 5    (cheeseburger)
+1. Xiaomi Mi Mix 2   (chiron) 
+2. Xiaomi Mi6    (sagit)
+3. LG V30        (joan)
+4. OnePlus 5T   (dumpling)
+5. OnePlus 5    (cheeseburger)
 
 ## Supported devices
 

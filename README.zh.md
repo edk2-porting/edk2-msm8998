@@ -27,11 +27,11 @@ QQ中文交流群:
 [项目论坛](https://forum.renegade-project.org/)
 
 ## 已支持的设备
-1. 摩托罗拉 Z2 Force  (nash)
-2. 小米 MIX2         (chiron)
-3. 小米 Mi6          (sagit)
-4. LG V30            (joan)
-5. 一加5t             (dumpling)
+
+1. 小米 MIX2         (chiron)
+2. 小米 Mi6          (sagit)
+3. LG V30            (joan)
+4. 一加5t             (dumpling)
 
 ## 依赖
 
