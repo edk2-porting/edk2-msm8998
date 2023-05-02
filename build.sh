@@ -129,7 +129,7 @@ then	set -e
 	if "${CHINESE}"
 	then	git submodule set-url edk2 https://hub.fastgit.xyz/tianocore/edk2.git
 		git submodule set-url edk2-platforms https://hub.fastgit.xyz/tianocore/edk2-platforms.git
-		git submodule set-url MSM8998Pkg/Library/SimpleInit https://hub.fastgit.xyz/BigfootACA/simple-init.git
+		git submodule set-url Platforms/Msm8998FamilyPkg/Library/simple-init https://hub.fastgit.xyz/BigfootACA/simple-init.git
 		git submodule init;git submodule update --depth 1
 		pushd Common/edk2
 
@@ -143,8 +143,7 @@ then	set -e
 		git submodule init;git submodule update
 		git checkout .gitmodules
 		popd
-		pushd MSM8998Pkg/Library/SimpleInit
-		git submodule set-url libs/lvgl     https://hub.fastgit.xyz/lvgl/lvgl.git
+		pushd Platforms/Msm8998FamilyPkg/Library/simple-init
 		git submodule set-url libs/freetype https://hub.fastgit.xyz/freetype/freetype.git
 		git submodule init;git submodule update
 		popd
@@ -153,7 +152,7 @@ then	set -e
 		pushd Common/edk2
 		git submodule init;git submodule update
 		popd
-		pushd MSM8998Pkg/Library/SimpleInit
+		pushd Platforms/Msm8998FamilyPkg/Library/simple-init
 		git submodule init;git submodule update
 		popd
 	fi
@@ -171,7 +170,7 @@ do	if [ -n "${i}" ]&&[ -d "${i}/Platform" ]
 		break
 	fi
 done
-for i in "${SIMPLE_INIT}" MSM8998Pkg/Library/SimpleInit ./simple-init ../simple-init
+for i in "${SIMPLE_INIT}" Platforms/Msm8998FamilyPkg/Library/simple-init ./simple-init ../simple-init
 do	if [ -n "${i}" ]&&[ -f "${i}/SimpleInit.inc" ]
 	then	_SIMPLE_INIT="$(realpath "${i}")"
 		break
