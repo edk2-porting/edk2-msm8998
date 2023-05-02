@@ -431,7 +431,7 @@ APRIORI DXE {
     INF ShellPkg/DynamicCommand/TftpDynamicCommand/TftpDynamicCommand.inf
 !endif #$(INCLUDE_TFTP_COMMAND)
 
-    INF MSM8998Pkg/Binary/LinuxSimpleMassStorage/LinuxSimpleMassStorage.inf
+    INF Platforms/Msm8998FamilyPkg/LinuxSimpleMassStorage/LinuxSimpleMassStorage.inf
 
     #
     # Bds

@@ -291,7 +291,7 @@
   ShellPkg/DynamicCommand/TftpDynamicCommand/TftpDynamicCommand.inf
 !endif #$(INCLUDE_TFTP_COMMAND)
 
-  MSM8998Pkg/Binary/LinuxSimpleMassStorage/LinuxSimpleMassStorage.inf
+  Platforms/Msm8998FamilyPkg/LinuxSimpleMassStorage/LinuxSimpleMassStorage.inf
 
 [BuildOptions.common]
   # FIXME: msm8998 doesn't support lse instructions, however build fails without it
