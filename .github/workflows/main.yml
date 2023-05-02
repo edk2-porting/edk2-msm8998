@@ -25,7 +25,6 @@ jobs:
           - dumpling
           - cheeseburger
           - joan
-          - nash
           - chiron
           - sagit
 
@@ -33,7 +32,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install requires packages
         run: |
