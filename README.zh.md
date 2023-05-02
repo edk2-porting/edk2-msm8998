@@ -14,24 +14,17 @@
 
 [Discord英语交流群](https://discord.gg/XXBWfag)
 
-QQ中文交流群: 
-
-主群：697666196 (已满，人数小于1900后开放)  
-二群：996450026        
-摸鱼专用群：737223105（需具有一定知识储备并正确回答入群问题）     
-情感交流群：991796138（仅限邀请）       
-核心管理群：766060878（暂不开放）
-
-[项目官网](https://renegade-project.org/)
-
-[项目论坛](https://forum.renegade-project.org/)
+[项目官网](https://renegade-project.tech/)
 
 ## 已支持的设备
 
-1. 小米 MIX2         (chiron)
-2. 小米 Mi6          (sagit)
-3. LG V30            (joan)
-4. 一加5t             (dumpling)
+| 设备                | Target name            |
+|---------------------|------------------------|
+| 一加 5              | cheeseburger           |
+| 一加 5T             | dumpling               |
+| LG V30              | joan                   |
+| 小米 Mi6            | sagit                  |
+| 小米 Mi Mix 2       | chiron                 |
 
 ## 依赖
 

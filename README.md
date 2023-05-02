@@ -19,19 +19,17 @@
 
 [Discord group](https://discord.gg/XXBWfag)
 
-QQ chinese group: 697666196 (Main group, full)  996450026 (Second group)  737223105 (Linux/edk2)
-
-[Project website](https://renegade-project.org/)
-
-[Project forum](https://forum.renegade-project.org/)
+[Project website](https://renegade-project.tech/)
 
 ## Supported devices
 
-1. Xiaomi Mi Mix 2   (chiron) 
-2. Xiaomi Mi6    (sagit)
-3. LG V30        (joan)
-4. OnePlus 5T   (dumpling)
-5. OnePlus 5    (cheeseburger)
+| Device             | Target name            |
+|--------------------|------------------------|
+| OnePlus 5          | cheeseburger           |
+| OnePlus 5T         | dumpling               |
+| LG V30             | joan                   |
+| Xiaomi Mi6         | sagit                  |
+| Xiaomi Mi Mix 2    | chiron                 |
 
 ## Supported devices
 
@@ -49,23 +47,6 @@ sudo apt upgrade
 sudo apt install build-essential uuid-dev iasl git nasm gcc-aarch64-linux-gnu abootimg python3-distutils python3-pil python3-git gettext
 ```
 
-If you are using GCC 11+, modify `edk2/BaseTools/Source/C/Makefiles/header.makefile`
-
-```diff
-diff --git a/BaseTools/Source/C/Makefiles/header.makefile b/BaseTools/Source/C/Makefiles/header.makefile
-index 0df728f..247c917 100644
---- a/BaseTools/Source/C/Makefiles/header.makefile
-+++ b/BaseTools/Source/C/Makefiles/header.makefile
-@@ -92,7 +92,7 @@ BUILD_CFLAGS = -MD -fshort-wchar -fno-strict-aliasing -fwrapv \
- -Wno-unused-result -nostdlib -g
- else
- BUILD_CFLAGS = -MD -fshort-wchar -fno-strict-aliasing -fwrapv \
---fno-delete-null-pointer-checks -Wall -Werror \
-+-fno-delete-null-pointer-checks -Wall \^M
- -Wno-deprecated-declarations -Wno-stringop-truncation -Wno-restrict \
- -Wno-unused-result -nostdlib -g
- endif
-```
 
 ## Building
 
