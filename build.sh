@@ -63,7 +63,7 @@ function _build(){
 		-b "${_MODE}" \
 		||return "$?"
 	gzip -c \
-		< "workspace/Build/MSM8998Pkg/${_MODE}_GCC5/FV/MSM8998PKG_UEFI.fd" \
+		< "workspace/Build/${DEVICE}/${_MODE}_GCC5/FV/MSM8998PKG_UEFI.fd" \
 		> "workspace/uefi-${DEVICE}.img.gz" \
 		||return "$?"
 	cat \
