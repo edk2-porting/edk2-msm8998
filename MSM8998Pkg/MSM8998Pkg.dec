@@ -44,3 +44,8 @@
   gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleHeight|2560|UINT32|0x0000a405
   # RTC information
   gMSM8998PkgTokenSpaceGuid.PcdBootShimInfo1|0xaf000000|UINT64|0x00000a601
+
+  # Device Info
+  gMSM8998PkgTokenSpaceGuid.PcdDeviceVendor|"Qualcomm"|VOID*|0x0000a301
+  gMSM8998PkgTokenSpaceGuid.PcdDeviceProduct|"Snapdragon 835 Device"|VOID*|0x0000a302
+  gMSM8998PkgTokenSpaceGuid.PcdDeviceCodeName|"msm8998"|VOID*|0x0000a303
