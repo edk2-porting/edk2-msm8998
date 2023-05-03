@@ -243,7 +243,7 @@
   #
   # SMBIOS Support
   #
-  Platforms/Msm8998FamilyPkg/Drivers/SmbiosPlatformDxe/SmbiosPlatformDxe.inf
+  Platforms/Msm8998FamilyPkg/Drivers/PlatformSmbiosDxe/PlatformSmbiosDxe.inf
   MdeModulePkg/Universal/SmbiosDxe/SmbiosDxe.inf
 
   #
