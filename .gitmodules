@@ -4,6 +4,6 @@
 [submodule "edk2-platforms"]
 	path = Common/edk2-platforms
 	url = https://github.com/tianocore/edk2-platforms.git
-[submodule "Platforms/Msm8998FamilyPkg/Library/simple-init"]
-	path = Platforms/Msm8998FamilyPkg/Library/simple-init
+[submodule "GPLDrivers/Library/simple-init"]
+	path = GPLDrivers/Library/simple-init
 	url = https://github.com/BigfootACA/simple-init
