@@ -12,7 +12,7 @@
 
 [Defines]
   INF_VERSION                    = 0x00010019
-  BASE_NAME                      = msm8998Lib
+  BASE_NAME                      = ArmPlatformLib
   FILE_GUID                      = 61620091-45BA-4EFF-8F58-F7ABF228CEBC
   MODULE_TYPE                    = BASE
   VERSION_STRING                 = 1.0
@@ -32,12 +32,15 @@
   HobLib
   IoLib
   MemoryAllocationLib
+  PlatformMemoryMapLib
   SerialPortLib
 
 [Sources.common]
-  msm8998.c
-  msm8998Helper.S
-  msm8998Mem.c
+  ArmPlatformLib.c
+  ArmPlatformLibMem.c
+
+[Sources.AArch64]
+  AArch64/ArmPlatformHelper.S
 
 [FixedPcd]
   gArmTokenSpaceGuid.PcdArmPrimaryCore

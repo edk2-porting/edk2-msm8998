@@ -19,8 +19,9 @@
 !include MSM8998Pkg/CommonDsc.dsc.inc
 
 [LibraryClasses.common]
+  PlatformMemoryMapLib|Silicon/QC/Msm8998/QcomPkg/Library/PlatformMemoryMapLib/PlatformMemoryMapLib.inf
   ArmLib|ArmPkg/Library/ArmLib/ArmBaseLib.inf
-  ArmPlatformLib|MSM8998Pkg/Library/msm8998Lib/msm8998Lib.inf
+  ArmPlatformLib|Platforms/Msm8998FamilyPkg/Library/ArmPlatformLib/ArmPlatformLib.inf
   CompilerIntrinsicsLib|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
   CapsuleLib|MdeModulePkg/Library/DxeCapsuleLibNull/DxeCapsuleLibNull.inf
   UefiBootManagerLib|MdeModulePkg/Library/UefiBootManagerLib/UefiBootManagerLib.inf

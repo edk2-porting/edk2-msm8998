@@ -21,16 +21,20 @@
 #include <Library/HobLib.h>
 #include <Library/MemoryAllocationLib.h>
 #include <Library/PcdLib.h>
-
-// This varies by device
-#include <Configuration/DeviceMemoryMap.h>
+#include <Library/PlatformMemoryMapLib.h>
 
 extern UINT64 mSystemMemoryEnd;
 
-VOID BuildMemoryTypeInformationHob(VOID);
+VOID
+BuildMemoryTypeInformationHob (
+  VOID
+  );
 
 STATIC
-VOID InitMmu(IN ARM_MEMORY_REGION_DESCRIPTOR *MemoryTable)
+VOID
+InitMmu (
+  IN ARM_MEMORY_REGION_DESCRIPTOR  *MemoryTable
+  )
 {
 
   VOID *        TranslationTableBase;
@@ -80,9 +84,9 @@ MemoryPeim(IN EFI_PHYSICAL_ADDRESS UefiMemoryBase, IN UINT64 UefiMemorySize)
 {
 
   PARM_MEMORY_REGION_DESCRIPTOR_EX MemoryDescriptorEx =
-      gDeviceMemoryDescriptorEx;
+      GetPlatformMemoryMap();
   ARM_MEMORY_REGION_DESCRIPTOR
-        MemoryDescriptor[MAX_ARM_MEMORY_REGION_DESCRIPTOR_COUNT];
+        MemoryTable[MAX_ARM_MEMORY_REGION_DESCRIPTOR_COUNT];
   UINTN Index = 0;
 
   // Ensure PcdSystemMemorySize has been set
@@ -93,6 +97,7 @@ MemoryPeim(IN EFI_PHYSICAL_ADDRESS UefiMemoryBase, IN UINT64 UefiMemorySize)
     switch (MemoryDescriptorEx->HobOption) {
     case AddMem:
     case AddDev:
+    case HobOnlyNoCacheSetting:
       AddHob(MemoryDescriptorEx);
       break;
     case NoHob:
@@ -100,13 +105,18 @@ MemoryPeim(IN EFI_PHYSICAL_ADDRESS UefiMemoryBase, IN UINT64 UefiMemorySize)
       goto update;
     }
 
+    if (MemoryDescriptorEx->HobOption == HobOnlyNoCacheSetting) {
+      MemoryDescriptorEx++;
+      continue;
+    }
+
   update:
     ASSERT(Index < MAX_ARM_MEMORY_REGION_DESCRIPTOR_COUNT);
 
-    MemoryDescriptor[Index].PhysicalBase = MemoryDescriptorEx->Address;
-    MemoryDescriptor[Index].VirtualBase  = MemoryDescriptorEx->Address;
-    MemoryDescriptor[Index].Length       = MemoryDescriptorEx->Length;
-    MemoryDescriptor[Index].Attributes   = MemoryDescriptorEx->ArmAttributes;
+    MemoryTable[Index].PhysicalBase = MemoryDescriptorEx->Address;
+    MemoryTable[Index].VirtualBase  = MemoryDescriptorEx->Address;
+    MemoryTable[Index].Length       = MemoryDescriptorEx->Length;
+    MemoryTable[Index].Attributes   = MemoryDescriptorEx->ArmAttributes;
 
     Index++;
     MemoryDescriptorEx++;
@@ -114,14 +124,14 @@ MemoryPeim(IN EFI_PHYSICAL_ADDRESS UefiMemoryBase, IN UINT64 UefiMemorySize)
 
   // Last one (terminator)
   ASSERT(Index < MAX_ARM_MEMORY_REGION_DESCRIPTOR_COUNT);
-  MemoryDescriptor[Index].PhysicalBase = 0;
-  MemoryDescriptor[Index].VirtualBase  = 0;
-  MemoryDescriptor[Index].Length       = 0;
-  MemoryDescriptor[Index].Attributes   = 0;
+  MemoryTable[Index].PhysicalBase = 0;
+  MemoryTable[Index].VirtualBase  = 0;
+  MemoryTable[Index].Length       = 0;
+  MemoryTable[Index].Attributes   = 0;
 
   // Build Memory Allocation Hob
   DEBUG((EFI_D_INFO, "Configure MMU In \n"));
-  InitMmu(MemoryDescriptor);
+  InitMmu(MemoryTable);
   DEBUG((EFI_D_INFO, "Configure MMU Out \n"));
 
   if (FeaturePcdGet(PcdPrePiProduceMemoryTypeInformationHob)) {
