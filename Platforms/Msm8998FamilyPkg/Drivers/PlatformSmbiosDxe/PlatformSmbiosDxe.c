@@ -30,6 +30,7 @@
 #include <Library/UefiBootServicesTableLib.h>
 #include <Library/UefiRuntimeServicesTableLib.h>
 #include <Library/PrintLib.h>
+#include <Library/FdtParserLib.h>
 
 /***********************************************************************
         SMBIOS data definition  TYPE0  BIOS Information
@@ -799,8 +800,8 @@ SMBIOS_TABLE_TYPE19 mMemArrMapInfoType19 = {
   0xFFFFFFFF,  // EndingAddress;
   0,           // MemoryArrayHandle; // Should match SMBIOS_TABLE_TYPE16.Handle, initialized at runtime, refer to PhyMemArrayInfoUpdateSmbiosType16()
   1,           // PartitionWidth;
-  0x080000000, // ExtendedStartingAddress;  // not used
-  0x100000000, // ExtendedEndingAddress;    // not used
+  0,           // ExtendedStartingAddress;  // not used
+  0,           // ExtendedEndingAddress;    // not used
 };
 CHAR8 *mMemArrMapInfoType19Strings[] = {
   NULL
@@ -939,6 +940,14 @@ PlatformSmbiosDriverEntryPoint (
   )
 {
   EFI_SMBIOS_HANDLE SmbiosHandle;
+  UINTN Node = 0;
+  UINTN MemoryBase = 0;
+  UINTN MemorySize = 0;
+  VOID *Fdt;
+  CHAR8 *Serial;
+
+  Fdt = GetFdt ();
+  ASSERT(Fdt != NULL);
 
   // TYPE0 BIOS Information
   AsciiSPrint (mBiosVersion, sizeof (mBiosVersion), "edk2-msm8998 %s", (CHAR16 *)FixedPcdGetPtr(PcdFirmwareVersionString));
@@ -995,9 +1004,12 @@ PlatformSmbiosDriverEntryPoint (
   LogSmbiosData ((EFI_SMBIOS_TABLE_HEADER*)&mMemDevInfoType17, mMemDevInfoType17Strings, NULL);
 
   // TYPE19 Memory Array Map Information
-  mMemArrMapInfoType19.ExtendedStartingAddress = PcdGet64 (PcdSystemMemoryBase);
-  mMemArrMapInfoType19.ExtendedEndingAddress = PcdGet64 (PcdSystemMemoryBase) + PcdGet64 (PcdSystemMemorySize);
-  LogSmbiosData ((EFI_SMBIOS_TABLE_HEADER*)&mMemArrMapInfoType19, mMemArrMapInfoType19Strings, NULL);
+  while (fdt_get_memory(Fdt, (int)Node, (uint64_t*)&MemoryBase, (uint64_t*)&MemorySize)) {
+    mMemArrMapInfoType19.StartingAddress = MemoryBase;
+    mMemArrMapInfoType19.EndingAddress = MemoryBase + MemorySize;
+    LogSmbiosData ((EFI_SMBIOS_TABLE_HEADER *)&mMemArrMapInfoType19, mMemArrMapInfoType19Strings, NULL);
+    Node++;
+  }
 
   // TYPE32 Boot Information
   LogSmbiosData ((EFI_SMBIOS_TABLE_HEADER*)&mBootInfoType32, mBootInfoType32Strings, NULL);

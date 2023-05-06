@@ -30,12 +30,14 @@
   ArmPkg/ArmPkg.dec
   ArmPlatformPkg/ArmPlatformPkg.dec
   MSM8998Pkg/MSM8998Pkg.dec
+  SimpleInit.dec
 
 [LibraryClasses]
   DebugLib
   HobLib
   ArmMmuLib
   ArmPlatformLib
+  SimpleInitLib
 
 [Guids]
   gEfiMemoryTypeInformationGuid
@@ -46,6 +48,7 @@
 [FixedPcd]
   gArmTokenSpaceGuid.PcdSystemMemoryBase
   gArmTokenSpaceGuid.PcdSystemMemorySize
+  gSimpleInitTokenSpaceGuid.PcdDeviceTreeStore
 
 [Depex]
   TRUE
