@@ -89,7 +89,7 @@
 
   gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString|L"Alpha"
 
-  gSimpleInitTokenSpaceGuid.PcdDeviceTreeStore|0xE0000000
+  gSimpleInitTokenSpaceGuid.PcdDeviceTreeStore|0x83300000
   gArmTokenSpaceGuid.PcdSystemMemoryBase|0x80000000
 
   # We bring up eight cores here!
