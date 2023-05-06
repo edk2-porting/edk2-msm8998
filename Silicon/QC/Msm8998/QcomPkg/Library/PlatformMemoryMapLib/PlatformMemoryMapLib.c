@@ -39,15 +39,15 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"Log Buffer",        0x9FFF7000, 0x00008000,  AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, WRITE_BACK_XN},
     {"Info Blk",          0x9FFFF000, 0x00001000,  AddMem, SYS_MEM, SYS_MEM_CAP,  RtData, WRITE_BACK_XN},
 
-    #ifdef MEMORY_4G
     /* 4GiB Memory */
-    {"RAM Partition",     0xA0000000, 0xDE4C0000,  AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
-    #else
-    /* 5.6GiB Memory */
-    {"RAM Partition",     0x40000000, 0x40000000,  AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
-    {"RAM Partition",     0xA0000000, 0x60000000,  AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
-    {"RAM Partition",     0x100000000,0xBD8C0000,  AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
-    #endif
+    {"RAM Partition",     0xA0000000, 0xDE4C0000,  Mem4G , SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
+    /* 6GiB Memory */
+    {"RAM Partition",     0x40000000, 0x40000000,  Mem6G , SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
+    {"RAM Partition",     0xA0000000, 0x60000000,  Mem6G , SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
+    {"RAM Partition",     0x100000000,0xBD8C0000,  Mem6G , SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
+    /* 8GiB Memory */
+    {"RAM Partition",     0xA0000000, 0xE0000000,  Mem8G , SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
+    {"RAM Partition",     0x180000000,0xFCCC0000,  Mem8G , SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
 
     /* Other memory regions */
     {"IMEM Base",         0x14680000, 0x00040000,  NoHob,  MMAP_IO, INITIALIZED,  Conv,   NS_DEVICE},
