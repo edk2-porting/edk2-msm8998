@@ -41,9 +41,6 @@ function _build(){
 	[ -d "${WORKSPACE}" ]||mkdir "${WORKSPACE}"
 	set -x
 	make -C "${_EDK2}/BaseTools" -j "$(nproc)"||exit "$?"
-	if "${GEN_ACPI}" && ! iasl -ve "MSM8998Pkg/AcpiTables/${DEVICE}/Dsdt.asl"
-	then echo "iasl failed with ${?}" >&2;return 1
-	fi
 	# based on the instructions from edk2-platform
 	rm -f "${OUTDIR}/boot-${DEVICE}.img" uefi_img "uefi-${DEVICE}.img.gz" "uefi-${DEVICE}.img.gz-dtb"
 	case "${MODE}" in
@@ -53,6 +50,9 @@ function _build(){
 	if [ -f "devices/${DEVICE}.conf" ]
 	then source "devices/${DEVICE}.conf"
 	else source "devices/default.conf"
+	fi
+	if "${GEN_ACPI}" && ! iasl -ve "${DSDT_FILE}"
+	then echo "iasl failed with ${?}" >&2;return 1
 	fi
 	build \
 		-s \
