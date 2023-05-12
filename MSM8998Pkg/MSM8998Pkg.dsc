@@ -56,7 +56,7 @@
   # SimpleFbDxe
   FrameBufferBltLib|MdeModulePkg/Library/FrameBufferBltLib/FrameBufferBltLib.inf
 
-  SerialPortLib|MSM8998Pkg/Library/FrameBufferSerialPortLib/FrameBufferSerialPortLib.inf
+  SerialPortLib|Platforms/Msm8998FamilyPkg/Library/FrameBufferSerialPortLib/FrameBufferSerialPortLib.inf
 
   PlatformBootManagerLib|MSM8998Pkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
   MemoryInitPeiLib|MSM8998Pkg/Library/MemoryInitPeiLib/PeiMemoryAllocationLib.inf
