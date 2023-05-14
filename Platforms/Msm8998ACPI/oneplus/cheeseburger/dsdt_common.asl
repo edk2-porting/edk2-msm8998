@@ -15,8 +15,6 @@ Name (SIDM, 0x0000000FFFFF00FF) // Holds the Modem Support bit field
 Name (SOSN, 0x000003F2741EA3B7) // SoC serial number
 Name (RMTB, 0x85E00000)         // RemoteFS Shared Memory base
 Name (RMTX, 0x00200000)         // RemoteFS Shared Memory size
-Name (FUCB, 0x94500000)         // MBA subsystem load address
-Name (FUCX, 0x00200000)         // MBA subsystem size
 Name (RFMB, 0x00000000)         // RFSA MPSS Shared Memory base
 Name (RFMS, 0x00000000)         // RFSA MPSS Shared Memory size
 Name (RFAB, 0x00000000)         // RFSA ADSP Shared Memory base

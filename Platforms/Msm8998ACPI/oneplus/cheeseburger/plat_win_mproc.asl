@@ -4,6 +4,13 @@ Scope (\_SB.ADSP)
     {
         Return (0x0F)
     }
+    Method (SSRE, 0, NotSerialized)
+    {
+        Return (Package (0x01)
+        {
+            Zero
+        })
+    }
 }
 
 Scope (\_SB.AMSS)
@@ -11,5 +18,12 @@ Scope (\_SB.AMSS)
     Method (_STA, 0, NotSerialized)  // _STA: Status
     {
         Return (0x0F)
+    }
+    Method (SSRE, 0, NotSerialized)
+    {
+        Return (Package (0x01)
+        {
+            Zero
+        })
     }
 }

@@ -30,15 +30,15 @@ Device (PILC)
             Package ()
             {
                 // Represents MBA subsystem
-                0x00000000, // Address
-                0x00000000, // Length
+                0x94500000, // Address
+                0x00200000, // Length
                 ToUUID ("BA58766D-ABF2-4402-88D7-90AB243F6C77")
             }
         })
 
         // Copy ACPI globals for Address for this subsystem into above package for use in driver
-        Store (FUCB, Index(DeRefOf(Index (PKGG, 0)), 0))
-        Store (FUCX, Index(DeRefOf(Index (PKGG, 0)), 1))
+        Store (RMTB, Index(DeRefOf(Index (PKGG, 0)), 0))
+        Store (RMTX, Index(DeRefOf(Index (PKGG, 0)), 1))
         
         Return (PKGG)
     }
@@ -257,6 +257,10 @@ Device (ADSP)
     }
 }
 
+
+//
+// AMSS Driver: Used for loading the modem binaries
+//
 Device (AMSS)
 {
     Name (_CCA, Zero)  // _CCA: Cache Coherency Attribute
@@ -278,23 +282,92 @@ Device (AMSS)
         Return (One)
     }
 
-    Method (RPEM, 0, NotSerialized)
+    //
+    // RPEC - RPE Clients Information
+    //
+    Method (RPEC, 0, NotSerialized)
     {
-        If ((\_SB.SOID == 0x0124))
+        If ((\_SB.SOID == 0x013F))
         {
-            Return (Package (0x01)
+            Return (Package (0x02)
             {
-                0x03
+                ToUUID ("2eaf5c83-4fa9-49b3-a247-bfdd66e5655b") /* SMD AMSS client GUID */, 
+                ToUUID ("0c25c0b1-f2b9-4688-b403-51cd34e8bb23") /* G-Link AMSS client GUID */
             })
         }
         Else
         {
-            Return (Package (0x01)
+            Return (Package (0x03)
             {
-                One
+                ToUUID ("2eaf5c83-4fa9-49b3-a247-bfdd66e5655b") /* SMD AMSS client GUID */, 
+                ToUUID ("0c25c0b1-f2b9-4688-b403-51cd34e8bb23") /* G-Link AMSS client GUID */, 
+                Buffer (0x10)
+                {
+                    /* 0000 */  0x9C, 0x00, 0x4C, 0x18, 0xCC, 0x42, 0xFF, 0x83,  // ..L..B..
+                    /* 0008 */  0x87, 0x25, 0x13, 0xA5, 0x7C, 0x32, 0x01, 0xEF   // .%..|2..
+                }
             })
         }
     }
+    Method (CHLD)
+    {
+        Return (Package (0x02)
+        {
+            Package (0x05)
+            {
+                "QCMS\\QCOM00EA", 
+                0x12, 
+                Zero, 
+                One, 
+                One
+            }, 
+
+            Package (0x05)
+            {
+                "QCMS\\QCOM00F7", 
+                0x2B, 
+                Zero, 
+                One, 
+                0x02
+            }
+        })
+    }
+
+    // Flag to enable modem shutdown (1 is enabled, 0 is disabled)
+    Method (SHUT, 0, NotSerialized)
+    {
+        // First argument SMD client GUID and Second argument points that dump collection does not need unlock from TZ
+        Return (Package (0x01)
+        {
+            One
+        })
+    }
+
+    Method (RPEM, 0, NotSerialized)
+    {
+        // Modem shutdown is handled by SUBSYS on this platform
+        Return (Package (0x01)
+        {
+            0x03
+        })
+    }
+
+    //
+    // Mappings from performance percentage to thermal mitigation level
+    //
+    Method (VLMT, 0x0, NotSerialized) {
+        Name (RBUF, Package ()
+        {
+            //           Percent(<=), TM level,
+            //           -----        ----------
+            Package () { 33,          3 },
+            Package () { 66,          2 },
+            Package () { 99,          1 },
+            Package () { 100,         0 }
+        })
+        Return (RBUF)  
+    }
+
 
     Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
     {
@@ -325,6 +398,9 @@ Device (AMSS)
     Include("wcnss_wlan.asl")
 }
 
+
+// QMI Service manager
+//
 Device (QSM)
 {
     Name (_HID, "QCOM00BD")  // _HID: Hardware ID
@@ -336,19 +412,59 @@ Device (QSM)
         \_SB.PILC, 
         \_SB.RPEN
     })
-    Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+
+    //
+    // DHMS client memory config
+    //
+    Method (_CRS, 0, NotSerialized)  
     {
         Name (RBUF, ResourceTemplate ()
         {
-            Memory32Fixed (ReadWrite,
-                0x95100000,         // Address Base
-                0x00600000,         // Address Length
-                )
+            // UEFI memory bank for DHMS clients
+            // Note: must match order of flagged for carveout packages below
+            Memory32Fixed(ReadWrite, 0x95100000, 0x00600000) 
         })
-        Return (RBUF) /* \_SB_.QSM_._CRS.RBUF */
+        Return (RBUF) 
     }
+
+    //
+    // DHMS client config
+    //
+    Name (DHMS, Package (0x01)
+    {
+        Package (0x03)
+        {
+            // Subsystem Name
+            "Diag", 
+
+            Buffer (0x10)
+            {
+                /* 0000 */  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // ........
+                /* 0008 */  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00   // ........
+            }, 
+
+            // Max CMA size, 0 = Use carveout
+            Zero
+        }
+    })
+
+    //
+    // QSMG - QSM General Platform-specific Configuration
+    //
+    Method (QSMG, 0, NotSerialized)
+    {
+        Return (Package (0x01)
+        {
+            1
+        })
+    }
+
 }
 
+//
+// Subsys Dependency Device
+//    Subsys devices that use QCCI should have an dependency on this
+//
 Device (SSDD)
 {
     Name (_HID, "QCOM00D6")  // _HID: Hardware ID
@@ -360,6 +476,9 @@ Device (SSDD)
     })
 }
 
+//
+// PDSR device
+//
 Device (PDSR)
 {
     Name (_HID, "QCOM00D3")  // _HID: Hardware ID
@@ -372,6 +491,9 @@ Device (PDSR)
     })
 }
 
+//
+// TFTP Device
+//
 Device (TFTP)
 {
     Name (_HID, "QCOM00FE")  // _HID: Hardware ID
