@@ -246,7 +246,7 @@ APRIORI DXE {
   INF EmbeddedPkg/Drivers/DtPlatformDxe/DtPlatformDxe.inf
 
   FILE FREEFORM = 25462CDA-221F-47DF-AC1D-259CFAA4E326 {
-    SECTION RAW = MSM8998Pkg/FdtBlob/msm8998-oneplus-dumpling.dtb
+    SECTION RAW = Platforms/Msm8998Pkg/Device/oneplus/dumpling/DeviceTree/Android/Android-dumpling.dtb
   }
 
     #
