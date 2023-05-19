@@ -10,12 +10,6 @@
 #
 ##
 
-################################################################################
-#
-# Defines Section - statements that will be processed to create a Makefile.
-#
-################################################################################
-
 [BuildOptions]
   RVCT:RELEASE_*_*_CC_FLAGS  = -DMDEPKG_NDEBUG
   GCC:RELEASE_*_*_CC_FLAGS  = -DMDEPKG_NDEBUG
@@ -30,7 +24,5 @@
   PlatformMemoryMapLib|Silicon/QC/Msm8998/QcomPkg/Library/PlatformMemoryMapLib/PlatformMemoryMapLib.inf
   PlatformPeiLib|Silicon/QC/Msm8998/QcomPkg/Library/PlatformPeiLib/PlatformPeiLib.inf
 
-!include MSM8998Pkg/CommonDsc.dsc.inc
-# Temporarily, we are currently Refactor
 !include Silicon/QC/Msm8998/QcomPkg/QcomPkg.dsc.inc
 !include Platforms/Msm8998FamilyPkg/Msm8998FamilyPkg.dsc.inc
