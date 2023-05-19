@@ -1,34 +1,12 @@
-#
-#  Copyright (c) 2018, Linaro Limited. All rights reserved.
-#
-#  This program and the accompanying materials
-#  are licensed and made available under the terms and conditions of the BSD License
-#  which accompanies this distribution.  The full text of the license may be found at
-#  http://opensource.org/licenses/bsd-license.php
-#
-#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
-#
-
 [Defines]
   DEC_SPECIFICATION              = 0x0001001a
   PACKAGE_NAME                   = MSM8998Pkg
   PACKAGE_GUID                   = 7eb1de03-3910-4d1d-84ce-c17b53636b9a
   PACKAGE_VERSION                = 0.1
 
-################################################################################
-#
-# Include Section - list of Include Paths that are provided by this package.
-#                   Comments are used for Keywords and Module Types.
-#
-# Supported Module Types:
-#  BASE SEC PEI_CORE PEIM DXE_CORE DXE_DRIVER DXE_RUNTIME_DRIVER DXE_SMM_DRIVER DXE_SAL_DRIVER UEFI_DRIVER UEFI_APPLICATION
-#
-################################################################################
 [Includes.common]
-  #Include                        # Root include for the package
-  Platforms/Msm8998FamilyPkg/Include
-
+  Include                        # Root include for the package
+  
 [Guids.common]
   gMSM8998PkgTokenSpaceGuid        = { 0x99a14446, 0xaad7, 0xe460, {0xb4, 0xe5, 0x1f, 0x79, 0xaa, 0xa4, 0x93, 0xfd } }
 

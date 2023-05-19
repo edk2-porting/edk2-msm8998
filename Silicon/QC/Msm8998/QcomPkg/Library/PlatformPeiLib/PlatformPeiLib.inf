@@ -29,7 +29,7 @@
   MdePkg/MdePkg.dec
   MdeModulePkg/MdeModulePkg.dec
   EmbeddedPkg/EmbeddedPkg.dec
-  MSM8998Pkg/MSM8998Pkg.dec
+  Platforms/Msm8998FamilyPkg/Msm8998FamilyPkg.dec
 
 [LibraryClasses]
   DebugLib
