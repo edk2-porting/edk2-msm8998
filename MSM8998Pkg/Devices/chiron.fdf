@@ -310,4 +310,4 @@ READ_LOCK_STATUS   = TRUE
         }
     }
 
-!include MSM8998Pkg/CommonFdf.fdf.inc
+!include Platforms/Msm8998FamilyPkg/Msm8998FamilyPkg.fdf.inc

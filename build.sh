@@ -91,7 +91,7 @@ function _clean(){ rm --one-file-system --recursive --force ./workspace boot-*.i
 function _distclean(){ if [ -d .git ];then git clean -xdf;else _clean;fi; }
 
 cd "$(dirname "$0")"||exit 1
-[ -f MSM8998Pkg/MSM8998Pkg.dsc ]||_error "cannot find MSM8998Pkg/MSM8998Pkg.dsc"
+[ -f Platforms/Msm8998Pkg/msm8998.dsc ]||_error "cannot find Platforms/Msm8998Pkg/msm8998.dsc"
 typeset -l DEVICE
 typeset -u MODE
 DEVICE=""

@@ -9,12 +9,9 @@
   SKUID_IDENTIFIER               = DEFAULT
   FLASH_DEFINITION               = MSM8998Pkg/Devices/sagit.fdf
 
-!include MSM8998Pkg/MSM8998Pkg.dsc
+!include Platforms/Msm8998Pkg/msm8998.dsc
 
 [PcdsFixedAtBuild.common]
-  # System Memory (4.6GB)
-  gArmTokenSpaceGuid.PcdSystemMemoryBase|0x80000000
-  gArmTokenSpaceGuid.PcdSystemMemorySize|0x12D8C0000
 
   gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1080
   gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|1920
