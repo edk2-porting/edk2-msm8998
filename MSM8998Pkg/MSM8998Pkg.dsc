@@ -58,17 +58,17 @@
 
   SerialPortLib|Platforms/Msm8998FamilyPkg/Library/FrameBufferSerialPortLib/FrameBufferSerialPortLib.inf
 
-  PlatformBootManagerLib|MSM8998Pkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
-  MemoryInitPeiLib|MSM8998Pkg/Library/MemoryInitPeiLib/PeiMemoryAllocationLib.inf
-  PlatformPeiLib|MSM8998Pkg/Library/PlatformPeiLib/PlatformPeiLib.inf
+  PlatformBootManagerLib|Platforms/Msm8998FamilyPkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
+  MemoryInitPeiLib|Platforms/Msm8998FamilyPkg/MemoryInitPei/MemoryInitPeiLib.inf
+  PlatformPeiLib|Silicon/QC/Msm8998/QcomPkg/Library/PlatformPeiLib/PlatformPeiLib.inf
 
 [LibraryClasses.common.SEC]
   PrePiLib|EmbeddedPkg/Library/PrePiLib/PrePiLib.inf
   ExtractGuidedSectionLib|EmbeddedPkg/Library/PrePiExtractGuidedSectionLib/PrePiExtractGuidedSectionLib.inf
   HobLib|EmbeddedPkg/Library/PrePiHobLib/PrePiHobLib.inf
   MemoryAllocationLib|EmbeddedPkg/Library/PrePiMemoryAllocationLib/PrePiMemoryAllocationLib.inf
-  MemoryInitPeiLib|MSM8998Pkg/Library/MemoryInitPeiLib/PeiMemoryAllocationLib.inf
-  PlatformPeiLib|MSM8998Pkg/Library/PlatformPeiLib/PlatformPeiLib.inf
+  MemoryInitPeiLib|Platforms/Msm8998FamilyPkg/MemoryInitPei/MemoryInitPeiLib.inf
+  PlatformPeiLib|Silicon/QC/Msm8998/QcomPkg/Library/PlatformPeiLib/PlatformPeiLib.inf
   PrePiHobListPointerLib|ArmPlatformPkg/Library/PrePiHobListPointerLib/PrePiHobListPointerLib.inf
 
 ################################################################################
@@ -181,7 +181,7 @@
 
   EmbeddedPkg/RealTimeClockRuntimeDxe/RealTimeClockRuntimeDxe.inf {
      <LibraryClasses>
-	  RealTimeClockLib|MSM8998Pkg/Library/VirtualRealTimeClockLib/VirtualRealTimeClockLib.inf
+	  RealTimeClockLib|Platforms/Msm8998FamilyPkg/Library/VirtualRealTimeClockLib/VirtualRealTimeClockLib.inf
   }
 
   MdeModulePkg/Universal/ReportStatusCodeRouter/RuntimeDxe/ReportStatusCodeRouterRuntimeDxe.inf
