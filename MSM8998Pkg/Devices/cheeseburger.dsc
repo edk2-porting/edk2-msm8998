@@ -9,7 +9,7 @@
   SKUID_IDENTIFIER               = DEFAULT
   FLASH_DEFINITION               = MSM8998Pkg/Devices/cheeseburger.fdf
 
-!include MSM8998Pkg/MSM8998Pkg.dsc
+!include Platforms/Msm8998Pkg/Msm8998.dsc
 
 [PcdsFixedAtBuild.common]
   # System Memory (4GB)

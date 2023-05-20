@@ -16,7 +16,7 @@
 #
 ################################################################################
 
-!include MSM8998Pkg/CommonDsc.dsc.inc
+!include Platforms/Msm8998FamilyPkg/Msm8998FamilyPkg.dsc.inc
 
 [LibraryClasses.common]
   PlatformMemoryMapLib|Silicon/QC/Msm8998/QcomPkg/Library/PlatformMemoryMapLib/PlatformMemoryMapLib.inf
