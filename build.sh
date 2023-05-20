@@ -68,7 +68,7 @@ function _build(){
 		||return "$?"
 	cat \
 		"workspace/uefi-${DEVICE}.img.gz" \
-		"device_specific/${DEVICE}.dtb" \
+		"Platforms/Msm8998Pkg/Device/${VENDOR_NAME}/${DEVICE}/DeviceTreeBlob/Android/Android-${DEVICE}.dtb" \
 		> "workspace/uefi-${DEVICE}.img.gz-dtb" \
 		||return "$?"
 	python3 ./mkbootimg.py \
