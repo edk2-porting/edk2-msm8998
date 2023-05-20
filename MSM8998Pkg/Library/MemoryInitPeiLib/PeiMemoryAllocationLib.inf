@@ -29,7 +29,7 @@
   EmbeddedPkg/EmbeddedPkg.dec
   ArmPkg/ArmPkg.dec
   ArmPlatformPkg/ArmPlatformPkg.dec
-  MSM8998Pkg/MSM8998Pkg.dec
+  Platforms/Msm8998FamilyPkg/Msm8998FamilyPkg.dec
   SimpleInit.dec
 
 [LibraryClasses]

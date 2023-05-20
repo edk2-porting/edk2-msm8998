@@ -33,7 +33,7 @@
   MdeModulePkg/MdeModulePkg.dec
   MdePkg/MdePkg.dec
   ShellPkg/ShellPkg.dec
-  MSM8998Pkg/MSM8998Pkg.dec
+  Platforms/Msm8998FamilyPkg/Msm8998FamilyPkg.dec
   SimpleInit.dec
 
 [LibraryClasses]
