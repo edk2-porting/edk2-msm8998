@@ -16,9 +16,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 3)
         Include("dsdt_common.asl")
         Include("cust_dsdt.asl") 
 
-        // what the fuck
-        Include("../Common/wtf.asl")
-
         Include("usb.asl")
         
         // Thermal Zone devices depend on PEP
@@ -27,7 +24,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 3)
 		//
         // Hardware Notifications
 		//
-        Include("cust_hwn.asl")
+        Include("../Common/cust_hwn.asl")
 
 		//
         // Buttons

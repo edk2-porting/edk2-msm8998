@@ -6444,41 +6444,6 @@ Device (GPU0)
         Return (RBUF) /* \_SB_.GPU0.DITH.RBUF */
     }
 
-    Name (BLOK, Zero)
-    Name (BLBK, Zero)
-    Method (BLCP, 1, NotSerialized)
-    {
-        Name (RBUF, Buffer (0x08){})
-        CreateDWordField (RBUF, Zero, PKHR)
-        PKHR = Zero
-        CreateDWordField (RBUF, 0x04, EOP)
-        EOP = Zero
-        If ((Arg0 <= 0x64))
-        {
-            BLBK = ToInteger (Arg0)
-            If ((BLOK == One))
-            {
-                Acquire (\_SB.MUT0, 0xFFFF)
-            }
-            ElseIf (Acquire (\_SB.MUT0, 0x0014))
-            {
-                Return (RBUF) /* \_SB_.GPU0.BLCP.RBUF */
-            }
-
-            If ((\_SB.ECOK == One))
-            {
-                \_SB.I2C7.BSTA = Zero
-                \_SB.I2C7.BLEN = One
-                \_SB.I2C7.DAT1 = ToInteger (Arg0)
-                \_SB.I2C7.APIB = \_SB.I2C7.BUF1
-            }
-
-            Release (\_SB.MUT0)
-        }
-
-        Return (RBUF) /* \_SB_.GPU0.BLCP.RBUF */
-    }
-
     Method (ROM2, 3, NotSerialized)
     {
         Name (PCFG, Buffer (One)
