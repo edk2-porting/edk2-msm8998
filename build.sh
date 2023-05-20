@@ -7,7 +7,7 @@ DEVICES=(
 	sagit
 	joan
 	cheeseburger
-        dumpling
+    dumpling
 )
 #####################################
 
@@ -28,7 +28,7 @@ function _help(){
 	echo "	--outputdir, -O:         output folder."
 	echo "	--help, -h:              show this help."
 	echo
-	echo "MainPage: https://github.com/lumingyu0423/edk2-MSM8998"
+	echo "MainPage: https://github.com/edk2-porting/edk2-msm8998"
 	exit "${1}"
 }
 
@@ -47,9 +47,9 @@ function _build(){
 		RELEASE)_MODE=RELEASE;;
 		*)_MODE=DEBUG;;
 	esac
-	if [ -f "devices/${DEVICE}.conf" ]
-	then source "devices/${DEVICE}.conf"
-	else source "devices/default.conf"
+	if [ -f "Config/${DEVICE}.conf" ]
+	then source "Config/${DEVICE}.conf"
+	else source "Config/default.conf"
 	fi
 	if "${GEN_ACPI}" && ! iasl -ve "${DSDT_FILE}"
 	then echo "iasl failed with ${?}" >&2;return 1
