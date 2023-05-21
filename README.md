@@ -30,7 +30,7 @@
 | LG V30             | joan                   |
 | Xiaomi Mi6         | sagit                  |
 | Xiaomi Mi Mix 2    | chiron                 |
-
+| HTC U11+           | HTC_OCMDTWL            |
 ## Supported devices
 
 [Windows Status Matrix](https://renegade-project.org/#/en/windows/state-frame.html)
