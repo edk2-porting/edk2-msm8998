@@ -8,6 +8,7 @@ DEVICES=(
 	joan
 	cheeseburger
         dumpling
+        htc_ocmdtwl
 )
 #####################################
 
