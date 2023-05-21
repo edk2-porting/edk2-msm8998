@@ -57,7 +57,7 @@ Include("../Common/bam.asl")
 Include("buses.asl")
 
 // MPROC Drivers (PIL Driver and Subsystem Drivers)
-Include("../Common/win_mproc.asl")
+Include("win_mproc.asl")
 Include("../Common/HoyaSmmu.asl")
 Include("graphics.asl")
 

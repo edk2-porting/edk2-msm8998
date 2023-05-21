@@ -17,8 +17,8 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"PIL_REGION",        0x8AB00000, 0x0B415000,  AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, UNCACHED_UNBUFFERED_XN},
     {"HLOS 3",            0x95F15000, 0x074EB000,  AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
     #else
-    {"PIL_REGION",        0x8AB00000, 0x0AD15000,  AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, UNCACHED_UNBUFFERED_XN},
-    {"HLOS 3",            0x95800000, 0x07C00000,  AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
+    {"PIL_REGION",        0x8AB00000, 0x0B315000,  AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, UNCACHED_UNBUFFERED_XN},
+    {"HLOS 3",            0x95E15000, 0x075EB000,  AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
     #endif
     {"Display Reserved",  0x9D400000, 0x02400000,  AddMem, MEM_RES, WRITE_THROUGH,MaxMem, WRITE_THROUGH},
     {"DBI Dump",          0x9D330000, 0x000D0000,  NoHob,  MMAP_IO, INITIALIZED,  Conv,   NS_DEVICE},

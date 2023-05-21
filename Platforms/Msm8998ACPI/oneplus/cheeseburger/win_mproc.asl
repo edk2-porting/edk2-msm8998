@@ -422,7 +422,7 @@ Device (QSM)
         {
             // UEFI memory bank for DHMS clients
             // Note: must match order of flagged for carveout packages below
-            Memory32Fixed(ReadWrite, 0x95100000, 0x00600000) 
+            Memory32Fixed(ReadWrite, 0x95815000, 0x00600000) 
         })
         Return (RBUF) 
     }
