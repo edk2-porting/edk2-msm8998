@@ -16,8 +16,8 @@
   gArmTokenSpaceGuid.PcdSystemMemoryBase|0x80000000
   gArmTokenSpaceGuid.PcdSystemMemorySize|0x12D8C0000
 
-  gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1080
-  gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|1920
+  gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1440
+  gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|2880
 
   # RTC information
   gMSM8998PkgTokenSpaceGuid.PcdBootShimInfo1|0xaf000000|UINT64|0x00000a601
