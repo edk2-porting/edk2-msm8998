@@ -20,46 +20,67 @@ Device (ADC1)
         \_SB.SPMI, 
         \_SB.PMIC
     })
-    Name (_HID, "QCOM0020")  // _HID: Hardware ID
+
+    /*----------------------------------------------------------------------------
+     * HID
+     * -------------------------------------------------------------------------*/
+    Name (_HID, "QCOM0020")
     Alias (\_SB.PSUB, _SUB)
-    Name (_UID, Zero)  // _UID: Unique ID
-    Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+    Name (_UID, Zero)
+
+    Method (_CRS)
     {
+        /*----------------------------------------------------------------------------
+         * ADC Resources
+         * -------------------------------------------------------------------------*/
         Name (INTB, ResourceTemplate ()
         {
-            GpioInt (Edge, ActiveHigh, ExclusiveAndWake, PullUp, 0x0000,
-                "\\_SB.PM01", 0x00, ResourceConsumer, ,
-                RawDataBuffer (0x01)  // Vendor Data
-                {
-                    0x02
-                })
-                {   // Pin list
-                    0x0188
-                }
-            GpioInt (Edge, ActiveHigh, ExclusiveAndWake, PullUp, 0x0000,
-                "\\_SB.PM01", 0x00, ResourceConsumer, ,
-                RawDataBuffer (0x01)  // Vendor Data
-                {
-                    0x02
-                })
-                {   // Pin list
-                    0x01A0
-                }
+            // VAdc - EOC
+            // ID = {slave id}{perph id}{int} = {0}{0011 0001}{000} = 0x188
+            GpioInt(Edge, ActiveHigh, ExclusiveAndWake, PullUp, 0, "\\_SB.PM01", , , , RawDataBuffer(){0x2}) {32} // 0x188 - PM_INT__VADC_HC1_USR__EOC
+
+            // VAdc TM - All interrupts
+            // ID = {slave id}{perph id}{int} = {0}{0011 0100}{000} = 0x1A0
+            GpioInt(Edge, ActiveHigh, ExclusiveAndWake, PullUp, 0, "\\_SB.PM01", , , , RawDataBuffer(){0x2}) {40} // 0x1A0 - PM_INT__VADC_HC7_BTM__THR
+
         })
-        Name (NAM, Buffer (0x0A)
-        {
-            "\\_SB.SPMI"
-        })
-        Name (VUSR, Buffer (0x0C)
-        {
-            /* 0000 */  0x8E, 0x13, 0x00, 0x01, 0x00, 0xC1, 0x02, 0x00,  // ........
-            /* 0008 */  0x31, 0x01, 0x00, 0x00                           // 1...
-        })
-        Name (VBTM, Buffer (0x0C)
-        {
-            /* 0000 */  0x8E, 0x13, 0x00, 0x01, 0x00, 0xC1, 0x02, 0x00,  // ........
-            /* 0008 */  0x34, 0x01, 0x00, 0x00                           // 4...
-        })
+    /*
+     * SPMI peripherals
+     */
+    Name(NAM, Buffer() {"\\_SB.SPMI"})
+
+    // VAdc
+    Name(VUSR, Buffer()
+    {
+        0x8E,       // SPB Descriptor
+        0x13, 0x00, // Length including NAM above
+        0x01,       // +0x00 SPB Descriptor Revision
+        0x00,       // +0x01 Resource Source Index
+        0xC1,       // +0x02 Bus type - vendor defined values are in the range 0xc0-0xff
+        0x02,       // +0x03 Consumer + controller initiated
+        0x00, 0x31, // +0x04 Type specific flags . Slave id, Upper8 bit address
+        0x01,       // +0x06 Type specific revision
+        0x00, 0x00  // +0x07 type specific data length
+                    // +0x09 - 0xd bytes for NULL-terminated NAM
+                    // Length = 0x13
+    })
+
+    // VAdc TM
+    Name(VBTM, Buffer()
+    {
+        0x8E,       // SPB Descriptor
+        0x13, 0x00, // Length including NAM above
+        0x01,       // +0x00 SPB Descriptor Revision
+        0x00,       // +0x01 Resource Source Index
+        0xC1,       // +0x02 Bus type - vendor defined values are in the range 0xc0-0xff
+        0x02,       // +0x03 Consumer + controller initiated
+        0x00, 0x34, // +0x04 Type specific flags . Slave id, Upper8 bit address
+        0x01,       // +0x06 Type specific revision
+        0x00, 0x00  // +0x07 type specific data length
+                    // +0x09 - 0xd bytes for NULL-terminated NAM
+                    // Length = 0x13
+    })
+
         Concatenate (VUSR, NAM, Local1)
         Concatenate (VBTM, NAM, Local2)
         Concatenate (Local1, Local2, Local3)
