@@ -7,7 +7,8 @@ DEVICES=(
 	sagit
 	joan
 	cheeseburger
-    dumpling
+        dumpling
+        htc_ocmdtwl
 )
 #####################################
 
