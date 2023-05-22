@@ -25,6 +25,7 @@
 | LG V30              | joan                   |
 | 小米 Mi6            | sagit                  |
 | 小米 Mi Mix 2       | chiron                 |
+| HTC U11+            | htc_ocmdtwl            |
 
 ## 依赖
 

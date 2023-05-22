@@ -30,6 +30,7 @@
 | LG V30             | joan                   |
 | Xiaomi Mi6         | sagit                  |
 | Xiaomi Mi Mix 2    | chiron                 |
+| HTC U11+           | htc_ocmdtwl            |
 
 ## Supported devices
 
