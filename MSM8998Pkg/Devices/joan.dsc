@@ -12,13 +12,9 @@
 !include Platforms/Msm8998Pkg/Msm8998.dsc
 
 [BuildOptions.common]
-  GCC:*_*_AARCH64_CC_FLAGS = -DLG_PIL_FIXED=1 -DMEMORY_4G=1
-
+  GCC:*_*_AARCH64_CC_FLAGS = -DLG_PIL_FIXED=1
 
 [PcdsFixedAtBuild.common]
-  # System Memory (4GB)
-  gArmTokenSpaceGuid.PcdSystemMemoryBase|0x40000000
-  gArmTokenSpaceGuid.PcdSystemMemorySize|0xF0000000
 
   gSimpleInitTokenSpaceGuid.PcdGuiDefaultDPI|550
 

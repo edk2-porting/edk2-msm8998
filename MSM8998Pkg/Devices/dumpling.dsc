@@ -12,8 +12,6 @@
 !include Platforms/Msm8998Pkg/Msm8998.dsc
 
 [PcdsFixedAtBuild.common]
-  # System Memory (4GB)
-  gArmTokenSpaceGuid.PcdSystemMemorySize|0xF0000000
 
   gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1080
   gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|2160
