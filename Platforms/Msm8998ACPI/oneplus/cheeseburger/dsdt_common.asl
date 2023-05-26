@@ -33,7 +33,7 @@ Device (HAL0)
 // Storage - UFS/SD 
 //
 Include("../Common/ufs.asl")
-Include("../Common/sdc.asl")
+//Include("../Common/sdc.asl")
 
 //
 // ASL Bridge Device
