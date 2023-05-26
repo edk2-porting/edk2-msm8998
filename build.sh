@@ -46,7 +46,7 @@ function _build(){
 	rm -f "${OUTDIR}/boot-${DEVICE}.img" uefi_img "uefi-${DEVICE}.img.gz" "uefi-${DEVICE}.img.gz-dtb"
 	case "${MODE}" in
 		RELEASE)_MODE=RELEASE;;
-		*)_MODE=DEBUG;;
+		DEBUG)_MODE=DEBUG;;
 	esac
 	if [ -f "Config/${DEVICE}.conf" ]
 	then source "Config/${DEVICE}.conf"

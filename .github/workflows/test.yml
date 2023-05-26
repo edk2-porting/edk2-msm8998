@@ -41,7 +41,7 @@ jobs:
 
       - name: Build device ${{ matrix.device }}
         run: |
-          ./build.sh --device ${{ matrix.device }} -r MODE
+          ./build.sh --device ${{ matrix.device }} -r DEBUG
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2
