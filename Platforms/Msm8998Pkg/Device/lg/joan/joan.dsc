@@ -21,9 +21,6 @@
   gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1440
   gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|2880
 
-  # RTC information
-  gMSM8998PkgTokenSpaceGuid.PcdBootShimInfo1|0xaf000000|UINT64|0x00000a601
-
   # Device Info
   gMSM8998PkgTokenSpaceGuid.PcdDeviceVendor|"LG"
   gMSM8998PkgTokenSpaceGuid.PcdDeviceProduct|"V30"
