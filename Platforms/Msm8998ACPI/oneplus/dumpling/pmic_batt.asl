@@ -2,6 +2,102 @@
 // ACPI device definitions, configuration and look-up tables.
 //
 
+//
+//PMIC Type-C Controler Driver (PMICTCC) Driver
+//
+Device (PTCC)
+{
+    Name (_HID, "QCOM00EB")  // _HID: Hardware ID
+    Alias (\_SB.PSUB, _SUB)
+    Name (_DEP, Package (One)  // _DEP: Dependencies
+    {
+        \_SB.PMIC
+    })
+    Method (_STA, 0, NotSerialized)  // _STA: Status
+    {
+        Return (Zero)
+    }
+
+    Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings
+    {
+        Name (RBUF, ResourceTemplate ()
+        {
+            GpioInt (Edge, ActiveHigh, SharedAndWake, PullNone, 0x0000,
+                "\\_SB.PM02", 0x00, ResourceConsumer, ,
+                )
+                {   // Pin list
+                    0x009F
+                }
+            GpioInt (Edge, ActiveHigh, SharedAndWake, PullNone, 0x0000,
+                "\\_SB.PM02", 0x00, ResourceConsumer, ,
+                )
+                {   // Pin list
+                    0x00BE
+                }
+            GpioInt (Edge, ActiveHigh, SharedAndWake, PullNone, 0x0000,
+                "\\_SB.PM02", 0x00, ResourceConsumer, ,
+                )
+                {   // Pin list
+                    0x00BD
+                }
+            GpioInt (Edge, ActiveHigh, SharedAndWake, PullNone, 0x0000,
+                "\\_SB.PM02", 0x00, ResourceConsumer, ,
+                )
+                {   // Pin list
+                    0x00BC
+                }
+            GpioInt (Edge, ActiveHigh, SharedAndWake, PullNone, 0x0000,
+                "\\_SB.PM02", 0x00, ResourceConsumer, ,
+                )
+                {   // Pin list
+                    0x00BB
+                }
+            GpioInt (Edge, ActiveHigh, SharedAndWake, PullNone, 0x0000,
+                "\\_SB.PM02", 0x00, ResourceConsumer, ,
+                )
+                {   // Pin list
+                    0x00BA
+                }
+            GpioInt (Edge, ActiveHigh, SharedAndWake, PullNone, 0x0000,
+                "\\_SB.PM02", 0x00, ResourceConsumer, ,
+                )
+                {   // Pin list
+                    0x00B9
+                }
+            GpioInt (Edge, ActiveHigh, SharedAndWake, PullNone, 0x0000,
+                "\\_SB.PM02", 0x00, ResourceConsumer, ,
+                )
+                {   // Pin list
+                    0x00B8
+                }
+            GpioInt (Edge, ActiveHigh, Exclusive, PullUp, 0x0000,
+                "\\_SB.PM02", 0x00, ResourceConsumer, ,
+                )
+                {   // Pin list
+                    0x0089
+                }
+        })
+        Return (RBUF) /* \_SB_.PTCC._CRS.RBUF */
+    }
+
+    Method (PIEN, 0, NotSerialized)
+    {
+        Name (CFG0, Package (0x09)
+        {
+            "CCStChg", 
+            "MsgRxDiscd", 
+            "MsgTxDiscd", 
+            "MsgTxFailed", 
+            "MsgRecv", 
+            "MsgSent", 
+            "SgnlRecv", 
+            "SgnlSent", 
+            "OtgOc"
+        })
+        Return (CFG0) /* \_SB_.PTCC.PIEN.CFG0 */
+    }
+}
+
 Device (BAT1)
 {
     Name (_HID, "BQB1380")  // _HID: Hardware ID // BQ27411
@@ -33,7 +129,7 @@ Device (BCL1)
     })
     Method (_STA, 0, NotSerialized)  // _STA: Status
     {
-        Return (0x0B)
+        Return (0x0F)
     }
 
     Method (_CRS, 0, NotSerialized)  // _CRS: Current Resource Settings

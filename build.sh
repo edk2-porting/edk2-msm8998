@@ -8,6 +8,7 @@ DEVICES=(
 	joan
 	cheeseburger
         dumpling
+        htc_ocmdtwl
 )
 #####################################
 
@@ -28,7 +29,7 @@ function _help(){
 	echo "	--outputdir, -O:         output folder."
 	echo "	--help, -h:              show this help."
 	echo
-	echo "MainPage: https://github.com/lumingyu0423/edk2-MSM8998"
+	echo "MainPage: https://github.com/edk2-porting/edk2-msm8998"
 	exit "${1}"
 }
 
@@ -45,11 +46,11 @@ function _build(){
 	rm -f "${OUTDIR}/boot-${DEVICE}.img" uefi_img "uefi-${DEVICE}.img.gz" "uefi-${DEVICE}.img.gz-dtb"
 	case "${MODE}" in
 		RELEASE)_MODE=RELEASE;;
-		*)_MODE=DEBUG;;
+		DEBUG)_MODE=DEBUG;;
 	esac
-	if [ -f "devices/${DEVICE}.conf" ]
-	then source "devices/${DEVICE}.conf"
-	else source "devices/default.conf"
+	if [ -f "Config/${DEVICE}.conf" ]
+	then source "Config/${DEVICE}.conf"
+	     source "Config/default.conf"
 	fi
 	if "${GEN_ACPI}" && ! iasl -ve "${DSDT_FILE}"
 	then echo "iasl failed with ${?}" >&2;return 1
@@ -68,7 +69,7 @@ function _build(){
 		||return "$?"
 	cat \
 		"workspace/uefi-${DEVICE}.img.gz" \
-		"device_specific/${DEVICE}.dtb" \
+		"Platforms/Msm8998Pkg/Device/${VENDOR_NAME}/${DEVICE}/DeviceTreeBlob/Android/Android-${DEVICE}.dtb" \
 		> "workspace/uefi-${DEVICE}.img.gz-dtb" \
 		||return "$?"
 	python3 ./mkbootimg.py \
@@ -91,7 +92,7 @@ function _clean(){ rm --one-file-system --recursive --force ./workspace boot-*.i
 function _distclean(){ if [ -d .git ];then git clean -xdf;else _clean;fi; }
 
 cd "$(dirname "$0")"||exit 1
-[ -f MSM8998Pkg/MSM8998Pkg.dsc ]||_error "cannot find MSM8998Pkg/MSM8998Pkg.dsc"
+[ -f Platforms/Msm8998Pkg/Msm8998.dsc ]||_error "cannot find Platforms/Msm8998Pkg/Msm8998.dsc"
 typeset -l DEVICE
 typeset -u MODE
 DEVICE=""

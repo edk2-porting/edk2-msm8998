@@ -24,7 +24,7 @@
   EmbeddedPkg/EmbeddedPkg.dec
   MdePkg/MdePkg.dec
   MdeModulePkg/MdeModulePkg.dec
-  MSM8998Pkg/MSM8998Pkg.dec
+  Platforms/Msm8998FamilyPkg/Msm8998FamilyPkg.dec
   SimpleInit.dec
 
 [LibraryClasses]

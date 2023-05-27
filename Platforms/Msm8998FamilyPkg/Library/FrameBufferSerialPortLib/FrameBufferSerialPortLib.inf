@@ -12,7 +12,7 @@
 [Packages]
   MdePkg/MdePkg.dec
   ArmPkg/ArmPkg.dec
-  MSM8998Pkg/MSM8998Pkg.dec
+  Platforms/Msm8998FamilyPkg/Msm8998FamilyPkg.dec
 
 [LibraryClasses]
   ArmLib

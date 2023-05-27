@@ -1,0 +1,51 @@
+#
+#  Copyright (c) 2018, Linaro Limited. All rights reserved.
+#
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution.  The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.php
+#
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+
+[Defines]
+  DEC_SPECIFICATION              = 0x0001001a
+  PACKAGE_NAME                   = MSM8998Pkg
+  PACKAGE_GUID                   = 7eb1de03-3910-4d1d-84ce-c17b53636b9a
+  PACKAGE_VERSION                = 0.1
+
+################################################################################
+#
+# Include Section - list of Include Paths that are provided by this package.
+#                   Comments are used for Keywords and Module Types.
+#
+# Supported Module Types:
+#  BASE SEC PEI_CORE PEIM DXE_CORE DXE_DRIVER DXE_RUNTIME_DRIVER DXE_SMM_DRIVER DXE_SAL_DRIVER UEFI_DRIVER UEFI_APPLICATION
+#
+################################################################################
+[Includes.common]
+  Include                        # Root include for the package
+
+[Guids.common]
+  gMSM8998PkgTokenSpaceGuid        = { 0x99a14446, 0xaad7, 0xe460, {0xb4, 0xe5, 0x1f, 0x79, 0xaa, 0xa4, 0x93, 0xfd } }
+
+[Protocols]
+  gEFIDroidKeypadDeviceProtocolGuid = { 0xb27625b5, 0x0b6c, 0x4614, { 0xaa, 0x3c, 0x33, 0x13, 0xb5, 0x1d, 0x36, 0x46 } }
+
+[PcdsFixedAtBuild.common]
+  # Simple FrameBuffer
+  gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x9d400000|UINT32|0x0000a400
+  gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferWidth|1440|UINT32|0x0000a401
+  gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|2560|UINT32|0x0000a402
+  gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32|UINT32|0x0000a403
+  gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleWidth|1440|UINT32|0x0000a404
+  gMSM8998PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleHeight|2560|UINT32|0x0000a405
+  # RTC information
+  gMSM8998PkgTokenSpaceGuid.PcdBootShimInfo1|0xaf000000|UINT64|0x00000a601
+
+  # Device Info
+  gMSM8998PkgTokenSpaceGuid.PcdDeviceVendor|"Qualcomm"|VOID*|0x0000a301
+  gMSM8998PkgTokenSpaceGuid.PcdDeviceProduct|"Snapdragon 835 Device"|VOID*|0x0000a302
+  gMSM8998PkgTokenSpaceGuid.PcdDeviceCodeName|"msm8998"|VOID*|0x0000a303
