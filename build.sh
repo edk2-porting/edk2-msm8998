@@ -50,7 +50,7 @@ function _build(){
 	esac
 	if [ -f "Config/${DEVICE}.conf" ]
 	then source "Config/${DEVICE}.conf"
-	else source "Config/default.conf"
+	     source "Config/default.conf"
 	fi
 	if "${GEN_ACPI}" && ! iasl -ve "${DSDT_FILE}"
 	then echo "iasl failed with ${?}" >&2;return 1
