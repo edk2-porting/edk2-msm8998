@@ -7,7 +7,7 @@
   SUPPORTED_ARCHITECTURES        = AARCH64
   BUILD_TARGETS                  = DEBUG|RELEASE
   SKUID_IDENTIFIER               = DEFAULT
-  FLASH_DEFINITION               = MSM8998Pkg/Devices/joan.fdf
+  FLASH_DEFINITION               = Platforms/Msm8998Pkg/Device/lg/joan/joan.fdf
 
 !include Platforms/Msm8998Pkg/Msm8998.dsc
 

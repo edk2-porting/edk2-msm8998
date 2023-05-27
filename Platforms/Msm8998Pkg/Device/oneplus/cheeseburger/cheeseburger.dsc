@@ -7,7 +7,7 @@
   SUPPORTED_ARCHITECTURES        = AARCH64
   BUILD_TARGETS                  = DEBUG|RELEASE
   SKUID_IDENTIFIER               = DEFAULT
-  FLASH_DEFINITION               = MSM8998Pkg/Devices/cheeseburger.fdf
+  FLASH_DEFINITION               = Platforms/Msm8998Pkg/Device/oneplus/cheeseburger/cheeseburger.fdf
 
 !include Platforms/Msm8998Pkg/Msm8998.dsc
 
