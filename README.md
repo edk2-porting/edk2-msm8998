@@ -72,7 +72,12 @@ fastboot boot boot_DEVICE.img
 
 (DEVICE is the codename of your phone.)
 
-## Credits
-
-
-
+## Acknowledgements
+- [Gustave Monce](https://github.com/gus33000) and his [SurfaceDuoPkg](https://github.com/WOA-Project/SurfaceDuoPkg)
+- [WOA-Project](https://github.com/WOA-Project)
+- [EFIDroid](https://github.com/efidroid)
+- [Ben (Bingxing) Wang](https://github.com/imbushuo/)
+- [Lumia950XLPkg](https://github.com/WOA-Project/Lumia950XLPkg)
+- BigfootACA and his [SimpleInit](https://github.com/BigfootACA/simple-init) and [LinuxSimpleMassStorage](https://github.com/BigfootACA/linux-simple-mass-storage)
+- fxsheep and his original edk2-sagit
+- All the developers and members of [Renegade Project](https://github.com/edk2-porting/) for offering efforts, equipments, valuable documents and more
