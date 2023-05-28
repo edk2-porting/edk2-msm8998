@@ -72,7 +72,7 @@ Device (USB0)
     //In order to use windbg debugging, USB is disabled
     Method (_STA, 0, NotSerialized)  // _STA: Status
     {
-        Return (Zero)
+        Return (0X0F)
     }
 
     Method (CCVL, 0, NotSerialized)
