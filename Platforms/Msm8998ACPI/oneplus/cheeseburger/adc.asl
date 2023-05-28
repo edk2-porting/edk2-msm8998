@@ -37,11 +37,11 @@ Device (ADC1)
         {
             // VAdc - EOC
             // ID = {slave id}{perph id}{int} = {0}{0011 0001}{000} = 0x188
-            GpioInt(Edge, ActiveHigh, ExclusiveAndWake, PullUp, 0, "\\_SB.PM01", , , , RawDataBuffer(){0x2}) {32} // 0x188 - PM_INT__VADC_HC1_USR__EOC
+            GpioInt(Edge, ActiveHigh, ExclusiveAndWake, PullUp, 0, "\\_SB.PM01", , , , RawDataBuffer(){0x2}) {0x188} // 0x188 - PM_INT__VADC_HC1_USR__EOC
 
             // VAdc TM - All interrupts
             // ID = {slave id}{perph id}{int} = {0}{0011 0100}{000} = 0x1A0
-            GpioInt(Edge, ActiveHigh, ExclusiveAndWake, PullUp, 0, "\\_SB.PM01", , , , RawDataBuffer(){0x2}) {40} // 0x1A0 - PM_INT__VADC_HC7_BTM__THR
+            GpioInt(Edge, ActiveHigh, ExclusiveAndWake, PullUp, 0, "\\_SB.PM01", , , , RawDataBuffer(){0x2}) {0x1A0} // 0x1A0 - PM_INT__VADC_HC7_BTM__THR
 
         })
     /*
