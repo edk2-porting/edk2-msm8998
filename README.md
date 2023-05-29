@@ -5,13 +5,29 @@
 - 中国人请看中文版
 [Chinese version (中文版)](https://github.com/edk2-porting/edk2-msm8998/blob/master/README.zh.md)
 
-## WARNING
-- **Since Windows 22H2 discontinued support for ARMv8.0 CPU, MSM8998 is also affected, which means after version 22H2 it is possible not to boot up.**
+## Warning
+- Starting with build 25188 ARMv8.1 Atomics are now required. Build 25169 to 25183 will BSOD on boot (KMODE_EXCEPTION_NOT_HANDLED). 
+- Builds 25163 and earlier will successfully boot.
 
 - **DO NOT EVER TRY TO PORT IT TO *SONY, SAMSUNG* DEVICES**
 
 - **YOUR UFS WILL BE WIPED CLEAN!!!**
 
+## Supported devices
+
+| Device                   | Target name            | ACPI Support	|
+|--------------------------|------------------------|---------------|
+| OnePlus 5                | cheeseburger           | ✅            |
+| OnePlus 5T               | dumpling               | ✅            |
+| LG V30                   | joan                   | ✅            |
+| Xiaomi Mi6               | sagit                  | ✅            |
+| Xiaomi Mi Mix 2          | chiron                 | ✅            |
+| Essential Phone PH-1     | mata                   | ✅            |
+| HTC U11+                 | htc_ocmdtwl            | ❌            |
+
+## Supported devices
+
+[Windows Status Matrix](https://renegade-project.org/#/en/windows/state-frame.html)
 
 ## Resources
 
@@ -20,21 +36,6 @@
 [Discord group](https://discord.gg/XXBWfag)
 
 [Project website](https://renegade-project.tech/)
-
-## Supported devices
-
-| Device             | Target name            |
-|--------------------|------------------------|
-| OnePlus 5          | cheeseburger           |
-| OnePlus 5T         | dumpling               |
-| LG V30             | joan                   |
-| Xiaomi Mi6         | sagit                  |
-| Xiaomi Mi Mix 2    | chiron                 |
-| HTC U11+           | htc_ocmdtwl            |
-
-## Supported devices
-
-[Windows Status Matrix](https://renegade-project.org/#/en/windows/state-frame.html)
 
 ## Dependencies
 
@@ -48,13 +49,12 @@ sudo apt upgrade
 sudo apt install build-essential uuid-dev iasl git nasm gcc-aarch64-linux-gnu abootimg python3-distutils python3-pil python3-git gettext
 ```
 
-
 ## Building
 
 1.Clone this project 
 
 ```bash
-git clone https://github.com/edk2-porting/edk2-msm8998.git --depth=1
+git clone https://github.com/edk2-porting/edk2-msm8998.git
 cd edk2-msm8998
 ```
 
@@ -73,7 +73,7 @@ fastboot boot boot_DEVICE.img
 (DEVICE is the codename of your phone.)
 
 ## Acknowledgements
-- [Gustave Monce](https://github.com/gus33000) and his [SurfaceDuoPkg](https://github.com/WOA-Project/SurfaceDuoPkg)
+- [Gustave Monce](https://github.com/gus33000) and his [SurfaceDuoPkg](https://github.com/WOA-Project/SurfaceDuoPkg) and [Lumia950XLPkg](https://github.com/WOA-Project/Lumia950XLPkg)
 - [WOA-Project](https://github.com/WOA-Project)
 - [EFIDroid](https://github.com/efidroid)
 - [Ben (Bingxing) Wang](https://github.com/imbushuo/)

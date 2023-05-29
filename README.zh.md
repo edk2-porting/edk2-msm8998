@@ -3,10 +3,29 @@
 **在编译该项目前，请确定你有一定的Linux常识，以下步骤已经是最简单的方法，如果你看不懂，那么请使用Releases中的编译成品**
 
 ## 警告
-- **22H2是ARMv8.0系统的终点，高通835也受到影响，这意味着Windows将不再在更高版本中启动**
+- 从内部版本 25188 开始，现在需要 ARMv8.1 。内部版本 25169 到 25183 将在启动时出现蓝屏 （KMODE_EXCEPTION_NOT_HANDLED）
+- 内部版本 25163 及更早版本将成功启动。
+
 - **请勿尝试移植到任何索尼和谷歌设备上**
 
 - **你的UFS会被清空!!!**
+
+## 已支持的设备
+
+| 设备                     | Target name            | ACPI Support	|
+|--------------------------|------------------------|---------------|
+| 一加 5                   | cheeseburger           | ✅            |
+| 一加 5T                  | dumpling               | ✅            |
+| LG V30                   | joan                   | ✅            |
+| 小米 Mi6                 | sagit                  | ✅            |
+| 小米 Mi Mix 2            | chiron                 | ✅            |
+| Essential Phone PH-1     | mata                   | ✅            |
+| HTC U11+                 | htc_ocmdtwl            | ❌            |
+
+## 支持的设备
+
+[Windows Status Matrix](https://renegade-project.org/#/en/windows/state-frame.html)
+
 
 ## 资源
 
@@ -15,17 +34,6 @@
 [Discord英语交流群](https://discord.gg/XXBWfag)
 
 [项目官网](https://renegade-project.tech/)
-
-## 已支持的设备
-
-| 设备                | Target name            |
-|---------------------|------------------------|
-| 一加 5              | cheeseburger           |
-| 一加 5T             | dumpling               |
-| LG V30              | joan                   |
-| 小米 Mi6            | sagit                  |
-| 小米 Mi Mix 2       | chiron                 |
-| HTC U11+            | htc_ocmdtwl            |
 
 ## 依赖
 
@@ -44,7 +52,7 @@ sudo apt install build-essential uuid-dev iasl git nasm gcc-aarch64-linux-gnu ab
 1.克隆此项目（默认使用国内fastgit镜像加速）
 
 ```bash
-git clone https://hub.fastgit.org/edk2-porting/edk2-msm8998.git --depth=1
+git clone https://hub.fastgit.org/edk2-porting/edk2-msm8998.git
 cd edk2-msm8998
 ```
 
@@ -63,7 +71,7 @@ fastboot boot boot_DEVICE.img
 (请将DEVICE替换成你的设备代号.)
 
 ## 致谢
-- [Gustave Monce](https://github.com/gus33000) and his [SurfaceDuoPkg](https://github.com/WOA-Project/SurfaceDuoPkg)
+- [Gustave Monce](https://github.com/gus33000) and his [SurfaceDuoPkg](https://github.com/WOA-Project/SurfaceDuoPkg) and [Lumia950XLPkg](https://github.com/WOA-Project/Lumia950XLPkg)
 - [WOA-Project](https://github.com/WOA-Project)
 - [EFIDroid](https://github.com/efidroid)
 - [Ben (Bingxing) Wang](https://github.com/imbushuo/)
