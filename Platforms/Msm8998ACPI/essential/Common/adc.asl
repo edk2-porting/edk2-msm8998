@@ -430,4 +430,4 @@ Device (ADC1)
     }
 }
 
-Include("cust_adc.asl")
+Include("../Common/cust_adc.asl")

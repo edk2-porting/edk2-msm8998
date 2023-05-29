@@ -19,7 +19,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 3)
         Include("usb.asl")
         
         // Thermal Zone devices depend on PEP
-        Include("cust_thermal_zones.asl")
+        Include("../Common/cust_thermal_zones.asl")
         
 		//
         // Hardware Notifications
@@ -29,7 +29,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 3)
 		//
         // Buttons
 		//
-        Include("cust_arraybutton.asl")
+        Include("../Common/cust_arraybutton.asl")
 
         //
         // Touch
@@ -62,6 +62,6 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 3)
         //
         // ADC driver
         //
-        Include("adc.asl")
+        Include("../Common/adc.asl")
     }
 }

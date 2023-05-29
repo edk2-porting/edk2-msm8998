@@ -232,7 +232,7 @@ ThermalZone (TZ32)
 {
     Name (_HID, "QCOM00CF")  // _HID: Hardware ID
     Name (_UID, Zero)  // _UID: Unique ID
-    Name (_TZD, Package (0x08)  // _TZD: Thermal Zone Devices
+    Name (_TZD, Package (0x07)  // _TZD: Thermal Zone Devices
     {
         \_SB.SYSM.APC0.CL0.CPU0, 
         \_SB.SYSM.APC0.CL0.CPU1, 
@@ -240,8 +240,7 @@ ThermalZone (TZ32)
         \_SB.SYSM.APC0.CL0.CPU3, 
         \_SB.PEP0, 
         \_SB.GPU0.MON0, 
-        \_SB.GPU0, 
-        \_SB.BAT1
+        \_SB.GPU0
     })
     Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
     {
@@ -291,7 +290,7 @@ ThermalZone (TZ36)
 {
     Name (_HID, "QCOM009E")  // _HID: Hardware ID
     Name (_UID, Zero)  // _UID: Unique ID
-    Name (_TZD, Package (0x09)  // _TZD: Thermal Zone Devices
+    Name (_TZD, Package (0x08)  // _TZD: Thermal Zone Devices
     {
         \_SB.SYSM.APC0.CL0.CPU0, 
         \_SB.SYSM.APC0.CL0.CPU1, 
@@ -300,8 +299,7 @@ ThermalZone (TZ36)
         \_SB.SYSM.APC0.CL1.CPU4, 
         \_SB.SYSM.APC0.CL1.CPU5, 
         \_SB.SYSM.APC0.CL1.CPU6, 
-        \_SB.SYSM.APC0.CL1.CPU7, 
-        \_SB.BAT1
+        \_SB.SYSM.APC0.CL1.CPU7
     })
     Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
     {
@@ -326,11 +324,10 @@ ThermalZone (TZ37)
 {
     Name (_HID, "QCOM009E")  // _HID: Hardware ID
     Name (_UID, One)  // _UID: Unique ID
-    Name (_TZD, Package (0x03)  // _TZD: Thermal Zone Devices
+    Name (_TZD, Package (0x02)  // _TZD: Thermal Zone Devices
     {
         \_SB.PEP0, 
-        \_SB.GPU0, 
-        \_SB.BAT1
+        \_SB.GPU0
     })
     Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
     {
@@ -394,7 +391,7 @@ ThermalZone (TZ99)
 {
     Name (_HID, "QCOM00B4")  // _HID: Hardware ID
     Name (_UID, 0x64)  // _UID: Unique ID
-    Name (_TZD, Package (0x0E)  // _TZD: Thermal Zone Devices
+    Name (_TZD, Package (0x0D)  // _TZD: Thermal Zone Devices
     {
         \_SB.SYSM.APC0.CL0.CPU0, 
         \_SB.SYSM.APC0.CL0.CPU1, 
@@ -408,8 +405,7 @@ ThermalZone (TZ99)
         \_SB.AMSS, 
         \_SB.GPU0.MON0, 
         \_SB.GPU0, 
-        \_SB.COEX, 
-        \_SB.BAT1
+        \_SB.COEX
     })
     Method (_PSV, 0, NotSerialized)  // _PSV: Passive Temperature
     {
