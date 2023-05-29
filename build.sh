@@ -2,13 +2,13 @@
 
 ##### Change this to add device #####
 DEVICES=(
-	nash
-	chiron
-	sagit
-	joan
-	cheeseburger
-        dumpling
-        htc_ocmdtwl
+    mata
+    chiron
+    sagit
+    joan
+    cheeseburger
+    dumpling
+    htc_ocmdtwl
 )
 #####################################
 
