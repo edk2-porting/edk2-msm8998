@@ -49,14 +49,14 @@ sudo apt install build-essential uuid-dev iasl git nasm gcc-aarch64-linux-gnu ab
 
 **不建议使用Ubuntu 18.04版本，请使用Ubuntu 20.04或以上版本**
 
-1.克隆此项目（默认使用国内fastgit镜像加速）
+1.克隆此项目（默认使用国内镜像加速）
 
 ```bash
-git clone https://hub.fastgit.org/edk2-porting/edk2-msm8998.git
+git clone https://hub.nuaa.cf/edk2-porting/edk2-msm8998.git
 cd edk2-msm8998
 ```
 
-2.编译此项目（默认使用fastgit加速submodule克隆，若不需要请删去 `--chinese`）
+2.编译此项目（默认使用国内镜像加速submodule克隆，若不需要请删去 `--chinese`）
 
 ```bash
 bash build.sh --chinese --device DEVICE
