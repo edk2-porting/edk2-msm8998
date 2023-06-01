@@ -37,7 +37,7 @@
   gEmbeddedTokenSpaceGuid.PcdAndroidFastbootUsbVendorId|0x18d1
   gEmbeddedTokenSpaceGuid.PcdAndroidFastbootUsbProductId|0xd00d
 
-  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString|L"Alpha"
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString|L"1.0.0"
   gEfiMdeModulePkgTokenSpaceGuid.PcdResetOnMemoryTypeInformationChange|FALSE
   # Make VariableRuntimeDxe work at emulated non-volatile variable mode.
   gEfiMdeModulePkgTokenSpaceGuid.PcdEmuVariableNvModeEnable|TRUE
