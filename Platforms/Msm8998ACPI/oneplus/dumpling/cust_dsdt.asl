@@ -1,5 +1,5 @@
-Include("cust_camera.asl")
-Include("cust_sensors.asl")
+Include("../Common/cust_camera.asl")
+Include("../Common/cust_sensors.asl")
 
 OperationRegion (CP17, SystemMemory, 0x0357F000, 0x10)
 Field (CP17, DWordAcc, NoLock, Preserve)

@@ -16,10 +16,10 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 3)
         Include("dsdt_common.asl")
         Include("cust_dsdt.asl") 
 
-        Include("usb.asl")
+        Include("../Common/usb.asl")
         
         // Thermal Zone devices depend on PEP
-        Include("cust_thermal_zones.asl")
+        Include("../Common/cust_thermal_zones.asl")
         
 		//
         // Hardware Notifications
@@ -29,7 +29,7 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 3)
 		//
         // Buttons
 		//
-        Include("cust_arraybutton.asl")
+        Include("../Common/cust_arraybutton.asl")
 
         //
         // Touch

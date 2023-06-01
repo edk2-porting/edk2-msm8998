@@ -19,8 +19,4 @@ Device (SEN1)
         Return ("8998")
     }
 
-    Method (PLAT, 0, NotSerialized)
-    {
-        Return ("CHEESEBURGER") // oneplus 5 
-    }
 }

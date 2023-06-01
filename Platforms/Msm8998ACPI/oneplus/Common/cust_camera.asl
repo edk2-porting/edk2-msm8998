@@ -6,7 +6,7 @@
 //
 //==============================================================================
 
-Include("cust_camera_exasoc.asl")
+Include("../Common/cust_camera_exasoc.asl")
 
 Device (MPCS)
 {
