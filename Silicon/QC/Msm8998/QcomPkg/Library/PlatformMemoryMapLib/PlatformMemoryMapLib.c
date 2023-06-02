@@ -11,8 +11,8 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
     {"MPSS_EFS",          0x85E00000, 0x00200000,  AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     {"SMEM",              0x86000000, 0x00200000,  AddMem, MEM_RES, UNCACHEABLE,  Reserv, UNCACHED_UNBUFFERED_XN},
     {"TZ",                0x86200000, 0x00B00000,  AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"TZApps",            0x86D00000, 0x00E00000,  NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
-    {"HLOS 2",            0x87B00000, 0x03000000,  NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"TZApps",            0x86D00000, 0x02200000,  NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
+    {"HLOS 2",            0x88F00000, 0x01C00000,  NoHob,  SYS_MEM, SYS_MEM_CAP,  Reserv, NS_DEVICE},
     #ifdef LG_PIL_FIXED
     {"PIL_REGION",        0x8AB00000, 0x0B415000,  AddMem, SYS_MEM, SYS_MEM_CAP,  Reserv, UNCACHED_UNBUFFERED_XN},
     {"HLOS 3",            0x95F15000, 0x074EB000,  AddMem, SYS_MEM, SYS_MEM_CAP,  Conv,   WRITE_BACK_XN},
