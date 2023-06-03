@@ -141,7 +141,7 @@ APRIORI DXE {
     INF MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf
     INF MdeModulePkg/Universal/Console/GraphicsConsoleDxe/GraphicsConsoleDxe.inf
 
-    !include Platforms/Msm8998Binaries/wp/dxe.inc
+    !include Platforms/Msm8998Binaries/common/dxe.inc
 
     INF MdeModulePkg/Universal/BdsDxe/BdsDxe.inf  
 
@@ -176,7 +176,7 @@ APRIORI DXE {
 
     INF MdeModulePkg/Universal/WatchdogTimerDxe/WatchdogTimer.inf
 
-    !include Platforms/Msm8998Binaries/wp/dxe.inc
+    !include Platforms/Msm8998Binaries/common/dxe.inc
 
     #
     # Virtual Keyboard

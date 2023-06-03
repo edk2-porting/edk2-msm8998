@@ -34,4 +34,4 @@
     INF Platforms/Msm8998Binaries/common/Binaries/UsbInitDxe/UsbInitDxe.inf
     INF Platforms/Msm8998Binaries/common/Binaries/UsbfnChgDxe/UsbfnChgDxe.inf
     INF Platforms/Msm8998Binaries/common/Binaries/UsbMouseDxe/UsbMouseDxe.inf
-    INF Platforms/Msm8998Binaries/joan/PatchedBinaries/ButtonsDxe/ButtonsDxe.inf 
+    INF Platforms/Msm8998Binaries/common/Binaries/ButtonsDxe/ButtonsDxe.inf
