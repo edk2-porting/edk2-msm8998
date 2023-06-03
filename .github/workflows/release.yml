@@ -16,9 +16,13 @@ jobs:
         device:
           - dumpling
           - cheeseburger
-          - chiron
           - joan
+          - chiron
           - sagit
+          - htc_ocmdtwl
+          - mata
+          - nx563j
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
