@@ -3,7 +3,7 @@
 - A broken but working EDK2 implementation for Snapdragon 835 platform.
 
 - 中国人请看中文版
-[Chinese version (中文版)](https://github.com/edk2-porting/edk2-msm8998/blob/master/README.zh.md)
+[Chinese version (中文版)](https://github.com/edk2-porting/edk2-msm8998/blob/new/README.zh.md)
 
 ## Warning
 - Starting with build 25188 ARMv8.1 Atomics are now required. Build 25169 to 25183 will BSOD on boot (KMODE_EXCEPTION_NOT_HANDLED). 
