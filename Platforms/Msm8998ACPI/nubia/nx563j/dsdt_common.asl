@@ -52,7 +52,7 @@ Include("../Common/pmic_core.asl")
 //
 Include("pmic_batt.asl")
 
-Include("pep.asl")
+Include("../Common/pep.asl")
 Include("../Common/bam.asl")
 Include("buses.asl")
 

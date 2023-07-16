@@ -14,9 +14,9 @@ DefinitionBlock ("", "DSDT", 2, "QCOMM ", "MSM8998 ", 3)
 
         Include("../Common/addSub.asl")
         Include("dsdt_common.asl")
-        Include("cust_dsdt.asl") 
+        Include("../Common/cust_dsdt.asl") 
 
-        Include("usb.asl")
+        Include("../Common/usb.asl")
         
         // Thermal Zone devices depend on PEP
         Include("../Common/cust_thermal_zones.asl")

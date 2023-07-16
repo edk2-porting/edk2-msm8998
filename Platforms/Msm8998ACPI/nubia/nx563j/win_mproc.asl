@@ -395,7 +395,7 @@ Device (AMSS)
         })
     }
 
-    Include("wcnss_wlan.asl")
+    Include("../Common/wcnss_wlan.asl")
 }
 
 
@@ -519,4 +519,4 @@ Device (SSVC)
 
 // Warning:  Include these files after device scopes have been defined
 //Include("cust_win_mproc.asl")   // Customer specific data
-Include("plat_win_mproc.asl")   // Platform specific data
+Include("../Common/plat_win_mproc.asl")   // Platform specific data
